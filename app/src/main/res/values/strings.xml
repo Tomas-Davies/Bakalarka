@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Logopadix</string>
+    <string name="category_speech">Mluva</string>
+    <string name="category_eyesight">Zrak</string>
+    <string name="category_hearing">Sluch</string>
+    <string name="category_rythm">Rytmus</string>
+    <string name="category_tales">Pohádky</string>
 </resources>
