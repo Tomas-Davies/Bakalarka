@@ -5,4 +5,533 @@
     <string name="category_hearing">Sluch</string>
     <string name="category_rythm">Rytmus</string>
     <string name="category_tales">Pohádky</string>
+    <string name="profile_heading">Profil</string>
+
+    <array name="speech_levels">
+        <item>A</item>
+        <item>O</item>
+        <item>U</item>
+        <item>E</item>
+        <item>I</item>
+        <item>Ě</item>
+        <item>OU</item>
+        <item>P</item>
+        <item>B</item>
+        <item>@array/level_M</item>
+        <item>@array/level_F</item>
+        <item>@array/level_V</item>
+        <item>@array/level_J</item>
+        <item>@array/level_T</item>
+        <item>@array/level_D</item>
+        <item>@array/level_N</item>
+        <item>Ť</item>
+        <item>Ď</item>
+        <item>Ň</item>
+        <item>@array/level_L</item>
+        <item>@array/level_K</item>
+        <item>@array/level_G</item>
+        <item>@array/level_CH</item>
+        <item>@array/level_H</item>
+        <item>@array/level_C</item>
+        <item>@array/level_S</item>
+        <item>@array/level_Z</item>
+        <item>@array/level_CSZ</item>
+        <item>@array/level_Č</item>
+        <item>@array/level_Š</item>
+        <item>@array/level_Ž</item>
+        <item>@array/level_ČŠŽ</item>
+        <item>@array/level_R</item>
+        <item>@array/level_Ř</item>
+    </array>
+
+    <array name="level_M">
+        <item>M_</item>
+        <item>_M_</item>
+        <item>_M</item>
+    </array>
+    <array name="level_F">
+        <item>F_</item>
+        <item>_F_</item>
+        <item>_F</item>
+    </array>
+    <array name="level_V">
+        <item>V_</item>
+        <item>_V_</item>
+    </array>
+    <array name="level_J">
+        <item>J_</item>
+        <item>_J_</item>
+        <item>_J</item>
+    </array>
+    <array name="level_T">
+        <item>T_</item>
+        <item>_T_</item>
+        <item>_T</item>
+    </array>
+    <array name="level_D">
+        <item>D_</item>
+        <item>_D_</item>
+        <item>D_D_</item>
+    </array>
+    <array name="level_N">
+        <item>N_</item>
+        <item>_N_</item>
+        <item>_N_N_</item>
+        <item>_N</item>
+    </array>
+    <array name="level_L">
+        <item>L_</item>
+        <item>_L_</item>
+        <item>_L_L_</item>
+        <item>_L</item>
+    </array>
+    <array name="level_K">
+        <item>K_</item>
+        <item>_K_</item>
+        <item>_K_K_</item>
+        <item>_K</item>
+    </array>
+    <array name="level_G">
+        <item>G_</item>
+        <item>_G_</item>
+    </array>
+    <array name="level_CH">
+        <item>CH_</item>
+        <item>_CH_</item>
+        <item>_CH</item>
+    </array>
+    <array name="level_H">
+        <item>H_</item>
+        <item>_H_</item>
+    </array>
+    <array name="level_C">
+        <item>C_</item>
+        <item>_C_</item>
+        <item>_C</item>
+    </array>
+    <array name="level_S">
+        <item>S_</item>
+        <item>_S_</item>
+        <item>S_S</item>
+        <item>_S</item>
+    </array>
+    <array name="level_Z">
+        <item>Z_</item>
+        <item>_Z_</item>
+        <item>Z_Z</item>
+    </array>
+    <array name="level_CSZ">
+        <!-- DODELAT PODLE KNIZKY -->
+    </array>
+    <array name="level_Č">
+        <item>Č_</item>
+        <item>Č_Č_</item>
+        <item>_Č_</item>
+        <item>_Č</item>
+    </array>
+    <array name="level_Š">
+        <item>Š_</item>
+        <item>Š_Š_</item>
+        <item>_Š_</item>
+        <item>_Š</item>
+    </array>
+    <array name="level_Ž">
+        <item>Ž_</item>
+        <item>_Ž_</item>
+    </array>
+    <array name="level_ČŠŽ">
+        <!-- DODELAT PODLE KNIZKY -->
+    </array>
+    <array name="level_R">
+        <item>R_</item>
+        <item>_R_</item>
+        <item>_R_R_</item>
+    </array>
+    <array name="level_Ř">
+        <item>Ř_</item>
+        <item>_Ř_</item>
+        <item>_Ř_Ř_</item>
+        <item>_Ř</item>
+    </array>
+
+
+
+
+    <string-array name="A">
+        <item>Máma</item>
+        <item>Táta</item>
+        <item>Bába</item>
+    </string-array>
+    <string-array name="O">
+        <item>Ota</item>
+        <item>Bonbon</item>
+        <item>Okno</item>
+    </string-array>
+    <string-array name="U">
+        <item>Bububu</item>
+        <item>Bota</item>
+        <item>Buchta</item>
+    </string-array>
+    <string-array name="E">
+        <item>Ema</item>
+        <item>Med</item>
+        <item>Elektrika</item>
+    </string-array>
+    <string-array name="I">
+        <item>Ivan</item>
+        <item>Spinká</item>
+        <item>Svítí</item>
+    </string-array>
+    <string-array name="Ě">
+        <item>Květa</item>
+        <item>Běta</item>
+        <item>Věneček</item>
+    </string-array>
+    <string-array name="OU">
+        <item>Mouka</item>
+        <item>Moucha</item>
+        <item>Bouda</item>
+    </string-array>
+    <string-array name="P">
+        <item>Papá</item>
+        <item>Pepa</item>
+        <item>Pytel</item>
+    </string-array>
+    <string-array name="B">
+        <item>Buben</item>
+        <item>Buchta</item>
+        <item>Buvol</item>
+    </string-array>
+    <string-array name="M_">
+        <item>Máma</item>
+        <item>Mák</item>
+        <item>Motýl</item>
+    </string-array>
+    <string-array name="_M_">
+        <item>Doma</item>
+        <item>Kamení</item>
+        <item>Komín</item>
+    </string-array>
+    <string-array name="_M">
+        <item>Dům</item>
+        <item>Osm</item>
+        <item>Salám</item>
+    </string-array>
+    <string-array name="F_">
+        <item>Fanda</item>
+        <item>Fouká</item>
+        <item>Fenka</item>
+    </string-array>
+    <string-array name="_F_">
+        <item>Telefon</item>
+        <item>Knoflík</item>
+        <item>Výfuk</item>
+    </string-array>
+    <string-array name="_F">
+        <item>Konev</item>
+        <item>Obuv</item>
+        <item>Páv</item>
+    </string-array>
+    <string-array name="V_">
+        <item>Vata</item>
+        <item>Váha</item>
+        <item>Vozík</item>
+    </string-array>
+    <string-array name="_V_">
+        <item>Ovečka</item>
+        <item>Veverka</item>
+        <item>Ovoce</item>
+    </string-array>
+    <string-array name="J_">
+        <item>Jáma</item>
+        <item>Jahoda</item>
+        <item>Jazyk</item>
+    </string-array>
+    <string-array name="_J_">
+        <item>Voják</item>
+        <item>Zajíc</item>
+        <item>Vajíčko</item>
+    </string-array>
+    <string-array name="_J">
+        <item>Boj</item>
+        <item>Pokoj</item>
+        <item>Hokejistka</item>
+    </string-array>
+    <string-array name="T_">
+        <item>Tanec</item>
+        <item>Táta</item>
+        <item>Televize</item>
+    </string-array>
+    <string-array name="_T_">
+        <item>Postel</item>
+        <item>Bota</item>
+        <item>Letadlo</item>
+    </string-array>
+    <string-array name="_T">
+        <item>Ocet</item>
+        <item>Sníst</item>
+        <item>Jíst</item>
+    </string-array>
+    <string-array name="D_">
+        <item>Datel</item>
+        <item>Deník</item>
+        <item>Duha</item>
+    </string-array>
+    <string-array name="_D_">
+        <item>Bouda</item>
+        <item>Voda</item>
+    </string-array>
+    <string-array name="D_D_">
+        <item>Dudák</item>
+        <item>Dodávka</item>
+        <item>Dudy</item>
+    </string-array>
+    <string-array name="N_">
+        <item>Nádoba</item>
+        <item>Nervy</item>
+        <item>Noha</item>
+        <item>Nos</item>
+    </string-array>
+    <string-array name="_N_">
+        <item>Okno</item>
+        <item>Slunce</item>
+        <item>Knoflík</item>
+    </string-array>
+    <string-array name="_N_N_">
+        <item>Leknín</item>
+        <item>Neandrtálec</item>
+    </string-array>
+    <string-array name="_N">
+        <item>Pán</item>
+        <item>Stan</item>
+        <item>Mlýn</item>
+    </string-array>
+    <string-array name="Ť">
+        <item>Tilko</item>
+        <item>Tělo</item>
+        <item>Štika</item>
+    </string-array>
+    <string-array name="Ď">
+        <item>Divák</item>
+        <item>Dílo</item>
+        <item>Sedí</item>
+    </string-array>
+    <string-array name="Ň">
+        <item>Nit</item>
+        <item>Peníze</item>
+        <item>Bochník</item>
+    </string-array>
+    <string-array name="L_">
+        <item>Lak</item>
+        <item>Lampa</item>
+        <item>Lano</item>
+    </string-array>
+    <string-array name="_L_">
+        <item>Malá</item>
+        <item>Víla</item>
+    </string-array>
+    <string-array name="_L_L_">
+        <item>Plakal</item>
+        <item>Lechtal</item>
+        <item>Lehl</item>
+    </string-array>
+    <string-array name="_L">
+        <item>Pyl</item>
+        <item>Sůl</item>
+        <item>Kanál</item>
+    </string-array>
+    <string-array name="K_">
+        <item>Koza</item>
+        <item>Kabelka</item>
+        <item>Kůň</item>
+    </string-array>
+    <string-array name="_K_">
+        <item>Lžička</item>
+        <item>Vlajka</item>
+    </string-array>
+    <string-array name="K_K">
+        <item>Kukačka</item>
+        <item>Kaktus</item>
+        <item>Kabelka</item>
+    </string-array>
+    <string-array name="_K">
+        <item>Šnek</item>
+        <item>Mák</item>
+        <item>Voják</item>
+    </string-array>
+    <string-array name="G_">
+        <item>Guma</item>
+        <item>Guláš</item>
+        <item>Gorila</item>
+    </string-array>
+    <string-array name="_G_">
+        <item>Vagón</item>
+        <item>Kilogram</item>
+        <item>Fotografka</item>
+    </string-array>
+    <string-array name="CH_">
+        <item>Chata</item>
+        <item>Chyba</item>
+        <item>Chleba</item>
+    </string-array>
+    <string-array name="_CH_">
+        <item>Ucho</item>
+        <item>Buchta</item>
+        <item>Kachna</item>
+    </string-array>
+    <string-array name="_CH">
+        <item>Mech</item>
+        <item>Duch</item>
+        <item>Hroch</item>
+    </string-array>
+    <string-array name="H_">
+        <item>Hamburgr</item>
+        <item>Houba</item>
+        <item>Had</item>
+    </string-array>
+    <string-array name="_H_">
+        <item>Noha</item>
+        <item>Tahá</item>
+        <item>Jahoda</item>
+    </string-array>
+    <string-array name="C_">
+        <item>Cvik</item>
+        <item>Cibule</item>
+        <item>Cesta</item>
+    </string-array>
+    <string-array name="_C_">
+        <item>Opice</item>
+        <item>Ovce</item>
+        <item>Pecka</item>
+    </string-array>
+    <string-array name="_C">
+        <item>Hrnec</item>
+        <item>Klec</item>
+        <item>Noc</item>
+    </string-array>
+    <string-array name="S_">
+        <item>Schody</item>
+        <item>Skála</item>
+        <item>Sova</item>
+    </string-array>
+    <string-array name="_S_">
+        <item>Máslo</item>
+        <item>Veslo</item>
+        <item>Láska</item>
+    </string-array>
+    <string-array name="S_S">
+        <item>Sysel</item>
+        <item>Sníst</item>
+        <item>Sladkost</item>
+    </string-array>
+    <string-array name="_S">
+        <item>Dopis</item>
+        <item>Les</item>
+        <item>Kompas</item>
+    </string-array>
+    <string-array name="Z_">
+        <item>Zlato</item>
+        <item>Zloděj</item>
+        <item>Zoubek</item>
+    </string-array>
+    <string-array name="_Z_">
+        <item>Jazyk</item>
+        <item>Hnízdo</item>
+        <item>Kozy</item>
+    </string-array>
+    <string-array name="Z_Z">
+        <item>Zazvonit</item>
+        <item>Zuzana</item>
+    </string-array>
+
+    <string-array name="Č_">
+        <item>Člun</item>
+        <item>Čmelák</item>
+        <item>Čepel</item>
+    </string-array>
+    <string-array name="Č_Č_">
+        <item>Čmeláček</item>
+        <item>Kočička</item>
+        <item>Čepička</item>
+    </string-array>
+    <string-array name="_Č_">
+        <item>Kočka</item>
+        <item>Tečka</item>
+        <item>Vidlička</item>
+    </string-array>
+    <string-array name="_Č">
+        <item>Meč</item>
+        <item>Klíč</item>
+        <item>Boháč</item>
+    </string-array>
+    <string-array name="Š_">
+        <item>Škola</item>
+        <item>Šnek</item>
+        <item>Špenát</item>
+    </string-array>
+    <string-array name="Š_Š_">
+        <item>Šašek</item>
+        <item>Šiška</item>
+    </string-array>
+    <string-array name="_Š_">
+        <item>Liška</item>
+        <item>Myška</item>
+        <item>Mašle</item>
+    </string-array>
+    <string-array name="_Š">
+        <item>Koš</item>
+        <item>Myš</item>
+        <item>Pleš</item>
+    </string-array>
+    <string-array name="Ž_">
+        <item>Župan</item>
+        <item>Žába</item>
+        <item>Žena</item>
+    </string-array>
+    <string-array name="_Ž_">
+        <item>Kužel</item>
+        <item>Nože</item>
+        <item>Lyže</item>
+    </string-array>
+
+    <string-array name="R_">
+        <item>Růže</item>
+        <item>Rostlina</item>
+        <item>Rohlík</item>
+    </string-array>
+    <string-array name="_R">
+        <item>Vítr</item>
+        <item>Sýr</item>
+        <item>Svetr</item>
+    </string-array>
+    <string-array name="_R_">
+        <item>Beruška</item>
+        <item>Dárek</item>
+        <item>Hora</item>
+        <item>Obrázek</item>
+    </string-array>
+    <string-array name="_R_R_">
+        <item>Traktor</item>
+        <item>Brambor</item>
+    </string-array>
+    <string-array name="Ř_">
+        <item>Řeka</item>
+        <item>Řetěz</item>
+        <item>Řízek</item>
+    </string-array>
+    <string-array name="_Ř_">
+        <item>Ořech</item>
+        <item>Moře</item>
+        <item>Kuře</item>
+    </string-array>
+    <string-array name="_Ř_Ř_">
+        <item>Kořenářka</item>
+        <item>Řehoř</item>
+        <item>Dřevař</item>
+    </string-array>
+    <string-array name="_Ř">
+        <item>Keř</item>
+        <item>Pekař</item>
+        <item>Kovář</item>
+    </string-array>
 </resources>
