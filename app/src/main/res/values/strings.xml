@@ -6,6 +6,7 @@
     <string name="category_rythm">Rytmus</string>
     <string name="category_tales">Pohádky</string>
     <string name="profile_heading">Profil</string>
+    <string name="home_screen_decor_label">I procvičování může být zábava.</string>
 
     <array name="speech_levels">
         <item>A</item>

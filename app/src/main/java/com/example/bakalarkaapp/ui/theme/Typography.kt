@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.sp
 
 
 val typography = Typography(
-    bodyLarge = TextStyle(
+    labelLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,

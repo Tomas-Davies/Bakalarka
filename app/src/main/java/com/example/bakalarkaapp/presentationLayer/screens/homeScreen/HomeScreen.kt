@@ -5,14 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -30,7 +33,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -86,24 +91,74 @@ class HomeScreen: AppCompatActivity() {
 
     @Composable
     private fun MainMenu( padding: PaddingValues){
-        LazyVerticalGrid(
-            modifier = Modifier.padding(18.dp, padding.calculateTopPadding(), 18.dp, 9.dp),
-            horizontalArrangement = Arrangement.spacedBy(18.dp),
-            verticalArrangement = Arrangement.spacedBy(18.dp),
-            columns = GridCells.Fixed(2),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(18.dp, padding.calculateTopPadding(), 18.dp, 9.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            item { MenuCard(title = stringResource(id = R.string.category_speech), 0) }
-            item { MenuCard(title = stringResource(id = R.string.category_eyesight), 1) }
-            item { MenuCard(title = stringResource(id = R.string.category_hearing), 2) }
-            item { MenuCard(title = stringResource(id = R.string.category_rythm), 3) }
-            item(span = { GridItemSpan(2) }) {
-                MenuCard(
-                    title = stringResource(id = R.string.category_tales),
-                    id = 4,
-                    ratio = 2.5f,
-                    imgId = R.drawable.dummy_img_500x200
-                ) }
+            LazyVerticalGrid(
+                horizontalArrangement = Arrangement.spacedBy(18.dp),
+                verticalArrangement = Arrangement.spacedBy(18.dp),
+                columns = GridCells.Fixed(2),
+            ) {
+                item {
+                    MenuCard(
+                        title = stringResource(id = R.string.category_speech),
+                        id = 0,
+                        imgId = R.drawable.speech_btn_img
+                    ) }
+                item {
+                    MenuCard(
+                        title = stringResource(id = R.string.category_eyesight),
+                        id = 1,
+                        imgId = R.drawable.eyesight_btn_img
+                    ) }
+                item {
+                    MenuCard(
+                        title = stringResource(id = R.string.category_hearing),
+                        id = 2,
+                        imgId = R.drawable.hearing_btn_img
+                    ) }
+                item {
+                    MenuCard(
+                        title = stringResource(id = R.string.category_rythm),
+                        id = 3,
+                        imgId = R.drawable.rythm_btn_img
+                    ) }
+                item(span = { GridItemSpan(2) }) {
+                    MenuCard(
+                        title = stringResource(id = R.string.category_tales),
+                        id = 4,
+                        ratio = 2.5f,
+                        imgId = R.drawable.tales_btn_img
+                    ) }
+            }
+
+            val configuration = LocalConfiguration.current
+            val screenWidth = configuration.screenWidthDp.dp
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.width(screenWidth / 2),
+                    text = stringResource(id = R.string.home_screen_decor_label),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.home_screen_decor),
+                    contentDescription = "decoration",
+                    modifier = Modifier.scale(2.5f),
+                )
+            }
+
         }
+
+
     }
 
     @Composable
@@ -134,7 +189,7 @@ class HomeScreen: AppCompatActivity() {
                     Text(
                         text = title,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 28.sp
+                        fontSize = 38.sp
                     )
                 }
             }
