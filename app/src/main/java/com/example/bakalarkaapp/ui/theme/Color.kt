@@ -63,3 +63,10 @@ val md_theme_dark_shadow = Color(0xFF000000)
 val md_theme_dark_surfaceTint = Color(0xFF00DCE2)
 val md_theme_dark_outlineVariant = Color(0xFF3F4949)
 val md_theme_dark_scrim = Color(0xFF000000)
+
+
+val md_theme_speech_background = Color(0xFFFF914D)
+val md_theme_eyesight_background = Color(0xFF38B6FF)
+val md_theme_hearing_background = Color(0xFFFFDE59)
+val md_theme_rythm_background = Color(0xFF67EB2E)
+val md_theme_tales_background = Color(0xFFFE67C4)

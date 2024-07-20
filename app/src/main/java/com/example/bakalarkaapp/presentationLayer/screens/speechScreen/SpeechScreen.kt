@@ -1,15 +1,33 @@
 package com.example.bakalarkaapp.presentationLayer.screens.speechScreen
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,9 +37,25 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ui.theme.AppTheme
 
@@ -60,16 +94,175 @@ class SpeechScreen: AppCompatActivity() {
                 )
             }
         ) {pdVal ->
-            SpeechScreenMenu(pdVal)
+            val arrIds = resources.obtainTypedArray(R.array.speech_levels)
+            val len = arrIds.length()
+            val levelItems = mutableListOf<Array<String>>()
+            for (i in 0 until len){
+                val id = arrIds.getResourceId(i, 0)
+                val item = resources.getStringArray(id)
+                levelItems.add(item)
+            }
+            arrIds.recycle()
+            SpeechScreenMenu(pdVal, levelItems)
         }
     }
 
     @Composable
-    private fun SpeechScreenMenu(pdVal: PaddingValues){
+    private fun SpeechScreenMenu(pdVal: PaddingValues, levelItems: MutableList<Array<String>>){
         LazyColumn(
-            modifier = Modifier.padding(pdVal)
+            modifier = Modifier.padding(pdVal),
+            contentPadding = PaddingValues(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-
+            items(levelItems){levelItem ->
+                val label = levelItem[0].replace("_", "")
+                key(label) {
+                    SpeechScreenCard(
+                        title = label,
+                        levelItems = levelItem
+                    )
+                }
+            }
         }
+    }
+
+    @Composable
+    private fun SpeechScreenCard(
+        title: String,
+        levelItems: Array<String>
+    ){
+        val ctx = LocalContext.current
+        var isCollapsedState by remember { mutableStateOf(true) }
+
+        val rotationState by animateFloatAsState(
+            targetValue = if (!isCollapsedState) 180f else 0f, label = ""
+        )
+
+        val isPrimitive = levelItems.size == 1
+
+        Card(
+            modifier = Modifier
+                .clip(RoundedCornerShape(16.dp))
+//                .border(
+//                    border = BorderStroke(4.dp, colorResource(id = R.color.speech_200)),
+//                    shape = RoundedCornerShape(16.dp)
+//                )
+                .fillMaxWidth()
+                .animateContentSize(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearOutSlowInEasing
+                    )
+                )
+                .background(colorResource(id = R.color.speech_500))
+                .padding(10.dp),
+            onClick = {
+                if (!isPrimitive){ isCollapsedState = !isCollapsedState }
+                else onCategoryClicked(ctx, title)
+            }
+        ) {
+            val horizontalArr = if (!isPrimitive) Arrangement.SpaceBetween else Arrangement.Start
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colorResource(id = R.color.speech_500))
+                    .padding(10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = horizontalArr
+            ) {
+                Text(
+                    text = title,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 32.sp
+                )
+
+                if (!isPrimitive){
+                    Icon(
+                        modifier = Modifier.rotate(rotationState),
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "drop down arrow"
+                    )
+                }
+            }
+
+            if (!isCollapsedState){
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(colorResource(id = R.color.speech_500)),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.speech_menu_item_label),
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 24.sp
+                    )
+                }
+
+                var rowWidth by remember { mutableStateOf(0.dp) }
+
+                // get local density from composable
+                val density = LocalDensity.current
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(colorResource(id = R.color.speech_500))
+                        .onGloballyPositioned {
+                            rowWidth = with(density) {
+                                it.size.width.toDp()
+                            }
+                        },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    levelItems.forEach { str ->
+                        LevelItem(
+                            label = str,
+                            parentWidth = rowWidth,
+                            itemCount = levelItems.count()
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun LevelItem(
+        label: String,
+        parentWidth: Dp,
+        itemCount: Int
+    ){
+        val ctx = LocalContext.current
+        Card(
+            modifier = Modifier
+                .width(parentWidth / itemCount)
+                .clip(RoundedCornerShape(8.dp))
+                .border(
+                    border = BorderStroke(5.dp, colorResource(id = R.color.speech_200)),
+                    shape = RoundedCornerShape(8.dp)
+                )
+                .padding(10.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = colorResource(id = R.color.speech_500)
+            ),
+            onClick = { onCategoryClicked(ctx, label) }
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = label,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 28.sp
+                )
+            }
+        }
+    }
+    private fun onCategoryClicked(ctx: Context, label: String){
+
     }
 }

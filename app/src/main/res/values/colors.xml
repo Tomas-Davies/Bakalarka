@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="speech_200">#FFFF914D</color>
+    <color name="eyesight_200">#FF38B6FF</color>
+    <color name="hearing_200">#FFFFDE59</color>
+    <color name="rythm_200">#FF67EB2E</color>
+    <color name="tales_200">#FFFE67C4</color>
+
+    <color name="speech_500">#FFF15226</color>
+    <color name="eyesight_500">#FF8C52FF</color>
+    <color name="hearing_500">#FFD2AA00</color>
+    <color name="rythm_500">#FF00BF63</color>
+    <color name="tales_500">#FF81249B</color>
 </resources>

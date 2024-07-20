@@ -157,8 +157,6 @@ class HomeScreen: AppCompatActivity() {
             }
 
         }
-
-
     }
 
     @Composable
@@ -181,11 +179,6 @@ class HomeScreen: AppCompatActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-//                    Image(
-//                        painter = painterResource(id = R.drawable.dummy_img),
-//                        contentDescription = "card image",
-//                        modifier = Modifier.fillMaxWidth()
-//                    )
                     Text(
                         text = title,
                         fontWeight = FontWeight.Bold,

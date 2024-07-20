@@ -8,16 +8,18 @@
     <string name="profile_heading">Profil</string>
     <string name="home_screen_decor_label">I procvičování může být zábava.</string>
 
+    <string name="speech_menu_item_label">Umístění</string>
+
     <array name="speech_levels">
-        <item>A</item>
-        <item>O</item>
-        <item>U</item>
-        <item>E</item>
-        <item>I</item>
-        <item>Ě</item>
-        <item>OU</item>
-        <item>P</item>
-        <item>B</item>
+        <item>@array/level_A</item>
+        <item>@array/level_O</item>
+        <item>@array/level_U</item>
+        <item>@array/level_E</item>
+        <item>@array/level_I</item>
+        <item>@array/level_Ě</item>
+        <item>@array/level_OU</item>
+        <item>@array/level_P</item>
+        <item>@array/level_B</item>
         <item>@array/level_M</item>
         <item>@array/level_F</item>
         <item>@array/level_V</item>
@@ -25,9 +27,9 @@
         <item>@array/level_T</item>
         <item>@array/level_D</item>
         <item>@array/level_N</item>
-        <item>Ť</item>
-        <item>Ď</item>
-        <item>Ň</item>
+        <item>@array/level_Ť</item>
+        <item>@array/level_Ď</item>
+        <item>@array/level_Ň</item>
         <item>@array/level_L</item>
         <item>@array/level_K</item>
         <item>@array/level_G</item>
@@ -45,6 +47,33 @@
         <item>@array/level_Ř</item>
     </array>
 
+    <array name="level_A">
+        <item>A</item>
+    </array>
+    <array name="level_O">
+        <item>O</item>
+    </array>
+    <array name="level_U">
+        <item>U</item>
+    </array>
+    <array name="level_E">
+        <item>E</item>
+    </array>
+    <array name="level_I">
+        <item>I</item>
+    </array>
+    <array name="level_Ě">
+        <item>Ě</item>
+    </array>
+    <array name="level_OU">
+        <item>OU</item>
+    </array>
+    <array name="level_P">
+        <item>P</item>
+    </array>
+    <array name="level_B">
+        <item>B</item>
+    </array>
     <array name="level_M">
         <item>M_</item>
         <item>_M_</item>
@@ -79,6 +108,15 @@
         <item>_N_</item>
         <item>_N_N_</item>
         <item>_N</item>
+    </array>
+    <array name="level_Ť">
+        <item>Ť</item>
+    </array>
+    <array name="level_Ď">
+        <item>Ď</item>
+    </array>
+    <array name="level_Ň">
+        <item>Ň</item>
     </array>
     <array name="level_L">
         <item>L_</item>
@@ -122,7 +160,8 @@
         <item>Z_Z</item>
     </array>
     <array name="level_CSZ">
-        <!-- DODELAT PODLE KNIZKY -->
+        <item>CSZ</item>
+        <!-- TODO DODELAT PODLE KNIZKY -->
     </array>
     <array name="level_Č">
         <item>Č_</item>
@@ -141,7 +180,8 @@
         <item>_Ž_</item>
     </array>
     <array name="level_ČŠŽ">
-        <!-- DODELAT PODLE KNIZKY -->
+        <item>ČŠŽ</item>
+        <!-- TODO DODELAT PODLE KNIZKY -->
     </array>
     <array name="level_R">
         <item>R_</item>
