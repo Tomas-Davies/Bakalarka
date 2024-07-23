@@ -22,10 +22,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -56,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ui.theme.AppTheme
+import java.util.LinkedList
 
 
 class SpeechScreen: AppCompatActivity() {
@@ -108,18 +108,46 @@ class SpeechScreen: AppCompatActivity() {
 
     @Composable
     private fun SpeechScreenMenu(pdVal: PaddingValues, levelItems: MutableList<Array<String>>){
-        LazyVerticalStaggeredGrid(
-            modifier = Modifier.padding(pdVal),
-            columns = StaggeredGridCells.Fixed(2),
-            contentPadding = PaddingValues(10.dp),
-            verticalItemSpacing = 15.dp,
-            horizontalArrangement = Arrangement.spacedBy(15.dp)
-        ) {
-            items(levelItems){levelItem ->
-                val label = levelItem[0].replace("_", "")
-                SpeechScreenCard(Modifier,title = label, levelItems = levelItem)
-            }
+
+            val scrollState = rememberScrollState()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp, pdVal.calculateTopPadding(), 15.dp, 0.dp)
+                    .verticalScroll(scrollState),
+                horizontalArrangement = Arrangement.spacedBy(15.dp),
+                verticalAlignment = Alignment.Top
+            ) {
+                val firstHalf = LinkedList<Array<String>>()
+                val secondHalf = LinkedList<Array<String>>()
+                for (i in levelItems.indices){
+                    if (i % 2 == 0){
+                        firstHalf.add(levelItems[i])
+                    } else {
+                        secondHalf.add(levelItems[i])
+                    }
+                }
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(15.dp)
+                ) {
+                    for (levelItem in firstHalf){
+                        val label = levelItem[0].replace("_", "")
+                        SpeechScreenCard(Modifier,title = label, levelItems = levelItem)
+                    }
+                }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(15.dp)
+                ) {
+                    for (levelItem in secondHalf){
+                        val label = levelItem[0].replace("_", "")
+                        SpeechScreenCard(Modifier,title = label, levelItems = levelItem)
+                    }
+                }
         }
+
     }
 
     @Composable
