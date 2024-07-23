@@ -3,6 +3,7 @@ package com.example.bakalarkaapp.presentationLayer.screens.speechScreen
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateContentSize
@@ -16,12 +17,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -38,7 +41,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -46,18 +48,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ui.theme.AppTheme
+
 
 class SpeechScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,25 +108,23 @@ class SpeechScreen: AppCompatActivity() {
 
     @Composable
     private fun SpeechScreenMenu(pdVal: PaddingValues, levelItems: MutableList<Array<String>>){
-        LazyColumn(
+        LazyVerticalStaggeredGrid(
             modifier = Modifier.padding(pdVal),
+            columns = StaggeredGridCells.Fixed(2),
             contentPadding = PaddingValues(10.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalItemSpacing = 15.dp,
+            horizontalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(levelItems){levelItem ->
-                val label = levelItem[0].replace("_", "")
-                key(label) {
-                    SpeechScreenCard(
-                        title = label,
-                        levelItems = levelItem
-                    )
-                }
+                val label = levelItem[0]
+                SpeechScreenCard(Modifier,title = label, levelItems = levelItem)
             }
         }
     }
 
     @Composable
     private fun SpeechScreenCard(
+        modifier: Modifier,
         title: String,
         levelItems: Array<String>
     ){
@@ -141,13 +138,8 @@ class SpeechScreen: AppCompatActivity() {
         val isPrimitive = levelItems.size == 1
 
         Card(
-            modifier = Modifier
+            modifier = modifier
                 .clip(RoundedCornerShape(16.dp))
-//                .border(
-//                    border = BorderStroke(4.dp, colorResource(id = R.color.speech_200)),
-//                    shape = RoundedCornerShape(16.dp)
-//                )
-                .fillMaxWidth()
                 .animateContentSize(
                     animationSpec = tween(
                         durationMillis = 300,
@@ -196,31 +188,14 @@ class SpeechScreen: AppCompatActivity() {
                     Text(
                         text = stringResource(id = R.string.speech_menu_item_label),
                         fontWeight = FontWeight.Normal,
-                        fontSize = 24.sp
+                        fontSize = 20.sp
                     )
-                }
-
-                var rowWidth by remember { mutableStateOf(0.dp) }
-
-                // get local density from composable
-                val density = LocalDensity.current
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colorResource(id = R.color.speech_500))
-                        .onGloballyPositioned {
-                            rowWidth = with(density) {
-                                it.size.width.toDp()
-                            }
-                        },
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                    Spacer(modifier = Modifier.height(5.dp))
                     levelItems.forEach { str ->
+                        Spacer(modifier = Modifier.height(5.dp))
                         LevelItem(
                             label = str,
-                            parentWidth = rowWidth,
-                            itemCount = levelItems.count()
+                            Modifier
                         )
                     }
                 }
@@ -231,23 +206,23 @@ class SpeechScreen: AppCompatActivity() {
     @Composable
     private fun LevelItem(
         label: String,
-        parentWidth: Dp,
-        itemCount: Int
+        modifier: Modifier
     ){
         val ctx = LocalContext.current
         Card(
-            modifier = Modifier
-                .width(parentWidth / itemCount)
+            modifier = modifier
                 .clip(RoundedCornerShape(8.dp))
                 .border(
                     border = BorderStroke(5.dp, colorResource(id = R.color.speech_200)),
                     shape = RoundedCornerShape(8.dp)
                 )
-                .padding(10.dp),
+                .padding(5.dp),
             colors = CardDefaults.cardColors(
                 containerColor = colorResource(id = R.color.speech_500)
             ),
-            onClick = { onCategoryClicked(ctx, label) }
+            onClick = {
+                onCategoryClicked(ctx, label)
+            }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -257,12 +232,12 @@ class SpeechScreen: AppCompatActivity() {
                 Text(
                     text = label,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp
+                    fontSize = 18.sp
                 )
             }
         }
     }
     private fun onCategoryClicked(ctx: Context, label: String){
-
+        Toast.makeText(ctx, "To be done", Toast.LENGTH_SHORT).show()
     }
 }
