@@ -116,7 +116,7 @@ class SpeechScreen: AppCompatActivity() {
             horizontalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(levelItems){levelItem ->
-                val label = levelItem[0]
+                val label = levelItem[0].replace("_", "")
                 SpeechScreenCard(Modifier,title = label, levelItems = levelItem)
             }
         }
