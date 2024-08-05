@@ -42,6 +42,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ui.theme.AppTheme
+import kotlinx.coroutines.launch
 import java.util.LinkedList
 
 
@@ -108,12 +110,13 @@ class SpeechScreen: AppCompatActivity() {
 
     @Composable
     private fun SpeechScreenMenu(pdVal: PaddingValues, levelItems: MutableList<Array<String>>){
-
             val scrollState = rememberScrollState()
+            val coroutineScope = rememberCoroutineScope()
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(15.dp, pdVal.calculateTopPadding(), 15.dp, 0.dp)
+                    .padding(15.dp, pdVal.calculateTopPadding(), 15.dp, 15.dp)
                     .verticalScroll(scrollState),
                 horizontalArrangement = Arrangement.spacedBy(15.dp),
                 verticalAlignment = Alignment.Top
@@ -134,7 +137,18 @@ class SpeechScreen: AppCompatActivity() {
                 ) {
                     for (levelItem in firstHalf){
                         val label = levelItem[0].replace("_", "")
-                        SpeechScreenCard(Modifier,title = label, levelItems = levelItem)
+                        SpeechScreenCard(
+                            Modifier,
+                            title = label,
+                            levelItems = levelItem,
+                            onExpand = {
+                                if (label == "Ž" || label == "R" || label == "Ř") {
+                                    coroutineScope.launch {
+                                        scrollState.scrollTo(scrollState.maxValue)
+                                    }
+                                }
+                            }
+                        )
                     }
                 }
                 Column(
@@ -143,26 +157,35 @@ class SpeechScreen: AppCompatActivity() {
                 ) {
                     for (levelItem in secondHalf){
                         val label = levelItem[0].replace("_", "")
-                        SpeechScreenCard(Modifier,title = label, levelItems = levelItem)
+                        SpeechScreenCard(
+                            Modifier,
+                            title = label,
+                            levelItems = levelItem,
+                            onExpand = {
+                                if (label == "Ž" || label == "R" || label == "Ř") {
+                                    coroutineScope.launch {
+                                        scrollState.scrollTo(scrollState.maxValue)
+                                    }
+                                }
+                            }
+                        )
                     }
                 }
-        }
-
+            }
     }
 
     @Composable
     private fun SpeechScreenCard(
         modifier: Modifier,
         title: String,
-        levelItems: Array<String>
+        levelItems: Array<String>,
+        onExpand: () -> Unit
     ){
         val ctx = LocalContext.current
         var isCollapsedState by remember { mutableStateOf(true) }
-
         val rotationState by animateFloatAsState(
             targetValue = if (!isCollapsedState) 180f else 0f, label = ""
         )
-
         val isPrimitive = levelItems.size == 1
 
         Card(
@@ -177,7 +200,10 @@ class SpeechScreen: AppCompatActivity() {
                 .background(colorResource(id = R.color.speech_500))
                 .padding(10.dp),
             onClick = {
-                if (!isPrimitive){ isCollapsedState = !isCollapsedState }
+                if (!isPrimitive){
+                    isCollapsedState = !isCollapsedState
+                   // if (!isCollapsedState) { onExpand() }
+                }
                 else onCategoryClicked(ctx, title)
             }
         ) {
@@ -227,6 +253,7 @@ class SpeechScreen: AppCompatActivity() {
                         )
                     }
                 }
+                onExpand()
             }
         }
     }
