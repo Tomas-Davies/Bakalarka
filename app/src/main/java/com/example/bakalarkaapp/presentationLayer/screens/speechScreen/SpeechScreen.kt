@@ -121,28 +121,32 @@ class SpeechScreen: AppCompatActivity() {
                 horizontalArrangement = Arrangement.spacedBy(15.dp),
                 verticalAlignment = Alignment.Top
             ) {
-                val firstHalf = LinkedList<Array<String>>()
-                val secondHalf = LinkedList<Array<String>>()
+                val firstCol = LinkedList<Array<String>>()
+                val secondCol = LinkedList<Array<String>>()
+                val thirdCol = LinkedList<Array<String>>()
                 for (i in levelItems.indices){
-                    if (i % 2 == 0){
-                        firstHalf.add(levelItems[i])
-                    } else {
-                        secondHalf.add(levelItems[i])
+                    if (i % 3 == 0){
+                        firstCol.add(levelItems[i])
+                    } else if (i % 3 == 1) {
+                        secondCol.add(levelItems[i])
                     }
+                    else thirdCol.add(levelItems[i])
                 }
+
+
 
                 Column(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
-                    for (levelItem in firstHalf){
+                    for (levelItem in firstCol){
                         val label = levelItem[0].replace("_", "")
                         SpeechScreenCard(
                             Modifier,
                             title = label,
                             levelItems = levelItem,
                             onExpand = {
-                                if (label == "Ž" || label == "R" || label == "Ř") {
+                                if (scrollCond(label)) {
                                     coroutineScope.launch {
                                         scrollState.scrollTo(scrollState.maxValue)
                                     }
@@ -155,14 +159,36 @@ class SpeechScreen: AppCompatActivity() {
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(15.dp)
                 ) {
-                    for (levelItem in secondHalf){
+                    for (levelItem in secondCol){
                         val label = levelItem[0].replace("_", "")
                         SpeechScreenCard(
                             Modifier,
                             title = label,
                             levelItems = levelItem,
                             onExpand = {
-                                if (label == "Ž" || label == "R" || label == "Ř") {
+                                if (scrollCond(label)) {
+                                    coroutineScope.launch {
+                                        scrollState.scrollTo(scrollState.maxValue)
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+
+                //TODO predelat opakujici se kod do funkce
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(15.dp)
+                ) {
+                    for (levelItem in thirdCol){
+                        val label = levelItem[0].replace("_", "")
+                        SpeechScreenCard(
+                            Modifier,
+                            title = label,
+                            levelItems = levelItem,
+                            onExpand = {
+                                if (scrollCond(label)) {
                                     coroutineScope.launch {
                                         scrollState.scrollTo(scrollState.maxValue)
                                     }
@@ -219,7 +245,7 @@ class SpeechScreen: AppCompatActivity() {
                 Text(
                     text = title,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp
+                    fontSize = 28.sp
                 )
 
                 if (!isPrimitive){
@@ -242,7 +268,7 @@ class SpeechScreen: AppCompatActivity() {
                     Text(
                         text = stringResource(id = R.string.speech_menu_item_label),
                         fontWeight = FontWeight.Normal,
-                        fontSize = 20.sp
+                        fontSize = 18.sp
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     levelItems.forEach { str ->
@@ -294,5 +320,9 @@ class SpeechScreen: AppCompatActivity() {
     }
     private fun onCategoryClicked(ctx: Context, label: String){
         Toast.makeText(ctx, "To be done", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun scrollCond(label: String): Boolean {
+        return (label == "Ž" || label == "R" || label == "Ř" || label == "Š" || label == "Č")
     }
 }
