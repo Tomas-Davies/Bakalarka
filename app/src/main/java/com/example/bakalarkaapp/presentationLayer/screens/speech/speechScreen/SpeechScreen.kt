@@ -1,9 +1,9 @@
-package com.example.bakalarkaapp.presentationLayer.screens.speechScreen
+package com.example.bakalarkaapp.presentationLayer.screens.speech.speechScreen
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateContentSize
@@ -55,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen
 import com.example.bakalarkaapp.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 import java.util.LinkedList
@@ -132,8 +133,6 @@ class SpeechScreen: AppCompatActivity() {
                     }
                     else thirdCol.add(levelItems[i])
                 }
-
-
 
                 Column(
                     modifier = Modifier.weight(1f),
@@ -318,8 +317,11 @@ class SpeechScreen: AppCompatActivity() {
             }
         }
     }
+
     private fun onCategoryClicked(ctx: Context, label: String){
-        Toast.makeText(ctx, "To be done", Toast.LENGTH_SHORT).show()
+        val intent = Intent(ctx, SpeechDetailScreen::class.java)
+        intent.putExtra("LABEL", label)
+        startActivity(intent)
     }
 
     private fun scrollCond(label: String): Boolean {

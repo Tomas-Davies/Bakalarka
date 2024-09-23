@@ -3,10 +3,12 @@ package com.example.bakalarkaapp.presentationLayer.screens.homeScreen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -40,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.ui.theme.AppTheme
@@ -47,7 +50,7 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.screens.eyesightScreen.EyesightScreen
 import com.example.bakalarkaapp.presentationLayer.screens.hearingScreen.HearingScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythmScreen.RythmScreen
-import com.example.bakalarkaapp.presentationLayer.screens.speechScreen.SpeechScreen
+import com.example.bakalarkaapp.presentationLayer.screens.speech.speechScreen.SpeechScreen
 import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesScreen
 
 class HomeScreen: AppCompatActivity() {
@@ -85,16 +88,37 @@ class HomeScreen: AppCompatActivity() {
                     }) 
             }
         ) {pdVal ->  
-            MainMenu(padding = pdVal)
+            MainContent(pdVal)
         }
     }
 
     @Composable
-    private fun MainMenu( padding: PaddingValues){
+    private fun MainContent(pdVal: PaddingValues){
+        BoxWithConstraints {
+            if (maxWidth < 500.dp){
+                MainMenu(padding = pdVal)
+            } else {
+                MainMenu(
+                    padding = pdVal,
+                    sidePadding = 32.dp,
+                    menuItemRatio = 1.5f,
+                    menuItemWideRatio = 3f
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun MainMenu(
+        padding: PaddingValues,
+        sidePadding: Dp = 18.dp,
+        menuItemRatio: Float = 1f,
+        menuItemWideRatio: Float = 2.5f
+    ){
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(18.dp, padding.calculateTopPadding(), 18.dp, 9.dp),
+                .padding(sidePadding, padding.calculateTopPadding(), sidePadding, 0.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -107,37 +131,44 @@ class HomeScreen: AppCompatActivity() {
                     MenuCard(
                         title = stringResource(id = R.string.category_speech),
                         id = 0,
+                        ratio = menuItemRatio,
                         imgId = R.drawable.speech_btn_img
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_eyesight),
                         id = 1,
+                        ratio = menuItemRatio,
                         imgId = R.drawable.eyesight_btn_img
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_hearing),
                         id = 2,
+                        ratio = menuItemRatio,
                         imgId = R.drawable.hearing_btn_img
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_rythm),
                         id = 3,
+                        ratio = menuItemRatio,
                         imgId = R.drawable.rythm_btn_img
                     ) }
                 item(span = { GridItemSpan(2) }) {
                     MenuCard(
                         title = stringResource(id = R.string.category_tales),
                         id = 4,
-                        ratio = 2.5f,
+                        ratio = menuItemWideRatio,
                         imgId = R.drawable.tales_btn_img
                     ) }
             }
 
             val configuration = LocalConfiguration.current
             val screenWidth = configuration.screenWidthDp.dp
+
+            Log.w("AAAAAAAAAAAAAAAAAAA", "$screenWidth")
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
