@@ -11,6 +11,7 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -57,6 +58,7 @@ import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen
 import com.example.bakalarkaapp.ui.theme.AppTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.LinkedList
 
@@ -113,11 +115,10 @@ class SpeechScreen: AppCompatActivity() {
     private fun SpeechScreenMenu(pdVal: PaddingValues, levelItems: MutableList<Array<String>>){
             val scrollState = rememberScrollState()
             val coroutineScope = rememberCoroutineScope()
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(15.dp, pdVal.calculateTopPadding(), 15.dp, 15.dp)
+                    .padding(15.dp, pdVal.calculateTopPadding(), 15.dp, 0.dp)
                     .verticalScroll(scrollState),
                 horizontalArrangement = Arrangement.spacedBy(15.dp),
                 verticalAlignment = Alignment.Top
@@ -133,70 +134,40 @@ class SpeechScreen: AppCompatActivity() {
                     }
                     else thirdCol.add(levelItems[i])
                 }
-
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(15.dp)
-                ) {
-                    for (levelItem in firstCol){
-                        val label = levelItem[0].replace("_", "")
-                        SpeechScreenCard(
-                            Modifier,
-                            title = label,
-                            levelItems = levelItem,
-                            onExpand = {
-                                if (scrollCond(label)) {
-                                    coroutineScope.launch {
-                                        scrollState.scrollTo(scrollState.maxValue)
-                                    }
-                                }
-                            }
-                        )
-                    }
-                }
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(15.dp)
-                ) {
-                    for (levelItem in secondCol){
-                        val label = levelItem[0].replace("_", "")
-                        SpeechScreenCard(
-                            Modifier,
-                            title = label,
-                            levelItems = levelItem,
-                            onExpand = {
-                                if (scrollCond(label)) {
-                                    coroutineScope.launch {
-                                        scrollState.scrollTo(scrollState.maxValue)
-                                    }
-                                }
-                            }
-                        )
-                    }
-                }
-
-                //TODO predelat opakujici se kod do funkce
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(15.dp)
-                ) {
-                    for (levelItem in thirdCol){
-                        val label = levelItem[0].replace("_", "")
-                        SpeechScreenCard(
-                            Modifier,
-                            title = label,
-                            levelItems = levelItem,
-                            onExpand = {
-                                if (scrollCond(label)) {
-                                    coroutineScope.launch {
-                                        scrollState.scrollTo(scrollState.maxValue)
-                                    }
-                                }
-                            }
-                        )
-                    }
-                }
+                val modifier = Modifier.weight(1f)
+                DataCol(modifier = modifier, col = firstCol, coroutineScope = coroutineScope, scrollState = scrollState)
+                DataCol(modifier = modifier, col = secondCol, coroutineScope = coroutineScope, scrollState = scrollState)
+                DataCol(modifier = modifier, col = thirdCol, coroutineScope = coroutineScope, scrollState = scrollState)
             }
+    }
+
+
+    @Composable
+    private fun DataCol(
+        modifier: Modifier,
+        col: LinkedList<Array<String>>,
+        coroutineScope: CoroutineScope,
+        scrollState: ScrollState){
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            for (levelItem in col){
+                val label = levelItem[0].replace("_", "")
+                SpeechScreenCard(
+                    Modifier,
+                    title = label,
+                    levelItems = levelItem,
+                    onExpand = {
+                        if (scrollCond(label)) {
+                            coroutineScope.launch {
+                                scrollState.scrollTo(scrollState.maxValue)
+                            }
+                        }
+                    }
+                )
+            }
+        }
     }
 
     @Composable

@@ -9,6 +9,7 @@
     <string name="home_screen_decor_label">I procvičování může být zábava.</string>
 
     <string name="speech_menu_item_label">Umístění</string>
+    <string name="play_sound_label">Přehrát</string>
 
     <array name="speech_levels">
         <item>@array/level_A</item>
