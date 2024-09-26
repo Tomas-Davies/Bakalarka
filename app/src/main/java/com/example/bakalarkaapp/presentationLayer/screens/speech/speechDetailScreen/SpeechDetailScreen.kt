@@ -21,6 +21,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,7 +34,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -115,13 +118,17 @@ class SpeechDetailScreen: ComponentActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Box(
-                    modifier = Modifier.fillMaxWidth().weight(3f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(3f),
                     contentAlignment = Alignment.Center
                 ){
                     Image(painter = painterResource(id = imageId), contentDescription = "image")
                 }
                 Text(
-                    modifier = Modifier.weight(1f).wrapContentHeight(),
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentHeight(),
                     text = uiState.currentWord,
                     fontWeight = FontWeight.Bold,
                     fontSize = 32.sp,
@@ -137,23 +144,38 @@ class SpeechDetailScreen: ComponentActivity() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
+                    modifier = Modifier.scale(1.5f),
                     onClick = { viewModel.previous() },
                     enabled = !uiState.isOnFirstWord
                 ) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "button previous")
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        contentDescription = "button previous"
+                    )
                 }
 
                 val audioId = resources.getIdentifier(uiState.id, "raw", ctx.packageName)
                 val mp = MediaPlayer.create(ctx, audioId)
 
-                Button(onClick = { mp.start() }) {
-                    Text(text = stringResource(id = R.string.play_sound_label))
+                Button(
+                    onClick = { mp.start() },
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.speech_500))
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.play_sound_label),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.ExtraBold
+                    )
                 }
                 IconButton(
+                    modifier = Modifier.scale(1.5f),
                     onClick = { viewModel.next() },
                     enabled = !uiState.isOnLastWord
                 ) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "button next")
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = "button next"
+                    )
                 }
             }
         }
