@@ -32,6 +32,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -123,7 +126,11 @@ class SpeechDetailScreen: ComponentActivity() {
                         .weight(3f),
                     contentAlignment = Alignment.Center
                 ){
-                    Image(painter = painterResource(id = imageId), contentDescription = "image")
+                    if (imageId != 0){
+                        Image(painter = painterResource(id = imageId), contentDescription = "image")
+                    } else {
+                        Image(painter = painterResource(id = R.drawable.image_not_available), contentDescription = "image")
+                    }
                 }
                 Text(
                     modifier = Modifier
@@ -135,7 +142,15 @@ class SpeechDetailScreen: ComponentActivity() {
                     textAlign = TextAlign.Center
                 )
             }
-
+            Text(
+                modifier = Modifier
+                    .weight(0.2f)
+                    .wrapContentHeight(),
+                text = "${uiState.index + 1} / ${viewModel.count}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 22.sp,
+                textAlign = TextAlign.Center
+            )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -155,10 +170,13 @@ class SpeechDetailScreen: ComponentActivity() {
                 }
 
                 val audioId = resources.getIdentifier(uiState.id, "raw", ctx.packageName)
-                val mp = MediaPlayer.create(ctx, audioId)
+                var mp: MediaPlayer? = null
+                if(audioId != 0){
+                    mp = MediaPlayer.create(ctx, audioId)
+                }
 
                 Button(
-                    onClick = { mp.start() },
+                    onClick = { mp?.start() },
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.speech_500))
                 ) {
                     Text(

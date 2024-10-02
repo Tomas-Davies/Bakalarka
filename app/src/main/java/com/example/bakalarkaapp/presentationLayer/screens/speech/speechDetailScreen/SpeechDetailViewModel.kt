@@ -17,7 +17,8 @@ data class UiState(
 )
 
 class SpeechDetailViewModel(private val words: Array<String>): ViewModel() {
-    var index = 0
+    private var index = 0
+    val count = words.size
     val word = words[index]
     private val _uiState = MutableStateFlow(UiState(word.toSpeechDetailId(), index, word, index == 0, index == words.size-1))
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -68,9 +69,10 @@ class SpeechDetailViewModel(private val words: Array<String>): ViewModel() {
     }
 
     private fun String.toSpeechDetailId(): String {
-        return this.withoutDiacritics().lowercase()
+        return this.withoutDiacritics().lowercase().replace(" ", "_")
     }
 }
+
 
 class SpeechDetailViewModelFactory(private val words: Array<String>): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

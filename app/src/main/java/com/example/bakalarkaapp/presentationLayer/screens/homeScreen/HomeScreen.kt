@@ -39,6 +39,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -47,7 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.ui.theme.AppTheme
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.presentationLayer.screens.eyesightScreen.EyesightScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.example.bakalarkaapp.presentationLayer.screens.hearingScreen.HearingScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythmScreen.RythmScreen
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechScreen.SpeechScreen
@@ -167,8 +168,6 @@ class HomeScreen: AppCompatActivity() {
             val configuration = LocalConfiguration.current
             val screenWidth = configuration.screenWidthDp.dp
 
-            Log.w("AAAAAAAAAAAAAAAAAAA", "$screenWidth")
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
@@ -212,6 +211,7 @@ class HomeScreen: AppCompatActivity() {
                 ) {
                     Text(
                         text = title,
+                        color = colorResource(id = R.color.white),
                         fontWeight = FontWeight.Bold,
                         fontSize = 38.sp
                     )

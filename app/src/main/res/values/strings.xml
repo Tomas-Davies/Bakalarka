@@ -11,6 +11,20 @@
     <string name="speech_menu_item_label">Umístění</string>
     <string name="play_sound_label">Přehrát</string>
 
+    <string name="eyesight_menu_label_1">Porovnání</string>
+    <string name="eyesight_menu_label_2">Analýza</string>
+    <string name="eyesight_menu_label_3">Rozlišení</string>
+    <string name="eyesight_menu_label_4">Paměť</string>
+    <string name="eyesight_menu_label_5">Syntéza</string>
+
+    <string name="eyesight_menu_label_long_1">Zraková diferenciace</string>
+    <string name="eyesight_menu_label_long_2">Zraková analýza</string>
+    <string name="eyesight_menu_label_long_3">Pozadí a figura</string>
+    <string name="eyesight_menu_label_long_4">Zraková paměť</string>
+    <string name="eyesight_menu_label_long_5">Zraková syntéza</string>
+
+    <string name="label_show">Zobrazit</string>
+
     <array name="speech_levels">
         <item>@array/level_A</item>
         <item>@array/level_O</item>
@@ -161,8 +175,13 @@
         <item>Z_Z</item>
     </array>
     <array name="level_CSZ">
-        <item>CSZ</item>
-        <!-- TODO DODELAT PODLE KNIZKY -->
+        <item>C_S_Z</item>
+        <item>C_S</item>
+        <item>S_C</item>
+        <item>C_Z</item>
+        <item>Z_C</item>
+        <item>S_Z</item>
+        <item>Z_S</item>
     </array>
     <array name="level_Č">
         <item>Č_</item>
@@ -181,8 +200,18 @@
         <item>_Ž_</item>
     </array>
     <array name="level_ČŠŽ">
-        <item>ČŠŽ</item>
-        <!-- TODO DODELAT PODLE KNIZKY -->
+        <item>Č_Š_Ž</item>
+        <item>Č_Š</item>
+        <item>Š_Č</item>
+        <item>Č_Ž</item>
+        <item>Ž_Č</item>
+        <item>S_Š</item>
+        <item>Š_S</item>
+        <item>S_Ž</item>
+        <item>Ž_S</item>
+        <item>S_Č</item>
+        <item>Č_S</item>
+        <item>Z_Š</item>
     </array>
     <array name="level_R">
         <item>R_</item>
@@ -485,7 +514,40 @@
         <item>Zazvonit</item>
         <item>Zuzana</item>
     </string-array>
-
+    <string-array name="C_S">
+        <item>Cesta</item>
+        <item>Cestovatel</item><!-- TODO zvuk -->
+        <item>Cestopis</item><!-- TODO zvuk -->
+    </string-array>
+    <string-array name="S_C">
+        <item>Slepice</item><!-- TODO zvuk -->
+        <item>Myslivec</item>
+        <item>Měsíc</item>
+    </string-array>
+    <string-array name="C_Z">
+        <item>Cizina</item><!-- TODO zvuk -->
+        <item>Cizinec</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Z_C">
+        <item>Záclona</item><!-- TODO zvk -->
+        <item>Zajatec</item><!-- TODO zvk -->
+        <item>Zácpa</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="S_Z">
+        <item>Slzy</item><!-- TODO zvk -->
+        <item>Svezl</item><!-- TODO zvk -->
+        <item>Slezl</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Z_S">
+        <item>Zásoba</item><!-- TODO zvk -->
+        <item>Zástup</item><!-- TODO zvk -->
+        <item>Zápas</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="C_S_Z">
+        <item>Zástupce</item> <!-- TODO zvk -->
+        <item>Sazenice</item> <!-- TODO zvk -->
+        <item>Zaměstnanec</item> <!-- TODO zvk -->
+    </string-array>
     <string-array name="Č_">
         <item>Člun</item>
         <item>Čmelák</item>
@@ -535,7 +597,65 @@
         <item>Nože</item>
         <item>Lyže</item>
     </string-array>
-
+    <string-array name="Č_Š_Ž">
+        <item>Šťastný život</item><!-- TODO zvk -->
+        <item>Kožišnictví</item><!-- TODO zvk -->
+        <item>Zažloutlý časopis</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Č_Š">
+        <item>Čeština</item><!-- TODO zvk -->
+        <item>Číšník</item><!-- TODO zvk -->
+        <item>Číše</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Š_Č">
+        <item>Košíček</item>
+        <item>Školáček</item><!-- TODO zvk -->
+        <item>Špaček</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Č_Ž">
+        <item>Čížek</item><!-- TODO zvk -->
+        <item>Čižmy</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Ž_Č">
+        <item>Lžička</item>
+        <item>Žehlička</item><!-- TODO zvk -->
+        <item>Žabička</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="S_Š">
+        <item>Sešit</item>
+        <item>Sušenka</item><!-- TODO zvk -->
+        <item>Sáša</item>
+    </string-array>
+    <string-array name="Š_S">
+        <item>Šest</item><!-- TODO zvk -->
+        <item>Švestka</item>
+        <item>Šikovný</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="S_Ž">
+        <item>Sněží</item><!-- TODO zvk -->
+        <item>Stížnost</item><!-- TODO zvk -->
+        <item>Smaží</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Ž_S">
+        <item>Životopis</item><!-- TODO zvk -->
+        <item>Žádost</item><!-- TODO zvk -->
+        <item>Žalost</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="S_Č">
+        <item>Součet</item><!-- TODO zvk -->
+        <item>Sekačka</item>
+        <item>Svačina</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Č_S">
+        <item>Časopis</item><!-- TODO zvk -->
+        <item>Čas</item>
+        <item>Česnek</item><!-- TODO zvk -->
+    </string-array>
+    <string-array name="Z_Š">
+        <item>Žašel</item><!-- TODO zvk -->
+        <item>Zašil</item><!-- TODO zvk -->
+        <item>Zašeptal</item><!-- TODO zvk -->
+    </string-array>
     <string-array name="R_">
         <item>Růže</item>
         <item>Rostlina</item>

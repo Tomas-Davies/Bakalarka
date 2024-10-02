@@ -40,6 +40,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +51,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -147,9 +152,11 @@ class SpeechScreen: AppCompatActivity() {
         modifier: Modifier,
         col: LinkedList<Array<String>>,
         coroutineScope: CoroutineScope,
-        scrollState: ScrollState){
+        scrollState: ScrollState
+    ){
+
         Column(
-            modifier = modifier,
+            modifier = modifier.padding(0.dp, 0.dp, 0.dp, 15.dp),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             for (levelItem in col){
@@ -157,15 +164,14 @@ class SpeechScreen: AppCompatActivity() {
                 SpeechScreenCard(
                     Modifier,
                     title = label,
-                    levelItems = levelItem,
-                    onExpand = {
-                        if (scrollCond(label)) {
-                            coroutineScope.launch {
-                                scrollState.scrollTo(scrollState.maxValue)
-                            }
+                    levelItems = levelItem
+                ) {
+                    if (scrollCond(label)) {
+                        coroutineScope.launch {
+                            scrollState.scrollTo(scrollState.maxValue)
                         }
                     }
-                )
+                }
             }
         }
     }
@@ -198,7 +204,6 @@ class SpeechScreen: AppCompatActivity() {
             onClick = {
                 if (!isPrimitive){
                     isCollapsedState = !isCollapsedState
-                   // if (!isCollapsedState) { onExpand() }
                 }
                 else onCategoryClicked(ctx, title)
             }
@@ -296,6 +301,6 @@ class SpeechScreen: AppCompatActivity() {
     }
 
     private fun scrollCond(label: String): Boolean {
-        return (label == "Ž" || label == "R" || label == "Ř" || label == "Š" || label == "Č")
+        return (label == "Ž" || label == "R" || label == "Ř" || label == "Š" || label == "Č" || label == "CSZ" || label == "ČŠŽ")
     }
 }

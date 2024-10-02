@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.eyesightScreen.EyesightScreen"
+            android:name=".presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
