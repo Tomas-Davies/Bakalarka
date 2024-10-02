@@ -1,11 +1,14 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightScreen
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -44,6 +47,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightAnalysisScreen.EyesightAnalysisScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthScreen.EyesightSynthScreen
 import com.example.bakalarkaapp.ui.theme.AppTheme
 
 class EyesightScreen: AppCompatActivity() {
@@ -84,8 +92,8 @@ class EyesightScreen: AppCompatActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(it)
-                    .verticalScroll(rememberScrollState()),
+                    .verticalScroll(rememberScrollState())
+                    .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 EyesightMenuCard(
@@ -103,19 +111,19 @@ class EyesightScreen: AppCompatActivity() {
                 EyesightMenuCard(
                     label = stringResource(id = R.string.eyesight_menu_label_3),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_3),
-                    id = 1,
+                    id = 2,
                     imgId = R.drawable.eyesight_btn_3_logo
                 )
                 EyesightMenuCard(
                     label = stringResource(id = R.string.eyesight_menu_label_4),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_4),
-                    id = 1,
+                    id = 3,
                     imgId = R.drawable.eyesight_btn_4_logo
                 )
                 EyesightMenuCard(
                     label = stringResource(id = R.string.eyesight_menu_label_5),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_5),
-                    id = 1,
+                    id = 4,
                     imgId = R.drawable.eyesight_btn_5_logo
                 )
             }
@@ -124,11 +132,12 @@ class EyesightScreen: AppCompatActivity() {
 
     @Composable
     private fun EyesightMenuCard(label: String, labelLong: String, id: Int, imgId: Int){
+        val ctx = LocalContext.current
         ElevatedCard(
             shape = RoundedCornerShape(25.dp),
-            onClick = { onCardClicked(id) },
+            onClick = { onCardClicked(ctx, id) },
             modifier = Modifier.fillMaxWidth(0.8f),
-            elevation = CardDefaults.cardElevation(defaultElevation = 15.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
             colors = CardColors(
                 contentColor = CardDefaults.cardColors().contentColor,
                 containerColor = colorResource(id = R.color.eyesight_200),
@@ -201,6 +210,14 @@ class EyesightScreen: AppCompatActivity() {
     }
 }
 
-private fun onCardClicked(id: Int){
+private fun onCardClicked(ctx: Context, id: Int){
+    var intent = Intent(ctx, EyesightComparisonScreen::class.java)
+    when(id){
+        1 -> intent = Intent(ctx, EyesightAnalysisScreen::class.java)
+        2 -> intent = Intent(ctx, EyesightDifferScreen::class.java)
+        3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
+        4 -> intent = Intent(ctx, EyesightSynthScreen::class.java)
+    }
 
+    ctx.startActivity(intent)
 }
