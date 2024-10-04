@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,7 +23,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -35,6 +39,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightAnalysisScreen.EyesightAnalysisScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
@@ -92,125 +101,81 @@ class EyesightScreen: AppCompatActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-                    .padding(it),
+                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                EyesightMenuCard(
+                val cardModifier = Modifier
+                val primaryColor = colorResource(id = R.color.eyesight_200)
+                val secondaryColor = colorResource(id = R.color.eyesight_300)
+                val textColor = colorResource(id = R.color.light)
+
+                CategoryButton(
+                    modifier = cardModifier,
                     label = stringResource(id = R.string.eyesight_menu_label_1),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_1),
-                    id = 0,
-                    imgId = R.drawable.eyesight_btn_1_logo
+                    popUpHeading = stringResource(id = R.string.eyesight_pop_up_heading_1),
+                    popUpContent = stringResource(id = R.string.eyesight_pop_up_body_1),
+                    imgId = R.drawable.eyesight_btn_1_logo,
+                    onClick = { onCardClicked(ctx, 0) },
+                    bgColorPrimary = primaryColor,
+                    bgColorSecondary = secondaryColor,
+                    textColor = textColor
                 )
-                EyesightMenuCard(
+                CategoryButton(
+                    modifier = cardModifier,
                     label = stringResource(id = R.string.eyesight_menu_label_2),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_2),
-                    id = 1,
-                    imgId = R.drawable.eyesight_btn_2_logo
+                    popUpHeading = stringResource(id = R.string.eyesight_pop_up_heading_2),
+                    popUpContent = stringResource(id = R.string.eyesight_pop_up_body_2),
+                    imgId = R.drawable.eyesight_btn_2_logo,
+                    onClick = { onCardClicked(ctx, 1) },
+                    bgColorPrimary = primaryColor,
+                    bgColorSecondary = secondaryColor,
+                    textColor = textColor
                 )
-                EyesightMenuCard(
+                CategoryButton(
+                    modifier = cardModifier,
                     label = stringResource(id = R.string.eyesight_menu_label_3),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_3),
-                    id = 2,
-                    imgId = R.drawable.eyesight_btn_3_logo
+                    popUpHeading = stringResource(id = R.string.eyesight_pop_up_heading_3),
+                    popUpContent = stringResource(id = R.string.eyesight_pop_up_body_3),
+                    imgId = R.drawable.eyesight_btn_3_logo,
+                    onClick = { onCardClicked(ctx, 2) },
+                    bgColorPrimary = primaryColor,
+                    bgColorSecondary = secondaryColor,
+                    textColor = textColor
                 )
-                EyesightMenuCard(
+                CategoryButton(
+                    modifier = cardModifier,
                     label = stringResource(id = R.string.eyesight_menu_label_4),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_4),
-                    id = 3,
-                    imgId = R.drawable.eyesight_btn_4_logo
+                    popUpHeading = stringResource(id = R.string.eyesight_pop_up_heading_4),
+                    popUpContent = stringResource(id = R.string.eyesight_pop_up_body_4),
+                    imgId = R.drawable.eyesight_btn_4_logo,
+                    onClick = { onCardClicked(ctx, 3) },
+                    bgColorPrimary = primaryColor,
+                    bgColorSecondary = secondaryColor,
+                    textColor = textColor
                 )
-                EyesightMenuCard(
+                CategoryButton(
+                    modifier = cardModifier,
                     label = stringResource(id = R.string.eyesight_menu_label_5),
                     labelLong = stringResource(id = R.string.eyesight_menu_label_long_5),
-                    id = 4,
-                    imgId = R.drawable.eyesight_btn_5_logo
+                    popUpHeading = stringResource(id = R.string.eyesight_pop_up_heading_5),
+                    popUpContent = stringResource(id = R.string.eyesight_pop_up_body_5),
+                    imgId = R.drawable.eyesight_btn_5_logo,
+                    onClick = { onCardClicked(ctx, 4) },
+                    bgColorPrimary = primaryColor,
+                    bgColorSecondary = secondaryColor,
+                    textColor = textColor
                 )
             }
-        }
-    }
-
-    @Composable
-    private fun EyesightMenuCard(label: String, labelLong: String, id: Int, imgId: Int){
-        val ctx = LocalContext.current
-        ElevatedCard(
-            shape = RoundedCornerShape(25.dp),
-            onClick = { onCardClicked(ctx, id) },
-            modifier = Modifier.fillMaxWidth(0.8f),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            colors = CardColors(
-                contentColor = CardDefaults.cardColors().contentColor,
-                containerColor = colorResource(id = R.color.eyesight_200),
-                disabledContentColor = CardDefaults.cardColors().disabledContentColor,
-                disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
-            )
-        ) {
-            CardContent(label, labelLong, imgId)
-        }
-        Spacer(modifier = Modifier.height(15.dp))
-    }
-
-    @Composable
-    private fun CardContent(label:String, labelLong: String, imgId: Int){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(15.dp, 2.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier.weight(3f)
-            ) {
-                Text(
-                    text = labelLong,
-                    color = colorResource(id = R.color.white),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
-                Text(
-                    color = colorResource(id = R.color.white),
-                    text = label,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                PlayButton()
-            }
-
-            Image(
-                modifier = Modifier
-                    .weight(2f)
-                    .scale(0.8f),
-                painter = painterResource(id = imgId),
-                contentDescription = "decor image")
-        }
-    }
-
-    @Composable
-    fun PlayButton() {
-       Row(
-           modifier = Modifier
-               .clip(RoundedCornerShape(25.dp))
-               .background(colorResource(id = R.color.eyesight_300))
-               .padding(5.dp, 2.dp),
-           verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(id = R.string.label_show),
-                color = colorResource(id = R.color.white),
-                fontSize = 12.sp
-            )
-            Icon(
-                modifier = Modifier.size(12.dp),
-                imageVector = Icons.Filled.PlayArrow,
-                contentDescription = "play icon",
-                tint = colorResource(id = R.color.white)
-            )
         }
     }
 }
 
-private fun onCardClicked(ctx: Context, id: Int){
+private fun onCardClicked(ctx: Context, id: Int) {
     var intent = Intent(ctx, EyesightComparisonScreen::class.java)
     when(id){
         1 -> intent = Intent(ctx, EyesightAnalysisScreen::class.java)

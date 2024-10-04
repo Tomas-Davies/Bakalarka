@@ -40,8 +40,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,9 +49,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.layout.LayoutCoordinates
-import androidx.compose.ui.layout.boundsInWindow
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -220,7 +215,8 @@ class SpeechScreen: AppCompatActivity() {
                 Text(
                     text = title,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp
+                    fontSize = 28.sp,
+                    color = colorResource(id = R.color.light)
                 )
 
                 if (!isPrimitive){
@@ -243,7 +239,8 @@ class SpeechScreen: AppCompatActivity() {
                     Text(
                         text = stringResource(id = R.string.speech_menu_item_label),
                         fontWeight = FontWeight.Normal,
-                        fontSize = 18.sp
+                        fontSize = 18.sp,
+                        color = colorResource(id = R.color.light)
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     levelItems.forEach { str ->
@@ -288,7 +285,8 @@ class SpeechScreen: AppCompatActivity() {
                 Text(
                     text = label,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = colorResource(id = R.color.light)
                 )
             }
         }

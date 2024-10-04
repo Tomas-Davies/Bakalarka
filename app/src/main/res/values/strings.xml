@@ -23,6 +23,54 @@
     <string name="eyesight_menu_label_long_4">Zraková paměť</string>
     <string name="eyesight_menu_label_long_5">Zraková syntéza</string>
 
+    <string name="eyesight_pop_up_heading_1">Zraková diferenciace</string>
+    <string name="eyesight_pop_up_heading_2">Zraková analýza</string>
+    <string name="eyesight_pop_up_heading_3">Pozadí a figura</string>
+    <string name="eyesight_pop_up_heading_4">Zraková paměť</string>
+    <string name="eyesight_pop_up_heading_5">Zraková syntéza</string>
+
+    <string name="eyesight_pop_up_body_1">Porovnání DECRIPTION</string>
+    <string name="eyesight_pop_up_body_2">Analýza DECRIPTION</string>
+    <string name="eyesight_pop_up_body_3">Rozlišení DECRIPTION</string>
+    <string name="eyesight_pop_up_body_4">Paměť DECRIPTION</string>
+    <string name="eyesight_pop_up_body_5">Syntéza DECRIPTION</string>
+
+    <string name="hearing_menu_label_1">Hlásky</string>
+    <string name="hearing_menu_label_2">Paměť</string>
+    <string name="hearing_menu_label_3">Syntéza</string>
+
+    <string name="hearing_menu_label_long_1">Fonematický sluch</string>
+    <string name="hearing_menu_label_long_2">Sluchová paměť</string>
+    <string name="hearing_menu_label_long_3">Sluchová syntéza</string>
+
+    <string name="hearing_pop_up_heading_1">Fonematický sluch</string>
+    <string name="hearing_pop_up_heading_2">Sluchová paměť</string>
+    <string name="hearing_pop_up_heading_3">Sluchová syntéza</string>
+
+    <string name="hearing_pop_up_body_1">Hlásky DECRIPTION</string>
+    <string name="hearing_pop_up_body_2">Paměť DECRIPTION</string>
+    <string name="hearing_pop_up_body_3">Syntéza DECRIPTION</string>
+
+    <string name="rythm_menu_label_1">Pexeso</string>
+    <string name="rythm_menu_label_2">Tleskání</string>
+    <string name="rythm_menu_label_3">Opakování</string>
+
+    <string name="rythm_menu_label_long_1">Rytmické pexeso</string>
+    <string name="rythm_menu_label_long_2">Rytmické vytleskávání</string>
+    <string name="rythm_menu_label_long_3">Rytmické opakování</string>
+
+    <string name="rythm_pop_up_heading_1">Rytmické pexeso</string>
+    <string name="rythm_pop_up_heading_2">Rytmické vytleskávání</string>
+    <string name="rythm_pop_up_heading_3">Rytmické opakování</string>
+
+    <string name="rythm_pop_up_body_1">Pexeso DECRIPTION</string>
+    <string name="rythm_pop_up_body_2">Vytleskávání DECRIPTION</string>
+    <string name="rythm_pop_up_body_3">Opakování DECRIPTION</string>
+
+
+
+    <string name="pop_up_dismiss_label">Zavřít</string>
+
     <string name="label_show">Zobrazit</string>
 
     <array name="speech_levels">

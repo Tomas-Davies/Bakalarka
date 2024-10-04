@@ -3,7 +3,6 @@ package com.example.bakalarkaapp.presentationLayer.screens.homeScreen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
@@ -133,35 +132,35 @@ class HomeScreen: AppCompatActivity() {
                         title = stringResource(id = R.string.category_speech),
                         id = 0,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.speech_btn_img
+                        imgId = R.drawable.home_speech_btn_img
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_eyesight),
                         id = 1,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.eyesight_btn_img
+                        imgId = R.drawable.home_eyesight_btn_img
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_hearing),
                         id = 2,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.hearing_btn_img
+                        imgId = R.drawable.home_hearing_btn_img
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_rythm),
                         id = 3,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.rythm_btn_img
+                        imgId = R.drawable.home_rythm_btn_img
                     ) }
                 item(span = { GridItemSpan(2) }) {
                     MenuCard(
                         title = stringResource(id = R.string.category_tales),
                         id = 4,
                         ratio = menuItemWideRatio,
-                        imgId = R.drawable.tales_btn_img
+                        imgId = R.drawable.home_tales_btn_img
                     ) }
             }
 
