@@ -11,22 +11,22 @@
     <color name="dark">#0E0E0E</color>
     <color name="light">#F1F1F1</color>
 
+    <color name="mc">#FFBC0D</color>
 
     <color name="speech_200">#FFFF914D</color>
     <color name="eyesight_200">#FF38B6FF</color>
-    <color name="hearing_200">#D3B202</color>
-    <color name="rythm_200">#5FC932</color>
+    <color name="hearing_200">#DFA50A</color>
+    <color name="rythm_200">#43B612</color>
     <color name="tales_200">#FFFE67C4</color>
 
     <color name="eyesight_300">#158ED5</color>
-    <color name="hearing_300">#BD9E1C</color>
-    <color name="rythm_300">#479526</color>
+    <color name="hearing_300">#D1AE1B</color>
+    <color name="rythm_300">#348A10</color>
 
     <color name="speech_500">#FFF15226</color>
     <color name="eyesight_500">#FF8C52FF</color>
-    <color name="hearing_500">#FFD2AA00</color>
+    <color name="hearing_500">#6E5900</color>
     <color name="rythm_500">#FF00BF63</color>
     <color name="tales_500">#FF81249B</color>
 
-    <color name="hearing_600">#886E00</color>
 </resources>

@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.hearingScreen.HearingScreen"
+            android:name=".presentationLayer.screens.hearing.hearingScreen.HearingScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.rythmScreen.RythmScreen"
+            android:name=".presentationLayer.screens.rythm.rythmScreen.RythmScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -103,6 +103,54 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightSynthScreen.EyesightSynthScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentationLayer.screens.hearing.hearingFonematicScreen.HearingFonematicScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentationLayer.screens.hearing.hearingMemoryScreen.HearingMemoryScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentationLayer.screens.hearing.hearingSynthScreen.HearingSynthScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentationLayer.screens.rythm.rythmPexesoScreen.RythmPexesoScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentationLayer.screens.rythm.rythmClapScreen.RythmClapScreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentationLayer.screens.rythm.rythmRepeatScreen.RythmRepeatScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

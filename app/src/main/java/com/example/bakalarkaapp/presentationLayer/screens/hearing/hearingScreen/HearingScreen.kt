@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.hearingScreen
+package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingScreen
 
 import android.app.Activity
 import android.content.Context
@@ -32,6 +32,9 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.ui.theme.AppTheme
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
+import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonematicScreen.HearingFonematicScreen
+import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemoryScreen.HearingMemoryScreen
+import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthScreen.HearingSynthScreen
 
 class HearingScreen: AppCompatActivity()
 {
@@ -77,8 +80,8 @@ class HearingScreen: AppCompatActivity()
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val cardModifier = Modifier
-                val primaryColor = colorResource(id = R.color.hearing_500)
-                val secondaryColor = colorResource(id = R.color.hearing_600)
+                val primaryColor = colorResource(id = R.color.hearing_200)
+                val secondaryColor = colorResource(id = R.color.hearing_500)
                 val textColor = colorResource(id = R.color.light)
 
                 CategoryButton(
@@ -87,7 +90,7 @@ class HearingScreen: AppCompatActivity()
                     labelLong = stringResource(id = R.string.hearing_menu_label_long_1),
                     popUpHeading = stringResource(id = R.string.hearing_pop_up_heading_1),
                     popUpContent = stringResource(id = R.string.hearing_pop_up_body_1),
-                    imgId = R.drawable.dummy_img_500,//R.drawable.hearing_btn_1_logo,
+                    imgId = R.drawable.hearing_btn_1_logo,
                     onClick = { onCardClicked(ctx, 0) },
                     bgColorPrimary = primaryColor,
                     bgColorSecondary = secondaryColor,
@@ -99,7 +102,7 @@ class HearingScreen: AppCompatActivity()
                     labelLong = stringResource(id = R.string.hearing_menu_label_long_2),
                     popUpHeading = stringResource(id = R.string.hearing_pop_up_heading_2),
                     popUpContent = stringResource(id = R.string.hearing_pop_up_body_2),
-                    imgId = R.drawable.dummy_img_500,//R.drawable.hearing_btn_2_logo,
+                    imgId = R.drawable.hearing_btn_2_logo,
                     onClick = { onCardClicked(ctx, 1) },
                     bgColorPrimary = primaryColor,
                     bgColorSecondary = secondaryColor,
@@ -111,7 +114,7 @@ class HearingScreen: AppCompatActivity()
                     labelLong = stringResource(id = R.string.hearing_menu_label_long_3),
                     popUpHeading = stringResource(id = R.string.hearing_pop_up_heading_3),
                     popUpContent = stringResource(id = R.string.hearing_pop_up_body_3),
-                    imgId = R.drawable.dummy_img_500,//R.drawable.hearing_btn_3_logo,
+                    imgId = R.drawable.hearing_btn_3_logo,
                     onClick = { onCardClicked(ctx, 2) },
                     bgColorPrimary = primaryColor,
                     bgColorSecondary = secondaryColor,
@@ -122,15 +125,13 @@ class HearingScreen: AppCompatActivity()
     }
 }
 
-//TODO
+
 private fun onCardClicked(ctx: Context, id: Int) {
-//    var intent = Intent(ctx, EyesightComparisonScreen::class.java)
-//    when(id){
-//        1 -> intent = Intent(ctx, EyesightAnalysisScreen::class.java)
-//        2 -> intent = Intent(ctx, EyesightDifferScreen::class.java)
-//        3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
-//        4 -> intent = Intent(ctx, EyesightSynthScreen::class.java)
-//    }
-//
-//    ctx.startActivity(intent)
+    var intent = Intent(ctx, HearingFonematicScreen::class.java)
+    when(id){
+        1 -> intent = Intent(ctx, HearingMemoryScreen::class.java)
+        2 -> intent = Intent(ctx, HearingSynthScreen::class.java)
+    }
+
+    ctx.startActivity(intent)
 }
