@@ -45,13 +45,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.bakalarkaapp.ui.theme.AppTheme
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingScreen.HearingScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmScreen.RythmScreen
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechScreen.SpeechScreen
 import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesScreen
+import com.example.bakalarkaapp.theme.AppTheme
 
 class HomeScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

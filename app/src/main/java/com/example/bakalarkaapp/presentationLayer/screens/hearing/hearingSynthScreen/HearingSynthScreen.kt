@@ -18,14 +18,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.example.bakalarkaapp.ui.theme.AppTheme
+import com.example.bakalarkaapp.theme.AppTheme
 
-class HearingSynthScreen: AppCompatActivity() {
+class HearingSynthScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme {
+            AppTheme("hearing") {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

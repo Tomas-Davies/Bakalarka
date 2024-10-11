@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.ui.theme
+package com.example.trivia_quizz_app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.sp
 
 
 val typography = Typography(
-    labelLarge = TextStyle(
+    bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,

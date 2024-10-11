@@ -29,7 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.bakalarkaapp.ui.theme.AppTheme
+import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
 import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonematicScreen.HearingFonematicScreen
@@ -42,7 +42,7 @@ class HearingScreen: AppCompatActivity()
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme {
+            AppTheme("hearing") {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

@@ -34,14 +34,14 @@ import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmClapScreen.RythmClapScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmPexesoScreen.RythmPexesoScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmRepeatScreen.RythmRepeatScreen
-import com.example.bakalarkaapp.ui.theme.AppTheme
+import com.example.bakalarkaapp.theme.AppTheme
 
 class RythmScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme {
+            AppTheme("rythm") {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

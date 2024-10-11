@@ -20,21 +20,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.ui.theme.AppTheme
 
-class EyesightAnalysisScreen: AppCompatActivity() {
+class EyesightAnalysisScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    EyesightAnalysisScreenContent()
-                }
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                EyesightAnalysisScreenContent()
             }
         }
+
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
