@@ -215,8 +215,7 @@ class SpeechScreen: AppCompatActivity() {
                 Text(
                     text = title,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp,
-                    color = colorResource(id = R.color.light)
+                    fontSize = 28.sp
                 )
 
                 if (!isPrimitive){
@@ -239,8 +238,7 @@ class SpeechScreen: AppCompatActivity() {
                     Text(
                         text = stringResource(id = R.string.speech_menu_item_label),
                         fontWeight = FontWeight.Normal,
-                        fontSize = 18.sp,
-                        color = colorResource(id = R.color.light)
+                        fontSize = 18.sp
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     levelItems.forEach { str ->

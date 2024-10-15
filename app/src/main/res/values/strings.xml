@@ -29,11 +29,38 @@
     <string name="eyesight_pop_up_heading_4">Zraková paměť</string>
     <string name="eyesight_pop_up_heading_5">Zraková syntéza</string>
 
-    <string name="eyesight_pop_up_body_1">Porovnání DECRIPTION</string>
-    <string name="eyesight_pop_up_body_2">Analýza DECRIPTION</string>
-    <string name="eyesight_pop_up_body_3">Rozlišení DECRIPTION</string>
-    <string name="eyesight_pop_up_body_4">Paměť DECRIPTION</string>
-    <string name="eyesight_pop_up_body_5">Syntéza DECRIPTION</string>
+    <string name="eyesight_pop_up_body_1">
+        Zraková diferenciace slouží k rozlišení vizuálních podnětů,
+        což je schopnost rozpoznat rozdíly mezi podobnými předměty, tvary, písmeny nebo symboly.
+        Tato dovednost je zásadní pro správné vnímání detailů, jako je odlišení písmen "b" a "d" nebo
+        rozlišení slov v textu. Cvičení na zrakovou diferenciaci pomáhají zlepšovat schopnost dítěte
+        rozeznávat drobné rozdíly mezi vizuálními objekty.
+    </string>
+    <string name="eyesight_pop_up_body_2">
+        Zraková analýza se týká schopnosti rozložit složitý vizuální podnět na jednotlivé části a
+        rozpoznat jeho strukturu. To znamená například umět rozpoznat tvary v složeném obrázku nebo
+        vyhledat specifický objekt v komplexní scéně. Rozvoj této dovednosti pomáhá dětem porozumět
+        složitým vizuálním informacím, což může podpořit schopnost číst a psát.
+    </string>
+    <string name="eyesight_pop_up_body_3">
+        Schopnost rozlišit figuru od pozadí je klíčová pro vnímání objektů v prostoru. Tato dovednost
+        znamená, že dítě umí rozpoznat významný objekt (figuru) ve složitém nebo rušivém pozadí.
+        Například když je potřeba zaměřit se na jedno slovo ve větě, i když kolem jsou další slova
+        nebo obrázky. Rozvoj této schopnosti je důležitý pro efektivní orientaci v tištěném textu i
+        ve vizuálních scénách.
+    </string>
+    <string name="eyesight_pop_up_body_4">
+        Zraková paměť zahrnuje schopnost uchovávat a následně si vybavit vizuální informace, které
+        byly dříve viděny. Například schopnost zapamatovat si, jak vypadalo slovo, symbol nebo obrázek,
+        aby mohlo být později rozpoznáno nebo reprodukováno. Tato dovednost je nezbytná pro čtení,
+        psaní a porozumění textu, protože dítě musí být schopné si zapamatovat tvary písmen a slov.
+    </string>
+    <string name="eyesight_pop_up_body_5">
+        Zraková syntéza je opakem zrakové analýzy a zahrnuje schopnost spojit jednotlivé části
+        vizuální informace do smysluplného celku. Dítě se učí kombinovat jednotlivé písmena do slov,
+        slova do vět, nebo rozpoznávat složené obrazy z několika prvků. Tato dovednost je důležitá pro
+        plynulé čtení a porozumění textu.
+    </string>
 
     <string name="hearing_menu_label_1">Hlásky</string>
     <string name="hearing_menu_label_2">Paměť</string>
@@ -47,9 +74,25 @@
     <string name="hearing_pop_up_heading_2">Sluchová paměť</string>
     <string name="hearing_pop_up_heading_3">Sluchová syntéza</string>
 
-    <string name="hearing_pop_up_body_1">Hlásky DECRIPTION</string>
-    <string name="hearing_pop_up_body_2">Paměť DECRIPTION</string>
-    <string name="hearing_pop_up_body_3">Syntéza DECRIPTION</string>
+    <string name="hearing_pop_up_body_1">
+        Fonematický sluch je schopnost vnímat a rozlišovat jednotlivé hlásky ve slovech.
+        Je základem pro správnou výslovnost a porozumění řeči. Rozvoj fonematického sluchu pomáhá
+        dětem rozpoznat rozdíly mezi zvuky v jazyce, například mezi hláskami „p“ a „b“.
+        Tato dovednost je klíčová pro správné čtení a psaní, protože pomáhá dětem rozkládat slova na
+        jednotlivé zvuky a spojovat je dohromady.
+    </string>
+    <string name="hearing_pop_up_body_2">
+        Sluchová paměť je schopnost zapamatovat si zvuky nebo slova, která byla slyšena, a následně
+        si je vybavit. Tato dovednost je nezbytná pro porozumění řeči, zapamatování si slovních
+        pokynů a následné opakování slov nebo vět. Sluchová paměť podporuje dovednost rozpoznávat a
+        reprodukovat slova, což je důležité pro správný vývoj řeči.
+    </string>
+    <string name="hearing_pop_up_body_3">
+        Sluchová syntéza je schopnost spojit jednotlivé zvuky nebo slabiky do smysluplného slova.
+        Například dítě slyší zvuky „m“ – „a“ – „k“, a dokáže z nich sestavit slovo „mak“.
+        Tato dovednost je klíčová pro správnou výslovnost a čtení. Pomáhá dětem porozumět tomu,
+        jak zvuky tvoří slova, a jak tato slova zapadají do vět.
+    </string>
 
     <string name="rythm_menu_label_1">Pexeso</string>
     <string name="rythm_menu_label_2">Tleskání</string>
@@ -63,11 +106,29 @@
     <string name="rythm_pop_up_heading_2">Rytmické vytleskávání</string>
     <string name="rythm_pop_up_heading_3">Rytmické opakování</string>
 
-    <string name="rythm_pop_up_body_1">Pexeso DECRIPTION</string>
-    <string name="rythm_pop_up_body_2">Vytleskávání DECRIPTION</string>
-    <string name="rythm_pop_up_body_3">Opakování DECRIPTION</string>
+    <string name="rythm_pop_up_body_1">
+        Rytmické pexeso je hra zaměřená na rozvoj sluchové paměti a rytmu. Dítě vnímá a napodobuje
+        různé rytmické vzory (například kombinace tleskání nebo úderů) a následně hledá dvojice
+        stejných rytmických sekvencí. Tato hra podporuje schopnost rozpoznat a zapamatovat si
+        rytmické vzorce, což zlepšuje sluchové vnímání a koordinaci.
+    </string>
+    <string name="rythm_pop_up_body_2">
+        Rytmické vytleskávání je technika, při které se používá tleskání v určitých rytmických
+        vzorcích. Tato cvičení pomáhají dětem rozvíjet schopnost vnímat a produkovat rytmus.
+        Pravidelné rytmické vytleskávání podporuje motorické dovednosti a koordinaci, což zároveň
+        přispívá k rozvoji správného tempa a rytmu řeči.
+    </string>
+    <string name="rythm_pop_up_body_3">
+        Rytmické opakování zahrnuje reprodukci slyšených rytmických vzorů, například pomocí tleskání
+        nebo bubnování. Dítě nejprve poslouchá vzorec (např. „tlesk-tlesk-pauza-tlesk“) a poté
+        ho zopakuje. Tato technika pomáhá rozvíjet sluchovou pozornost, rytmus a schopnost
+        napodobovat rytmické struktury, což pozitivně ovlivňuje schopnost naslouchat a
+        zpracovávat sluchové podněty.
+    </string>
 
-
+    <string name="identical">Stejné</string>
+    <string name="different">Rozdílné</string>
+    <string name="eyesight_comparison_label">Jsou dané tvary stejné či rozdílné?</string>
 
     <string name="pop_up_dismiss_label">Zavřít</string>
 

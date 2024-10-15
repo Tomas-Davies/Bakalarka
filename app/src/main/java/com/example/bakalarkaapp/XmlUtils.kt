@@ -14,7 +14,6 @@ class XmlUtils {
         xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
         val dataList = xmlMapper.readValue(xmlString, mappingClass)
-
         return dataList
     }
 

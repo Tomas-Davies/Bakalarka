@@ -66,9 +66,11 @@ dependencies {
     // Android Studio Preview support
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
+    // XML to class mapping
     val jacksonVersion = "2.18.0"
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
+    implementation("javax.xml.stream:stax-api:1.0-2")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

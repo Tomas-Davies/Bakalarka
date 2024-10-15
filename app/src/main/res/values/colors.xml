@@ -29,4 +29,6 @@
     <color name="rythm_500">#FF00BF63</color>
     <color name="tales_500">#FF81249B</color>
 
+    <color name="correct">#A6CB12</color>
+    <color name="incorrect">#E00543</color>
 </resources>

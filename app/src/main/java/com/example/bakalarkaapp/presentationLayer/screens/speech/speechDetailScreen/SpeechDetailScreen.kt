@@ -111,11 +111,11 @@ class SpeechDetailScreen: ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            val imageId = resources.getIdentifier(uiState.id, "drawable", ctx.packageName)
+            val imageId = resources.getIdentifier(uiState.wordResourcesId, "drawable", ctx.packageName)
 
             Column(
                 modifier = Modifier.weight(3f),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(
                     modifier = Modifier
@@ -166,7 +166,7 @@ class SpeechDetailScreen: ComponentActivity() {
                     )
                 }
 
-                val audioId = resources.getIdentifier(uiState.id, "raw", ctx.packageName)
+                val audioId = resources.getIdentifier(uiState.wordResourcesId, "raw", ctx.packageName)
                 var mp: MediaPlayer? = null
                 if(audioId != 0){
                     mp = MediaPlayer.create(ctx, audioId)

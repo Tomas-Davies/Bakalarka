@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.text.Normalizer
 
-data class UiState(
-    val id: String,
+data class SpeechDetailUiState(
+    val wordResourcesId: String,
     val index: Int,
     val currentWord: String,
     val isOnFirstWord:Boolean,
@@ -20,8 +20,8 @@ class SpeechDetailViewModel(private val words: Array<String>): ViewModel() {
     private var index = 0
     val count = words.size
     val word = words[index]
-    private val _uiState = MutableStateFlow(UiState(word.toSpeechDetailId(), index, word, index == 0, index == words.size-1))
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(SpeechDetailUiState(word.toSpeechDetailId(), index, word, index == 0, index == words.size-1))
+    val uiState: StateFlow<SpeechDetailUiState> = _uiState.asStateFlow()
 
     fun next(){
         if (indexInc()){
@@ -38,7 +38,7 @@ class SpeechDetailViewModel(private val words: Array<String>): ViewModel() {
         _uiState.update { currentState ->
             val word = words[index]
             currentState.copy(
-                id = word.toSpeechDetailId(),
+                wordResourcesId = word.toSpeechDetailId(),
                 index = index,
                 currentWord = word,
                 isOnFirstWord = index == 0,
@@ -80,7 +80,7 @@ class SpeechDetailViewModelFactory(private val words: Array<String>): ViewModelP
             @Suppress("UNCHECKED_CAST")
             return SpeechDetailViewModel(words) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel")
+        throw IllegalArgumentException("Unknown ViewModel class: SpeechDetailViewModel")
     }
 }
 

@@ -34,7 +34,7 @@ val speech_theme_light_outlineVariant = Color(0xFFC3C6D2)
 val speech_theme_light_scrim = Color(0xFF000000)
 
 val speech_theme_dark_primary = Color(0xFFF15226)
-val speech_theme_dark_onPrimary = Color(0xFF003738)
+val speech_theme_dark_onPrimary = Color(0xFFF1F1F1)
 val speech_theme_dark_primaryContainer = Color(0xFF004F52)
 val speech_theme_dark_onPrimaryContainer = Color(0xFF45F9FF)
 val speech_theme_dark_secondary = Color(0xFFB0CCCC)
@@ -67,7 +67,7 @@ val speech_theme_dark_scrim = Color(0xFF000000)
 
 
 val eyesight_theme_light_primary = Color(0xFF365E9D)
-val eyesight_theme_light_onPrimary = Color(0xFFFFFFFF)
+val eyesight_theme_light_onPrimary = Color(0xFFF1F1F1)
 val eyesight_theme_light_primaryContainer = Color(0xFF82A8EC)
 val eyesight_theme_light_onPrimaryContainer = Color(0xFF001C40)
 val eyesight_theme_light_secondary = Color(0xFF515F79)
