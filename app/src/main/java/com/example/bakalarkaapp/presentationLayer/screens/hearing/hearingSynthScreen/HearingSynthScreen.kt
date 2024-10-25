@@ -18,6 +18,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.theme.AppTheme
 
 class HearingSynthScreen : AppCompatActivity() {
@@ -43,7 +45,7 @@ class HearingSynthScreen : AppCompatActivity() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(text = "From Intent") },
+                    title = { Text(text = stringResource(id = R.string.hearing_menu_label_3)) },
                     navigationIcon = {
                         IconButton(onClick = { (ctx as Activity).finish() }) {
                             Icon(

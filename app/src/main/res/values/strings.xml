@@ -133,6 +133,13 @@
     <string name="pop_up_dismiss_label">Zavřít</string>
 
     <string name="label_show">Zobrazit</string>
+    <string name="label_again">Znovu</string>
+    <string name="label_leave">Odejít</string>
+    <string name="correct_label">Správně</string>
+    <string name="eyesight_comparison_result_1">Opakování je matka moudrosti.</string>
+    <string name="eyesight_comparison_result_2">Vedl sis dobře.</string>
+    <string name="eyesight_comparison_result_3">Vedl sis velmi dobře</string>
+    <string name="eyesight_comparison_result_4">Vedl sis naprosto excelentně!</string>
 
     <array name="speech_levels">
         <item>@array/level_A</item>
@@ -805,4 +812,21 @@
         <item>Pekař</item>
         <item>Kovář</item>
     </string-array>
+
+
+    <string-array name="EyesightAnalysisWords">
+        <item>Myška</item>
+        <item>Mašle</item>
+        <item>Dárek</item>
+        <item>Sýr</item>
+        <item>Šest</item>
+        <item>Žába</item>
+        <item>Člun</item>
+        <item>Sova</item>
+        <item>Keř</item>
+        <item>Pekař</item>
+        <item>Kovář</item>
+    </string-array>
+
+    <string name="eyesightAnalysisLabel">Přesuň písmenka podle obrázku</string>
 </resources>

@@ -20,6 +20,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,7 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 
 @Composable
@@ -102,14 +102,14 @@ private fun CardContent(
             Text(
                 text = labelLong,
                 color = textColor,
-                fontSize = 14.sp,
+                style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Normal
             )
             Text(
                 color = textColor,
                 text = label,
-                fontWeight = FontWeight.Bold,
-                fontSize = 28.sp
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             ShowMoreLabel(
@@ -146,14 +146,14 @@ fun ShowMoreLabel(bgColor: Color, textColor: Color) {
         modifier = Modifier
             .clip(RoundedCornerShape(25.dp))
             .background(bgColor)
-            .padding(8.dp, 0.dp),
+            .padding(8.dp, 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = stringResource(id = R.string.label_show),
             color = textColor,
-            fontSize = 12.sp
+            style = MaterialTheme.typography.labelMedium
         )
         Icon(
             modifier = Modifier.size(12.dp),

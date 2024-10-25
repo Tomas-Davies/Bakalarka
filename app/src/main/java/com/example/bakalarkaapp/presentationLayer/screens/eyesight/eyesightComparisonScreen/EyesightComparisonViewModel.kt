@@ -14,7 +14,8 @@ sealed class ScreenState{
 }
 data class EyesightComparisonUiState (
     val imageId: String,
-    val answer: Boolean
+    val answer: Boolean,
+    val restartTrigger: Int = 0
 )
 
 class EyesightComparisonViewModel(private val comparisonData: List<ComparisonItem>): ViewModel() {
@@ -25,6 +26,23 @@ class EyesightComparisonViewModel(private val comparisonData: List<ComparisonIte
     val uiState: StateFlow<EyesightComparisonUiState> = _uiState.asStateFlow()
     private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Running)
     val screenState: StateFlow<ScreenState> = _screenState.asStateFlow()
+    var score: Int = 0
+    var btnOneClickedFlag: Boolean = false
+    var btnTwoClickedFlag: Boolean = false
+
+
+    fun scoreInc(){
+        if (!btnOneClickedFlag) {
+            score++
+            btnOneClickedFlag = true
+        }
+    }
+    fun scoreDesc(){
+        if (!btnTwoClickedFlag) {
+            score--
+            btnTwoClickedFlag = true
+        }
+    }
 
     fun updateData(){
         indexInc()
@@ -32,13 +50,23 @@ class EyesightComparisonViewModel(private val comparisonData: List<ComparisonIte
         _uiState.update { currentState ->
             currentState.copy(
                 imageId = currentItem.imageId,
-                answer = currentItem.isSameShape.toBoolean()
+                answer = currentItem.isSameShape.toBoolean(),
+                restartTrigger = idx
             )
         }
+        btnOneClickedFlag = false
+        btnTwoClickedFlag = false
     }
 
     fun restart(){
+        score = 0
         _screenState.value = ScreenState.Running
+    }
+
+    fun scorePercentage(): Int {
+        val correctCount = score
+        val questionCount = data.size
+        return (correctCount * 100) / questionCount
     }
 
     private fun indexInc(){

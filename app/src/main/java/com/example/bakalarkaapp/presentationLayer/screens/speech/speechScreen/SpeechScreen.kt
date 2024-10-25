@@ -54,7 +54,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen
 import com.example.bakalarkaapp.theme.AppTheme
@@ -214,8 +213,8 @@ class SpeechScreen: AppCompatActivity() {
             ) {
                 Text(
                     text = title,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 28.sp
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold
                 )
 
                 if (!isPrimitive){
@@ -237,8 +236,7 @@ class SpeechScreen: AppCompatActivity() {
                 ) {
                     Text(
                         text = stringResource(id = R.string.speech_menu_item_label),
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 18.sp
+                        style = MaterialTheme.typography.titleMedium
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     levelItems.forEach { str ->
@@ -282,8 +280,8 @@ class SpeechScreen: AppCompatActivity() {
             ) {
                 Text(
                     text = label,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
                     color = colorResource(id = R.color.light)
                 )
             }

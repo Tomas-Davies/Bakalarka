@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -42,7 +43,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -134,8 +134,8 @@ class SpeechDetailScreen: ComponentActivity() {
                         .weight(1f)
                         .wrapContentHeight(),
                     text = uiState.currentWord,
+                    style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 32.sp,
                     textAlign = TextAlign.Center
                 )
             }
@@ -144,8 +144,8 @@ class SpeechDetailScreen: ComponentActivity() {
                     .weight(0.2f)
                     .wrapContentHeight(),
                 text = "${uiState.index + 1} / ${viewModel.count}",
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                fontSize = 22.sp,
                 textAlign = TextAlign.Center
             )
             Row(
@@ -174,12 +174,14 @@ class SpeechDetailScreen: ComponentActivity() {
 
                 Button(
                     onClick = { mp?.start() },
+                    shape = CircleShape,
+                    contentPadding = PaddingValues(0.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.speech_500))
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.play_sound_label),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.ExtraBold
+                    Image(
+                        modifier = Modifier.scale(2f),
+                        painter = painterResource(id = R.drawable.sound_on_icon),
+                        contentDescription = "sound on icon"
                     )
                 }
                 IconButton(

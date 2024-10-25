@@ -8,9 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,10 +16,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -40,7 +35,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -48,13 +42,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.XmlUtils
 import com.example.bakalarkaapp.dataLayer.ComparisonData
+import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
+import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
 import com.example.bakalarkaapp.theme.AppTheme
 
-class EyesightComparisonScreen: AppCompatActivity() {
+class EyesightComparisonScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -77,7 +72,10 @@ class EyesightComparisonScreen: AppCompatActivity() {
                     val screenState = viewModel.screenState.collectAsState().value
                     when (screenState) {
                         is ScreenState.Running -> EyesightComparisonRunning(viewModel)
-                        is ScreenState.Finished -> EyesightComparisonFinished(viewModel)
+                        is ScreenState.Finished -> ResultScreen(
+                            viewModel.scorePercentage(),
+                            onRestartBtnClick = { viewModel.restart() }
+                        )
                     }
                 }
             }
@@ -104,15 +102,21 @@ class EyesightComparisonScreen: AppCompatActivity() {
             }
         ) {
             val uiState = viewModel.uiState.collectAsState().value
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val imageResId =
-                    resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
+                TimerIndicator(
+                    msDuration = 15000,
+                    onFinish = {
+                        playSound(ctx, R.raw.wrong_answer)
+                        viewModel.updateData()
+                    },
+                    restartTrigger = uiState.restartTrigger
+                )
+                val imageResId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
                 Image(
                     modifier = Modifier
                         .weight(1.5f)
@@ -128,7 +132,7 @@ class EyesightComparisonScreen: AppCompatActivity() {
                     Text(
                         modifier = Modifier.weight(1f),
                         text = stringResource(id = R.string.eyesight_comparison_label),
-                        fontSize = 26.sp,
+                        style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center
                     )
                     Row(
@@ -175,26 +179,6 @@ class EyesightComparisonScreen: AppCompatActivity() {
         }
     }
 
-    @Composable
-    private fun EyesightComparisonFinished(viewModel: EyesightComparisonViewModel) {
-        val ctx = LocalContext.current
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "Hotovo",
-                fontWeight = FontWeight.Bold
-            )
-            Button(onClick = { viewModel.restart() }) {
-                Text(text = "Znovu")
-            }
-            Button(onClick = { (ctx as Activity).finish() }) {
-                Text(text = "Odejít")
-            }
-        }
-    }
 
     @Composable
     private fun CompareButton(
@@ -229,7 +213,7 @@ class EyesightComparisonScreen: AppCompatActivity() {
                 )
                 Text(
                     text = label,
-                    fontSize = 26.sp,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.ExtraBold,
                     color = colorResource(id = R.color.dark)
                 )
@@ -244,13 +228,21 @@ fun onCompareButtonClick(
     viewModel: EyesightComparisonViewModel,
     ctx: Context, correctSoundId: Int,
     wrongSoundId: Int
-){
-    if (userAnswer == correctAnswer){
-        val mp = MediaPlayer.create(ctx, correctSoundId)
-        mp.start()
+) {
+    if (userAnswer == correctAnswer) {
+        viewModel.scoreInc()
+        playSound(ctx, correctSoundId)
         viewModel.updateData()
     } else {
-        val mp = MediaPlayer.create(ctx, wrongSoundId)
-        mp.start()
+        viewModel.scoreDesc()
+        playSound(ctx, wrongSoundId)
+    }
+}
+
+private fun playSound(ctx: Context, soundId: Int) {
+    val mediaPlayer = MediaPlayer.create(ctx, soundId)
+    mediaPlayer.start()
+    mediaPlayer.setOnCompletionListener { mp ->
+        mp.release()
     }
 }

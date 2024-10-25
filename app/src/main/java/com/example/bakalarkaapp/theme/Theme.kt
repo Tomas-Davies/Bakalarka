@@ -10,7 +10,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.example.trivia_quizz_app.ui.theme.typography
 
 
 private val SpeechLightColors = lightColorScheme(

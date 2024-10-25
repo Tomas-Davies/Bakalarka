@@ -44,7 +44,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingScreen.HearingScreen
@@ -175,8 +174,7 @@ class HomeScreen: AppCompatActivity() {
                 Text(
                     modifier = Modifier.width(screenWidth / 2),
                     text = stringResource(id = R.string.home_screen_decor_label),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Image(
                     painter = painterResource(id = R.drawable.home_screen_decor),
@@ -211,8 +209,8 @@ class HomeScreen: AppCompatActivity() {
                     Text(
                         text = title,
                         color = colorResource(id = R.color.white),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 38.sp
+                        style = MaterialTheme.typography.displaySmall,
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }

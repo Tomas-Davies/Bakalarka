@@ -18,7 +18,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.theme.AppTheme
+import com.example.bakalarkaapp.R
 
 class HearingMemoryScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +44,7 @@ class HearingMemoryScreen : AppCompatActivity() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(text = "From Intent") },
+                    title = { Text(text = stringResource(id = R.string.hearing_menu_label_2)) },
                     navigationIcon = {
                         IconButton(onClick = { (ctx as Activity).finish() }) {
                             Icon(
