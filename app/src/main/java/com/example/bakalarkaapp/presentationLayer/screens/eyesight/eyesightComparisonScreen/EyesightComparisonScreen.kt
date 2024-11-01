@@ -42,11 +42,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.XmlUtils
-import com.example.bakalarkaapp.dataLayer.ComparisonData
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
+import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightComparisonScreen : AppCompatActivity() {
@@ -59,15 +59,9 @@ class EyesightComparisonScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val ctx = LocalContext.current
-                    val mappedClass = XmlUtils().parseXmlData(
-                        ctx,
-                        "eyesight_comparison_data",
-                        ComparisonData::class.java
-                    )
-                    val data = mappedClass.data
+                    val app = application as LogoApp
                     val viewModel: EyesightComparisonViewModel by viewModels {
-                        EyesightComparionViewModelFactory(data.shuffled())
+                        EyesightComparionViewModelFactory(app.eyesightComparisonRepository)
                     }
                     val screenState = viewModel.screenState.collectAsState().value
                     when (screenState) {

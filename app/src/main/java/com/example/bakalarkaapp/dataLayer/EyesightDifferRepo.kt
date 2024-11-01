@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRootName
 
 class EyesightDifferRepo(context: Context) {
-//    private val mappedClass: Data = XmlUtils().
-//        parseXmlData(context, "eyesight_differ_data", Data::class.java)
-//    val data: List<DifferItem> = mappedClass.data
+    private val mappedClass = XmlUtils().
+        parseXmlData(context, "eyesight_differ_data", DifferData::class.java)
+    val data: List<DifferItem> = mappedClass.data
 }
 
 @JsonRootName("answers")
@@ -28,7 +28,7 @@ class QaPair {
 
 @JsonRootName("questionAndAnswers")
 class QuestionAndAnswers {
-    @JsonProperty("QaPair")
+    @JsonProperty("qaPair")
     var qaPairs: List<QaPair> = ArrayList()
 }
 

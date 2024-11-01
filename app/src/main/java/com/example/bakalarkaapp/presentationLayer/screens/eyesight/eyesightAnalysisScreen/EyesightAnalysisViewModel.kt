@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.shuffle
 import com.example.bakalarkaapp.toDrawableId
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,10 +14,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-sealed class ScreenState {
-    data object Running : ScreenState()
-    data object Finished : ScreenState()
-}
 
 data class EyesightAnalysisUiState(
     val wordResourcesId: String,
@@ -149,7 +146,7 @@ class EyesightAnalysisViewModel(private val words: Array<String>) : ViewModel() 
     }
 }
 
-class EyesightAnalysisViewModelFacory(private val words: Array<String>) :
+class EyesightAnalysisViewModelFactory(private val words: Array<String>) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

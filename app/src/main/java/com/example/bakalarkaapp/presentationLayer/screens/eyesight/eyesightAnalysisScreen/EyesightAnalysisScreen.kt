@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
+import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightAnalysisScreen : AppCompatActivity() {
@@ -78,7 +79,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
         words.shuffle()
 
         val viewModel: EyesightAnalysisViewModel by viewModels {
-            EyesightAnalysisViewModelFacory(words)
+            EyesightAnalysisViewModelFactory(words)
         }
 
         setContent {
@@ -194,7 +195,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
                         DropBox(
                             index = i,
                             viewModel = viewModel,
-                            toggleDragSourceEnability = { sourceIndex, enabled ->
+                            toggleDragSourceAbility = { sourceIndex, enabled ->
                                 if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
                                     viewModel.enabledStates[sourceIndex].value = enabled
                                 }
@@ -227,7 +228,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
     private fun DropBox(
         index: Int,
         viewModel: EyesightAnalysisViewModel,
-        toggleDragSourceEnability: (index: Int, enabled: Boolean) -> Unit
+        toggleDragSourceAbility: (index: Int, enabled: Boolean) -> Unit
     ) {
         val resetDropFlag = viewModel.resetDropFlag.collectAsState()
         var dragSourceIndex by remember { mutableIntStateOf(-1) }
@@ -248,7 +249,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
                         ?.getItemAt(0)?.text
                     val dataList = text.toString().split('|')
                     dragSourceIndex = dataList[0].toInt()
-                    toggleDragSourceEnability(dragSourceIndex, false)
+                    toggleDragSourceAbility(dragSourceIndex, false)
                     label = dataList[1]
                     viewModel.addLetterAt(label[0], index)
                     return true
@@ -269,7 +270,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
             onClick = {
                 if (label != " "){
                     label = " "
-                    toggleDragSourceEnability(dragSourceIndex, true)
+                    toggleDragSourceAbility(dragSourceIndex, true)
                     viewModel.removeLetterAt(index)
                     dragSourceIndex = -1
                 }

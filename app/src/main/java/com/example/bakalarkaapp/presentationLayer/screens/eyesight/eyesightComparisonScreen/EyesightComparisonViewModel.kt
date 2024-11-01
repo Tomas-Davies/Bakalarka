@@ -2,24 +2,21 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.dataLayer.ComparisonItem
+import com.example.bakalarkaapp.dataLayer.EyesightComparisonRepo
+import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-sealed class ScreenState{
-    data object Running: ScreenState()
-    data object Finished: ScreenState()
-}
 data class EyesightComparisonUiState (
     val imageId: String,
     val answer: Boolean,
     val restartTrigger: Int = 0
 )
 
-class EyesightComparisonViewModel(private val comparisonData: List<ComparisonItem>): ViewModel() {
-    private var data = comparisonData
+class EyesightComparisonViewModel(comparisonDataRepository: EyesightComparisonRepo): ViewModel() {
+    private var data = comparisonDataRepository.data.shuffled()
     private var idx = 0
     private var currentItem = data[0]
     private val _uiState = MutableStateFlow(EyesightComparisonUiState(currentItem.imageId, currentItem.isSameShape.toBoolean()))
@@ -70,21 +67,21 @@ class EyesightComparisonViewModel(private val comparisonData: List<ComparisonIte
     }
 
     private fun indexInc(){
-        if (idx+1 < comparisonData.size){
+        if (idx+1 < data.size){
             idx++
         } else {
             idx = 0
-            data = comparisonData.shuffled()
+            data = data.shuffled()
             _screenState.value = ScreenState.Finished
         }
     }
 }
 
-class EyesightComparionViewModelFactory(private val comparisonData: List<ComparisonItem>): ViewModelProvider.Factory {
+class EyesightComparionViewModelFactory(private val comparisonDataRepository: EyesightComparisonRepo): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(EyesightComparisonViewModel::class.java)){
-            return EyesightComparisonViewModel(comparisonData) as T
+            return EyesightComparisonViewModel(comparisonDataRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightComparisonViewModel")
     }
