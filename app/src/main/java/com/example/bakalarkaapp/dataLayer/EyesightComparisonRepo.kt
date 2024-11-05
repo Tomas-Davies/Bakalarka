@@ -1,29 +1,32 @@
 package com.example.bakalarkaapp.dataLayer
 
 import android.content.Context
+import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.XmlUtils
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonRootName
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 
 class EyesightComparisonRepo(context: Context) {
-    private val mappedClass = XmlUtils().
-    parseXmlData(context, "eyesight_comparison_data", ComparisonData::class.java)
+    private val mappedClass = XmlUtils.
+    parseXmlData(context, R.xml.eyesight_comparison_data, ComparisonData::class.java)
     val data: List<ComparisonItem> = mappedClass.data
 }
 
-@JsonRootName("comparisonItem")
+@JacksonXmlRootElement(localName = "comparisonItem")
 class ComparisonItem {
-    @JsonProperty("imageId")
-    val imageId: String = ""
+    @JacksonXmlProperty(localName = "imageId")
+    val imageId = TextValue()
 
-    @JsonProperty("isSameShape")
-    val isSameShape: String = ""
+    @JacksonXmlProperty(localName = "isSameShape")
+    val isSameShape = TextValue()
 }
 
-@JsonRootName("data")
+@JacksonXmlRootElement(localName = "data")
 class ComparisonData {
-    @JsonProperty("comparisonItem")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "comparisonItem")
     val data: List<ComparisonItem> = ArrayList()
 }
 

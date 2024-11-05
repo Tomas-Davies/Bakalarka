@@ -19,13 +19,13 @@ class EyesightComparisonViewModel(comparisonDataRepository: EyesightComparisonRe
     private var data = comparisonDataRepository.data.shuffled()
     private var idx = 0
     private var currentItem = data[0]
-    private val _uiState = MutableStateFlow(EyesightComparisonUiState(currentItem.imageId, currentItem.isSameShape.toBoolean()))
+    private val _uiState = MutableStateFlow(EyesightComparisonUiState(currentItem.imageId.value, currentItem.isSameShape.value.toBoolean()))
     val uiState: StateFlow<EyesightComparisonUiState> = _uiState.asStateFlow()
     private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Running)
     val screenState: StateFlow<ScreenState> = _screenState.asStateFlow()
-    var score: Int = 0
-    var btnOneClickedFlag: Boolean = false
-    var btnTwoClickedFlag: Boolean = false
+    private var score: Int = 0
+    private var btnOneClickedFlag: Boolean = false
+    private var btnTwoClickedFlag: Boolean = false
 
 
     fun scoreInc(){
@@ -46,8 +46,8 @@ class EyesightComparisonViewModel(comparisonDataRepository: EyesightComparisonRe
         currentItem = data[idx]
         _uiState.update { currentState ->
             currentState.copy(
-                imageId = currentItem.imageId,
-                answer = currentItem.isSameShape.toBoolean(),
+                imageId = currentItem.imageId.value,
+                answer = currentItem.isSameShape.value.toBoolean(),
                 restartTrigger = idx
             )
         }

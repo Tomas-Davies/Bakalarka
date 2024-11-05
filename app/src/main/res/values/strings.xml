@@ -828,5 +828,7 @@
         <item>Kovář</item>
     </string-array>
 
-    <string name="eyesightAnalysisLabel">Přesuň písmenka podle obrázku</string>
+    <string name="eyesight_analysis_label">Přesuň písmenka podle obrázku</string>
+    <string name="eyesight_memory_label_1">Zapamatuj si tyto obrázky</string>
+    <string name="eyesight_memory_label_2">Vyber obrázek, který je navíc</string>
 </resources>

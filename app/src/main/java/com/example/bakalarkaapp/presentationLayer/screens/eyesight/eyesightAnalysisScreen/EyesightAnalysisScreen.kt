@@ -149,7 +149,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.eyesightAnalysisLabel),
+                text = stringResource(id = R.string.eyesight_analysis_label),
                 style = MaterialTheme.typography.headlineSmall
             )
 
@@ -185,8 +185,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 maxItemsInEachRow = 5
             ) {
@@ -206,8 +205,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
             }
 
             FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 maxItemsInEachRow = 5
             ) {
@@ -233,6 +231,9 @@ class EyesightAnalysisScreen : AppCompatActivity() {
         val resetDropFlag = viewModel.resetDropFlag.collectAsState()
         var dragSourceIndex by remember { mutableIntStateOf(-1) }
         var label by remember { mutableStateOf(" ") }
+        val hoverColor = MaterialTheme.colorScheme.primary
+        val defaultColor = MaterialTheme.colorScheme.surfaceVariant
+        var dropBoxColor by remember { mutableStateOf(defaultColor) }
 
         LaunchedEffect(resetDropFlag.value) {
             if (label != " "){
@@ -242,9 +243,20 @@ class EyesightAnalysisScreen : AppCompatActivity() {
             }
         }
 
-        val callback = remember(resetDropFlag.value) {
+        val dropTarget = remember(resetDropFlag.value) {
             object : DragAndDropTarget {
+                override fun onMoved(event: DragAndDropEvent) {
+                    super.onMoved(event)
+                    if (label == " ") dropBoxColor = hoverColor
+                }
+                override fun onExited(event: DragAndDropEvent) {
+                    super.onExited(event)
+                    dropBoxColor = defaultColor
+                }
                 override fun onDrop(event: DragAndDropEvent): Boolean {
+                    dropBoxColor = defaultColor
+                    if (label != " ") return false
+
                     val text = event.toAndroidDragEvent().clipData
                         ?.getItemAt(0)?.text
                     val dataList = text.toString().split('|')
@@ -265,7 +277,7 @@ class EyesightAnalysisScreen : AppCompatActivity() {
                             .mimeTypes()
                             .contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
                     },
-                    target = callback
+                    target = dropTarget
                 ),
             onClick = {
                 if (label != " "){
@@ -274,7 +286,10 @@ class EyesightAnalysisScreen : AppCompatActivity() {
                     viewModel.removeLetterAt(index)
                     dragSourceIndex = -1
                 }
-            }
+            },
+            colors = CardDefaults.cardColors(
+                containerColor = dropBoxColor
+            )
         ) {
             Text(
                 modifier = Modifier.padding(15.dp),

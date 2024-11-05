@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <object>cmelak</object>
+        <object>buvol</object>
+        <object>beruska</object>
+        <extraObject>kos</extraObject>
+    </round>
+    <round>
+        <object>kachna</object>
+        <object>ker</object>
+        <object>kilogram</object>
+        <extraObject>knoflik</extraObject>
+    </round>
+    <round>
+        <object>cesnek</object>
+        <object>cibule</object>
+        <object>chleba</object>
+        <object>cise</object>
+        <extraObject>clun</extraObject>
+    </round>
+    <round>
+        <object>dum</object>
+        <object>kabelka</object>
+        <object>kaktus</object>
+        <object>kompas</object>
+        <extraObject>maslo</extraObject>
+    </round>
+</data>

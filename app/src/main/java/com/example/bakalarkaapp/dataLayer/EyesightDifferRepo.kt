@@ -1,48 +1,42 @@
 package com.example.bakalarkaapp.dataLayer
 
 import android.content.Context
+import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.XmlUtils
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonRootName
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 class EyesightDifferRepo(context: Context) {
-    private val mappedClass = XmlUtils().
-        parseXmlData(context, "eyesight_differ_data", DifferData::class.java)
+    private val mappedClass = XmlUtils.
+        parseXmlData(context, R.xml.eyesight_differ_data, DifferData::class.java)
     val data: List<DifferItem> = mappedClass.data
 }
 
-@JsonRootName("answers")
-class Answers {
-    @JsonProperty("correctAnswer")
-    var correctAnswer: List<String> = ArrayList()
+
+@JacksonXmlRootElement(localName = "round")
+class Round {
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "question")
+    val question = TextValue()
+
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "correctAnswer")
+    val answers: List<TextValue> = ArrayList()
 }
 
-@JsonRootName("qaPair")
-class QaPair {
-    @JsonProperty("answers")
-    var answers: Answers = Answers()
-
-    @JsonProperty("question")
-    var question: String = ""
-}
-
-@JsonRootName("questionAndAnswers")
-class QuestionAndAnswers {
-    @JsonProperty("qaPair")
-    var qaPairs: List<QaPair> = ArrayList()
-}
-
-@JsonRootName("differItem")
+@JacksonXmlRootElement(localName = "differItem")
 class DifferItem {
-    @JsonProperty("imageId")
-    var imageId: String = ""
+    @JacksonXmlProperty(localName = "imageId")
+    val imageId = TextValue()
 
-    @JsonProperty("questionAndAnswers")
-    var questionAndAnswers: QuestionAndAnswers = QuestionAndAnswers()
+    @JacksonXmlProperty(localName = "rounds")
+    val rounds: List<Round> = ArrayList()
 }
 
-@JsonRootName("dataItems")
-class DifferData {
-    @JsonProperty("differItem")
-    var data: List<DifferItem> = ArrayList()
+@JacksonXmlRootElement(localName = "data")
+class DifferData{
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "differItem")
+    val data: List<DifferItem> = ArrayList()
 }

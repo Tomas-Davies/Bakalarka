@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-    <words>
+    <round>
         <word>kovar</word>
         <word>drevar</word>
         <word>pekar</word>
-    </words>
-    <words>
+    </round>
+    <round>
         <word>more</word>
         <word>kure</word>
         <word>orech</word>
-    </words>
+    </round>
 </data>

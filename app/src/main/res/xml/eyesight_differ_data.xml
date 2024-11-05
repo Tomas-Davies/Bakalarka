@@ -1,99 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dataItems>
+<data>
     <differItem>
         <imageId>eyesight_differ_image_1</imageId>
-        <questionAndAnswers>
-            <qaPair>
-                <answers>
-                    <correctAnswer>list</correctAnswer>
-                </answers>
+        <rounds>
+            <round>
+                <correctAnswer>list</correctAnswer>
                 <question>Co se nachází před jablkem?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>jablko</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>jablko</correctAnswer>
                 <question>Co se nachází za listem?</question>
-            </qaPair>
-        </questionAndAnswers>
+            </round>
+        </rounds>
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_2</imageId>
-        <questionAndAnswers>
-            <qaPair>
-                <answers>
-                    <correctAnswer>motýl</correctAnswer>
-                </answers>
+        <rounds>
+            <round>
+                <correctAnswer>motýl</correctAnswer>
                 <question>Co se nachází před mufinem?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>mufin</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>mufin</correctAnswer>
                 <question>Co se nachází za motýlem?</question>
-            </qaPair>
-        </questionAndAnswers>
+            </round>
+        </rounds>
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_3</imageId>
-        <questionAndAnswers>
-            <qaPair>
-                <answers>
-                    <correctAnswer>třešně</correctAnswer>
-                </answers>
+        <rounds>
+            <round>
+                <correctAnswer>třešně</correctAnswer>
                 <question>Co se nachází před hrníčkem?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>hrníček</correctAnswer>
-                    <correctAnswer>čepice</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>hrníček</correctAnswer>
+                <correctAnswer>čepice</correctAnswer>
                 <question>Co se nachází za třešněmi?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>čepice</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>čepice</correctAnswer>
                 <question>Co se nachází za hrníčkem?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>hrníček</correctAnswer>
-                    <correctAnswer>třešně</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>hrníček</correctAnswer>
+                <correctAnswer>třešně</correctAnswer>
                 <question>Co se nachází před čepicí?</question>
-            </qaPair>
-        </questionAndAnswers>
+            </round>
+        </rounds>
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_4</imageId>
-        <questionAndAnswers>
-            <qaPair>
-                <answers>
-                    <correctAnswer>rostlina</correctAnswer>
-                </answers>
+        <rounds>
+            <round>
+                <correctAnswer>rostlina</correctAnswer>
                 <question>Co se nachází před sluníčkem?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>sluníčko</correctAnswer>
-                    <correctAnswer>rifle</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>sluníčko</correctAnswer>
+                <correctAnswer>rifle</correctAnswer>
                 <question>Co se nachází za rostlinou?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>rifle</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>rifle</correctAnswer>
                 <question>Co se nachází za sluníčkem?</question>
-            </qaPair>
-            <qaPair>
-                <answers>
-                    <correctAnswer>sluníčko</correctAnswer>
-                    <correctAnswer>rostlina</correctAnswer>
-                </answers>
+            </round>
+            <round>
+                <correctAnswer>sluníčko</correctAnswer>
+                <correctAnswer>rostlina</correctAnswer>
                 <question>Co se nachází před riflemi?</question>
-            </qaPair>
-        </questionAndAnswers>
+            </round>
+        </rounds>
     </differItem>
-</dataItems>
+</data>

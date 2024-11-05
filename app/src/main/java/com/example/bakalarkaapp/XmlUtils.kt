@@ -1,24 +1,21 @@
 package com.example.bakalarkaapp
 
 import android.content.Context
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.xmlpull.v1.XmlPullParser
 
-class XmlUtils {
+object XmlUtils {
+    fun <T:Any> parseXmlData(context: Context, resourceId: Int, mappingClass: Class<T>): T{
+        val xmlString = readXmlFile(context, resourceId)
+        val xmlMapper = XmlMapper().apply {
+            registerKotlinModule()
+        }
 
-    fun <T:Any> parseXmlData(context: Context, xmlFileName: String, mappingClass: Class<T>): T{
-        val xmlString = readXmlFile(context, xmlFileName)
-        val xmlMapper = XmlMapper(JacksonXmlModule().apply { setDefaultUseWrapper(false) })
-        xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
-        val dataList = xmlMapper.readValue(xmlString, mappingClass)
-        return dataList
+        return xmlMapper.readValue(xmlString, mappingClass)
     }
 
-    private fun readXmlFile(context: Context, fileName: String): String {
-        val resId = context.resources.getIdentifier(fileName, "xml", context.packageName)
+    private fun readXmlFile(context: Context, resId: Int): String {
         val xmlResource = context.resources.getXml(resId)
         val stringBuilder = StringBuilder()
 
