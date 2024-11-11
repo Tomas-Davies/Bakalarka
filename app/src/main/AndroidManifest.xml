@@ -71,7 +71,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.eyesight.eyesightAnalysisScreen.EyesightAnalysisScreen"
+            android:name=".presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -103,7 +103,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.eyesight.eyesightSynthScreen.EyesightSynthScreen"
+            android:name=".presentationLayer.screens.eyesight.eyesightAnalysisScreen.EyesightAnalysisScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

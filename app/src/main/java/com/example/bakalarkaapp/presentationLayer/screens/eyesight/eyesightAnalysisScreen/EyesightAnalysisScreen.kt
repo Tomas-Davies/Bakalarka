@@ -1,38 +1,21 @@
-@file:OptIn(
-    ExperimentalFoundationApi::class,
-    ExperimentalLayoutApi::class,
-    ExperimentalMaterial3Api::class
-)
-
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightAnalysisScreen
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipDescription
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.draganddrop.dragAndDropSource
-import androidx.compose.foundation.draganddrop.dragAndDropTarget
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,31 +28,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draganddrop.DragAndDropEvent
-import androidx.compose.ui.draganddrop.DragAndDropTarget
-import androidx.compose.ui.draganddrop.DragAndDropTransferData
-import androidx.compose.ui.draganddrop.mimeTypes
-import androidx.compose.ui.draganddrop.toAndroidDragEvent
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DragBox
+import com.example.bakalarkaapp.presentationLayer.components.dragDrop.EyesightDragDropViewModel
+import com.example.bakalarkaapp.presentationLayer.components.dragDrop.EyesightDragDropViewModelFactory
 import com.example.bakalarkaapp.theme.AppTheme
+
 
 class EyesightAnalysisScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,12 +50,12 @@ class EyesightAnalysisScreen : AppCompatActivity() {
         val words: Array<String> = resources.getStringArray(R.array.EyesightAnalysisWords)
         words.shuffle()
 
-        val viewModel: EyesightAnalysisViewModel by viewModels {
-            EyesightAnalysisViewModelFactory(words)
+        val viewModel: EyesightDragDropViewModel by viewModels {
+            EyesightDragDropViewModelFactory(words)
         }
 
         setContent {
-            AppTheme("eyesight") {
+            AppTheme(ThemeType.THEME_EYESIGHT) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -94,9 +66,9 @@ class EyesightAnalysisScreen : AppCompatActivity() {
         }
     }
 
-
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun EyesightAnalysisScreenContent(viewModel: EyesightAnalysisViewModel) {
+    private fun EyesightAnalysisScreenContent(viewModel: EyesightDragDropViewModel) {
         val ctx = LocalContext.current
         Scaffold(
             topBar = {
@@ -115,25 +87,19 @@ class EyesightAnalysisScreen : AppCompatActivity() {
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                    .fillMaxHeight()
+                    .padding(0.dp, it.calculateTopPadding(), 0.dp, 18.dp)
             ) {
-                val screenState = viewModel.screenState.collectAsState().value
-                when (screenState) {
-                    is ScreenState.Running -> EyesightAnalysisRunning(ctx, viewModel)
-                    is ScreenState.Finished -> ResultScreen(
-                        viewModel.scorePercentage(),
-                        onRestartBtnClick = { viewModel.restart() }
-                    )
-                }
+                EyesightAnalysisRunning(viewModel)
             }
         }
     }
 
+    @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    private fun EyesightAnalysisRunning(ctx: Context, viewModel: EyesightAnalysisViewModel){
+    private fun EyesightAnalysisRunning(viewModel: EyesightDragDropViewModel) {
+        val ctx = LocalContext.current
         val uiState = viewModel.uiState.collectAsState().value
-
         val allLettersPlaced = remember(viewModel.enabledStates) {
             derivedStateOf { viewModel.enabledStates.all { !it.value } }
         }
@@ -143,206 +109,74 @@ class EyesightAnalysisScreen : AppCompatActivity() {
                 viewModel.validateResult()
             }
         }
-
+        val modifier = Modifier.fillMaxWidth()
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.eyesight_analysis_label),
+                text = stringResource(id = R.string.eyesight_drag_drop_label),
                 style = MaterialTheme.typography.headlineSmall
             )
-
             Spacer(modifier = Modifier.weight(0.1f))
-
-            val imageId = resources.getIdentifier(uiState.wordResourcesId, "drawable", ctx.packageName)
-
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.7f),
-                painter = painterResource(id = imageId),
-                contentDescription = "image"
-            )
-
-            DragDropBoxes(
-                modifier = Modifier.weight(0.7f),
-                uiState = uiState,
-                viewModel = viewModel
-            )
-        }
-    }
-
-    @Composable
-    private fun DragDropBoxes(
-        modifier: Modifier,
-        uiState: EyesightAnalysisUiState,
-        viewModel: EyesightAnalysisViewModel
-    ) {
-        Column(
-            modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                maxItemsInEachRow = 5
+            Row(
+                modifier = modifier
             ) {
-                for (i in uiState.currentWord.indices) {
-                    key(i){
-                        DropBox(
-                            index = i,
-                            viewModel = viewModel,
-                            toggleDragSourceAbility = { sourceIndex, enabled ->
-                                if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
-                                    viewModel.enabledStates[sourceIndex].value = enabled
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                maxItemsInEachRow = 5
-            ) {
-                for (i in uiState.currentWord.indices) {
-                    key(i) {
+                val word = uiState.currentWord
+                val wordParts = word.to3Parts()
+                // LEFT BOXES
+                Column(
+                    modifier = modifier,
+                ) {
+                    val letters = wordParts[0].reversed()
+                    for (i in letters.indices){
+                        val idx = letters.length-1 - i
                         DragBox(
-                            letter = uiState.currentWord[i],
-                            enabled = viewModel.enabledStates[i].value,
-                            index = i
+                            letter = letters[i],
+                            enabled = viewModel.enabledStates[idx].value,
+                            index = idx
                         )
                     }
                 }
+
+                Column(
+
+                ) {
+                    Row(
+
+                    ) {
+
+                    }
+                    val imageId = resources.getIdentifier(uiState.wordResourcesId, "drawable", ctx.packageName)
+                    Image(
+                        painter = painterResource(id = R.drawable.dummy_img_500),
+                        contentDescription = "image"
+                    )
+                }
+
+                Column(
+
+                ) {
+
+                }
             }
         }
     }
 
-    @Composable
-    private fun DropBox(
-        index: Int,
-        viewModel: EyesightAnalysisViewModel,
-        toggleDragSourceAbility: (index: Int, enabled: Boolean) -> Unit
-    ) {
-        val resetDropFlag = viewModel.resetDropFlag.collectAsState()
-        var dragSourceIndex by remember { mutableIntStateOf(-1) }
-        var label by remember { mutableStateOf(" ") }
-        val hoverColor = MaterialTheme.colorScheme.primary
-        val defaultColor = MaterialTheme.colorScheme.surfaceVariant
-        var dropBoxColor by remember { mutableStateOf(defaultColor) }
+    private fun String.to3Parts(): List<String> {
+        val partSize = this.length / 3
+        val remainder = this.length % 3
 
-        LaunchedEffect(resetDropFlag.value) {
-            if (label != " "){
-                label = " "
-                dragSourceIndex = -1
-                viewModel.setResetDropFlag(false)
-            }
-        }
+        val firstEndIdx = partSize + if (remainder > 0) 1 else 0
+        val secondEndIdx = firstEndIdx + partSize + if (remainder > 1) 1 else 0
 
-        val dropTarget = remember(resetDropFlag.value) {
-            object : DragAndDropTarget {
-                override fun onMoved(event: DragAndDropEvent) {
-                    super.onMoved(event)
-                    if (label == " ") dropBoxColor = hoverColor
-                }
-                override fun onExited(event: DragAndDropEvent) {
-                    super.onExited(event)
-                    dropBoxColor = defaultColor
-                }
-                override fun onDrop(event: DragAndDropEvent): Boolean {
-                    dropBoxColor = defaultColor
-                    if (label != " ") return false
-
-                    val text = event.toAndroidDragEvent().clipData
-                        ?.getItemAt(0)?.text
-                    val dataList = text.toString().split('|')
-                    dragSourceIndex = dataList[0].toInt()
-                    toggleDragSourceAbility(dragSourceIndex, false)
-                    label = dataList[1]
-                    viewModel.addLetterAt(label[0], index)
-                    return true
-                }
-            }
-        }
-
-        Card(
-            modifier = Modifier
-                .dragAndDropTarget(
-                    shouldStartDragAndDrop = { event ->
-                        event
-                            .mimeTypes()
-                            .contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
-                    },
-                    target = dropTarget
-                ),
-            onClick = {
-                if (label != " "){
-                    label = " "
-                    toggleDragSourceAbility(dragSourceIndex, true)
-                    viewModel.removeLetterAt(index)
-                    dragSourceIndex = -1
-                }
-            },
-            colors = CardDefaults.cardColors(
-                containerColor = dropBoxColor
-            )
-        ) {
-            Text(
-                modifier = Modifier.padding(15.dp),
-                text = label,
-                fontSize = 42.sp,
-                fontFamily = FontFamily.Monospace
-            )
-        }
+        val parts = listOf(
+            this.substring(0, firstEndIdx),
+            this.substring(firstEndIdx, secondEndIdx),
+            this.substring(secondEndIdx)
+        )
+        return parts
     }
 
 
-    @Composable
-    private fun DragBox(
-        letter: Char,
-        enabled: Boolean,
-        index: Int
-    ) {
-        Card(
-            modifier = Modifier
-                .then(
-                    if (enabled) {
-                        Modifier.dragAndDropSource(
-//                    drawDragDecoration = {
-//
-//                    }
-                        ) {
-                            detectTapGestures(
-                                onPress = {
-                                    tryAwaitRelease()
-                                    startTransfer(
-                                        transferData = DragAndDropTransferData(
-                                            ClipData.newPlainText(
-                                                "text",
-                                                "$index|$letter"
-                                            )
-                                        )
-                                    )
-                                }
-                            )
-                        }
-                    } else Modifier.alpha(0.5f)
-                )
-                .border(
-                    BorderStroke(2.dp, if (enabled) Color.Green else Color.Gray),
-                    CardDefaults.shape
-                )
-        ) {
-            Text(
-                modifier = Modifier
-                    .padding(15.dp),
-                text = letter.toString(),
-                fontSize = 28.sp
-            )
-        }
-    }
 }

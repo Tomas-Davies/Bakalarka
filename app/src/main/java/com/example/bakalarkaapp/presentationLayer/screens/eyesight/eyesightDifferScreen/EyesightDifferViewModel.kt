@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.bakalarkaapp.dataLayer.EyesightDifferRepo
 import com.example.bakalarkaapp.dataLayer.Round
+import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,18 +19,12 @@ data class EyesightDifferUiState(
     val questionNumber: Int
 )
 
-class EyesightDifferViewModel(differRepo: EyesightDifferRepo): ViewModel() {
+class EyesightDifferViewModel(differRepo: EyesightDifferRepo): BaseViewModel() {
     private val data = differRepo.data
             .shuffled()
             .sortedBy { differItem -> differItem.rounds.size  }
-    private var roundIdx = 0
     private var questionIdx = 0
     private var currentItem = data[roundIdx]
-    private var isFirstCorrectAttempt = true
-    private var isFirstWrongAttempt = true
-    private var score = 0
-    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Running)
-    val screenState: StateFlow<ScreenState> = _screenState.asStateFlow()
 
     private var questionNumber = 1
 
@@ -43,10 +38,11 @@ class EyesightDifferViewModel(differRepo: EyesightDifferRepo): ViewModel() {
 
         )
     )
-
     val uiState: StateFlow<EyesightDifferUiState> = _uiState.asStateFlow()
-    var count = getQuestionsCount()
-        private set
+    init {
+        count = getQuestionsCount()
+    }
+
 
     fun validateAnswer(answer: String) {
         val correctAnswers = getCorrectAnswers()
@@ -64,41 +60,37 @@ class EyesightDifferViewModel(differRepo: EyesightDifferRepo): ViewModel() {
         }
     }
 
-    fun restart(){
-        roundIdx = 0
+    override fun doRestart(){
         questionIdx = 0
         currentItem = data[roundIdx]
         questionNumber = 1
         completeUiStateUpdate()
-        _screenState.value = ScreenState.Running
-    }
-
-    fun scorePercentage(): Int {
-        val correctCount = score
-        val questionCount = count
-        return (correctCount * 100) / questionCount
     }
 
     private fun nextQuestion(){
         val questions = getQuestions()
         if (questionIdx < questions.size-1){
-            resetAttemptFlags()
-            questionNumber++
-            questionIdx++
-            _uiState.update { currentState ->
-                currentState.copy(
-                    correctAnswers = getCorrectAnswers(),
-                    question = getQuestion(),
-                    questionNumber = questionNumber
-
-                )
-            }
+            updateData()
         } else {
             nextRound()
         }
     }
 
-    private fun nextRound(){
+    override fun updateData() {
+        resetAttemptFlags()
+        questionNumber++
+        questionIdx++
+        _uiState.update { currentState ->
+            currentState.copy(
+                correctAnswers = getCorrectAnswers(),
+                question = getQuestion(),
+                questionNumber = questionNumber
+
+            )
+        }
+    }
+
+    override fun nextRound(): Boolean{
         questionIdx = 0
         if (roundIdx < data.size-1){
             resetAttemptFlags()
@@ -106,8 +98,10 @@ class EyesightDifferViewModel(differRepo: EyesightDifferRepo): ViewModel() {
             roundIdx++
             currentItem = data[roundIdx]
             completeUiStateUpdate()
+            return true
         } else {
             _screenState.value = ScreenState.Finished
+            return false
         }
     }
 
@@ -154,12 +148,6 @@ class EyesightDifferViewModel(differRepo: EyesightDifferRepo): ViewModel() {
         }
         return counter
     }
-
-    private fun resetAttemptFlags(){
-        isFirstCorrectAttempt = true
-        isFirstWrongAttempt = true
-    }
-
 }
 
 class EyesightDifferViewModelFactory(private val differRepo: EyesightDifferRepo): ViewModelProvider.Factory {

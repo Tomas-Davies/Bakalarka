@@ -3,36 +3,38 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.bakalarkaapp.dataLayer.EyesightMemoryRepo
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlin.random.Random
 
 data class EyesightMemoryUiState(
     var objectDrawableIds: List<String>,
     var round: Int
 )
-class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): ViewModel() {
+class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): BaseViewModel() {
     private val data = memoryRepo.data
         .shuffled()
         .sortedBy { item -> item.objects.size }
-
-    private var roundIdx = 0
     private var currentObjects = data[roundIdx].objects
         .map { it.value }
         .toMutableList()
-
-    private var currentExtraObject = data[roundIdx].extraObject.value
+    private var currentExtraObject = ""
     private var _uiState = MutableStateFlow(EyesightMemoryUiState(currentObjects, roundIdx + 1))
     val uiState = _uiState.asStateFlow()
-    private var _screenState = MutableStateFlow<ScreenState>(ScreenState.Running)
-    var screenState = _screenState.asStateFlow()
-    private var isFirstCorrectAttempt = true
-    private var isFirstWrongAttempt = true
-    private var score = 0
-    var count = data.size
     var enabled = false
+
+    init {
+        count = data.size
+        chooseExtraObject()
+    }
+
+    private fun chooseExtraObject(){
+        val randomIndex = Random.nextInt(currentObjects.size)
+        currentExtraObject = currentObjects[randomIndex]
+        currentObjects.removeAt(randomIndex)
+    }
 
     fun validateAnswer(answer: String): Boolean {
         if (answer == currentExtraObject){
@@ -40,7 +42,7 @@ class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): ViewModel() {
                 score++
                 isFirstCorrectAttempt = false
             }
-            indexInc()
+            nextRound()
             updateData()
             return true
         } else {
@@ -52,17 +54,9 @@ class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): ViewModel() {
         }
     }
 
-    fun restart(){
-        roundIdx = 0
+    override fun doRestart() {
         score = 0
         updateData()
-        _screenState.value = ScreenState.Running
-    }
-
-    fun scorePercentage(): Int {
-        val correctCount = score
-        val questionCount = count
-        return (correctCount * 100) / questionCount
     }
 
     fun showExtraItem(){
@@ -75,33 +69,19 @@ class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): ViewModel() {
         }
     }
 
-    private fun updateData(){
+    override fun updateData(){
         enabled = false
         resetAttemptFlags()
         currentObjects = data[roundIdx].objects
             .map { it.value }
             .toMutableList()
-
-        currentExtraObject = data[roundIdx].extraObject.value
+        chooseExtraObject()
         _uiState.update { state ->
             state.copy(
                 objectDrawableIds = currentObjects,
                 round = roundIdx + 1
             )
         }
-    }
-
-    private fun indexInc(){
-        if (roundIdx+1 < data.size){
-            roundIdx++
-        } else {
-            _screenState.value = ScreenState.Finished
-        }
-    }
-
-    private fun resetAttemptFlags(){
-        isFirstCorrectAttempt = true
-        isFirstWrongAttempt = true
     }
 }
 

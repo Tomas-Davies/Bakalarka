@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.theme.AppTheme
 
 class TalesScreen: AppCompatActivity() {
@@ -29,7 +30,7 @@ class TalesScreen: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme("tales") {
+            AppTheme(ThemeType.THEME_TALES) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

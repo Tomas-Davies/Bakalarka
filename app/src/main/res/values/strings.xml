@@ -814,7 +814,8 @@
     </string-array>
 
 
-    <string-array name="EyesightAnalysisWords">
+    <!-- WORD LENGTH MAX 5 !!! -->
+    <string-array name="EyesightSynthesisWords">
         <item>Myška</item>
         <item>Mašle</item>
         <item>Dárek</item>
@@ -828,7 +829,21 @@
         <item>Kovář</item>
     </string-array>
 
-    <string name="eyesight_analysis_label">Přesuň písmenka podle obrázku</string>
+    <string-array name="EyesightAnalysisWords">
+        <item>Dodávka</item>
+        <item>Elektrika</item>
+        <item>Guláš</item>
+        <item>Hnízdo</item>
+        <item>Houba</item>
+        <item>Kabelka</item>
+        <item>Kilogram</item>
+        <item>Leknín</item>
+        <item>Nádoba</item>
+        <item>Obrázek</item>
+        <item>Ovce</item>
+    </string-array>
+
+    <string name="eyesight_drag_drop_label">Přesuň písmenka podle obrázku</string>
     <string name="eyesight_memory_label_1">Zapamatuj si tyto obrázky</string>
     <string name="eyesight_memory_label_2">Vyber obrázek, který je navíc</string>
 </resources>

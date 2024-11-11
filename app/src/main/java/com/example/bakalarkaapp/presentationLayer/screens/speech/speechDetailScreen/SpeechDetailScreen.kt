@@ -44,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.theme.AppTheme
 
 class SpeechDetailScreen: ComponentActivity() {
@@ -59,7 +60,7 @@ class SpeechDetailScreen: ComponentActivity() {
         }
 
         setContent {
-            AppTheme("speech") {
+            AppTheme(ThemeType.THEME_SPEECH) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

@@ -30,6 +30,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmClapScreen.RythmClapScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmPexesoScreen.RythmPexesoScreen
@@ -41,7 +42,7 @@ class RythmScreen: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme("rythm") {
+            AppTheme(ThemeType.THEME_RYTHM) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

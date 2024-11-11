@@ -1,10 +1,11 @@
-package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightAnalysisScreen
+package com.example.bakalarkaapp.presentationLayer.components.dragDrop
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.shuffle
 import com.example.bakalarkaapp.toDrawableId
@@ -15,31 +16,29 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-data class EyesightAnalysisUiState(
+data class EyesightDragDropUiState(
     val wordResourcesId: String,
     val currentWord: String
 )
 
-class EyesightAnalysisViewModel(private val words: Array<String>) : ViewModel() {
-    private var index = 0
-    private var word = words[index]
+class EyesightDragDropViewModel(private val words: Array<String>) : BaseViewModel() {
+    private var word = words[roundIdx]
     private var wordMixed = word.uppercase().shuffle()
     private var userWord = CharArray(word.length)
-    private var score = 0
     private var alreadyFailed = false
 
     private var _enabledStates = List(word.length) { mutableStateOf(true) }
     val enabledStates: List<MutableState<Boolean>> get() = _enabledStates
 
-    private val _uiState = MutableStateFlow(EyesightAnalysisUiState(word.toDrawableId(), wordMixed))
-    val uiState: StateFlow<EyesightAnalysisUiState> = _uiState.asStateFlow()
-
-    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Running)
-    val screenState: StateFlow<ScreenState> = _screenState.asStateFlow()
+    private val _uiState = MutableStateFlow(EyesightDragDropUiState(word.toDrawableId(), wordMixed))
+    val uiState: StateFlow<EyesightDragDropUiState> = _uiState.asStateFlow()
 
     private val _resetDropFlag = MutableStateFlow(false)
     val resetDropFlag: StateFlow<Boolean> = _resetDropFlag.asStateFlow()
 
+    init {
+        count = words.size
+    }
 
     fun addLetterAt(letter: Char, index: Int) {
         if (index < word.length) {
@@ -83,10 +82,10 @@ class EyesightAnalysisViewModel(private val words: Array<String>) : ViewModel() 
         }
     }
 
-    private fun updateData() {
+    override fun updateData() {
         alreadyFailed = false
-        if (indexInc()){
-            word = words[index]
+        if (nextRound()){
+            word = words[roundIdx]
             wordMixed = word.uppercase().shuffle()
             userWord = CharArray(word.length)
 
@@ -113,26 +112,8 @@ class EyesightAnalysisViewModel(private val words: Array<String>) : ViewModel() 
         }
     }
 
-    private fun indexInc(): Boolean {
-        if (index + 1 < words.size) {
-            index++
-            return true
-        } else {
-            _screenState.value = ScreenState.Finished
-            return false
-        }
-    }
-
-    fun scorePercentage(): Int {
-        val correctCount = score
-        val questionCount = words.size
-        return (correctCount * 100) / questionCount
-    }
-
-    fun restart() {
-        index = 0
-        score = 0
-        word = words[index]
+    override fun doRestart() {
+        word = words[roundIdx]
         wordMixed = word.uppercase().shuffle()
         userWord = CharArray(word.length)
         _enabledStates = List(word.length) { mutableStateOf(true) }
@@ -144,14 +125,15 @@ class EyesightAnalysisViewModel(private val words: Array<String>) : ViewModel() 
             _resetDropFlag.emit(false)
         }
     }
+
 }
 
-class EyesightAnalysisViewModelFactory(private val words: Array<String>) :
+class EyesightDragDropViewModelFactory(private val words: Array<String>) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EyesightAnalysisViewModel::class.java)) {
-            return EyesightAnalysisViewModel(words) as T
+        if (modelClass.isAssignableFrom(EyesightDragDropViewModel::class.java)) {
+            return EyesightDragDropViewModel(words) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightComparisonViewModel")
     }

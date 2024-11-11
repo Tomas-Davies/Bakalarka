@@ -4,26 +4,26 @@
         <object>cmelak</object>
         <object>buvol</object>
         <object>beruska</object>
-        <extraObject>kos</extraObject>
+        <object>kos</object>
     </round>
     <round>
         <object>kachna</object>
         <object>ker</object>
         <object>kilogram</object>
-        <extraObject>knoflik</extraObject>
+        <object>knoflik</object>
     </round>
     <round>
         <object>cesnek</object>
         <object>cibule</object>
         <object>chleba</object>
         <object>cise</object>
-        <extraObject>clun</extraObject>
+        <object>clun</object>
     </round>
     <round>
         <object>dum</object>
         <object>kabelka</object>
         <object>kaktus</object>
         <object>kompas</object>
-        <extraObject>maslo</extraObject>
+        <object>maslo</object>
     </round>
 </data>

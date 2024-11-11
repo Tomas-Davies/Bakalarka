@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -54,7 +55,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme("eyesight") {
+            AppTheme(ThemeType.THEME_EYESIGHT) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -142,7 +143,6 @@ class EyesightComparisonScreen : AppCompatActivity() {
                             onClick = {
                                 onCompareButtonClick(
                                     true,
-                                    uiState.answer,
                                     viewModel,
                                     ctx,
                                     R.raw.correct_answer,
@@ -159,7 +159,6 @@ class EyesightComparisonScreen : AppCompatActivity() {
                             onClick = {
                                 onCompareButtonClick(
                                     false,
-                                    uiState.answer,
                                     viewModel,
                                     ctx,
                                     R.raw.correct_answer,
@@ -218,17 +217,13 @@ class EyesightComparisonScreen : AppCompatActivity() {
 
 fun onCompareButtonClick(
     userAnswer: Boolean,
-    correctAnswer: Boolean,
     viewModel: EyesightComparisonViewModel,
     ctx: Context, correctSoundId: Int,
     wrongSoundId: Int
 ) {
-    if (userAnswer == correctAnswer) {
-        viewModel.scoreInc()
+    if (viewModel.validateAnswer(userAnswer)){
         playSound(ctx, correctSoundId)
-        viewModel.updateData()
     } else {
-        viewModel.scoreDesc()
         playSound(ctx, wrongSoundId)
     }
 }

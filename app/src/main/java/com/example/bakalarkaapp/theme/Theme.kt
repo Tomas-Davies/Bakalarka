@@ -10,6 +10,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.example.bakalarkaapp.ThemeType
 
 
 private val SpeechLightColors = lightColorScheme(
@@ -335,24 +336,26 @@ private val TalesDarkColors = darkColorScheme(
 
 @Composable
 fun AppTheme(
-    type: String = "speech",
+    type: Int = ThemeType.THEME_SPEECH,
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     var colors = SpeechDarkColors
     if (!useDarkTheme) {
         when(type){
-            "speech" -> {colors = SpeechLightColors}
-            "eyesight" -> {colors = EyesightLightColors}
-            "hearing" -> {colors = HearingLightColors}
-            "rythm" -> {colors = RythmLightColors}
+            ThemeType.THEME_SPEECH -> {colors = SpeechLightColors}
+            ThemeType.THEME_EYESIGHT -> {colors = EyesightLightColors}
+            ThemeType.THEME_HEARING -> {colors = HearingLightColors}
+            ThemeType.THEME_RYTHM -> {colors = RythmLightColors}
+            ThemeType.THEME_TALES -> {colors = TalesLightColors}
         }
   } else {
         when(type){
-            "speech" -> {colors = SpeechDarkColors}
-            "eyesight" -> {colors = EyesightDarkColors}
-            "hearing" -> {colors = HearingDarkColors}
-            "rythm" -> {colors = RythmDarkColors}
+            ThemeType.THEME_SPEECH -> {colors = SpeechDarkColors}
+            ThemeType.THEME_EYESIGHT -> {colors = EyesightDarkColors}
+            ThemeType.THEME_HEARING -> {colors = HearingDarkColors}
+            ThemeType.THEME_RYTHM -> {colors = RythmDarkColors}
+            ThemeType.THEME_TALES -> {colors = TalesDarkColors}
         }
   }
 

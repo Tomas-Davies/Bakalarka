@@ -17,9 +17,6 @@ class MemoryItem {
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "object")
     val objects: List<TextValue> = emptyList()
-
-    @JacksonXmlProperty(localName = "extraObject")
-    val extraObject: TextValue = TextValue()
 }
 
 @JacksonXmlRootElement(localName = "data")

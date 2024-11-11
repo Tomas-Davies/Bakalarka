@@ -30,12 +30,13 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightAnalysisScreen.EyesightAnalysisScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthScreen.EyesightSynthScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightAnalysisScreen.EyesightAnalysisScreen
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightScreen: AppCompatActivity() {
@@ -43,7 +44,7 @@ class EyesightScreen: AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme("eyesight") {
+            AppTheme(ThemeType.THEME_EYESIGHT) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -156,7 +157,7 @@ private fun onCardClicked(ctx: Context, id: Int) {
         1 -> intent = Intent(ctx, EyesightAnalysisScreen::class.java)
         2 -> intent = Intent(ctx, EyesightDifferScreen::class.java)
         3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
-        4 -> intent = Intent(ctx, EyesightSynthScreen::class.java)
+        4 -> intent = Intent(ctx, EyesightSynthesisScreen::class.java)
     }
 
     ctx.startActivity(intent)
