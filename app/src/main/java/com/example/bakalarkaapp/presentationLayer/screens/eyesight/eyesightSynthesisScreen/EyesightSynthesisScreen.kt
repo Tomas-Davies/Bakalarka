@@ -171,7 +171,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 maxItemsInEachRow = 5
             ) {
-                for (i in uiState.currentWord.indices) {
+                for (i in uiState.mixedWord.indices) {
                     key(i){
                         DropBox(
                             index = i,
@@ -191,10 +191,10 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 maxItemsInEachRow = 5
             ) {
-                for (i in uiState.currentWord.indices) {
+                for (i in uiState.mixedWord.indices) {
                     key(i) {
                         DragBox(
-                            letter = uiState.currentWord[i],
+                            letter = uiState.mixedWord[i],
                             enabled = viewModel.enabledStates[i].value,
                             index = i
                         )

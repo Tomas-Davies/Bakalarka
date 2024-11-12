@@ -830,17 +830,28 @@
     </string-array>
 
     <string-array name="EyesightAnalysisWords">
-        <item>Dodávka</item>
-        <item>Elektrika</item>
-        <item>Guláš</item>
-        <item>Hnízdo</item>
-        <item>Houba</item>
-        <item>Kabelka</item>
-        <item>Kilogram</item>
-        <item>Leknín</item>
-        <item>Nádoba</item>
-        <item>Obrázek</item>
-        <item>Ovce</item>
+<!--        <item>Dodávka</item>-->
+<!--        <item>Elektrika</item>-->
+<!--        <item>Guláš</item>-->
+<!--        <item>Hnízdo</item>-->
+<!--        <item>Houba</item>-->
+<!--        <item>Kabelka</item>-->
+<!--        <item>Kilogram</item>-->
+<!--        <item>Leknín</item>-->
+<!--        <item>Nádoba</item>-->
+<!--        <item>Obrázek</item>-->
+<!--        <item>Ovce</item>-->
+        <item>Myška</item>
+        <item>Mašle</item>
+        <item>Dárek</item>
+        <item>Sýr</item>
+        <item>Šest</item>
+        <item>Žába</item>
+        <item>Člun</item>
+        <item>Sova</item>
+        <item>Keř</item>
+        <item>Pekař</item>
+        <item>Kovář</item>
     </string-array>
 
     <string name="eyesight_drag_drop_label">Přesuň písmenka podle obrázku</string>

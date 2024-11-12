@@ -18,10 +18,12 @@ import kotlinx.coroutines.launch
 
 data class EyesightDragDropUiState(
     val wordResourcesId: String,
-    val currentWord: String
+    val mixedWord: String,
+    val currendWord: String
 )
 
-class EyesightDragDropViewModel(private val words: Array<String>) : BaseViewModel() {
+class EyesightDragDropViewModel(data: Array<String>) : BaseViewModel() {
+    private val words = data.sortedBy { w -> w.length }
     private var word = words[roundIdx]
     private var wordMixed = word.uppercase().shuffle()
     private var userWord = CharArray(word.length)
@@ -30,7 +32,8 @@ class EyesightDragDropViewModel(private val words: Array<String>) : BaseViewMode
     private var _enabledStates = List(word.length) { mutableStateOf(true) }
     val enabledStates: List<MutableState<Boolean>> get() = _enabledStates
 
-    private val _uiState = MutableStateFlow(EyesightDragDropUiState(word.toDrawableId(), wordMixed))
+    private val _uiState =
+        MutableStateFlow(EyesightDragDropUiState(word.toDrawableId(), wordMixed, word.uppercase()))
     val uiState: StateFlow<EyesightDragDropUiState> = _uiState.asStateFlow()
 
     private val _resetDropFlag = MutableStateFlow(false)
@@ -64,10 +67,11 @@ class EyesightDragDropViewModel(private val words: Array<String>) : BaseViewMode
         }
     }
 
-    private fun scoreInc(){
+    private fun scoreInc() {
         score++
     }
-    private fun scoreDesc(){
+
+    private fun scoreDesc() {
         if (!alreadyFailed) {
             score--
             alreadyFailed = true
@@ -84,14 +88,14 @@ class EyesightDragDropViewModel(private val words: Array<String>) : BaseViewMode
 
     override fun updateData() {
         alreadyFailed = false
-        if (nextRound()){
+        if (nextRound()) {
             word = words[roundIdx]
             wordMixed = word.uppercase().shuffle()
             userWord = CharArray(word.length)
+            _enabledStates = List(word.length) { mutableStateOf(true) }
 
             viewModelScope.launch {
                 _resetDropFlag.emit(true)
-                _enabledStates = List(word.length) { mutableStateOf(true) }
                 updateState()
             }
         }
@@ -107,7 +111,8 @@ class EyesightDragDropViewModel(private val words: Array<String>) : BaseViewMode
         _uiState.update { currentState ->
             currentState.copy(
                 wordResourcesId = word.toDrawableId(),
-                currentWord = wordMixed
+                mixedWord = wordMixed,
+                currendWord = word.uppercase()
             )
         }
     }

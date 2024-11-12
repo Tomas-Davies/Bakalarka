@@ -68,6 +68,7 @@ fun DropBox(
                 toggleDragSourceAbility(dragSourceIndex, false)
                 label = dataList[1]
                 viewModel.addLetterAt(label[0], index)
+
                 return true
             }
         }
