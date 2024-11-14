@@ -1,7 +1,4 @@
-@file:OptIn(
-    ExperimentalLayoutApi::class,
-    ExperimentalMaterial3Api::class
-)
+@file:OptIn(ExperimentalLayoutApi::class)
 
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen
 
@@ -16,7 +13,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,6 +37,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -47,11 +47,11 @@ import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DragBox
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DropBox
-import com.example.bakalarkaapp.presentationLayer.components.dragDrop.EyesightDragDropUiState
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.EyesightDragDropViewModel
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.EyesightDragDropViewModelFactory
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
+
 
 class EyesightSynthesisScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +77,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     }
 
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun EyesightSynthesisScreenContent(viewModel: EyesightDragDropViewModel) {
         val ctx = LocalContext.current
@@ -98,11 +99,12 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 val screenState = viewModel.screenState.collectAsState().value
                 when (screenState) {
-                    is ScreenState.Running -> EyesightSynthesisRunning(ctx, viewModel)
+                    is ScreenState.Running -> EyesightSynthesisScreenRunning(ctx, viewModel)
                     is ScreenState.Finished -> ResultScreen(
                         viewModel.scorePercentage(),
                         onRestartBtnClick = { viewModel.restart() }
@@ -113,7 +115,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     }
 
     @Composable
-    private fun EyesightSynthesisRunning(ctx: Context, viewModel: EyesightDragDropViewModel){
+    private fun EyesightSynthesisScreenRunning(ctx: Context, viewModel: EyesightDragDropViewModel) {
         val uiState = viewModel.uiState.collectAsState().value
 
         val allLettersPlaced = remember(viewModel.enabledStates) {
@@ -125,56 +127,37 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 viewModel.validateResult()
             }
         }
+        val modifier = Modifier.fillMaxWidth()
+
+        Text(
+            modifier = Modifier,
+            text = stringResource(id = R.string.eyesight_drag_drop_label),
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        val word = uiState.currendWord
+        val wordParts = word.to3Parts()
+        val topIndexesStart = wordParts[0].length
+        val rightIndexesStart = topIndexesStart + wordParts[1].length
 
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(id = R.string.eyesight_drag_drop_label),
-                style = MaterialTheme.typography.headlineSmall
-            )
+            Spacer(modifier = Modifier.weight(0.5f))
 
-            Spacer(modifier = Modifier.weight(0.1f))
-
-            val imageId = resources.getIdentifier(uiState.wordResourcesId, "drawable", ctx.packageName)
-
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.7f),
-                painter = painterResource(id = imageId),
-                contentDescription = "image"
-            )
-
-            DragDropBoxes(
-                modifier = Modifier.weight(0.7f),
-                uiState = uiState,
-                viewModel = viewModel
-            )
-        }
-    }
-
-    @Composable
-    private fun DragDropBoxes(
-        modifier: Modifier,
-        uiState: EyesightDragDropUiState,
-        viewModel: EyesightDragDropViewModel
-    ) {
-        Column(
-            modifier = modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
+            // TOP BOXES
+            Row(
+                modifier = modifier,
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                maxItemsInEachRow = 5
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                for (i in uiState.mixedWord.indices) {
-                    key(i){
+                val letters = wordParts[1]
+                var position = topIndexesStart
+                for (i in letters.indices) {
+                    key(position) {
                         DropBox(
-                            index = i,
+                            index = position,
                             viewModel = viewModel,
                             toggleDragSourceAbility = { sourceIndex, enabled ->
                                 if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
@@ -183,24 +166,116 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                             }
                         )
                     }
+                    position++
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // LEFT BOXES
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    val letters = wordParts[0].reversed()
+                    for (i in letters.indices.reversed()) {
+                        key(i) {
+                            DropBox(
+                                index = i,
+                                viewModel = viewModel,
+                                toggleDragSourceAbility = { sourceIndex, enabled ->
+                                    if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
+                                        viewModel.enabledStates[sourceIndex].value = enabled
+                                    }
+                                }
+                            )
+                        }
+                    }
+                }
+
+                // CENTER IMAGE
+                val imageId = ctx.resources.getIdentifier(
+                    uiState.wordResourcesId,
+                    "drawable",
+                    ctx.packageName
+                )
+                Image(
+                    modifier = modifier
+                        .weight(5f),
+                    painter = painterResource(id = imageId),
+                    contentDescription = "image",
+                    contentScale = ContentScale.FillWidth
+                )
+
+                // RIGHT BOXES
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .weight(1f),
+                    horizontalAlignment = Alignment.End,
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    var position = rightIndexesStart
+                    val letters = wordParts[2]
+                    for (i in letters.indices) {
+                        key(position) {
+                            DropBox(
+                                index = position,
+                                viewModel = viewModel,
+                                toggleDragSourceAbility = { sourceIndex, enabled ->
+                                    if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
+                                        viewModel.enabledStates[sourceIndex].value = enabled
+                                    }
+                                }
+                            )
+                        }
+                        position++
+                    }
                 }
             }
 
             FlowRow(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = modifier.weight(1f),
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                maxItemsInEachRow = 5
+                maxItemsInEachRow = 6,
+                verticalArrangement = Arrangement.Center
             ) {
-                for (i in uiState.mixedWord.indices) {
-                    key(i) {
+                val letters = uiState.mixedWord
+
+                for (position in uiState.mixedWord.indices) {
+                    key(position) {
                         DragBox(
-                            letter = uiState.mixedWord[i],
-                            enabled = viewModel.enabledStates[i].value,
-                            index = i
+                            letter = letters[position],
+                            enabled = viewModel.enabledStates[position].value,
+                            index = position
                         )
                     }
                 }
             }
         }
     }
+
+    private fun String.to3Parts(): List<String> {
+        val partSize = this.length / 3
+        val remainder = this.length % 3
+
+        val firstEndIdx = partSize + if (remainder > 0) 1 else 0
+        val secondEndIdx = firstEndIdx + partSize + if (remainder > 1) 1 else 0
+
+        val parts = listOf(
+            this.substring(0, firstEndIdx),
+            this.substring(firstEndIdx, secondEndIdx),
+            this.substring(secondEndIdx)
+        )
+        return parts
+    }
+
+
 }

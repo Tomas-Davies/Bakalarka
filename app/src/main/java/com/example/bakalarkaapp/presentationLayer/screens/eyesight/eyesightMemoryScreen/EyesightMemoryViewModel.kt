@@ -55,7 +55,6 @@ class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): BaseViewModel() {
     }
 
     override fun doRestart() {
-        score = 0
         updateData()
     }
 

@@ -36,7 +36,7 @@ import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynth
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightAnalysisScreen.EyesightAnalysisScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.imageSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightScreen: AppCompatActivity() {
@@ -154,7 +154,7 @@ class EyesightScreen: AppCompatActivity() {
 private fun onCardClicked(ctx: Context, id: Int) {
     var intent = Intent(ctx, EyesightComparisonScreen::class.java)
     when(id){
-        1 -> intent = Intent(ctx, EyesightAnalysisScreen::class.java)
+        1 -> intent = Intent(ctx, EyesightSearchScreen::class.java)
         2 -> intent = Intent(ctx, EyesightDifferScreen::class.java)
         3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
         4 -> intent = Intent(ctx, EyesightSynthesisScreen::class.java)

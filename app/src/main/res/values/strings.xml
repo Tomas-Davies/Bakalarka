@@ -12,19 +12,19 @@
     <string name="play_sound_label">Přehrát</string>
 
     <string name="eyesight_menu_label_1">Porovnání</string>
-    <string name="eyesight_menu_label_2">Analýza</string>
+    <string name="eyesight_menu_label_2">Hledání</string>
     <string name="eyesight_menu_label_3">Rozlišení</string>
     <string name="eyesight_menu_label_4">Paměť</string>
     <string name="eyesight_menu_label_5">Syntéza</string>
 
     <string name="eyesight_menu_label_long_1">Zraková diferenciace</string>
-    <string name="eyesight_menu_label_long_2">Zraková analýza</string>
+    <string name="eyesight_menu_label_long_2">Pozadí a figura</string>
     <string name="eyesight_menu_label_long_3">Pozadí a figura</string>
     <string name="eyesight_menu_label_long_4">Zraková paměť</string>
     <string name="eyesight_menu_label_long_5">Zraková syntéza</string>
 
     <string name="eyesight_pop_up_heading_1">Zraková diferenciace</string>
-    <string name="eyesight_pop_up_heading_2">Zraková analýza</string>
+    <string name="eyesight_pop_up_heading_2">Pozadí a figura</string>
     <string name="eyesight_pop_up_heading_3">Pozadí a figura</string>
     <string name="eyesight_pop_up_heading_4">Zraková paměť</string>
     <string name="eyesight_pop_up_heading_5">Zraková syntéza</string>
@@ -37,10 +37,11 @@
         rozeznávat drobné rozdíly mezi vizuálními objekty.
     </string>
     <string name="eyesight_pop_up_body_2">
-        Zraková analýza se týká schopnosti rozložit složitý vizuální podnět na jednotlivé části a
-        rozpoznat jeho strukturu. To znamená například umět rozpoznat tvary v složeném obrázku nebo
-        vyhledat specifický objekt v komplexní scéně. Rozvoj této dovednosti pomáhá dětem porozumět
-        složitým vizuálním informacím, což může podpořit schopnost číst a psát.
+        Schopnost rozlišit figuru od pozadí je klíčová pro vnímání objektů v prostoru. Tato dovednost
+        znamená, že dítě umí rozpoznat významný objekt (figuru) ve složitém nebo rušivém pozadí.
+        Například když je potřeba zaměřit se na jedno slovo ve větě, i když kolem jsou další slova
+        nebo obrázky. Rozvoj této schopnosti je důležitý pro efektivní orientaci v tištěném textu i
+        ve vizuálních scénách.
     </string>
     <string name="eyesight_pop_up_body_3">
         Schopnost rozlišit figuru od pozadí je klíčová pro vnímání objektů v prostoru. Tato dovednost
@@ -816,45 +817,21 @@
 
     <!-- WORD LENGTH MAX 5 !!! -->
     <string-array name="EyesightSynthesisWords">
-        <item>Myška</item>
-        <item>Mašle</item>
-        <item>Dárek</item>
-        <item>Sýr</item>
-        <item>Šest</item>
-        <item>Žába</item>
-        <item>Člun</item>
-        <item>Sova</item>
-        <item>Keř</item>
-        <item>Pekař</item>
-        <item>Kovář</item>
-    </string-array>
-
-    <string-array name="EyesightAnalysisWords">
-<!--        <item>Dodávka</item>-->
-<!--        <item>Elektrika</item>-->
-<!--        <item>Guláš</item>-->
-<!--        <item>Hnízdo</item>-->
-<!--        <item>Houba</item>-->
-<!--        <item>Kabelka</item>-->
-<!--        <item>Kilogram</item>-->
-<!--        <item>Leknín</item>-->
-<!--        <item>Nádoba</item>-->
-<!--        <item>Obrázek</item>-->
-<!--        <item>Ovce</item>-->
-        <item>Myška</item>
-        <item>Mašle</item>
-        <item>Dárek</item>
-        <item>Sýr</item>
-        <item>Šest</item>
-        <item>Žába</item>
-        <item>Člun</item>
-        <item>Sova</item>
-        <item>Keř</item>
-        <item>Pekař</item>
-        <item>Kovář</item>
+        <item>Dodávka</item>
+        <item>Elektrika</item>
+        <item>Guláš</item>
+        <item>Hnízdo</item>
+        <item>Houba</item>
+        <item>Kabelka</item>
+        <item>Kilogram</item>
+        <item>Leknín</item>
+        <item>Nádoba</item>
+        <item>Obrázek</item>
+        <item>Ovce</item>
     </string-array>
 
     <string name="eyesight_drag_drop_label">Přesuň písmenka podle obrázku</string>
     <string name="eyesight_memory_label_1">Zapamatuj si tyto obrázky</string>
     <string name="eyesight_memory_label_2">Vyber obrázek, který je navíc</string>
+    <string name="eyesight_search_label_1">Hledání - najdi skryté kočky</string>
 </resources>
