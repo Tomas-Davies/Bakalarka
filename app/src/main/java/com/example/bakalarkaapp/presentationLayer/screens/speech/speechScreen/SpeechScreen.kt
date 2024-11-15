@@ -6,10 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -188,12 +188,12 @@ class SpeechScreen: AppCompatActivity() {
         Card(
             modifier = modifier
                 .clip(RoundedCornerShape(16.dp))
-                .animateContentSize(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearOutSlowInEasing
-                    )
-                )
+//                .animateContentSize(
+//                    animationSpec = tween(
+//                        durationMillis = 300,
+//                        easing = LinearOutSlowInEasing
+//                    )
+//                )
                 .background(colorResource(id = R.color.speech_500))
                 .padding(10.dp),
             onClick = {
@@ -227,7 +227,11 @@ class SpeechScreen: AppCompatActivity() {
                 }
             }
 
-            if (!isCollapsedState){
+            AnimatedVisibility(
+                visible = !isCollapsedState,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

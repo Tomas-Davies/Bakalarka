@@ -834,4 +834,5 @@
     <string name="eyesight_memory_label_1">Zapamatuj si tyto obrázky</string>
     <string name="eyesight_memory_label_2">Vyber obrázek, který je navíc</string>
     <string name="eyesight_search_label_1">Hledání - najdi skryté kočky</string>
+    <string name="eyesight_search_label_2">Našel si všechny!</string>
 </resources>

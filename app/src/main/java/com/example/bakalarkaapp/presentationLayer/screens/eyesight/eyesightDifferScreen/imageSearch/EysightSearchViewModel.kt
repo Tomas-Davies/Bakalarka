@@ -2,19 +2,19 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiff
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.dataLayer.EyesightSearchRepo
 import com.example.bakalarkaapp.dataLayer.SearchItem
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class EyesightSearchUiState(
     val bgImageResource: String,
-    val items: List<SearchItem>,
-    val remaining: Int
+    val items: List<SearchItem>
 )
 
 class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() {
@@ -22,25 +22,34 @@ class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() 
     private var currentRound = rounds[roundIdx]
     private var _uiState = MutableStateFlow(
         EyesightSearchUiState(
-            currentRound.background.value,
-            currentRound.items,
-            0
+            bgImageResource = currentRound.background.value,
+            items = currentRound.items
         )
     )
     val uiState = _uiState.asStateFlow()
-    var itemsFound = 0
+    private var _foundAll = MutableStateFlow(false)
+    val foundAll = _foundAll.asStateFlow()
+    private var _itemsFound = MutableStateFlow(0)
+    var itemsFound = _itemsFound.asStateFlow()
+
 
     init {
         count = rounds.size
     }
 
     fun onItemClick() {
-        itemsFound++
-        if (itemsFound == currentRound.items.size) {
-            score++
-            itemsFound = 0
-            if (nextRound()) {
-                updateData()
+        _itemsFound.value++
+        if (itemsFound.value == currentRound.items.size) {
+            viewModelScope.launch {
+                _foundAll.emit(true)
+                score++
+                delay(2000)
+                _itemsFound.value = 0
+                _foundAll.emit(false)
+                delay(500)
+                if (nextRound()) {
+                    updateData()
+                }
             }
         }
     }

@@ -11,6 +11,11 @@ import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,6 +33,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,6 +50,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -60,10 +67,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.core.content.getSystemService
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
@@ -197,6 +204,39 @@ class EyesightSearchScreen : AppCompatActivity() {
                     }
                 }
             }
+            val foundAll = viewModel.foundAll.collectAsState().value
+            AnimatedVisibility(
+                modifier = Modifier.align(Alignment.Center),
+                visible = foundAll,
+                enter = scaleIn() + fadeIn(),
+                exit = scaleOut() + fadeOut()
+            ) {
+                ElevatedCard(
+                    modifier = Modifier.padding(15.dp)
+                ) {
+                    Text(
+                        modifier = Modifier.padding(15.dp),
+                        text = stringResource(id = R.string.eyesight_search_label_2),
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                }
+            }
+
+            ElevatedCard(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(10.dp)
+            ) {
+                val found = viewModel.itemsFound.collectAsState().value
+                Text(
+                    modifier = Modifier.padding(10.dp),
+                    text = "${found}/${uiState.items.size}",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
         }
     }
 
@@ -226,7 +266,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                             val yPercentage =
                                 (100 * (offset.y + maxY)) / (imageSize.height * scale)
 
-                            Log.w("LEVEL_INFO","x = $xPercentage%, y = $yPercentage%")
+                            Log.w("LEVEL_INFO", "x = $xPercentage%, y = $yPercentage%")
                         }
                     }
                 },
@@ -249,7 +289,7 @@ class EyesightSearchScreen : AppCompatActivity() {
         val yPos = (yPerc / 100f) * imageSize.height
         var visibility by remember { mutableStateOf(false) }
         var hideItem by remember { mutableStateOf(true) }
-        val overlaySize = with(LocalDensity.current){size.toPx()/ 2}
+        val overlaySize = with(LocalDensity.current) { size.toPx() / 2 }
         val overlayLayer = Rect(Offset(overlaySize, overlaySize), overlaySize)
         val modifier = Modifier
             .graphicsLayer {
@@ -259,7 +299,11 @@ class EyesightSearchScreen : AppCompatActivity() {
                 translationY = trY
             }
             .drawBehind {
-                val whiteComplement = Color(-(255 - itemColor.red).toInt(), (255 - itemColor.green).toInt() , (255 - itemColor.blue).toInt())
+                val whiteComplement = Color(
+                    -(255 - itemColor.red).toInt(),
+                    (255 - itemColor.green).toInt(),
+                    (255 - itemColor.blue).toInt()
+                )
                 val paint = Paint()
                 paint.color = whiteComplement
                 paint.blendMode = BlendMode.Plus
@@ -317,7 +361,8 @@ class EyesightSearchScreen : AppCompatActivity() {
 
     private fun getVibrator(): Vibrator {
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            val vibratorManager =
+                getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
             vibratorManager.defaultVibrator
         } else {
             @Suppress("DEPRECATION")
