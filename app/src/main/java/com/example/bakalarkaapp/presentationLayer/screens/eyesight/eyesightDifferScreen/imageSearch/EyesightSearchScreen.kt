@@ -1,7 +1,12 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.imageSearch
 
 import android.app.Activity
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -58,6 +63,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.core.content.getSystemService
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
@@ -290,6 +296,10 @@ class EyesightSearchScreen : AppCompatActivity() {
             .clickable(
                 enabled = !visibility
             ) {
+                val vibrator = getVibrator()
+                vibrator.vibrate(
+                    VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
+                )
                 viewModel.onItemClick()
                 visibility = true
                 hideItem = false
@@ -303,5 +313,17 @@ class EyesightSearchScreen : AppCompatActivity() {
                 else modifier
             ) {}
         }
+    }
+
+    private fun getVibrator(): Vibrator {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(VIBRATOR_SERVICE) as Vibrator
+        }
+
+        return vibrator
     }
 }
