@@ -1,15 +1,10 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.imageSearch
 
 import android.app.Activity
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.RuntimeShader
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -37,7 +32,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -47,43 +41,29 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.ShaderBrush
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.get
-import androidx.core.graphics.set
-import androidx.core.graphics.toColor
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.dataLayer.SearchItem
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
-import org.intellij.lang.annotations.Language
 
 class EyesightSearchScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -145,7 +125,6 @@ class EyesightSearchScreen : AppCompatActivity() {
         }
     }
 
-
     @Composable
     fun EyesightImageSearchRunning(viewModel: EyesightSearchViewModel) {
         val ctx = LocalContext.current
@@ -198,12 +177,16 @@ class EyesightSearchScreen : AppCompatActivity() {
 
                 for (item in uiState.items) {
                     key(item) {
+                        val r = item.color.r.value.toInt()
+                        val g = item.color.g.value.toInt()
+                        val b = item.color.b.value.toInt()
                         ItemOverlay(
                             viewModel = viewModel,
                             size = item.size.value.toInt().dp,
                             xPerc = item.x.value.toFloat(),
                             yPerc = item.y.value.toFloat(),
-                            imageSize = imageSize
+                            imageSize = imageSize,
+                            itemColor = Color(r, g, b)
                         )
                     }
                 }
@@ -251,7 +234,8 @@ class EyesightSearchScreen : AppCompatActivity() {
         viewModel: EyesightSearchViewModel,
         xPerc: Float,
         yPerc: Float,
-        imageSize: IntSize
+        imageSize: IntSize,
+        itemColor: Color
     ) {
         var trX: Float
         var trY: Float
@@ -259,7 +243,8 @@ class EyesightSearchScreen : AppCompatActivity() {
         val yPos = (yPerc / 100f) * imageSize.height
         var visibility by remember { mutableStateOf(false) }
         var hideItem by remember { mutableStateOf(true) }
-
+        val overlaySize = with(LocalDensity.current){size.toPx()/ 2}
+        val overlayLayer = Rect(Offset(overlaySize, overlaySize), overlaySize)
         val modifier = Modifier
             .graphicsLayer {
                 trX = xPos - size.toPx() / 2
@@ -268,13 +253,35 @@ class EyesightSearchScreen : AppCompatActivity() {
                 translationY = trY
             }
             .drawBehind {
+                val whiteComplement = Color(-(255 - itemColor.red).toInt(), (255 - itemColor.green).toInt() , (255 - itemColor.blue).toInt())
                 val paint = Paint()
-                paint.color = Color.White
-                paint.colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+                paint.color = whiteComplement
+                paint.blendMode = BlendMode.Plus
+                drawIntoCanvas {
+                    it.drawRect(
+                        overlayLayer,
+                        paint
+                    )
+                }
+            }
+            .drawBehind {
+                val paint = Paint()
+                paint.color = Color.Black
                 paint.blendMode = BlendMode.Saturation
                 drawIntoCanvas {
                     it.drawRect(
-                        Rect(Offset(size.toPx() / 2, size.toPx() / 2), size.toPx() / 2),
+                        overlayLayer,
+                        paint
+                    )
+                }
+            }
+            .drawBehind {
+                val paint = Paint()
+                paint.color = Color.DarkGray
+                paint.blendMode = BlendMode.ColorBurn
+                drawIntoCanvas {
+                    it.drawRect(
+                        overlayLayer,
                         paint
                     )
                 }

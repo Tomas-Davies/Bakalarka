@@ -3,7 +3,6 @@ package com.example.bakalarkaapp.dataLayer
 import android.content.Context
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.XmlUtils
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
@@ -14,6 +13,15 @@ class EyesightSearchRepo(context: Context) {
     val data: List<SearchRound> = mappedClass.data
 }
 
+@JacksonXmlRootElement(localName = "color")
+class ItemColor {
+    @JacksonXmlProperty(localName = "r")
+    val r = TextValue()
+    @JacksonXmlProperty(localName = "g")
+    val g = TextValue()
+    @JacksonXmlProperty(localName = "b")
+    val b = TextValue()
+}
 
 @JacksonXmlRootElement(localName = "item")
 class SearchItem {
@@ -23,7 +31,10 @@ class SearchItem {
     val y = TextValue()
     @JacksonXmlProperty(localName = "size")
     val size = TextValue()
+    @JacksonXmlProperty(localName = "color")
+    val color = ItemColor()
 }
+
 @JacksonXmlRootElement(localName = "round")
 class SearchRound {
     @JacksonXmlProperty(localName = "background")
