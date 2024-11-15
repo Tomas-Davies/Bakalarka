@@ -43,6 +43,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -142,6 +143,7 @@ class EyesightSearchScreen : AppCompatActivity() {
     fun EyesightImageSearchRunning(viewModel: EyesightSearchViewModel) {
         val ctx = LocalContext.current
         val uiState = viewModel.uiState.collectAsState().value
+        val foundAll = viewModel.foundAll.collectAsState().value
         val imageId = resources.getIdentifier(uiState.bgImageResource, "drawable", ctx.packageName)
 
         var imageSize by remember { mutableStateOf(IntSize.Zero) }
@@ -150,6 +152,11 @@ class EyesightSearchScreen : AppCompatActivity() {
         var panningOffset by remember { mutableStateOf(Offset(0f, 0f)) }
         var maxX = 0f
         var maxY = 0f
+
+        LaunchedEffect (uiState) {
+            panningOffset = Offset(0f, 0f)
+            scale = 1f
+        }
 
         BoxWithConstraints {
             val state = rememberTransformableState { zoomChange, panChange, _ ->
@@ -204,7 +211,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                     }
                 }
             }
-            val foundAll = viewModel.foundAll.collectAsState().value
+
             AnimatedVisibility(
                 modifier = Modifier.align(Alignment.Center),
                 visible = foundAll,
