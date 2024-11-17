@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -225,13 +226,5 @@ fun onCompareButtonClick(
         playSound(ctx, correctSoundId)
     } else {
         playSound(ctx, wrongSoundId)
-    }
-}
-
-private fun playSound(ctx: Context, soundId: Int) {
-    val mediaPlayer = MediaPlayer.create(ctx, soundId)
-    mediaPlayer.start()
-    mediaPlayer.setOnCompletionListener { mp ->
-        mp.release()
     }
 }

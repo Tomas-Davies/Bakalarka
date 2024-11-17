@@ -75,6 +75,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
@@ -290,6 +291,7 @@ class EyesightSearchScreen : AppCompatActivity() {
         imageSize: IntSize,
         itemColor: Color
     ) {
+        val ctx = LocalContext.current
         var trX: Float
         var trY: Float
         val xPos = (xPerc / 100f) * imageSize.width
@@ -347,6 +349,7 @@ class EyesightSearchScreen : AppCompatActivity() {
             .clickable(
                 enabled = !visibility
             ) {
+                playSound(ctx, R.raw.meow)
                 val vibrator = getVibrator()
                 vibrator.vibrate(
                     VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
