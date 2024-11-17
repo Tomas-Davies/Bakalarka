@@ -17,7 +17,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
@@ -30,7 +29,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ElevatedCard
@@ -197,16 +195,20 @@ class EyesightSearchScreen : AppCompatActivity() {
                 )
 
                 for (item in uiState.items) {
+                    val r = item.color.r.value.toInt()
+                    val g = item.color.g.value.toInt()
+                    val b = item.color.b.value.toInt()
+                    val xPerc = item.x.value.toFloat()
+                    val yPerc = item.y.value.toFloat()
+                    val x = (xPerc / 100f) * imageSize.width
+                    val y = (yPerc / 100f) * imageSize.height
+
                     key(item) {
-                        val r = item.color.r.value.toInt()
-                        val g = item.color.g.value.toInt()
-                        val b = item.color.b.value.toInt()
                         ItemOverlay(
                             viewModel = viewModel,
                             size = item.size.value.toInt().dp,
-                            xPerc = item.x.value.toFloat(),
-                            yPerc = item.y.value.toFloat(),
-                            imageSize = imageSize,
+                            xPos = x,
+                            yPos = y,
                             itemColor = Color(r, g, b)
                         )
                     }
@@ -244,7 +246,6 @@ class EyesightSearchScreen : AppCompatActivity() {
                     fontWeight = FontWeight.Bold
                 )
             }
-
         }
     }
 
@@ -263,20 +264,22 @@ class EyesightSearchScreen : AppCompatActivity() {
             modifier = Modifier
                 .fillMaxWidth()
                 .onSizeChanged { setImageSize(it) }
+                // Pro zjistovani souradnic pri implementaci noveho levelu
                 .pointerInput(Unit) {
-                    detectTapGestures { offset ->
-                        if (offset.x >= 0 && offset.x <= imageSize.width
-                            &&
-                            offset.y >= 0 && offset.y <= imageSize.height
-                        ) {
-                            val xPercentage =
-                                (100 * (offset.x + maxX)) / (imageSize.width * scale)
-                            val yPercentage =
-                                (100 * (offset.y + maxY)) / (imageSize.height * scale)
+                    detectTapGestures(
+                        onTap = { offset ->
+                            if (offset.x >= 0 && offset.x <= imageSize.width
+                                &&
+                                offset.y >= 0 && offset.y <= imageSize.height
+                            ) {
+                                val xPercentage =
+                                    (100 * (offset.x + maxX)) / (imageSize.width * scale)
+                                val yPercentage =
+                                    (100 * (offset.y + maxY)) / (imageSize.height * scale)
 
-                            Log.w("LEVEL_INFO", "x = $xPercentage%, y = $yPercentage%")
-                        }
-                    }
+                                Log.w("LEVEL_INFO", "x = $xPercentage%, y = $yPercentage%")
+                            }
+                        })
                 },
             contentScale = ContentScale.Fit
         )
@@ -286,18 +289,14 @@ class EyesightSearchScreen : AppCompatActivity() {
     private fun ItemOverlay(
         size: Dp,
         viewModel: EyesightSearchViewModel,
-        xPerc: Float,
-        yPerc: Float,
-        imageSize: IntSize,
+        xPos: Float,
+        yPos: Float,
         itemColor: Color
     ) {
         val ctx = LocalContext.current
+        var overlayShow by remember { mutableStateOf(true) }
         var trX: Float
         var trY: Float
-        val xPos = (xPerc / 100f) * imageSize.width
-        val yPos = (yPerc / 100f) * imageSize.height
-        var visibility by remember { mutableStateOf(false) }
-        var hideItem by remember { mutableStateOf(true) }
         val overlaySize = with(LocalDensity.current) { size.toPx() / 2 }
         val overlayLayer = Rect(Offset(overlaySize, overlaySize), overlaySize)
         val modifier = Modifier
@@ -346,28 +345,23 @@ class EyesightSearchScreen : AppCompatActivity() {
                 }
             }
             .size(size)
-            .clickable(
-                enabled = !visibility
-            ) {
+            .clickable {
                 playSound(ctx, R.raw.item_found)
                 val vibrator = getVibrator()
                 vibrator.vibrate(
                     VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
                 )
+                overlayShow = false
                 viewModel.onItemClick()
-                visibility = true
-                hideItem = false
             }
 
-        if (hideItem) {
+        if (overlayShow) {
             Box(
-                modifier =
-                if (visibility)
-                    modifier.border(2.dp, Color.Red, RoundedCornerShape(size))
-                else modifier
+                modifier = modifier
             ) {}
         }
     }
+
 
     private fun getVibrator(): Vibrator {
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
