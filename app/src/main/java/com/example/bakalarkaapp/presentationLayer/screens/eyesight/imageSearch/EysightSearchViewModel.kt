@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.imageSearch
+package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -44,12 +44,12 @@ class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() 
                 _foundAll.emit(true)
                 score++
                 delay(2000)
-                _itemsFound.value = 0
                 _foundAll.emit(false)
                 delay(500)
                 if (nextRound()) {
                     updateData()
                 }
+                _itemsFound.value = 0
             }
         }
     }

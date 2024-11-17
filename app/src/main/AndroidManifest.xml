@@ -102,7 +102,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.eyesight.eyesightDifferScreen.imageSearch.EyesightSearchScreen"
+            android:name=".presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

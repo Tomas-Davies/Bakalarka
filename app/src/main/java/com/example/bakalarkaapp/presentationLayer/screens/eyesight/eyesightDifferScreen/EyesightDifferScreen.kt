@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
@@ -157,7 +158,13 @@ class EyesightDifferScreen: AppCompatActivity() {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 for (answer in uiState.answers){
-                    Button(onClick = { viewModel.validateAnswer(answer) }) {
+                    Button(onClick = {
+                        if (viewModel.validateAnswer(answer)){
+                            playSound(ctx, R.raw.correct_answer)
+                        } else {
+                            playSound(ctx, R.raw.wrong_answer)
+                        }
+                    }) {
                         Text(text = answer)
                     }
                 }

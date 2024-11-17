@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.imageSearch
+package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
 
 import android.app.Activity
 import android.content.Context
@@ -349,7 +349,7 @@ class EyesightSearchScreen : AppCompatActivity() {
             .clickable(
                 enabled = !visibility
             ) {
-                playSound(ctx, R.raw.meow)
+                playSound(ctx, R.raw.item_found)
                 val vibrator = getVibrator()
                 vibrator.vibrate(
                     VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)

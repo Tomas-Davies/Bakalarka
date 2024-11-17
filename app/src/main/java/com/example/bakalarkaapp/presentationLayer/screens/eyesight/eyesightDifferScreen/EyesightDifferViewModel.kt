@@ -44,7 +44,7 @@ class EyesightDifferViewModel(differRepo: EyesightDifferRepo): BaseViewModel() {
     }
 
 
-    fun validateAnswer(answer: String) {
+    fun validateAnswer(answer: String): Boolean {
         val correctAnswers = getCorrectAnswers()
         if (correctAnswers.contains(answer)){
             if (isFirstCorrectAttempt) {
@@ -52,11 +52,13 @@ class EyesightDifferViewModel(differRepo: EyesightDifferRepo): BaseViewModel() {
                 isFirstCorrectAttempt = false
             }
             nextQuestion()
+            return true
         } else {
             if (isFirstWrongAttempt) {
                 score--
                 isFirstWrongAttempt = false
             }
+            return false
         }
     }
 

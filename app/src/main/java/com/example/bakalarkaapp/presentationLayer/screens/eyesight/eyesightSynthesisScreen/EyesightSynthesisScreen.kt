@@ -44,6 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DragBox
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DropBox
@@ -124,7 +125,11 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
         LaunchedEffect(allLettersPlaced.value) {
             if (allLettersPlaced.value) {
-                viewModel.validateResult()
+                if (viewModel.validateResult()){
+                    playSound(ctx, R.raw.correct_answer)
+                } else {
+                    playSound(ctx, R.raw.wrong_answer)
+                }
             }
         }
         val modifier = Modifier.fillMaxWidth()
@@ -144,7 +149,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.weight(0.5f))
+            Spacer(modifier = Modifier.weight(0.2f))
 
             // TOP BOXES
             Row(

@@ -36,7 +36,7 @@ import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynth
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.imageSearch.EyesightSearchScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightScreen: AppCompatActivity() {
