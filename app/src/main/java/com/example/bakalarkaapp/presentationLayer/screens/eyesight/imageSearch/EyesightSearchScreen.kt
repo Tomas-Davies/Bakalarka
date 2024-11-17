@@ -152,7 +152,7 @@ class EyesightSearchScreen : AppCompatActivity() {
         var maxX = 0f
         var maxY = 0f
 
-        LaunchedEffect (uiState) {
+        LaunchedEffect(uiState) {
             panningOffset = Offset(0f, 0f)
             scale = 1f
         }
@@ -195,9 +195,6 @@ class EyesightSearchScreen : AppCompatActivity() {
                 )
 
                 for (item in uiState.items) {
-                    val r = item.color.r.value.toInt()
-                    val g = item.color.g.value.toInt()
-                    val b = item.color.b.value.toInt()
                     val xPerc = item.x.value.toFloat()
                     val yPerc = item.y.value.toFloat()
                     val x = (xPerc / 100f) * imageSize.width
@@ -209,7 +206,12 @@ class EyesightSearchScreen : AppCompatActivity() {
                             size = item.size.value.toInt().dp,
                             xPos = x,
                             yPos = y,
-                            itemColor = Color(r, g, b)
+                            itemColor = Color
+                                (
+                                item.color.r.value.toInt(),
+                                item.color.g.value.toInt(),
+                                item.color.b.value.toInt()
+                            )
                         )
                     }
                 }
