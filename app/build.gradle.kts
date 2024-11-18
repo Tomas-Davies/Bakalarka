@@ -72,6 +72,8 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
     implementation("javax.xml.stream:stax-api:1.0-2")
 
+    // Confetti
+    implementation("nl.dionsegijn:konfetti-compose:2.0.4")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

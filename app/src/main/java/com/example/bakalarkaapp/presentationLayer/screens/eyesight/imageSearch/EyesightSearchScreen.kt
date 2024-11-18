@@ -77,6 +77,12 @@ import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
+import nl.dionsegijn.konfetti.compose.KonfettiView
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.core.models.Size
+import java.util.concurrent.TimeUnit
 
 class EyesightSearchScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -301,13 +307,15 @@ class EyesightSearchScreen : AppCompatActivity() {
         var trY: Float
         val overlaySize = with(LocalDensity.current) { size.toPx() / 2 }
         val overlayLayer = Rect(Offset(overlaySize, overlaySize), overlaySize)
-        val modifier = Modifier
+        val positionModifier = Modifier
             .graphicsLayer {
                 trX = xPos - size.toPx() / 2
                 trY = yPos - size.toPx() / 2
                 translationX = trX
                 translationY = trY
             }
+
+        val filteredColorModifier = positionModifier
             .drawBehind {
                 val whiteComplement = Color(
                     -(255 - itemColor.red).toInt(),
@@ -346,9 +354,11 @@ class EyesightSearchScreen : AppCompatActivity() {
                     )
                 }
             }
+
+        val modifier = filteredColorModifier
             .size(size)
             .clickable {
-                playSound(ctx, R.raw.item_found)
+                playSound(ctx, R.raw.correct_answer)
                 val vibrator = getVibrator()
                 vibrator.vibrate(
                     VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
@@ -357,10 +367,30 @@ class EyesightSearchScreen : AppCompatActivity() {
                 viewModel.onItemClick()
             }
 
+        val parties = listOf(
+            Party(
+                speed = 3f,
+                damping = 1f,
+                spread = 360,
+                position = Position.Relative(0.2, 0.2),
+                timeToLive = 1000L,
+                fadeOutEnabled = true,
+                size = listOf(Size.SMALL),
+                emitter = Emitter(duration = 50L, TimeUnit.MILLISECONDS).max(15)
+            )
+        )
+
         if (overlayShow) {
             Box(
                 modifier = modifier
             ) {}
+        } else {
+            Box(
+                modifier = positionModifier.size(size.times(1.5f)),
+                contentAlignment = Alignment.Center
+            ){
+                KonfettiView(parties = parties, modifier = Modifier.fillMaxSize())
+            }
         }
     }
 
