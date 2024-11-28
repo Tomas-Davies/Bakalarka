@@ -3,23 +3,27 @@ package com.example.bakalarkaapp.dataLayer
 import android.content.Context
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.XmlUtils
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonRootName
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 class HearingFonematicRepo(val context: Context) {
-    private val mappedClass = XmlUtils.parseXmlData(context, R.xml.hearing_fonematic_data, FonematicData::class.java)
-    val data: List<Words> = mappedClass.data
+    private val mappedClass = XmlUtils.
+        parseXmlData(context, R.xml.hearing_fonematic_data, FonematicData::class.java)
+    val data: List<FonematicRound> = mappedClass.data
 }
 
 
-@JsonRootName("words")
-data class Words(
-    @JsonProperty("word")
-    val words: List<String> = ArrayList()
+@JacksonXmlRootElement(localName = "round")
+data class FonematicRound(
+    @JacksonXmlProperty(localName = "word")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    val words: List<TextValue> = ArrayList()
 )
 
-@JsonRootName("data")
+@JacksonXmlRootElement(localName = "data")
 data class FonematicData(
-    @JsonProperty("words")
-    val data: List<Words> = ArrayList()
+    @JacksonXmlProperty(localName = "round")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    val data: List<FonematicRound> = ArrayList()
 )

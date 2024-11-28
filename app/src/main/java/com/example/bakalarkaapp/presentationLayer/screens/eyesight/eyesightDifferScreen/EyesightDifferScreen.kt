@@ -146,7 +146,7 @@ class EyesightDifferScreen: AppCompatActivity() {
                         .weight(1f)
                         .wrapContentHeight(),
                     text = uiState.question,
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )

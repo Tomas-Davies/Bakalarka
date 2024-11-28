@@ -110,7 +110,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.hearing.hearingFonematicScreen.HearingFonematicScreen"
+            android:name=".presentationLayer.screens.hearing.hearingFonematic.HearingFonematicScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -118,7 +118,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.hearing.hearingMemoryScreen.HearingMemoryScreen"
+            android:name=".presentationLayer.screens.hearing.hearingMemory.HearingMemoryScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -126,7 +126,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.hearing.hearingSynthScreen.HearingSynthScreen"
+            android:name=".presentationLayer.screens.hearing.hearingSynthesis.HearingSynthesisScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

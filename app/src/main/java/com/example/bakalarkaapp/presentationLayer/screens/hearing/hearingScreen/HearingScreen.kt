@@ -33,9 +33,9 @@ import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
-import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonematicScreen.HearingFonematicScreen
-import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemoryScreen.HearingMemoryScreen
-import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthScreen.HearingSynthScreen
+import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonematic.HearingFonematicScreen
+import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemory.HearingMemoryScreen
+import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthesis.HearingSynthesisScreen
 
 class HearingScreen: AppCompatActivity()
 {
@@ -131,7 +131,7 @@ private fun onCardClicked(ctx: Context, id: Int) {
     var intent = Intent(ctx, HearingFonematicScreen::class.java)
     when(id){
         1 -> intent = Intent(ctx, HearingMemoryScreen::class.java)
-        2 -> intent = Intent(ctx, HearingSynthScreen::class.java)
+        2 -> intent = Intent(ctx, HearingSynthesisScreen::class.java)
     }
 
     ctx.startActivity(intent)

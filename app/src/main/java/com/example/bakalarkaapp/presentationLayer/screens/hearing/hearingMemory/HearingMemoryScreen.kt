@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemoryScreen
+package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemory
 
 import android.app.Activity
 import android.os.Bundle

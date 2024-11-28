@@ -78,6 +78,6 @@ class EyesightSearchViewModelFactory(private val searchRepo: EyesightSearchRepo)
         if (modelClass.isAssignableFrom(EyesightSearchViewModel::class.java)) {
             return EyesightSearchViewModel(searchRepo) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class: EyesightSearchViewModel")
+        throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }
 }

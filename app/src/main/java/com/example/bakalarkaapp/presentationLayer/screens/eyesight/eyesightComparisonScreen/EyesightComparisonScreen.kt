@@ -2,19 +2,21 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComp
 
 import android.app.Activity
 import android.content.Context
-import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -112,9 +114,11 @@ class EyesightComparisonScreen : AppCompatActivity() {
                     },
                     restartTrigger = uiState.restartTrigger
                 )
+                Spacer(modifier = Modifier.height(50.dp))
                 val imageResId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
                 Image(
                     modifier = Modifier
+                        .background(Color.White)
                         .weight(1.5f)
                         .fillMaxWidth(),
                     painter = painterResource(id = imageResId),
@@ -123,14 +127,22 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f)
+                        .weight(1f),
                 ) {
-                    Text(
-                        modifier = Modifier.weight(1f),
-                        text = stringResource(id = R.string.eyesight_comparison_label),
-                        style = MaterialTheme.typography.headlineSmall,
-                        textAlign = TextAlign.Center
-                    )
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Text(
+                            text = stringResource(id = R.string.eyesight_comparison_label),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

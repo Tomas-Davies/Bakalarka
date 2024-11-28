@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonematicScreen
+package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthesis
 
 import android.app.Activity
 import android.os.Bundle
@@ -23,16 +23,17 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.theme.AppTheme
 
-class HearingFonematicScreen: AppCompatActivity() {
+class HearingSynthesisScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             AppTheme(ThemeType.THEME_HEARING) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HearingFonematicScreenContent()
+                    HearingSynthScreenContent()
                 }
             }
         }
@@ -40,12 +41,12 @@ class HearingFonematicScreen: AppCompatActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun HearingFonematicScreenContent(){
+    private fun HearingSynthScreenContent(){
         val ctx = LocalContext.current
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.hearing_menu_label_1)) },
+                    title = { Text(text = stringResource(id = R.string.hearing_menu_label_3)) },
                     navigationIcon = {
                         IconButton(onClick = { (ctx as Activity).finish() }) {
                             Icon(

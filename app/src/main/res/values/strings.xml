@@ -835,4 +835,6 @@
     <string name="eyesight_memory_label_2">Vyber obrázek, který je navíc</string>
     <string name="eyesight_search_label_1">Hledání - najdi skryté kočky</string>
     <string name="eyesight_search_label_2">Našel si všechny!</string>
+
+    <string name="hearing_fonematic_label"> Přehraj si nahrávku a poté vyber obrázek</string>
 </resources>

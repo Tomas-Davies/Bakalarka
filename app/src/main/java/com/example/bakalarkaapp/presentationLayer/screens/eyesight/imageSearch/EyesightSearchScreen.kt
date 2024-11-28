@@ -285,7 +285,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                                 val yPercentage =
                                     (100 * (offset.y + maxY)) / (imageSize.height * scale)
 
-                                Log.w("LEVEL_INFO", "x = $xPercentage%, y = $yPercentage%")
+                                Log.w("SEARCH_IMAGE_PERC_CORDS", "x = $xPercentage%, y = $yPercentage%")
                             }
                         })
                 },

@@ -41,6 +41,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
@@ -137,7 +139,9 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         Text(
             modifier = Modifier,
             text = stringResource(id = R.string.eyesight_drag_drop_label),
-            style = MaterialTheme.typography.headlineSmall
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
 
         val word = uiState.currendWord
