@@ -287,7 +287,8 @@ class EyesightSearchScreen : AppCompatActivity() {
 
                                 Log.w("SEARCH_IMAGE_PERC_CORDS", "x = $xPercentage%, y = $yPercentage%")
                             }
-                        })
+                        }
+                        )
                 },
             contentScale = ContentScale.Fit
         )

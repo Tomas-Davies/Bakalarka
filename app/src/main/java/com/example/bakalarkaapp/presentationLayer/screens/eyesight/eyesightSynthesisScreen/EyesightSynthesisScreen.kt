@@ -117,6 +117,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         }
     }
 
+    
     @Composable
     private fun EyesightSynthesisScreenRunning(ctx: Context, viewModel: EyesightDragDropViewModel) {
         val uiState = viewModel.uiState.collectAsState().value
