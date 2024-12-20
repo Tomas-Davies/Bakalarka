@@ -29,8 +29,10 @@ class SearchItem {
     val x = TextValue()
     @JacksonXmlProperty(localName = "yPosPercentage")
     val y = TextValue()
-    @JacksonXmlProperty(localName = "size")
-    val size = TextValue()
+    @JacksonXmlProperty(localName = "width")
+    val width = TextValue()
+    @JacksonXmlProperty(localName = "height")
+    val height = TextValue()
     @JacksonXmlProperty(localName = "color")
     val color = ItemColor()
 }

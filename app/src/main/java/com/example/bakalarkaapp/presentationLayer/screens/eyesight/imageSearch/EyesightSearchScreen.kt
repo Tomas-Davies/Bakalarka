@@ -17,6 +17,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
@@ -54,6 +55,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
@@ -68,6 +70,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
@@ -81,7 +84,6 @@ import nl.dionsegijn.konfetti.compose.KonfettiView
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
-import nl.dionsegijn.konfetti.core.models.Size
 import java.util.concurrent.TimeUnit
 
 class EyesightSearchScreen : AppCompatActivity() {
@@ -209,7 +211,8 @@ class EyesightSearchScreen : AppCompatActivity() {
                     key(item) {
                         ItemOverlay(
                             viewModel = viewModel,
-                            size = item.size.value.toInt().dp,
+                            width = item.width.value.toInt().dp,
+                            height = item.height.value.toInt().dp,
                             xPos = x,
                             yPos = y,
                             itemColor = Color
@@ -296,8 +299,9 @@ class EyesightSearchScreen : AppCompatActivity() {
 
     @Composable
     private fun ItemOverlay(
-        size: Dp,
         viewModel: EyesightSearchViewModel,
+        height: Dp,
+        width: Dp,
         xPos: Float,
         yPos: Float,
         itemColor: Color
@@ -306,12 +310,14 @@ class EyesightSearchScreen : AppCompatActivity() {
         var overlayShow by remember { mutableStateOf(true) }
         var trX: Float
         var trY: Float
-        val overlaySize = with(LocalDensity.current) { size.toPx() / 2 }
-        val overlayLayer = Rect(Offset(overlaySize, overlaySize), overlaySize)
+        val overlayWidth = with(LocalDensity.current) { width.toPx() }
+        val overlayHeight = with(LocalDensity.current) { height.toPx() }
+
+        val overlayLayer = Rect(Offset(0f, 0f), Size(overlayWidth, overlayHeight))
         val positionModifier = Modifier
             .graphicsLayer {
-                trX = xPos - size.toPx() / 2
-                trY = yPos - size.toPx() / 2
+                trX = xPos - width.toPx() / 2       // xPos je stred
+                trY = yPos - height.toPx() / 2      // yPos je stred
                 translationX = trX
                 translationY = trY
             }
@@ -357,7 +363,7 @@ class EyesightSearchScreen : AppCompatActivity() {
             }
 
         val modifier = filteredColorModifier
-            .size(size)
+            .size(DpSize(width, height))
             .clickable {
                 playSound(ctx, R.raw.correct_answer)
                 val vibrator = getVibrator()
@@ -376,18 +382,18 @@ class EyesightSearchScreen : AppCompatActivity() {
                 position = Position.Relative(0.2, 0.2),
                 timeToLive = 1000L,
                 fadeOutEnabled = true,
-                size = listOf(Size.SMALL),
+                size = listOf(nl.dionsegijn.konfetti.core.models.Size.SMALL),
                 emitter = Emitter(duration = 50L, TimeUnit.MILLISECONDS).max(15)
             )
         )
 
         if (overlayShow) {
             Box(
-                modifier = modifier
+                modifier = modifier//.border(2.dp, Color.Red)
             ) {}
         } else {
             Box(
-                modifier = positionModifier.size(size.times(1.5f)),
+                modifier = positionModifier.size(width.times(1.5f), height.times(1.5f)),
                 contentAlignment = Alignment.Center
             ){
                 KonfettiView(parties = parties, modifier = Modifier.fillMaxSize())
