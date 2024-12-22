@@ -1,10 +1,11 @@
-package com.example.bakalarkaapp.presentationLayer.components.dragDrop
+package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.shuffle
@@ -22,7 +23,7 @@ data class EyesightDragDropUiState(
     val currendWord: String
 )
 
-class EyesightDragDropViewModel(data: Array<String>) : BaseViewModel() {
+class EyesightDragDropViewModel(app: LogoApp, data: Array<String>) : BaseViewModel(app) {
     private val words = data.sortedBy { w -> w.length }
     private var word = words[roundIdx]
     private var wordMixed = word.uppercase().shuffle()
@@ -133,12 +134,12 @@ class EyesightDragDropViewModel(data: Array<String>) : BaseViewModel() {
 
 }
 
-class EyesightDragDropViewModelFactory(private val words: Array<String>) :
+class EyesightDragDropViewModelFactory(private val app: LogoApp, private val words: Array<String>) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightDragDropViewModel::class.java)) {
-            return EyesightDragDropViewModel(words) as T
+            return EyesightDragDropViewModel(app, words) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightComparisonViewModel")
     }

@@ -39,8 +39,6 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.playResultSound
-import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -57,7 +55,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                 ) {
                     val app = application as LogoApp
                     val viewModel: HearingFonematicViewModel by viewModels {
-                        HearingFonematicFactory(app.hearingFonematicRepository)
+                        HearingFonematicFactory(app)
                     }
                     HearingFonematicScreenContent(viewModel)
                 }
@@ -143,7 +141,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                                 .fillMaxWidth(0.6f)
                                 .clickable {
                                     val result = viewModel.validateAnswer(image.key)
-                                    playResultSound(ctx, result)
+                                    viewModel.playResultSound(result)
                                 },
                             painter = painterResource(id = image.value),
                             contentDescription = "image"
@@ -154,7 +152,7 @@ class HearingFonematicScreen : AppCompatActivity() {
             }
 
             PlaySoundButton(
-                onClick = { playSound(ctx, soundId) }
+                onClick = { viewModel.playSound(soundId) }
             )
         }
     }

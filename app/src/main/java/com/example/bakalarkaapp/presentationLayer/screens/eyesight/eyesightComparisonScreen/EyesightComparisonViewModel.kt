@@ -2,7 +2,7 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.dataLayer.EyesightComparisonRepo
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,8 +15,8 @@ data class EyesightComparisonUiState(
     val restartTrigger: Int = 0
 )
 
-class EyesightComparisonViewModel(comparisonDataRepository: EyesightComparisonRepo) :
-    BaseViewModel() {
+class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
+    private val comparisonDataRepository = app.eyesightComparisonRepository
     private var data = comparisonDataRepository.data.shuffled()
     private var currentItem = data[0]
     private val _uiState = MutableStateFlow(
@@ -81,12 +81,12 @@ class EyesightComparisonViewModel(comparisonDataRepository: EyesightComparisonRe
     }
 }
 
-class EyesightComparionViewModelFactory(private val comparisonDataRepository: EyesightComparisonRepo) :
+class EyesightComparionViewModelFactory(private val app: LogoApp) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(EyesightComparisonViewModel::class.java)) {
-            return EyesightComparisonViewModel(comparisonDataRepository) as T
+            return EyesightComparisonViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightComparisonViewModel")
     }

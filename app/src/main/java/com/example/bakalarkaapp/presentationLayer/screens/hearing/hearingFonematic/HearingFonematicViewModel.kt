@@ -2,7 +2,7 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonema
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.dataLayer.HearingFonematicRepo
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,8 @@ data class HearingFonematicUiState(
     val soundResource: String
 )
 
-class HearingFonematicViewModel(repo: HearingFonematicRepo) : BaseViewModel() {
+class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
+    private val repo = app.hearingFonematicRepository
     private val rounds = repo.data.shuffled()
     private var currentRound = rounds[roundIdx]
     private var currentWords = currentRound.words
@@ -70,11 +71,11 @@ class HearingFonematicViewModel(repo: HearingFonematicRepo) : BaseViewModel() {
     }
 }
 
-class HearingFonematicFactory(private val repo: HearingFonematicRepo) : ViewModelProvider.Factory {
+class HearingFonematicFactory(private val app: LogoApp) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HearingFonematicViewModel::class.java)) {
-            return HearingFonematicViewModel(repo) as T
+            return HearingFonematicViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

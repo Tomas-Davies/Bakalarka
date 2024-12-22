@@ -1,9 +1,10 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
 
+import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.bakalarkaapp.dataLayer.EyesightSearchRepo
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.SearchItem
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import kotlinx.coroutines.delay
@@ -17,7 +18,8 @@ data class EyesightSearchUiState(
     val items: List<SearchItem>
 )
 
-class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() {
+class EyesightSearchViewModel(app: LogoApp) : BaseViewModel(app) {
+    private val searchRepo = app.eyesightSearchRepository
     private val rounds = searchRepo.data
     private var currentRound = rounds[roundIdx]
     private var _uiState = MutableStateFlow(
@@ -33,6 +35,10 @@ class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() 
     var itemsFound = _itemsFound.asStateFlow()
     private var clickCounter = 0
     private var foundCatsCounter = 0
+    private var _missIndicatorPos = MutableStateFlow(Offset(0f,0f))
+    var missIndicatorPos = _missIndicatorPos.asStateFlow()
+    private var _showMissIndicator = MutableStateFlow(false)
+    val showMissIndicator = _showMissIndicator.asStateFlow()
 
 
     init {
@@ -80,15 +86,22 @@ class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() 
         updateData()
     }
 
-
+    fun moveMissIndicator(offset: Offset){
+        viewModelScope.launch {
+            _missIndicatorPos.emit(offset)
+            _showMissIndicator.emit(true)
+            delay(500)
+            _showMissIndicator.emit(false)
+        }
+    }
 }
 
-class EyesightSearchViewModelFactory(private val searchRepo: EyesightSearchRepo) :
+class EyesightSearchViewModelFactory(private val app: LogoApp) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSearchViewModel::class.java)) {
-            return EyesightSearchViewModel(searchRepo) as T
+            return EyesightSearchViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

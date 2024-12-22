@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
@@ -56,7 +55,7 @@ class EyesightDifferScreen: AppCompatActivity() {
                 ) {
                     val app = application as LogoApp
                     val viewModel: EyesightDifferViewModel by viewModels {
-                        EyesightDifferViewModelFactory(app.eyesightDifferRepository)
+                        EyesightDifferViewModelFactory(app)
                     }
                     EyesightDifferScreenContent(viewModel)
                 }
@@ -160,9 +159,9 @@ class EyesightDifferScreen: AppCompatActivity() {
                 for (answer in uiState.answers){
                     Button(onClick = {
                         if (viewModel.validateAnswer(answer)){
-                            playSound(ctx, R.raw.correct_answer)
+                            viewModel.playSound(R.raw.correct_answer)
                         } else {
-                            playSound(ctx, R.raw.wrong_answer)
+                            viewModel.playSound(R.raw.wrong_answer)
                         }
                     }) {
                         Text(text = answer)

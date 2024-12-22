@@ -1,7 +1,6 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -47,7 +46,6 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -65,7 +63,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 ) {
                     val app = application as LogoApp
                     val viewModel: EyesightComparisonViewModel by viewModels {
-                        EyesightComparionViewModelFactory(app.eyesightComparisonRepository)
+                        EyesightComparionViewModelFactory(app)
                     }
                     val screenState = viewModel.screenState.collectAsState().value
                     when (screenState) {
@@ -109,7 +107,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 TimerIndicator(
                     msDuration = 15000,
                     onFinish = {
-                        playSound(ctx, R.raw.wrong_answer)
+                        viewModel.playSound(R.raw.wrong_answer)
                         viewModel.updateData()
                     },
                     restartTrigger = uiState.restartTrigger
@@ -157,7 +155,6 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 onCompareButtonClick(
                                     true,
                                     viewModel,
-                                    ctx,
                                     R.raw.correct_answer,
                                     R.raw.wrong_answer
                                 )
@@ -173,7 +170,6 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 onCompareButtonClick(
                                     false,
                                     viewModel,
-                                    ctx,
                                     R.raw.correct_answer,
                                     R.raw.wrong_answer
                                 )
@@ -231,12 +227,12 @@ class EyesightComparisonScreen : AppCompatActivity() {
 fun onCompareButtonClick(
     userAnswer: Boolean,
     viewModel: EyesightComparisonViewModel,
-    ctx: Context, correctSoundId: Int,
+    correctSoundId: Int,
     wrongSoundId: Int
 ) {
     if (viewModel.validateAnswer(userAnswer)){
-        playSound(ctx, correctSoundId)
+        viewModel.playSound(correctSoundId)
     } else {
-        playSound(ctx, wrongSoundId)
+        viewModel.playSound(wrongSoundId)
     }
 }

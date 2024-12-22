@@ -2,7 +2,7 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiff
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.dataLayer.EyesightDifferRepo
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.Round
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -19,7 +19,8 @@ data class EyesightDifferUiState(
     val questionNumber: Int
 )
 
-class EyesightDifferViewModel(differRepo: EyesightDifferRepo): BaseViewModel() {
+class EyesightDifferViewModel(app: LogoApp): BaseViewModel(app) {
+    private val differRepo = app.eyesightDifferRepository
     private val data = differRepo.data
             .shuffled()
             .sortedBy { differItem -> differItem.rounds.size  }
@@ -152,11 +153,11 @@ class EyesightDifferViewModel(differRepo: EyesightDifferRepo): BaseViewModel() {
     }
 }
 
-class EyesightDifferViewModelFactory(private val differRepo: EyesightDifferRepo): ViewModelProvider.Factory {
+class EyesightDifferViewModelFactory(private val app: LogoApp): ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightDifferViewModel::class.java)){
-            return EyesightDifferViewModel(differRepo) as T
+            return EyesightDifferViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightDifferViewModel")
     }

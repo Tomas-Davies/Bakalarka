@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -61,7 +60,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
                 ) {
                     val app = application as LogoApp
                     val viewModel: EyesightMemoryViewModel by viewModels {
-                        EyesightMemoryViewModelFactory(app.eyesightMemoryRepository)
+                        EyesightMemoryViewModelFactory(app)
                     }
                     EyesightMemoryScreenContent(viewModel)
                 }
@@ -165,10 +164,10 @@ class EyesightMemoryScreen : AppCompatActivity() {
                                 drawable = drawable,
                                 onClick = {
                                     if(viewModel.validateAnswer(id)){
-                                        playSound(ctx, R.raw.correct_answer)
+                                        viewModel.playSound(R.raw.correct_answer)
                                         messageId = R.string.eyesight_memory_label_1
                                     } else {
-                                        playSound(ctx, R.raw.wrong_answer)
+                                        viewModel.playSound(R.raw.wrong_answer)
                                     }
                                 },
                                 enabled = viewModel.enabled

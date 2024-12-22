@@ -2,7 +2,7 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.dataLayer.EyesightMemoryRepo
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,8 @@ data class EyesightMemoryUiState(
     var objectDrawableIds: List<String>,
     var round: Int
 )
-class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): BaseViewModel() {
+class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
+    private val memoryRepo = app.eyesightMemoryRepository
     private val data = memoryRepo.data
         .shuffled()
         .sortedBy { item -> item.objects.size }
@@ -84,11 +85,11 @@ class EyesightMemoryViewModel(memoryRepo: EyesightMemoryRepo): BaseViewModel() {
     }
 }
 
-class EyesightMemoryViewModelFactory(private val memoryRepo: EyesightMemoryRepo): ViewModelProvider.Factory {
+class EyesightMemoryViewModelFactory(private val app: LogoApp): ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightMemoryViewModel::class.java)){
-            return EyesightMemoryViewModel(memoryRepo) as T
+            return EyesightMemoryViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightDifferViewModel")
     }

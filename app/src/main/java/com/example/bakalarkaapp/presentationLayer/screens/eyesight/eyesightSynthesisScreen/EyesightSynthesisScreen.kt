@@ -44,14 +44,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DragBox
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DropBox
-import com.example.bakalarkaapp.presentationLayer.components.dragDrop.EyesightDragDropViewModel
-import com.example.bakalarkaapp.presentationLayer.components.dragDrop.EyesightDragDropViewModelFactory
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -62,9 +60,10 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
         val words: Array<String> = resources.getStringArray(R.array.EyesightSynthesisWords)
         words.shuffle()
+        val app = application as LogoApp
 
         val viewModel: EyesightDragDropViewModel by viewModels {
-            EyesightDragDropViewModelFactory(words)
+            EyesightDragDropViewModelFactory(app, words)
         }
 
         setContent {
@@ -129,9 +128,9 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         LaunchedEffect(allLettersPlaced.value) {
             if (allLettersPlaced.value) {
                 if (viewModel.validateResult()){
-                    playSound(ctx, R.raw.correct_answer)
+                    viewModel.playSound(R.raw.correct_answer)
                 } else {
-                    playSound(ctx, R.raw.wrong_answer)
+                    viewModel.playSound(R.raw.wrong_answer)
                 }
             }
         }

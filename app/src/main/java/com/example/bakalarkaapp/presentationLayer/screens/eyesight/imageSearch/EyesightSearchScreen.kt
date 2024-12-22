@@ -1,12 +1,8 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
 
 import android.app.Activity
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -17,7 +13,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.rememberTransformableState
@@ -28,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -76,7 +72,6 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.playSound
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
@@ -98,7 +93,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                 ) {
                     val app = application as LogoApp
                     val viewModel: EyesightSearchViewModel by viewModels {
-                        EyesightSearchViewModelFactory(app.eyesightSearchRepository)
+                        EyesightSearchViewModelFactory(app)
                     }
                     EyesightImageSearchScreenContent(viewModel)
                 }
@@ -227,6 +222,12 @@ class EyesightSearchScreen : AppCompatActivity() {
                         )
                     }
                 }
+                val showMissIndicator = viewModel.showMissIndicator.collectAsState().value
+                val missIndicatorPos = viewModel.missIndicatorPos.collectAsState().value
+               
+                if (showMissIndicator){
+                    MissIndicator(offset = missIndicatorPos)
+                }
             }
 
             AnimatedVisibility(
@@ -273,8 +274,6 @@ class EyesightSearchScreen : AppCompatActivity() {
         maxX: Float,
         maxY: Float
     ) {
-        val ctx = LocalContext.current
-
         Image(
             painter = painterResource(id = drawableId),
             contentDescription = "Clickable image",
@@ -299,18 +298,33 @@ class EyesightSearchScreen : AppCompatActivity() {
                                     "x = $xPercentage%, y = $yPercentage%"
                                 )
                             }
-
-                            val vibrator = getVibrator()
-                            vibrator.vibrate(
-                                VibrationEffect.createPredefined(VibrationEffect.EFFECT_DOUBLE_CLICK)
+                            viewModel.moveMissIndicator(offset)
+                            viewModel.vibrate(
+                                VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK)
                             )
-                            playSound(ctx, R.raw.wrong_answer)
+                            viewModel.playSound(R.raw.wrong_answer)
                             viewModel.missClick()
                         }
                     )
                 },
             contentScale = ContentScale.Fit
         )
+    }
+
+    @Composable
+    private fun MissIndicator(offset: Offset){
+        val boxSize = 40.dp
+        val x = with(LocalDensity.current){ offset.x.toDp() - boxSize / 2}
+        val y = with(LocalDensity.current){ offset.y.toDp() - boxSize / 2}
+
+        Box(
+            modifier = Modifier
+                .size(boxSize)
+                .offset(x, y),
+            contentAlignment = Alignment.Center
+        ){
+            Text(text = "x", color = Color.Red)
+        }
     }
 
     @Composable
@@ -322,7 +336,6 @@ class EyesightSearchScreen : AppCompatActivity() {
         yPos: Float,
         itemColor: Color
     ) {
-        val ctx = LocalContext.current
         var overlayShow by remember { mutableStateOf(true) }
         var trX: Float
         var trY: Float
@@ -381,9 +394,8 @@ class EyesightSearchScreen : AppCompatActivity() {
         val modifier = filteredColorModifier
             .size(DpSize(width, height))
             .clickable {
-                playSound(ctx, R.raw.correct_answer)
-                val vibrator = getVibrator()
-                vibrator.vibrate(
+                viewModel.playSound(R.raw.correct_answer)
+                viewModel.vibrate(
                     VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
                 )
                 overlayShow = false
@@ -415,19 +427,5 @@ class EyesightSearchScreen : AppCompatActivity() {
                 KonfettiView(parties = parties, modifier = Modifier.fillMaxSize())
             }
         }
-    }
-
-
-    private fun getVibrator(): Vibrator {
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager =
-                getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vibratorManager.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            getSystemService(VIBRATOR_SERVICE) as Vibrator
-        }
-
-        return vibrator
     }
 }
