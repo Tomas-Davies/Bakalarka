@@ -31,6 +31,8 @@ class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() 
     val foundAll = _foundAll.asStateFlow()
     private var _itemsFound = MutableStateFlow(0)
     var itemsFound = _itemsFound.asStateFlow()
+    private var clickCounter = 0
+    private var foundCatsCounter = 0
 
 
     init {
@@ -38,6 +40,8 @@ class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() 
     }
 
     fun onItemClick() {
+        clickCounter++
+        foundCatsCounter++
         _itemsFound.value++
         if (itemsFound.value == currentRound.items.size) {
             viewModelScope.launch {
@@ -52,6 +56,14 @@ class EyesightSearchViewModel(searchRepo: EyesightSearchRepo) : BaseViewModel() 
                 _itemsFound.value = 0
             }
         }
+    }
+
+    fun missClick(){
+        clickCounter++
+    }
+
+    override fun scorePercentage(): Int {
+        return (foundCatsCounter * 100) / clickCounter
     }
 
     override fun updateData() {

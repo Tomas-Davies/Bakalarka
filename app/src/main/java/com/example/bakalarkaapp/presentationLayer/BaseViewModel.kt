@@ -36,7 +36,7 @@ abstract class BaseViewModel: ViewModel() {
         _screenState.value = ScreenState.Running
     }
 
-    fun scorePercentage(): Int {
+    open fun scorePercentage(): Int {
         val correctCount = score
         return (correctCount * 100) / count
     }
@@ -47,4 +47,6 @@ abstract class BaseViewModel: ViewModel() {
     }
 
     protected abstract fun updateData()
+
+
 }

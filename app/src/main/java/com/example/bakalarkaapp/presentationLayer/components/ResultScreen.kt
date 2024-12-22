@@ -42,7 +42,8 @@ import com.example.bakalarkaapp.R
 @Composable
 fun ResultScreen(
     scorePercentage: Int,
-    onRestartBtnClick: () -> Unit
+    onRestartBtnClick: () -> Unit,
+    message: String = stringResource(id = R.string.correct_label)
 ) {
     val ctx = LocalContext.current
     var medalLimit by remember { mutableIntStateOf(0) }
@@ -68,6 +69,7 @@ fun ResultScreen(
 
         Spacer(modifier = Modifier.weight(0.1f))
         ResultProgressBar(
+            message = message,
             indicatorProgress = scorePercentage.toFloat(),
             modifier = Modifier.fillMaxWidth(),
             updateMedal = { progressAnimation ->
@@ -121,6 +123,7 @@ fun ResultScreen(
 
 @Composable
 fun ResultProgressBar(
+    message: String,
     indicatorProgress: Float,
     modifier: Modifier = Modifier,
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
@@ -134,9 +137,8 @@ fun ResultProgressBar(
         label = ""
     )
 
-    val label = stringResource(id = R.string.correct_label)
     Text(
-        text = "$label: ${(progressAnimation * 100).toInt()}%",
+        text = "$message: ${(progressAnimation * 100).toInt()}%",
         style = MaterialTheme.typography.headlineMedium
     )
     Spacer(modifier = Modifier.height(16.dp))

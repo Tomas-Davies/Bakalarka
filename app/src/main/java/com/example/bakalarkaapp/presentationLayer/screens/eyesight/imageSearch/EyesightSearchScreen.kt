@@ -139,7 +139,9 @@ class EyesightSearchScreen : AppCompatActivity() {
                     is ScreenState.Finished -> {
                         ResultScreen(
                             scorePercentage = viewModel.scorePercentage(),
-                            onRestartBtnClick = { viewModel.restart() })
+                            onRestartBtnClick = { viewModel.restart() },
+                            message = stringResource(id = R.string.accuracy_label)
+                            )
                     }
                 }
             }
@@ -194,6 +196,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                     }
             ) {
                 SearchImage(
+                    viewModel = viewModel,
                     drawableId = imageId,
                     imageSize = imageSize,
                     setImageSize = { newSize -> imageSize = newSize },
@@ -262,6 +265,7 @@ class EyesightSearchScreen : AppCompatActivity() {
 
     @Composable
     private fun SearchImage(
+        viewModel: EyesightSearchViewModel,
         drawableId: Int,
         imageSize: IntSize,
         setImageSize: (newSize: IntSize) -> Unit,
@@ -269,6 +273,8 @@ class EyesightSearchScreen : AppCompatActivity() {
         maxX: Float,
         maxY: Float
     ) {
+        val ctx = LocalContext.current
+
         Image(
             painter = painterResource(id = drawableId),
             contentDescription = "Clickable image",
@@ -288,10 +294,20 @@ class EyesightSearchScreen : AppCompatActivity() {
                                 val yPercentage =
                                     (100 * (offset.y + maxY)) / (imageSize.height * scale)
 
-                                Log.w("SEARCH_IMAGE_PERC_CORDS", "x = $xPercentage%, y = $yPercentage%")
+                                Log.w(
+                                    "SEARCH_IMAGE_PERC_CORDS",
+                                    "x = $xPercentage%, y = $yPercentage%"
+                                )
                             }
+
+                            val vibrator = getVibrator()
+                            vibrator.vibrate(
+                                VibrationEffect.createPredefined(VibrationEffect.EFFECT_DOUBLE_CLICK)
+                            )
+                            playSound(ctx, R.raw.wrong_answer)
+                            viewModel.missClick()
                         }
-                        )
+                    )
                 },
             contentScale = ContentScale.Fit
         )

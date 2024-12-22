@@ -137,6 +137,7 @@
     <string name="label_again">Znovu</string>
     <string name="label_leave">Odejít</string>
     <string name="correct_label">Správně</string>
+    <string name="accuracy_label">Přesnost</string>
     <string name="eyesight_comparison_result_1">Opakování je matka moudrosti.</string>
     <string name="eyesight_comparison_result_2">Vedl sis dobře.</string>
     <string name="eyesight_comparison_result_3">Vedl sis velmi dobře</string>
