@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -215,14 +216,18 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     "drawable",
                     ctx.packageName
                 )
-                Image(
-                    modifier = modifier
+                AnimatedContent(
+                    modifier = Modifier
                         .weight(5f),
-                    painter = painterResource(id = imageId),
-                    contentDescription = "image",
-                    contentScale = ContentScale.FillWidth
-                )
-
+                    targetState = imageId,
+                    label = ""
+                ) { targetImage ->
+                    Image(
+                        painter = painterResource(id = targetImage),
+                        contentDescription = "image",
+                        contentScale = ContentScale.FillWidth
+                    )
+                }
                 // RIGHT BOXES
                 Column(
                     modifier = Modifier

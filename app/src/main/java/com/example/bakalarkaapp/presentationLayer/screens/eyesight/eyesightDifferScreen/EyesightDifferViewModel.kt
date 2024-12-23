@@ -2,14 +2,17 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiff
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.Round
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class EyesightDifferUiState(
     val imageId: String,
@@ -72,10 +75,13 @@ class EyesightDifferViewModel(app: LogoApp): BaseViewModel(app) {
 
     private fun nextQuestion(){
         val questions = getQuestions()
-        if (questionIdx < questions.size-1){
-            updateData()
-        } else {
-            nextRound()
+        viewModelScope.launch {
+            delay(1500)
+            if (questionIdx < questions.size-1){
+                updateData()
+            } else {
+                nextRound()
+            }
         }
     }
 

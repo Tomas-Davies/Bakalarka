@@ -2,12 +2,15 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class EyesightComparisonUiState(
     val imageId: String,
@@ -48,7 +51,12 @@ class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 
     private fun onCorrectAnswer(){
-        if (nextRound()) updateData()
+        viewModelScope.launch {
+            delay(1500)
+            if (nextRound()) {
+                updateData()
+            }
+        }
     }
 
     fun validateAnswer(answer: Boolean): Boolean {

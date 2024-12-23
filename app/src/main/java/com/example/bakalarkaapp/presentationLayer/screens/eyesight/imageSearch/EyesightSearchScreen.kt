@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -224,10 +225,11 @@ class EyesightSearchScreen : AppCompatActivity() {
                 }
                 val showMissIndicator = viewModel.showMissIndicator.collectAsState().value
                 val missIndicatorPos = viewModel.missIndicatorPos.collectAsState().value
-               
-                if (showMissIndicator){
-                    MissIndicator(offset = missIndicatorPos)
-                }
+
+                MissIndicator(
+                    offset = missIndicatorPos,
+                    show = showMissIndicator
+                )
             }
 
             AnimatedVisibility(
@@ -312,8 +314,8 @@ class EyesightSearchScreen : AppCompatActivity() {
     }
 
     @Composable
-    private fun MissIndicator(offset: Offset){
-        val boxSize = 40.dp
+    private fun MissIndicator(offset: Offset, show: Boolean){
+        val boxSize = 30.dp
         val x = with(LocalDensity.current){ offset.x.toDp() - boxSize / 2}
         val y = with(LocalDensity.current){ offset.y.toDp() - boxSize / 2}
 
@@ -323,7 +325,22 @@ class EyesightSearchScreen : AppCompatActivity() {
                 .offset(x, y),
             contentAlignment = Alignment.Center
         ){
-            Text(text = "x", color = Color.Red)
+            AnimatedVisibility(
+                visible = show,
+                enter = scaleIn(
+                    animationSpec = tween(durationMillis = 100)
+                ),
+                exit = scaleOut(
+                    animationSpec = tween(durationMillis = 100)
+                )
+            ) {
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painterResource(id = R.drawable.miss_click_icon),
+                    contentDescription = "miss click icon",
+                    contentScale = ContentScale.FillWidth
+                )
+            }
         }
     }
 

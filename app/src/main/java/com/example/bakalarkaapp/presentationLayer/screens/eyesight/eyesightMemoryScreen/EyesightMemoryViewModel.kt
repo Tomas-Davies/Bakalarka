@@ -2,11 +2,14 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 data class EyesightMemoryUiState(
@@ -43,8 +46,11 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
                 score++
                 isFirstCorrectAttempt = false
             }
-            nextRound()
-            updateData()
+            viewModelScope.launch {
+                delay(1500)
+                nextRound()
+                updateData()
+            }
             return true
         } else {
             if (isFirstWrongAttempt){

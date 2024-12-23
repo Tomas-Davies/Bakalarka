@@ -2,11 +2,14 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonema
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class HearingFonematicUiState(
     val imageResource1: String,
@@ -38,8 +41,11 @@ class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
     fun validateAnswer(answer: String): Boolean {
         if (answer == _uiState.value.soundResource) {
             score++
-            if (nextRound()) {
-                updateData()
+            viewModelScope.launch {
+                delay(1500)
+                if (nextRound()) {
+                    updateData()
+                }
             }
             return true
         } else {

@@ -126,10 +126,11 @@ class SpeechScreen: AppCompatActivity() {
                 val firstCol = LinkedList<Array<String>>()
                 val secondCol = LinkedList<Array<String>>()
                 val thirdCol = LinkedList<Array<String>>()
+                val colCount = 4
                 for (i in levelItems.indices){
-                    if (i % 3 == 0){
+                    if (i % colCount == 0){
                         firstCol.add(levelItems[i])
-                    } else if (i % 3 == 1) {
+                    } else if (i % colCount == 1) {
                         secondCol.add(levelItems[i])
                     }
                     else thirdCol.add(levelItems[i])
@@ -188,12 +189,6 @@ class SpeechScreen: AppCompatActivity() {
         Card(
             modifier = modifier
                 .clip(RoundedCornerShape(16.dp))
-//                .animateContentSize(
-//                    animationSpec = tween(
-//                        durationMillis = 300,
-//                        easing = LinearOutSlowInEasing
-//                    )
-//                )
                 .background(colorResource(id = R.color.speech_500))
                 .padding(10.dp),
             onClick = {

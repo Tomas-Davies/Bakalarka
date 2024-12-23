@@ -10,6 +10,7 @@ import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.shuffle
 import com.example.bakalarkaapp.toDrawableId
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -59,7 +60,10 @@ class EyesightDragDropViewModel(app: LogoApp, data: Array<String>) : BaseViewMod
     fun validateResult(): Boolean {
         if (userWord.joinToString("") == word.uppercase()) {
             scoreInc()
-            updateData()
+            viewModelScope.launch {
+                delay(1500)
+                updateData()
+            }
             return true
         } else {
             scoreDesc()

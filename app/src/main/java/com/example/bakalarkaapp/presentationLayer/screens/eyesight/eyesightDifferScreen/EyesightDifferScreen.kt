@@ -5,6 +5,10 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -121,12 +125,20 @@ class EyesightDifferScreen: AppCompatActivity() {
                     contentAlignment = Alignment.Center
                 ){
                     if (imageId != 0){
-                        Image(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentScale = ContentScale.FillWidth,
-                            painter = painterResource(id = imageId),
-                            contentDescription = "image"
-                        )
+                        AnimatedContent(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            targetState = imageId,
+                            label = "",
+                            transitionSpec = { slideInHorizontally {fullWidth -> fullWidth } togetherWith  slideOutHorizontally{fullWidth -> -fullWidth } }
+                        ) {targetImage ->
+                            Image(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentScale = ContentScale.FillWidth,
+                                painter = painterResource(id = targetImage),
+                                contentDescription = "image"
+                            )
+                        }
                     } else {
                         Image(painter = painterResource(id = R.drawable.image_not_available), contentDescription = "image")
                     }

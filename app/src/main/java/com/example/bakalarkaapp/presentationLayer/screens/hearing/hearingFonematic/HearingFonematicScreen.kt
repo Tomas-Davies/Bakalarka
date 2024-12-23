@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -121,7 +121,7 @@ class HearingFonematicScreen : AppCompatActivity() {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = stringResource(id = R.string.hearing_fonematic_label),
@@ -135,18 +135,23 @@ class HearingFonematicScreen : AppCompatActivity() {
                 verticalArrangement = Arrangement.Top
             ) {
                 images.forEach { image ->
-                    key(image.value) {
-                        Image(
+                        AnimatedContent(
                             modifier = Modifier
-                                .fillMaxWidth(0.6f)
-                                .clickable {
-                                    val result = viewModel.validateAnswer(image.key)
-                                    viewModel.playResultSound(result)
-                                },
-                            painter = painterResource(id = image.value),
-                            contentDescription = "image"
-                        )
-                        Spacer(modifier = Modifier.height(30.dp))
+                                .fillMaxWidth(0.7f),
+                            targetState = image.value,
+                            label = ""
+                        ) { targetImage ->
+                            Image(
+                                modifier = Modifier
+                                    .clickable {
+                                        val result = viewModel.validateAnswer(image.key)
+                                        viewModel.playResultSound(result)
+                                    },
+                                painter = painterResource(id = targetImage),
+                                contentDescription = "image"
+                            )
+
+                        Spacer(modifier = Modifier.height(60.dp))
                     }
                 }
             }

@@ -5,6 +5,11 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -78,7 +83,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
     @Composable
     private fun EyesightComparisonRunning(viewModel: EyesightComparisonViewModel) {
         val ctx = LocalContext.current
@@ -114,14 +119,22 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 )
                 Spacer(modifier = Modifier.height(50.dp))
                 val imageResId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
-                Image(
+                AnimatedContent(
                     modifier = Modifier
-                        .background(Color.White)
                         .weight(1.5f)
                         .fillMaxWidth(),
-                    painter = painterResource(id = imageResId),
-                    contentDescription = "comparison image"
-                )
+                    targetState = imageResId,
+                    label = "",
+                    transitionSpec = { slideInHorizontally {fullWidth -> fullWidth } togetherWith  slideOutHorizontally{fullWidth -> -fullWidth } }
+                ) { targetImage ->
+                    Image(
+                        modifier = Modifier
+                            .background(Color.White),
+                        painter = painterResource(id = targetImage),
+                        contentDescription = "comparison image"
+                    )
+                }
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
