@@ -137,6 +137,7 @@
     <string name="label_again">Znovu</string>
     <string name="label_leave">Odejít</string>
     <string name="correct_label">Správně</string>
+    <string name="wrong_label">Špatně</string>
     <string name="accuracy_label">Přesnost</string>
     <string name="eyesight_comparison_result_1">Opakování je matka moudrosti.</string>
     <string name="eyesight_comparison_result_2">Vedl sis dobře.</string>
@@ -836,6 +837,9 @@
     <string name="eyesight_memory_label_2">Vyber obrázek, který je navíc</string>
     <string name="eyesight_search_label_1">Hledání - najdi skryté kočky</string>
     <string name="eyesight_search_label_2">Našel si všechny!</string>
+    <string name="eyesight_search_level_info_label">Úroveň</string>
+    <string name="eyesight_search_level_heading">Hledání</string>
+
 
     <string name="hearing_fonematic_label"> Přehraj si nahrávku a poté vyber obrázek</string>
 </resources>

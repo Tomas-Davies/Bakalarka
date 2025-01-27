@@ -92,9 +92,10 @@ class EyesightSearchScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val level_idx = intent.getIntExtra("LEVEL_INDEX", 0)
                     val app = application as LogoApp
                     val viewModel: EyesightSearchViewModel by viewModels {
-                        EyesightSearchViewModelFactory(app)
+                        EyesightSearchViewModelFactory(app, level_idx)
                     }
                     EyesightImageSearchScreenContent(viewModel)
                 }

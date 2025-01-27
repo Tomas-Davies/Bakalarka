@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
@@ -100,8 +101,17 @@ fun DropBox(
         Text(
             modifier = Modifier.padding(15.dp),
             text = label,
-            fontSize = 42.sp,
+            fontSize = 28.sp,
             fontFamily = FontFamily.Monospace
         )
+
+        if (label == " "){
+            Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = "${index + 1}",
+                fontSize = 12.sp
+            )
+        }
+
     }
 }

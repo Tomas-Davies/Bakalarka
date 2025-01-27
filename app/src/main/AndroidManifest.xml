@@ -15,6 +15,7 @@
         tools:targetApi="31" >
         <activity
             android:name=".presentationLayer.screens.homeScreen.HomeScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,6 +24,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.speech.speechScreen.SpeechScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -31,6 +33,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -39,6 +42,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingScreen.HearingScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -47,6 +51,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmScreen.RythmScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -55,6 +60,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.tales.TalesScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -63,6 +69,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -71,6 +78,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -79,6 +87,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -87,6 +96,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -95,6 +105,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -103,6 +114,16 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentationLayer.screens.eyesight.imageSearch.LevelsScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -111,6 +132,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingFonematic.HearingFonematicScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -119,6 +141,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingMemory.HearingMemoryScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -127,6 +150,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingSynthesis.HearingSynthesisScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -135,6 +159,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmPexesoScreen.RythmPexesoScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -143,6 +168,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmClapScreen.RythmClapScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -151,6 +177,7 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmRepeatScreen.RythmRepeatScreen"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

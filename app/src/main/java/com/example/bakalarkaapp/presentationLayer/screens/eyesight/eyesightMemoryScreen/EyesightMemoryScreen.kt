@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -113,70 +114,78 @@ class EyesightMemoryScreen : AppCompatActivity() {
     private fun EyesightMemoryRunning(viewModel: EyesightMemoryViewModel) {
         val ctx = LocalContext.current
         val uiState = viewModel.uiState.collectAsState().value
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .weight(0.1f),
-                text = "${uiState.round} / ${viewModel.count}",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-
-            var messageId by remember { mutableIntStateOf(R.string.eyesight_memory_label_1) }
-
-            TimerIndicator(
-                msDuration = 15000,
-                onFinish = {
-                    viewModel.showExtraItem()
-                    messageId = R.string.eyesight_memory_label_2
-                },
-                restartTrigger = uiState.round
-            )
-            Text(
-                modifier = Modifier
-                    .weight(0.1f)
-                    .wrapContentHeight(),
-                text = stringResource(id = messageId),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
-            Box(
-                modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.Center
+        Box {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                LazyVerticalGrid(
-                    modifier = Modifier.fillMaxWidth(),
-                    columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                Text(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .weight(0.1f),
+                    text = "${uiState.round} / ${viewModel.count}",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                var messageId by remember { mutableIntStateOf(R.string.eyesight_memory_label_1) }
+
+                TimerIndicator(
+                    msDuration = 15000,
+                    onFinish = {
+                        viewModel.showExtraItem()
+                        messageId = R.string.eyesight_memory_label_2
+                    },
+                    restartTrigger = uiState.round
+                )
+                Text(
+                    modifier = Modifier
+                        .weight(0.1f)
+                        .wrapContentHeight(),
+                    text = stringResource(id = messageId),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.Center
                 ) {
-                    val objects = uiState.objectDrawableIds
-                    for (id in objects) {
-                        val drawable = resources.getIdentifier(id, "drawable", ctx.packageName)
-                        item {
-                            ImageCard(
-                                drawable = drawable,
-                                onClick = {
-                                    if(viewModel.validateAnswer(id)){
-                                        viewModel.playSound(R.raw.correct_answer)
-                                        messageId = R.string.eyesight_memory_label_1
-                                    } else {
-                                        viewModel.playSound(R.raw.wrong_answer)
-                                    }
-                                },
-                                enabled = viewModel.enabled
-                            )
+                    LazyVerticalGrid(
+                        modifier = Modifier.fillMaxWidth(),
+                        columns = GridCells.Fixed(2),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        val objects = uiState.objectDrawableIds
+                        for (id in objects) {
+                            val drawable = resources.getIdentifier(id, "drawable", ctx.packageName)
+                            item {
+                                ImageCard(
+                                    drawable = drawable,
+                                    onClick = {
+                                        if(viewModel.validateAnswer(id)){
+                                            viewModel.playSound(R.raw.correct_answer)
+                                            messageId = R.string.eyesight_memory_label_1
+                                        } else {
+                                            viewModel.playSound(R.raw.wrong_answer)
+                                        }
+                                    },
+                                    enabled = viewModel.enabled
+                                )
+                            }
                         }
                     }
                 }
             }
+
+            AnswerResult(
+                viewModel = viewModel,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
+
 
     }
 

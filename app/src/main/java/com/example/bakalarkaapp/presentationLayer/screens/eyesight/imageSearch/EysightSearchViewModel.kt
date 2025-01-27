@@ -18,7 +18,11 @@ data class EyesightSearchUiState(
     val items: List<SearchItem>
 )
 
-class EyesightSearchViewModel(app: LogoApp) : BaseViewModel(app) {
+class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app) {
+    init {
+        roundIdx = levelIndex
+    }
+
     private val searchRepo = app.eyesightSearchRepository
     private val rounds = searchRepo.data
     private var currentRound = rounds[roundIdx]
@@ -42,7 +46,7 @@ class EyesightSearchViewModel(app: LogoApp) : BaseViewModel(app) {
 
 
     init {
-        count = rounds.size
+        count = rounds.size - levelIndex
     }
 
     fun onItemClick() {
@@ -96,12 +100,12 @@ class EyesightSearchViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 }
 
-class EyesightSearchViewModelFactory(private val app: LogoApp) :
+class EyesightSearchViewModelFactory(private val app: LogoApp, private val levelIndex: Int) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSearchViewModel::class.java)) {
-            return EyesightSearchViewModel(app) as T
+            return EyesightSearchViewModel(app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

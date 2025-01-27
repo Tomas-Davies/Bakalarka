@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -103,93 +104,105 @@ class EyesightComparisonScreen : AppCompatActivity() {
             }
         ) {
             val uiState = viewModel.uiState.collectAsState().value
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                TimerIndicator(
-                    msDuration = 15000,
-                    onFinish = {
-                        viewModel.playSound(R.raw.wrong_answer)
-                        viewModel.updateData()
-                    },
-                    restartTrigger = uiState.restartTrigger
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                val imageResId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
-                AnimatedContent(
-                    modifier = Modifier
-                        .weight(1.5f)
-                        .fillMaxWidth(),
-                    targetState = imageResId,
-                    label = "",
-                    transitionSpec = { slideInHorizontally {fullWidth -> fullWidth } togetherWith  slideOutHorizontally{fullWidth -> -fullWidth } }
-                ) { targetImage ->
-                    Image(
-                        modifier = Modifier
-                            .background(Color.White),
-                        painter = painterResource(id = targetImage),
-                        contentDescription = "comparison image"
-                    )
-                }
-
+            Box {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
+                        .fillMaxSize()
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Box(
+                    val enabled = viewModel.buttonsEnabled.collectAsState().value
+
+                    TimerIndicator(
+                        msDuration = 15000,
+                        onFinish = {
+                            if(enabled){
+                                viewModel.playSound(R.raw.wrong_answer)
+                                viewModel.onTimerFinish()
+                            }
+                        },
+                        restartTrigger = uiState.restartTrigger
+                    )
+                    Spacer(modifier = Modifier.height(50.dp))
+                    val imageResId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
+                    AnimatedContent(
                         modifier = Modifier
-                            .weight(1f)
+                            .weight(1.5f)
                             .fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ){
-                        Text(
-                            text = stringResource(id = R.string.eyesight_comparison_label),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
+                        targetState = imageResId,
+                        label = "",
+                        transitionSpec = { slideInHorizontally {fullWidth -> fullWidth } togetherWith  slideOutHorizontally{fullWidth -> -fullWidth } }
+                    ) { targetImage ->
+                        Image(
+                            modifier = Modifier
+                                .background(Color.White),
+                            painter = painterResource(id = targetImage),
+                            contentDescription = "comparison image"
                         )
                     }
 
-                    Row(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(1f)
+                            .weight(1f),
                     ) {
-                        CompareButton(
-                            modifier = Modifier.weight(1f),
-                            imageId = R.drawable.equals,
-                            label = stringResource(id = R.string.identical),
-                            bgColor = colorResource(id = R.color.correct),
-                            onClick = {
-                                onCompareButtonClick(
-                                    true,
-                                    viewModel,
-                                    R.raw.correct_answer,
-                                    R.raw.wrong_answer
-                                )
-                            }
-                        )
-                        Spacer(modifier = Modifier.weight(0.3f))
-                        CompareButton(
-                            modifier = Modifier.weight(1f),
-                            imageId = R.drawable.non_equal,
-                            label = stringResource(id = R.string.different),
-                            bgColor = colorResource(id = R.color.incorrect),
-                            onClick = {
-                                onCompareButtonClick(
-                                    false,
-                                    viewModel,
-                                    R.raw.correct_answer,
-                                    R.raw.wrong_answer
-                                )
-                            }
-                        )
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Text(
+                                text = stringResource(id = R.string.eyesight_comparison_label),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                        ) {
+                            CompareButton(
+                                modifier = Modifier.weight(1f),
+                                imageId = R.drawable.equals,
+                                label = stringResource(id = R.string.identical),
+                                bgColor = colorResource(id = R.color.correct),
+                                enabled = enabled,
+                                onClick = {
+                                    onCompareButtonClick(
+                                        true,
+                                        viewModel,
+                                        R.raw.correct_answer,
+                                        R.raw.wrong_answer
+                                    )
+                                }
+                            )
+                            Spacer(modifier = Modifier.weight(0.3f))
+                            CompareButton(
+                                modifier = Modifier.weight(1f),
+                                imageId = R.drawable.non_equal,
+                                label = stringResource(id = R.string.different),
+                                bgColor = colorResource(id = R.color.incorrect),
+                                enabled = enabled,
+                                onClick = {
+                                    onCompareButtonClick(
+                                        false,
+                                        viewModel,
+                                        R.raw.correct_answer,
+                                        R.raw.wrong_answer
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
+                AnswerResult(
+                    viewModel = viewModel,
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
     }
@@ -201,6 +214,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
         imageId: Int,
         label: String,
         bgColor: Color = colorResource(id = R.color.eyesight_300),
+        enabled: Boolean,
         onClick: () -> Unit
     ) {
         ElevatedCard(
@@ -211,7 +225,8 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 containerColor = bgColor,
                 disabledContentColor = CardDefaults.cardColors().disabledContentColor,
                 disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
-            )
+            ),
+            enabled = enabled
         ) {
             Column(
                 modifier = Modifier

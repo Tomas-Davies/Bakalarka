@@ -42,6 +42,7 @@ class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
         if (answer == _uiState.value.soundResource) {
             score++
             viewModelScope.launch {
+                showMessage(result = true)
                 delay(1500)
                 if (nextRound()) {
                     updateData()
@@ -49,6 +50,7 @@ class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
             }
             return true
         } else {
+            showMessage(result = false)
             if (isFirstWrongAttempt) {
                 score--
                 isFirstWrongAttempt = false

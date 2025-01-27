@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -48,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DragBox
 import com.example.bakalarkaapp.presentationLayer.components.dragDrop.DropBox
@@ -137,107 +139,34 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         }
         val modifier = Modifier.fillMaxWidth()
 
-        Text(
-            modifier = Modifier,
-            text = stringResource(id = R.string.eyesight_drag_drop_label),
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
+        Box {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.eyesight_drag_drop_label),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
 
-        val word = uiState.currendWord
-        val wordParts = word.to3Parts()
-        val topIndexesStart = wordParts[0].length
-        val rightIndexesStart = topIndexesStart + wordParts[1].length
+            val word = uiState.currendWord
+            val wordParts = word.to3Parts()
+            val topIndexesStart = wordParts[0].length
+            val rightIndexesStart = topIndexesStart + wordParts[1].length
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.weight(0.2f))
-
-            // TOP BOXES
-            Row(
-                modifier = modifier,
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val letters = wordParts[1]
-                var position = topIndexesStart
-                for (i in letters.indices) {
-                    key(position) {
-                        DropBox(
-                            index = position,
-                            viewModel = viewModel,
-                            toggleDragSourceAbility = { sourceIndex, enabled ->
-                                if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
-                                    viewModel.enabledStates[sourceIndex].value = enabled
-                                }
-                            }
-                        )
-                    }
-                    position++
-                }
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // LEFT BOXES
-                Column(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    val letters = wordParts[0].reversed()
-                    for (i in letters.indices.reversed()) {
-                        key(i) {
-                            DropBox(
-                                index = i,
-                                viewModel = viewModel,
-                                toggleDragSourceAbility = { sourceIndex, enabled ->
-                                    if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
-                                        viewModel.enabledStates[sourceIndex].value = enabled
-                                    }
-                                }
-                            )
-                        }
-                    }
-                }
+                Spacer(modifier = Modifier.weight(0.2f))
 
-                // CENTER IMAGE
-                val imageId = ctx.resources.getIdentifier(
-                    uiState.wordResourcesId,
-                    "drawable",
-                    ctx.packageName
-                )
-                AnimatedContent(
-                    modifier = Modifier
-                        .weight(5f),
-                    targetState = imageId,
-                    label = ""
-                ) { targetImage ->
-                    Image(
-                        painter = painterResource(id = targetImage),
-                        contentDescription = "image",
-                        contentScale = ContentScale.FillWidth
-                    )
-                }
-                // RIGHT BOXES
-                Column(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f),
-                    horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.SpaceEvenly
+                // TOP BOXES
+                Row(
+                    modifier = modifier,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    var position = rightIndexesStart
-                    val letters = wordParts[2]
+                    val letters = wordParts[1]
+                    var position = topIndexesStart
                     for (i in letters.indices) {
                         key(position) {
                             DropBox(
@@ -253,26 +182,105 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                         position++
                     }
                 }
-            }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // LEFT BOXES
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        val letters = wordParts[0].reversed()
+                        for (i in letters.indices.reversed()) {
+                            key(i) {
+                                DropBox(
+                                    index = i,
+                                    viewModel = viewModel,
+                                    toggleDragSourceAbility = { sourceIndex, enabled ->
+                                        if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
+                                            viewModel.enabledStates[sourceIndex].value = enabled
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    }
 
-            FlowRow(
-                modifier = modifier.weight(1f),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                maxItemsInEachRow = 6,
-                verticalArrangement = Arrangement.Center
-            ) {
-                val letters = uiState.mixedWord
-
-                for (position in uiState.mixedWord.indices) {
-                    key(position) {
-                        DragBox(
-                            letter = letters[position],
-                            enabled = viewModel.enabledStates[position].value,
-                            index = position
+                    // CENTER IMAGE
+                    val imageId = ctx.resources.getIdentifier(
+                        uiState.wordResourcesId,
+                        "drawable",
+                        ctx.packageName
+                    )
+                    AnimatedContent(
+                        modifier = Modifier
+                            .weight(5f),
+                        targetState = imageId,
+                        label = ""
+                    ) { targetImage ->
+                        Image(
+                            painter = painterResource(id = targetImage),
+                            contentDescription = "image",
+                            contentScale = ContentScale.FillWidth
                         )
+                    }
+                    // RIGHT BOXES
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f),
+                        horizontalAlignment = Alignment.End,
+                        verticalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        var position = rightIndexesStart
+                        val letters = wordParts[2]
+                        for (i in letters.indices) {
+                            key(position) {
+                                DropBox(
+                                    index = position,
+                                    viewModel = viewModel,
+                                    toggleDragSourceAbility = { sourceIndex, enabled ->
+                                        if (sourceIndex != -1 && sourceIndex < viewModel.enabledStates.size) {
+                                            viewModel.enabledStates[sourceIndex].value = enabled
+                                        }
+                                    }
+                                )
+                            }
+                            position++
+                        }
+                    }
+                }
+
+                FlowRow(
+                    modifier = modifier.weight(1f),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    maxItemsInEachRow = 6,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    val letters = uiState.mixedWord
+
+                    for (position in uiState.mixedWord.indices) {
+                        key(position) {
+                            DragBox(
+                                letter = letters[position],
+                                enabled = viewModel.enabledStates[position].value,
+                                index = position
+                            )
+                        }
                     }
                 }
             }
+            AnswerResult(
+                viewModel = viewModel,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 

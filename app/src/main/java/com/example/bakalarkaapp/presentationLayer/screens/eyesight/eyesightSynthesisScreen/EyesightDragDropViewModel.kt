@@ -25,7 +25,7 @@ data class EyesightDragDropUiState(
 )
 
 class EyesightDragDropViewModel(app: LogoApp, data: Array<String>) : BaseViewModel(app) {
-    private val words = data.sortedBy { w -> w.length }
+    private val words = data.copyOfRange(0, 5).sortedBy { w -> w.length }
     private var word = words[roundIdx]
     private var wordMixed = word.uppercase().shuffle()
     private var userWord = CharArray(word.length)
@@ -61,11 +61,13 @@ class EyesightDragDropViewModel(app: LogoApp, data: Array<String>) : BaseViewMod
         if (userWord.joinToString("") == word.uppercase()) {
             scoreInc()
             viewModelScope.launch {
+                showMessage(result = true)
                 delay(1500)
                 updateData()
             }
             return true
         } else {
+            showMessage(result = false)
             scoreDesc()
             resetData()
             return false

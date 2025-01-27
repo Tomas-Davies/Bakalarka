@@ -9,6 +9,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -118,23 +120,24 @@ class HearingFonematicScreen : AppCompatActivity() {
             Pair(uiState.imageResource3, imageId3)
         )
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = stringResource(id = R.string.hearing_fonematic_label),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+        Box {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                images.forEach { image ->
+                Text(
+                    text = stringResource(id = R.string.hearing_fonematic_label),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    images.forEach { image ->
                         AnimatedContent(
                             modifier = Modifier
                                 .fillMaxWidth(0.7f),
@@ -151,13 +154,18 @@ class HearingFonematicScreen : AppCompatActivity() {
                                 contentDescription = "image"
                             )
 
-                        Spacer(modifier = Modifier.height(60.dp))
+                            Spacer(modifier = Modifier.height(60.dp))
+                        }
                     }
                 }
-            }
 
-            PlaySoundButton(
-                onClick = { viewModel.playSound(soundId) }
+                PlaySoundButton(
+                    onClick = { viewModel.playSound(soundId) }
+                )
+            }
+            AnswerResult(
+                viewModel = viewModel,
+                modifier = Modifier.align(Alignment.Center)
             )
         }
     }

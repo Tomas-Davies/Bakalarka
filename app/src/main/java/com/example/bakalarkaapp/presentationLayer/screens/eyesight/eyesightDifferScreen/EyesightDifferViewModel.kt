@@ -55,6 +55,7 @@ class EyesightDifferViewModel(app: LogoApp): BaseViewModel(app) {
                 score++
                 isFirstCorrectAttempt = false
             }
+            showMessage(result = true)
             nextQuestion()
             return true
         } else {
@@ -62,6 +63,7 @@ class EyesightDifferViewModel(app: LogoApp): BaseViewModel(app) {
                 score--
                 isFirstWrongAttempt = false
             }
+            showMessage(result = false)
             return false
         }
     }

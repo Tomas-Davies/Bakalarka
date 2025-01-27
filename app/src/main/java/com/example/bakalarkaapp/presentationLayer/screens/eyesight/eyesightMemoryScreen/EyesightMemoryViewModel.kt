@@ -47,12 +47,14 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
                 isFirstCorrectAttempt = false
             }
             viewModelScope.launch {
+                showMessage(result = true)
                 delay(1500)
                 nextRound()
                 updateData()
             }
             return true
         } else {
+            showMessage(result = false)
             if (isFirstWrongAttempt){
                 score--
                 isFirstWrongAttempt = false

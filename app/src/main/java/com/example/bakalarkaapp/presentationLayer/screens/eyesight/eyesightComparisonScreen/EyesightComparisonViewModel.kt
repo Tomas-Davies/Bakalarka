@@ -36,7 +36,7 @@ class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
         count = data.size
     }
 
-    fun scoreInc() {
+    private fun scoreInc() {
         if (!btnOneClickedFlag) {
             score++
             btnOneClickedFlag = true
@@ -50,21 +50,30 @@ class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
         }
     }
 
-    private fun onCorrectAnswer(){
+    private fun moveNext(){
         viewModelScope.launch {
             delay(1500)
+            _buttonsEnabled.value = true
             if (nextRound()) {
                 updateData()
             }
         }
     }
 
+    fun onTimerFinish(){
+        moveNext()
+        scoreDesc()
+    }
+
     fun validateAnswer(answer: Boolean): Boolean {
         if (answer == _uiState.value.answer){
+            _buttonsEnabled.value = false
+            showMessage(result = true)
             scoreInc()
-            onCorrectAnswer()
+            moveNext()
             return true
         }
+        showMessage(result = false)
         scoreDesc()
         return false
     }

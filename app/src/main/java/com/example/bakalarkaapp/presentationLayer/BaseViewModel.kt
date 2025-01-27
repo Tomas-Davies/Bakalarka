@@ -3,18 +3,23 @@ package com.example.bakalarkaapp.presentationLayer
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Build
+import android.os.Message
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.presentationLayer.states.AnswerResultState
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel(application: LogoApp): ViewModel() {
@@ -26,8 +31,10 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
     protected var isFirstCorrectAttempt = true
     protected var isFirstWrongAttempt = true
     var count = 0
-
-
+    private var _answerResultState = MutableStateFlow(AnswerResultState())
+    val answerResultState = _answerResultState.asStateFlow()
+    protected var _buttonsEnabled = MutableStateFlow(true)
+    val buttonsEnabled = _buttonsEnabled.asStateFlow()
 
     protected open fun nextRound(): Boolean {
         if (roundIdx + 1 < count) {
@@ -59,6 +66,24 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
     }
 
     protected abstract fun updateData()
+
+    private fun updateAnswerResultState(result: Boolean = false, show: Boolean = false, message: String = ""){
+        _answerResultState.update { state ->
+            state.copy(
+                showResult = show,
+                correctAnswer = result,
+                message = message
+            )
+        }
+    }
+
+    protected fun showMessage(result: Boolean = answerResultState.value.correctAnswer, message: String = ""){
+        viewModelScope.launch {
+            updateAnswerResultState(show = true, result = result, message = message)
+            delay(1000)
+            updateAnswerResultState(show = false, result = result, message = message)
+        }
+    }
 
 
     fun playSound(soundId: Int) {

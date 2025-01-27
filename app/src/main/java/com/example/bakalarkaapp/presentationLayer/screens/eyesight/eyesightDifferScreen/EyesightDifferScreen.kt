@@ -10,6 +10,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
@@ -107,79 +110,86 @@ class EyesightDifferScreen: AppCompatActivity() {
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun EyesightDifferRunning(viewModel: EyesightDifferViewModel){
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            val ctx = LocalContext.current
-            val uiState = viewModel.uiState.collectAsState().value
-            val imageId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
-
+        Box {
             Column(
-                modifier = Modifier.weight(3f),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxSize()
             ) {
-                Box(
+                val ctx = LocalContext.current
+                val uiState = viewModel.uiState.collectAsState().value
+                val imageId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
+
+                Column(
+                    modifier = Modifier.weight(3f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(3f),
+                        contentAlignment = Alignment.Center
+                    ){
+                        if (imageId != 0){
+                            AnimatedContent(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                targetState = imageId,
+                                label = "",
+                                transitionSpec = { slideInHorizontally {fullWidth -> fullWidth } togetherWith  slideOutHorizontally{fullWidth -> -fullWidth } }
+                            ) {targetImage ->
+                                Image(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentScale = ContentScale.FillWidth,
+                                    painter = painterResource(id = targetImage),
+                                    contentDescription = "image"
+                                )
+                            }
+                        } else {
+                            Image(painter = painterResource(id = R.drawable.image_not_available), contentDescription = "image")
+                        }
+                    }
+                    Text(
+                        modifier = Modifier
+                            .weight(0.2f)
+                            .wrapContentHeight(),
+                        text = "${uiState.questionNumber} / ${viewModel.count}",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentHeight(),
+                        text = uiState.question,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                }
+                FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(3f),
-                    contentAlignment = Alignment.Center
-                ){
-                    if (imageId != 0){
-                        AnimatedContent(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            targetState = imageId,
-                            label = "",
-                            transitionSpec = { slideInHorizontally {fullWidth -> fullWidth } togetherWith  slideOutHorizontally{fullWidth -> -fullWidth } }
-                        ) {targetImage ->
-                            Image(
-                                modifier = Modifier.fillMaxWidth(),
-                                contentScale = ContentScale.FillWidth,
-                                painter = painterResource(id = targetImage),
-                                contentDescription = "image"
-                            )
+                        .weight(1f),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    for (answer in uiState.answers){
+                        Button(onClick = {
+                            if (viewModel.validateAnswer(answer)){
+                                viewModel.playSound(R.raw.correct_answer)
+                            } else {
+                                viewModel.playSound(R.raw.wrong_answer)
+                            }
+                        }) {
+                            Text(text = answer)
                         }
-                    } else {
-                        Image(painter = painterResource(id = R.drawable.image_not_available), contentDescription = "image")
-                    }
-                }
-                Text(
-                    modifier = Modifier
-                        .weight(0.2f)
-                        .wrapContentHeight(),
-                    text = "${uiState.questionNumber} / ${viewModel.count}",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-                Text(
-                    modifier = Modifier
-                        .weight(1f)
-                        .wrapContentHeight(),
-                    text = uiState.question,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-            }
-            FlowRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                for (answer in uiState.answers){
-                    Button(onClick = {
-                        if (viewModel.validateAnswer(answer)){
-                            viewModel.playSound(R.raw.correct_answer)
-                        } else {
-                            viewModel.playSound(R.raw.wrong_answer)
-                        }
-                    }) {
-                        Text(text = answer)
                     }
                 }
             }
+            
+            AnswerResult(
+                viewModel = viewModel,
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }
