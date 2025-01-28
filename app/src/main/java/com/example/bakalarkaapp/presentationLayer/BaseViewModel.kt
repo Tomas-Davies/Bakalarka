@@ -3,12 +3,10 @@ package com.example.bakalarkaapp.presentationLayer
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Build
-import android.os.Message
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
@@ -56,8 +54,7 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
     }
 
     open fun scorePercentage(): Int {
-        val correctCount = score
-        return (correctCount * 100) / count
+        return (score * 100) / count
     }
 
     protected fun resetAttemptFlags(){

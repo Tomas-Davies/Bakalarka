@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp
+package com.example.bakalarkaapp.utils.string
 
 import java.text.Normalizer
 

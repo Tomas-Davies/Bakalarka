@@ -10,7 +10,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +34,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -60,9 +58,10 @@ class EyesightDifferScreen: AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val levelIndex = intent.getIntExtra("LEVEL_INDEX", 0)
                     val app = application as LogoApp
                     val viewModel: EyesightDifferViewModel by viewModels {
-                        EyesightDifferViewModelFactory(app)
+                        EyesightDifferViewModelFactory(app, levelIndex)
                     }
                     EyesightDifferScreenContent(viewModel)
                 }
@@ -151,7 +150,7 @@ class EyesightDifferScreen: AppCompatActivity() {
                         modifier = Modifier
                             .weight(0.2f)
                             .wrapContentHeight(),
-                        text = "${uiState.questionNumber} / ${viewModel.count}",
+                        text = "${uiState.questionNumber} / ${uiState.count}",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center

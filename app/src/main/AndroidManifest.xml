@@ -122,7 +122,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.eyesight.imageSearch.LevelsScreen"
+            android:name=".presentationLayer.screens.levelsScreen.LevelsScreen"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

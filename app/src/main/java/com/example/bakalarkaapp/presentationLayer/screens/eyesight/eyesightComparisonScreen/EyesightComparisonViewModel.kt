@@ -18,13 +18,17 @@ data class EyesightComparisonUiState(
     val restartTrigger: Int = 0
 )
 
-class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
+class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : BaseViewModel(app) {
+    init {
+        roundIdx = levelIndex
+    }
+
     private val comparisonDataRepository = app.eyesightComparisonRepository
-    private var data = comparisonDataRepository.data.shuffled()
-    private var currentItem = data[0]
+    private var data = comparisonDataRepository.data
+    private var currentItem = data[roundIdx]
     private val _uiState = MutableStateFlow(
         EyesightComparisonUiState(
-            currentItem.imageId.value,
+            currentItem.background.value,
             currentItem.isSameShape.value.toBoolean()
         )
     )
@@ -60,6 +64,11 @@ class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
         }
     }
 
+    override fun scorePercentage(): Int {
+        val count = count - levelIndex
+        return (score * 100) / count
+    }
+
     fun onTimerFinish(){
         moveNext()
         scoreDesc()
@@ -80,10 +89,10 @@ class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
 
     public override fun updateData() {
         currentItem = data[roundIdx]
-        println(currentItem.imageId.value)
+        println(currentItem.background.value)
         _uiState.update { currentState ->
             currentState.copy(
-                imageId = currentItem.imageId.value,
+                imageId = currentItem.background.value,
                 answer = currentItem.isSameShape.value.toBoolean(),
                 restartTrigger = roundIdx
             )
@@ -93,17 +102,17 @@ class EyesightComparisonViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 
     override fun doRestart() {
-        data = data.shuffled()
+        roundIdx = levelIndex
         updateData()
     }
 }
 
-class EyesightComparionViewModelFactory(private val app: LogoApp) :
+class EyesightComparionViewModelFactory(private val app: LogoApp, private val levelIndex: Int) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(EyesightComparisonViewModel::class.java)) {
-            return EyesightComparisonViewModel(app) as T
+            return EyesightComparisonViewModel(app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightComparisonViewModel")
     }

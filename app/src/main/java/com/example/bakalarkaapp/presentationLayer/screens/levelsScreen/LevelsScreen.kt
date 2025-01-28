@@ -1,12 +1,15 @@
-package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
+package com.example.bakalarkaapp.presentationLayer.screens.levelsScreen
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CardColors
@@ -32,6 +35,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
@@ -40,26 +44,58 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.dataLayer.repositories.ComparisonItem
+import com.example.bakalarkaapp.dataLayer.repositories.DifferItem
+import com.example.bakalarkaapp.dataLayer.repositories.SearchRound
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.theme.AppTheme
+import com.example.bakalarkaapp.utils.bundle.serializable
 
 class LevelsScreen : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val themeType = intent.getIntExtra("THEME_TYPE", 0)
+        val nextActivityClass = intent.serializable("NEXT_ACTIVITY_CLASS", Class::class.java)
+
         setContent {
-            AppTheme(ThemeType.THEME_EYESIGHT) {
+            AppTheme(themeType) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val app = application as LogoApp
-                    val viewModel: LevelsViewModel by viewModels {
-                        LevelsViewModelFactory(app)
+
+                    val viewModel = when(intent.getStringExtra("REPOSITORY_TYPE")) {
+                        "SEARCH" -> {
+                            val repo = app.eyesightSearchRepository
+                            val vm: LevelsViewModel<SearchRound> by viewModels {
+                                LevelsViewModelFactory(repo)
+                            }
+                            vm
+                        }
+                        "DIFFER" -> {
+                            val repo = app.eyesightDifferRepository
+                            val vm: LevelsViewModel<DifferItem> by viewModels {
+                                LevelsViewModelFactory(repo)
+                            }
+                            vm
+                        }
+                        "COMPARISON" -> {
+                            val repo = app.eyesightComparisonRepository
+                            val vm: LevelsViewModel<ComparisonItem> by viewModels {
+                                LevelsViewModelFactory(repo)
+                            }
+                            vm
+                        }
+                        else -> throw IllegalArgumentException("Unknown repository type")
                     }
-                    LevelsScreenContent(viewModel)
+                    LevelsScreenContent(viewModel, nextActivityClass)
                 }
             }
         }
@@ -67,7 +103,7 @@ class LevelsScreen : AppCompatActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun LevelsScreenContent(viewModel: LevelsViewModel) {
+    fun LevelsScreenContent(viewModel: LevelsViewModel<out LevelWithImage>, nextActivityClass: Class<*>?) {
         val ctx = LocalContext.current
         Scaffold(
             topBar = {
@@ -92,33 +128,30 @@ class LevelsScreen : AppCompatActivity() {
                 horizontalArrangement = Arrangement.spacedBy(18.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
-                var i = 0
-                items(viewModel.levels) { level ->
-                    val image = resources.getIdentifier("${level.first}_low", "drawable", packageName)
-                    LevelIcon(imageId = image, level.second, i)
-                    i++
+
+                itemsIndexed(viewModel.levels) { i, level ->
+                    val image = resources.getIdentifier("${level}_low", "drawable", packageName)
+                    LevelIcon(imageId = image, i, nextActivityClass)
                 }
             }
         }
     }
 
     @Composable
-    private fun LevelIcon(imageId: Int, objectCount: Int, i: Int){
+    private fun LevelIcon(imageId: Int, i: Int, nextActivityClass: Class<*>?){
         val ctx = LocalContext.current
         val cardColor = colorResource(id = R.color.eyesight_300)
         val textColor = colorResource(id = R.color.light)
 
         ElevatedCard(
             onClick = {
-                // TODO zde dam parameter class<*>
-                val intent = Intent(ctx, EyesightSearchScreen::class.java)
-                //TODO podle aktivity nastavim EXTRAS
+                val intent = Intent(ctx, nextActivityClass)
                 intent.putExtra("LEVEL_INDEX", i)
                 startActivity(intent)
             },
             colors = CardColors(
                 contentColor = CardDefaults.cardColors().contentColor,
-                containerColor = cardColor,
+                containerColor = Color.White,
                 disabledContentColor = CardDefaults.cardColors().disabledContentColor,
                 disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
             )
@@ -127,21 +160,35 @@ class LevelsScreen : AppCompatActivity() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
+                var alignment = Alignment.Center
+                var contentScale = ContentScale.Fit
+                var colorFilter: ColorFilter? = null
+                if (nextActivityClass == EyesightSearchScreen::class.java) {
+                    alignment = Alignment.TopCenter
+                    contentScale = ContentScale.Crop
+                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+                }
+
                 Image(
-                    modifier = Modifier.height(125.dp).fillMaxWidth(),
+                    modifier = Modifier
+                        .height(125.dp)
+                        .fillMaxWidth(),
                     painter = painterResource(id = imageId),
                     contentDescription = "Search level icon",
-                    // TODO podle eyesight aktivity "filter = isEyesight ? ColorFilter...   :   null
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }),
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.TopCenter
+                    colorFilter = colorFilter,
+                    contentScale = contentScale,
+                    alignment = alignment
                 )
 
                 Text(
-                    modifier = Modifier.padding(0.dp, 10.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(cardColor)
+                        .padding(0.dp, 10.dp),
                     text = "${stringResource(id = R.string.eyesight_search_level_info_label)}: ${i + 1}",
                     fontWeight = FontWeight.SemiBold,
-                    color = textColor
+                    color = textColor,
+                    textAlign = TextAlign.Center
                 )
             }
         }

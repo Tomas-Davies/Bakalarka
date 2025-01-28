@@ -1,16 +1,18 @@
-package com.example.bakalarkaapp.dataLayer
+package com.example.bakalarkaapp.dataLayer.repositories
 
 import android.content.Context
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.XmlUtils
+import com.example.bakalarkaapp.dataLayer.TextValue
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelWithImage
+import com.example.bakalarkaapp.utils.xml.XmlParser
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-class EyesightSearchRepo(context: Context) {
-    private val mappedClass = XmlUtils.
+class EyesightSearchRepo(context: Context): Repository<SearchRound> {
+    private val mappedClass = XmlParser.
     parseXmlData(context, R.xml.eyesight_search_data, SearchData::class.java)
-    val data: List<SearchRound> = mappedClass.data
+    override val data: List<SearchRound> = mappedClass.data
 }
 
 @JacksonXmlRootElement(localName = "color")
@@ -38,9 +40,9 @@ class SearchItem {
 }
 
 @JacksonXmlRootElement(localName = "round")
-class SearchRound {
+class SearchRound: LevelWithImage {
     @JacksonXmlProperty(localName = "background")
-    val background = TextValue()
+    override val background = TextValue()
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "item")
     val items : List<SearchItem> = emptyList()

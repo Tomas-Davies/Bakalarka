@@ -126,7 +126,7 @@ class SpeechScreen: AppCompatActivity() {
                 val firstCol = LinkedList<Array<String>>()
                 val secondCol = LinkedList<Array<String>>()
                 val thirdCol = LinkedList<Array<String>>()
-                val colCount = 4
+                val colCount = 3
                 for (i in levelItems.indices){
                     if (i % colCount == 0){
                         firstCol.add(levelItems[i])

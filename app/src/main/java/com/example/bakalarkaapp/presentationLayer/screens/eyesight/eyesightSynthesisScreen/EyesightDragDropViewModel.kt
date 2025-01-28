@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
-import com.example.bakalarkaapp.shuffle
-import com.example.bakalarkaapp.toDrawableId
+import com.example.bakalarkaapp.utils.string.shuffle
+import com.example.bakalarkaapp.utils.string.toDrawableId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

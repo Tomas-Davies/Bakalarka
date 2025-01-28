@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.dataLayer.Round
+import com.example.bakalarkaapp.dataLayer.repositories.Round
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import kotlinx.coroutines.delay
@@ -19,33 +19,35 @@ data class EyesightDifferUiState(
     val answers: List<String>,
     val correctAnswers: List<String>,
     val question: String,
-    val questionNumber: Int
+    val questionNumber: Int,
+    val count: Int
 )
 
-class EyesightDifferViewModel(app: LogoApp): BaseViewModel(app) {
+class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseViewModel(app) {
+    init {
+        roundIdx = levelIndex
+    }
     private val differRepo = app.eyesightDifferRepository
     private val data = differRepo.data
-            .shuffled()
-            .sortedBy { differItem -> differItem.rounds.size  }
     private var questionIdx = 0
     private var currentItem = data[roundIdx]
-
     private var questionNumber = 1
+    private var countFromLevel = 0
+    init {
+        getTotalQuestionsCount()
+    }
 
     private val _uiState = MutableStateFlow(
         EyesightDifferUiState(
-            imageId = currentItem.imageId.value,
+            imageId = currentItem.background.value,
             answers = getPossibleAnswers(),
             correctAnswers =  getCorrectAnswers(),
             question = getQuestion(),
-            questionNumber = questionNumber
-
+            questionNumber = questionNumber,
+            count = countFromLevel
         )
     )
     val uiState: StateFlow<EyesightDifferUiState> = _uiState.asStateFlow()
-    init {
-        count = getQuestionsCount()
-    }
 
 
     fun validateAnswer(answer: String): Boolean {
@@ -119,7 +121,7 @@ class EyesightDifferViewModel(app: LogoApp): BaseViewModel(app) {
     private fun completeUiStateUpdate(){
         _uiState.update { currentState ->
             currentState.copy(
-                imageId = currentItem.imageId.value,
+                imageId = currentItem.background.value,
                 answers = getPossibleAnswers(),
                 correctAnswers = getCorrectAnswers(),
                 question = getQuestion(),
@@ -150,22 +152,25 @@ class EyesightDifferViewModel(app: LogoApp): BaseViewModel(app) {
         return currentItem.rounds[questionIdx].question.value
     }
 
-    private fun getQuestionsCount(): Int{
-        var counter = 0
-        for (set in data) {
-            for (i in set.rounds){
-                counter++
+    private fun getTotalQuestionsCount() {
+        for (setIdx in data.indices) {
+            for (i in data[setIdx].rounds){
+                count++
+                if (setIdx >= levelIndex) countFromLevel++
             }
         }
-        return counter
+    }
+
+    override fun scorePercentage(): Int {
+        return (score * 100) / countFromLevel
     }
 }
 
-class EyesightDifferViewModelFactory(private val app: LogoApp): ViewModelProvider.Factory {
+class EyesightDifferViewModelFactory(private val app: LogoApp, private val levelIndex: Int): ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightDifferViewModel::class.java)){
-            return EyesightDifferViewModel(app) as T
+            return EyesightDifferViewModel(app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightDifferViewModel")
     }

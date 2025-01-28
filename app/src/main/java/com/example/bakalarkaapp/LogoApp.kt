@@ -1,11 +1,11 @@
 package com.example.bakalarkaapp
 
 import android.app.Application
-import com.example.bakalarkaapp.dataLayer.EyesightComparisonRepo
-import com.example.bakalarkaapp.dataLayer.EyesightDifferRepo
-import com.example.bakalarkaapp.dataLayer.EyesightMemoryRepo
-import com.example.bakalarkaapp.dataLayer.EyesightSearchRepo
-import com.example.bakalarkaapp.dataLayer.HearingFonematicRepo
+import com.example.bakalarkaapp.dataLayer.repositories.EyesightComparisonRepo
+import com.example.bakalarkaapp.dataLayer.repositories.EyesightDifferRepo
+import com.example.bakalarkaapp.dataLayer.repositories.EyesightMemoryRepo
+import com.example.bakalarkaapp.dataLayer.repositories.EyesightSearchRepo
+import com.example.bakalarkaapp.dataLayer.repositories.HearingFonematicRepo
 
 class LogoApp: Application() {
     val eyesightDifferRepository by lazy { EyesightDifferRepo(this) }

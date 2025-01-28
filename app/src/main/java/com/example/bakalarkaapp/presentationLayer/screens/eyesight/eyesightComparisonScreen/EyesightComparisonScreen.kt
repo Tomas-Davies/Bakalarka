@@ -67,9 +67,10 @@ class EyesightComparisonScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val levelIdx = intent.getIntExtra("LEVEL_INDEX", 0)
                     val app = application as LogoApp
                     val viewModel: EyesightComparisonViewModel by viewModels {
-                        EyesightComparionViewModelFactory(app)
+                        EyesightComparionViewModelFactory(app, levelIdx)
                     }
                     val screenState = viewModel.screenState.collectAsState().value
                     when (screenState) {

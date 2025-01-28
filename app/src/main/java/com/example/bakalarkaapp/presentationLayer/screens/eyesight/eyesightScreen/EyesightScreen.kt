@@ -36,7 +36,8 @@ import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynth
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.LevelsScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightScreen: AppCompatActivity() {
@@ -152,13 +153,28 @@ class EyesightScreen: AppCompatActivity() {
 }
 
 private fun onCardClicked(ctx: Context, id: Int) {
-    var intent = Intent(ctx, EyesightComparisonScreen::class.java)
+    var intent = Intent(ctx, LevelsScreen::class.java)
     when(id){
-        1 -> intent = Intent(ctx, LevelsScreen::class.java)
-        2 -> intent = Intent(ctx, EyesightDifferScreen::class.java)
+        0 -> {
+            intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightComparisonScreen::class.java)
+            intent.putExtra("REPOSITORY_TYPE", "COMPARISON")
+        }
+        1 -> {
+            intent = Intent(ctx, LevelsScreen::class.java)
+            intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightSearchScreen::class.java)
+            intent.putExtra("REPOSITORY_TYPE", "SEARCH")
+
+        }
+        2 -> {
+            intent = Intent(ctx, LevelsScreen::class.java)
+            intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightDifferScreen::class.java)
+            intent.putExtra("REPOSITORY_TYPE", "DIFFER")
+
+        }
         3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
         4 -> intent = Intent(ctx, EyesightSynthesisScreen::class.java)
     }
 
+    intent.putExtra("THEME_TYPE", ThemeType.THEME_EYESIGHT)
     ctx.startActivity(intent)
 }

@@ -1,11 +1,11 @@
-package com.example.bakalarkaapp
+package com.example.bakalarkaapp.utils.xml
 
 import android.content.Context
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.xmlpull.v1.XmlPullParser
 
-object XmlUtils {
+object XmlParser {
     fun <T:Any> parseXmlData(context: Context, resourceId: Int, mappingClass: Class<T>): T{
         val xmlString = readXmlFile(context, resourceId)
         val xmlMapper = XmlMapper().apply {

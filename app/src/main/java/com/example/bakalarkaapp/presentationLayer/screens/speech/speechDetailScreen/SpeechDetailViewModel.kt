@@ -2,7 +2,7 @@ package com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailSc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.toDrawableId
+import com.example.bakalarkaapp.utils.string.toDrawableId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
