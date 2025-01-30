@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel(application: LogoApp): ViewModel() {
-    val appContext = application.applicationContext
+    private val appContext = application.applicationContext
     protected var roundIdx = 0
     protected var score = 0
     protected val _screenState = MutableStateFlow<ScreenState>(ScreenState.Running)

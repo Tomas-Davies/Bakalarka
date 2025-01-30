@@ -114,6 +114,6 @@ class EyesightComparionViewModelFactory(private val app: LogoApp, private val le
         if (modelClass.isAssignableFrom(EyesightComparisonViewModel::class.java)) {
             return EyesightComparisonViewModel(app, levelIndex) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class: EyesightComparisonViewModel")
+        throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }
 }

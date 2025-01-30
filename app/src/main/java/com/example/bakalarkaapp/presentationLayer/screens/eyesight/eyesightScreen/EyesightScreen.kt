@@ -32,10 +32,10 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
 import com.example.bakalarkaapp.theme.AppTheme
