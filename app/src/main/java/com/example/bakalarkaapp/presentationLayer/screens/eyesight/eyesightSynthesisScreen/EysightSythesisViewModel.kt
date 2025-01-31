@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.dataLayer.repositories.SynthRound
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -53,36 +54,29 @@ class EyesightSynthesisViewModel(
     private val appContext: Context
 ) : BaseViewModel(app)
 {
+    init {
+        roundIdx = levelIndex
+    }
     private val rounds = app.eyesightSynthesisRepository.data
-    private var round = rounds[roundIdx]
     private val bitmaps = imageNamesToBitmaps(rounds)
     private var currImage = bitmaps[roundIdx]
-    private var pieceCount = 9
+    private var pieceCount = rounds[roundIdx].pieceCount
     private var pieceMinSize = 100
     private val threshold = 200
-
+    private var placedPieces = 0
     private val _uiState =
         MutableStateFlow(EyesightSynthesisUiState(currImage, pieceCount))
     val uiState: StateFlow<EyesightSynthesisUiState> = _uiState.asStateFlow()
-
     init {
         count = rounds.size
     }
 
-    fun validateResult(): Boolean {
-        if (true) {
+    private fun moveNext() {
+        viewModelScope.launch {
+            showMessage(result = true, message = appContext.resources.getString(R.string.message_positive))
             scoreInc()
-            viewModelScope.launch {
-                showMessage(result = true)
-                delay(1500)
-                updateData()
-            }
-            return true
-        } else {
-            showMessage(result = false)
-            score--
-            // TODO reset pieces
-            return false
+            delay(1500)
+            updateData()
         }
     }
 
@@ -93,10 +87,7 @@ class EyesightSynthesisViewModel(
     override fun updateData() {
         if (nextRound()) {
             currImage = bitmaps[roundIdx]
-
-            viewModelScope.launch {
-                updateState()
-            }
+            updateState()
         }
     }
 
@@ -206,15 +197,16 @@ class EyesightSynthesisViewModel(
         val scaledTargetY = piece.imageY * imageScale
         val dist = distance(scaledTargetX, scaledTargetY, currInBitmapX, currInBitmapY)
 
-        return if (dist <= threshold) {
-            Log.w("STATUSSSSSS", "...................IS OK")
-            Offset(
+        if (dist <= threshold) {
+            val pos = Offset(
                 x = (scaledTargetX + bitmapPosition.x) - bottomBoxOffset.x,
                 y = (scaledTargetY + bitmapPosition.y) - bottomBoxOffset.y
             )
+            Log.w("DIST", "dist( $dist )")
+            placedPieces++
+            return pos
         } else {
-            Log.w("STATUSSSSSS", "...................IS OUT")
-            Offset(piece.startingX, piece.startingY)
+            return Offset(piece.startingX, piece.startingY)
         }
     }
 
@@ -225,10 +217,19 @@ class EyesightSynthesisViewModel(
         return dist
     }
 
+    fun checkAllPiecesPlaced(){
+        viewModelScope.launch {
+            Log.w("PIECEEES", "total: $pieceCount, placed: $placedPieces")
+            if (placedPieces == pieceCount){
+                moveNext()
+            }
+        }
+    }
+
     private fun imageNamesToBitmaps(rounds: List<SynthRound>): List<Bitmap> {
         val bitmaps = mutableListOf<Bitmap>()
         for (round in rounds){
-            val drawableId = appContext.resources.getIdentifier(round.image.value.toDrawableId(), "drawable", appContext.packageName)
+            val drawableId = appContext.resources.getIdentifier(round.background.value.toDrawableId(), "drawable", appContext.packageName)
             val options = BitmapFactory.Options()
             options.inScaled = false
             val bitmap = BitmapFactory.decodeResource(appContext.resources, drawableId, options)

@@ -89,7 +89,6 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
 
     public override fun updateData() {
         currentItem = data[roundIdx]
-        println(currentItem.background.value)
         _uiState.update { currentState ->
             currentState.copy(
                 imageId = currentItem.background.value,

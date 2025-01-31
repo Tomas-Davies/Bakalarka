@@ -9,7 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-class EyesightSearchRepo(context: Context): Repository<SearchRound> {
+class EyesightSearchRepo(context: Context): IRepository<SearchRound> {
     private val mappedClass = XmlParser.
     parseXmlData(context, R.xml.eyesight_search_data, SearchData::class.java)
     override val data: List<SearchRound> = mappedClass.data

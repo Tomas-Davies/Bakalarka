@@ -115,10 +115,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 val screenState = viewModel.screenState.collectAsState().value
                 when (screenState) {
                     is ScreenState.Running -> EyesightSynthesisScreenRunning(viewModel)
-                    is ScreenState.Finished -> ResultScreen(
-                        viewModel.scorePercentage(),
-                        onRestartBtnClick = { viewModel.restart() }
-                    )
+                    is ScreenState.Finished -> (ctx as Activity).finish()
                 }
             }
         }
@@ -252,6 +249,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         var isDragging by remember { mutableStateOf(false) }
         var dragStarted by remember { mutableStateOf(false) }
         var dragEnded by remember { mutableStateOf(false) }
+        var correctlyPlaced by remember { mutableStateOf(false) }
         val width = with(LocalDensity.current) { piece.width.toDp() }
         val height = with(LocalDensity.current) { piece.height.toDp() }
 
@@ -281,8 +279,16 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 alpha = if (isDragging) 0.8f else 1f
             )
         val isInImage = bottomBoxPosition.y > (pos.y + bottomBoxPosition.y)
-        if (isInImage && dragEnded){
-           pos = viewModel.setCorrectPos(piece, pos, imagePosition, imageScale, bottomBoxPosition)
+
+        if (isInImage && dragEnded && !correctlyPlaced){
+            val newPos = viewModel.setCorrectPos(piece, pos, imagePosition, imageScale, bottomBoxPosition)
+            val placedWrong = Offset(piece.startingX, piece.startingY)
+            if (newPos != placedWrong) {
+                viewModel.checkAllPiecesPlaced()
+                correctlyPlaced = true
+            }
+            dragEnded = false
+            pos = newPos
         }
 
         Image(

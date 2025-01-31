@@ -10,7 +10,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 
-class EyesightComparisonRepo(context: Context): Repository<ComparisonItem> {
+class EyesightComparisonRepo(context: Context): IRepository<ComparisonItem> {
     private val mappedClass = XmlParser.
     parseXmlData(context, R.xml.eyesight_comparison_data, ComparisonData::class.java)
     override val data: List<ComparisonItem> = mappedClass.data

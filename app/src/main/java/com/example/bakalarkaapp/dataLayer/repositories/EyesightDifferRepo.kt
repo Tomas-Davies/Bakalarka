@@ -9,7 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-class EyesightDifferRepo(context: Context): Repository<DifferItem> {
+class EyesightDifferRepo(context: Context): IRepository<DifferItem> {
     private val mappedClass = XmlParser.
         parseXmlData(context, R.xml.eyesight_differ_data, DifferData::class.java)
     override val data: List<DifferItem> = mappedClass.data

@@ -3,17 +3,16 @@ package com.example.bakalarkaapp.presentationLayer.screens.levelsScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.bakalarkaapp.dataLayer.TextValue
-import com.example.bakalarkaapp.dataLayer.repositories.Repository
+import com.example.bakalarkaapp.dataLayer.repositories.IRepository
 
 interface LevelWithImage {
     val background: TextValue
 }
 
 
-class LevelsViewModel<T: LevelWithImage>(repository: Repository<T>): ViewModel() {
+class LevelsViewModel<T: LevelWithImage>(repository: IRepository<T>): ViewModel() {
     private val data = repository.data
     val levels = getLevelsList()
-
 
     private fun getLevelsList(): List<String>{
         val l = mutableListOf<String>()
@@ -25,7 +24,8 @@ class LevelsViewModel<T: LevelWithImage>(repository: Repository<T>): ViewModel()
     }
 }
 
-class LevelsViewModelFactory<R: LevelWithImage>(private val repository: Repository<R>): ViewModelProvider.Factory {
+
+class LevelsViewModelFactory<R: LevelWithImage>(private val repository: IRepository<R>): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(LevelsViewModel::class.java)){

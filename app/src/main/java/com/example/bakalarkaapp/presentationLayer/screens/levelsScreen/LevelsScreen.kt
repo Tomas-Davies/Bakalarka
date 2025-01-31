@@ -51,6 +51,7 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.dataLayer.repositories.ComparisonItem
 import com.example.bakalarkaapp.dataLayer.repositories.DifferItem
 import com.example.bakalarkaapp.dataLayer.repositories.SearchRound
+import com.example.bakalarkaapp.dataLayer.repositories.SynthRound
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.utils.bundle.serializable
@@ -89,6 +90,13 @@ class LevelsScreen : AppCompatActivity() {
                         "COMPARISON" -> {
                             val repo = app.eyesightComparisonRepository
                             val vm: LevelsViewModel<ComparisonItem> by viewModels {
+                                LevelsViewModelFactory(repo)
+                            }
+                            vm
+                        }
+                        "SYNTHESIS" -> {
+                            val repo = app.eyesightSynthesisRepository
+                            val vm: LevelsViewModel<SynthRound> by viewModels {
                                 LevelsViewModelFactory(repo)
                             }
                             vm

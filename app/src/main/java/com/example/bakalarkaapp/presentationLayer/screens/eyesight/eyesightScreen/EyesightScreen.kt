@@ -163,16 +163,18 @@ private fun onCardClicked(ctx: Context, id: Int) {
             intent = Intent(ctx, LevelsScreen::class.java)
             intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightSearchScreen::class.java)
             intent.putExtra("REPOSITORY_TYPE", "SEARCH")
-
         }
         2 -> {
             intent = Intent(ctx, LevelsScreen::class.java)
             intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightDifferScreen::class.java)
             intent.putExtra("REPOSITORY_TYPE", "DIFFER")
-
         }
         3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
-        4 -> intent = Intent(ctx, EyesightSynthesisScreen::class.java)
+        4 -> {
+            intent = Intent(ctx, LevelsScreen::class.java)
+            intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightSynthesisScreen::class.java)
+            intent.putExtra("REPOSITORY_TYPE", "SYNTHESIS")
+        }
     }
 
     intent.putExtra("THEME_TYPE", ThemeType.THEME_EYESIGHT)
