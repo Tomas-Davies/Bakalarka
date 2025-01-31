@@ -3,6 +3,7 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynt
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.VibrationEffect
 import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
@@ -87,12 +88,13 @@ class EyesightSynthesisViewModel(
     override fun updateData() {
         if (nextRound()) {
             currImage = bitmaps[roundIdx]
+            pieceCount = rounds[roundIdx].pieceCount
+            placedPieces = 0
             updateState()
         }
     }
 
     private fun updateState() {
-        pieceCount++
         _uiState.update { currentState ->
             currentState.copy(
                 image = currImage,
@@ -101,15 +103,6 @@ class EyesightSynthesisViewModel(
         }
     }
 
-    override fun doRestart() {
-        roundIdx = 0
-        currImage = bitmaps[roundIdx]
-
-        viewModelScope.launch {
-            _screenState.value = ScreenState.Running
-            updateState()
-        }
-    }
 
     //                                PUZZLE LOGIKA
 
@@ -202,10 +195,12 @@ class EyesightSynthesisViewModel(
                 x = (scaledTargetX + bitmapPosition.x) - bottomBoxOffset.x,
                 y = (scaledTargetY + bitmapPosition.y) - bottomBoxOffset.y
             )
-            Log.w("DIST", "dist( $dist )")
             placedPieces++
+            playResultSound(true)
+            vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
             return pos
         } else {
+            playResultSound(result = false)
             return Offset(piece.startingX, piece.startingY)
         }
     }
@@ -219,11 +214,29 @@ class EyesightSynthesisViewModel(
 
     fun checkAllPiecesPlaced(){
         viewModelScope.launch {
-            Log.w("PIECEEES", "total: $pieceCount, placed: $placedPieces")
             if (placedPieces == pieceCount){
                 moveNext()
             }
         }
+    }
+
+    fun getInitialPositions(containerWidth: Int, containerHeight: Int, scaledPieces: List<ImagePiece>): MutableList<Offset>{
+        val positions = mutableListOf<Offset>()
+        val colCount = findSquare(scaledPieces.size)
+        val rowCount = colCount
+        val pieceWidth = containerWidth / colCount
+        val pieceHeight = containerHeight / rowCount
+        for (row in 0 until rowCount) {
+            for (col in 0 until colCount) {
+                val index = row * colCount + col
+                if (index < scaledPieces.size) {
+                    val x = col * pieceWidth.toFloat()
+                    val y = row * pieceHeight.toFloat()
+                    positions.add(Offset(x, y))
+                }
+            }
+        }
+        return positions
     }
 
     private fun imageNamesToBitmaps(rounds: List<SynthRound>): List<Bitmap> {
@@ -236,6 +249,14 @@ class EyesightSynthesisViewModel(
             bitmaps.add(bitmap)
         }
         return bitmaps
+    }
+
+    private fun findSquare(num: Int): Int {
+        var sq = 1
+        while(sq * sq < num){
+            sq++
+        }
+        return sq
     }
 
 }

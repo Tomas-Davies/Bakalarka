@@ -129,7 +129,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         var imageOffset by remember { mutableStateOf(Offset.Zero) }
         var containerWidth by remember { mutableIntStateOf(0) }
         var containerHeight by remember { mutableIntStateOf(0) }
-        val pieces by remember {
+        val pieces by remember(uiState.image.hashCode()) {
             mutableStateOf(
                 viewModel.cutImage(
                     uiState.image,
@@ -137,7 +137,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 )
             )
         }
-        val scaledPieces = remember(pieces, imageScale) {
+        val scaledPieces = remember(uiState.image.hashCode(), pieces, imageScale) {
             pieces.map { piece ->
                 piece.copy(
                     width = (piece.width.toFloat() * imageScale).toInt(),
@@ -146,31 +146,15 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 )
             }
         }
-        var initialPositions by remember { mutableStateOf(emptyList<Offset>()) }
+        var initialPositions by remember(uiState.image.hashCode()) { mutableStateOf(emptyList<Offset>()) }
 
-        LaunchedEffect(containerWidth, containerHeight, scaledPieces) {
+        LaunchedEffect(containerWidth, containerHeight, scaledPieces, uiState.image.hashCode()) {
             if (containerWidth > 0 && containerHeight > 0 && scaledPieces.isNotEmpty()) {
-                val positions = mutableListOf<Offset>()
-
-                val colCount = findSquare(scaledPieces.size)
-                val rowCount = colCount
-                val pieceWidth = containerWidth / colCount
-                val pieceHeight = containerHeight / rowCount
-                for (row in 0 until rowCount) {
-                    for (col in 0 until colCount) {
-                        val index = row * colCount + col
-                        if (index < scaledPieces.size) {
-                            val x = col * pieceWidth.toFloat()
-                            val y = row * pieceHeight.toFloat()
-                            positions.add(Offset(x, y))
-                        }
-                    }
-                }
-                initialPositions = positions
+                initialPositions = viewModel.getInitialPositions(containerWidth, containerHeight, scaledPieces)
             }
         }
 
-        var bottomBoxPosition by remember { mutableStateOf(Offset.Zero) }
+        var bottomBoxPosition by remember(uiState.image) { mutableStateOf(Offset.Zero) }
 
         Box(
             modifier = Modifier.fillMaxSize()
@@ -219,7 +203,8 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                                 bottomBoxPosition = bottomBoxPosition,
                                 imagePosition = imageOffset,
                                 imageScale = imageScale,
-                                viewModel = viewModel
+                                viewModel = viewModel,
+                                key = uiState.image.hashCode()
                             )
                         }
                     }
@@ -240,16 +225,17 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         bottomBoxPosition: Offset,
         imagePosition: Offset,
         imageScale: Float,
-        viewModel: EyesightSynthesisViewModel
+        viewModel: EyesightSynthesisViewModel,
+        key: Int
     ) {
         var pos by remember { mutableStateOf(initialPosition) }
         piece.startingX = initialPosition.x
         piece.startingY = initialPosition.y
 
-        var isDragging by remember { mutableStateOf(false) }
-        var dragStarted by remember { mutableStateOf(false) }
-        var dragEnded by remember { mutableStateOf(false) }
-        var correctlyPlaced by remember { mutableStateOf(false) }
+        var isDragging by remember(key) { mutableStateOf(false) }
+        var dragStarted by remember(key) { mutableStateOf(false) }
+        var dragEnded by remember(key) { mutableStateOf(false) }
+        var correctlyPlaced by remember(key) { mutableStateOf(false) }
         val width = with(LocalDensity.current) { piece.width.toDp() }
         val height = with(LocalDensity.current) { piece.height.toDp() }
 
@@ -271,7 +257,8 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     },
                     onDrag = { change, dragAmount ->
                         change.consume()
-                        pos += dragAmount
+                        if(!correctlyPlaced) pos += dragAmount
+
                     }
                 )
             }
@@ -302,14 +289,6 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             bitmap = piece.bitmap.asImageBitmap(),
             contentDescription = "Image piece"
         )
-    }
-
-    private fun findSquare(num: Int): Int {
-        var sq = 1
-        while(sq * sq < num){
-            sq++
-        }
-        return sq
     }
 
 }

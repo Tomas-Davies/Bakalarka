@@ -2,6 +2,14 @@
 <data>
     <round>
         <image>ant_bg</image>
+        <pieceCount>6</pieceCount>
+    </round>
+    <round>
+        <image>ant_bg</image>
         <pieceCount>9</pieceCount>
+    </round>
+    <round>
+        <image>ant_bg</image>
+        <pieceCount>12</pieceCount>
     </round>
 </data>
