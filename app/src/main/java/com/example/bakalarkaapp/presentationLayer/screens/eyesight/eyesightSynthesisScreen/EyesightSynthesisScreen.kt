@@ -57,7 +57,6 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
-import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
 import kotlin.math.roundToInt
@@ -271,7 +270,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             val newPos = viewModel.setCorrectPos(piece, pos, imagePosition, imageScale, bottomBoxPosition)
             val placedWrong = Offset(piece.startingX, piece.startingY)
             if (newPos != placedWrong) {
-                viewModel.checkAllPiecesPlaced()
+                viewModel.onAllPiecesPlaced()
                 correctlyPlaced = true
             }
             dragEnded = false

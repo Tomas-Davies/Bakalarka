@@ -12,10 +12,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class HearingFonematicUiState(
-    val imageResource1: String,
-    val imageResource2: String,
-    val imageResource3: String,
-    val soundResource: String
+    val words: List<String>,
+    val playedWord: String
 )
 
 class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
@@ -25,10 +23,8 @@ class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
     private var currentWords = currentRound.words
     private val _uiState = MutableStateFlow(
         HearingFonematicUiState(
-            currentWords[0].value,
-            currentWords[1].value,
-            currentWords[2].value,
-            currentWords.random().value
+            words = currentWords,
+            playedWord = currentWords.random()
         )
     )
 
@@ -39,7 +35,7 @@ class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 
     fun validateAnswer(answer: String): Boolean {
-        if (answer == _uiState.value.soundResource) {
+        if (answer == _uiState.value.playedWord) {
             score++
             viewModelScope.launch {
                 showMessage(result = true)
@@ -66,10 +62,8 @@ class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
 
         _uiState.update { state ->
             state.copy(
-                imageResource1 = currentWords[0].value,
-                imageResource2 = currentWords[1].value,
-                imageResource3 = currentWords[2].value,
-                soundResource = currentWords.random().value
+                words = currentWords,
+                playedWord = currentWords.random()
             )
         }
     }

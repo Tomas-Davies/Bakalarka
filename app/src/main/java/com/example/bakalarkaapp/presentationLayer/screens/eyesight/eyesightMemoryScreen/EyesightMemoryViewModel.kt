@@ -22,7 +22,7 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
         .shuffled()
         .sortedBy { item -> item.objects.size }
     private var currentObjects = data[roundIdx].objects
-        .map { it.value }
+
         .toMutableList()
     private var currentExtraObject = ""
     private var _uiState = MutableStateFlow(EyesightMemoryUiState(currentObjects, roundIdx + 1))
@@ -49,8 +49,7 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
             viewModelScope.launch {
                 showMessage(result = true)
                 delay(1500)
-                nextRound()
-                updateData()
+                if (nextRound()) updateData()
             }
             return true
         } else {
@@ -81,7 +80,6 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
         enabled = false
         resetAttemptFlags()
         currentObjects = data[roundIdx].objects
-            .map { it.value }
             .toMutableList()
         chooseExtraObject()
         _uiState.update { state ->

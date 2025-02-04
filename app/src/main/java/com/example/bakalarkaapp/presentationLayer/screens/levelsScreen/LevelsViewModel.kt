@@ -2,11 +2,10 @@ package com.example.bakalarkaapp.presentationLayer.screens.levelsScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.dataLayer.TextValue
 import com.example.bakalarkaapp.dataLayer.repositories.IRepository
 
 interface LevelWithImage {
-    val background: TextValue
+    val background: String
 }
 
 
@@ -17,7 +16,7 @@ class LevelsViewModel<T: LevelWithImage>(repository: IRepository<T>): ViewModel(
     private fun getLevelsList(): List<String>{
         val l = mutableListOf<String>()
         for (round in data){
-            val roundInfo = round.background.value
+            val roundInfo = round.background
             l.add(roundInfo)
         }
         return l

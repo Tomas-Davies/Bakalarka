@@ -53,16 +53,16 @@ import com.example.bakalarkaapp.theme.AppTheme
 class EyesightMemoryScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val app = application as LogoApp
+        val viewModel: EyesightMemoryViewModel by viewModels {
+            EyesightMemoryViewModelFactory(app)
+        }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val app = application as LogoApp
-                    val viewModel: EyesightMemoryViewModel by viewModels {
-                        EyesightMemoryViewModelFactory(app)
-                    }
                     EyesightMemoryScreenContent(viewModel)
                 }
             }

@@ -108,17 +108,8 @@ class HearingFonematicScreen : AppCompatActivity() {
 
     @Composable
     private fun HearingFonematicRunning(viewModel: HearingFonematicViewModel) {
-        val ctx = LocalContext.current
         val uiState = viewModel.uiState.collectAsState().value
-        val imageId1 = resources.getIdentifier(uiState.imageResource1, "drawable", ctx.packageName)
-        val imageId2 = resources.getIdentifier(uiState.imageResource2, "drawable", ctx.packageName)
-        val imageId3 = resources.getIdentifier(uiState.imageResource3, "drawable", ctx.packageName)
-        val soundId = resources.getIdentifier(uiState.soundResource, "raw", ctx.packageName)
-        val images = mapOf(
-            Pair(uiState.imageResource1, imageId1),
-            Pair(uiState.imageResource2, imageId2),
-            Pair(uiState.imageResource3, imageId3)
-        )
+        val soundId = resources.getIdentifier(uiState.playedWord, "raw", packageName)
 
         Box {
             Column(
@@ -137,17 +128,18 @@ class HearingFonematicScreen : AppCompatActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Top
                 ) {
-                    images.forEach { image ->
+                    uiState.words.forEach { word ->
+                        val imageId = resources.getIdentifier(word, "drawable", packageName)
                         AnimatedContent(
                             modifier = Modifier
                                 .fillMaxWidth(0.7f),
-                            targetState = image.value,
+                            targetState = imageId,
                             label = ""
                         ) { targetImage ->
                             Image(
                                 modifier = Modifier
                                     .clickable {
-                                        val result = viewModel.validateAnswer(image.key)
+                                        val result = viewModel.validateAnswer(word)
                                         viewModel.playResultSound(result)
                                     },
                                 painter = painterResource(id = targetImage),

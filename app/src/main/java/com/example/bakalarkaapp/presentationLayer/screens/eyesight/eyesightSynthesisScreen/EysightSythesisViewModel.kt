@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.VibrationEffect
-import android.util.Log
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,6 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.dataLayer.repositories.SynthRound
 import com.example.bakalarkaapp.presentationLayer.BaseViewModel
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.utils.string.toDrawableId
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +49,7 @@ data class Rect(
 
 class EyesightSynthesisViewModel(
     app: LogoApp,
-    private val levelIndex: Int,
+    levelIndex: Int,
     private val appContext: Context
 ) : BaseViewModel(app)
 {
@@ -212,7 +210,7 @@ class EyesightSynthesisViewModel(
         return dist
     }
 
-    fun checkAllPiecesPlaced(){
+    fun onAllPiecesPlaced(){
         viewModelScope.launch {
             if (placedPieces == pieceCount){
                 moveNext()
@@ -242,7 +240,7 @@ class EyesightSynthesisViewModel(
     private fun imageNamesToBitmaps(rounds: List<SynthRound>): List<Bitmap> {
         val bitmaps = mutableListOf<Bitmap>()
         for (round in rounds){
-            val drawableId = appContext.resources.getIdentifier(round.background.value.toDrawableId(), "drawable", appContext.packageName)
+            val drawableId = appContext.resources.getIdentifier(round.background.toDrawableId(), "drawable", appContext.packageName)
             val options = BitmapFactory.Options()
             options.inScaled = false
             val bitmap = BitmapFactory.decodeResource(appContext.resources, drawableId, options)
@@ -253,9 +251,7 @@ class EyesightSynthesisViewModel(
 
     private fun findSquare(num: Int): Int {
         var sq = 1
-        while(sq * sq < num){
-            sq++
-        }
+        while(sq * sq < num){ sq++ }
         return sq
     }
 

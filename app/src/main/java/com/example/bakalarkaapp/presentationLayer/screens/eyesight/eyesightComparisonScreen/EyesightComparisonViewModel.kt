@@ -28,8 +28,8 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
     private var currentItem = data[roundIdx]
     private val _uiState = MutableStateFlow(
         EyesightComparisonUiState(
-            currentItem.background.value,
-            currentItem.isSameShape.value.toBoolean()
+            currentItem.background,
+            currentItem.isSameShape
         )
     )
     val uiState: StateFlow<EyesightComparisonUiState> = _uiState.asStateFlow()
@@ -91,8 +91,8 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
         currentItem = data[roundIdx]
         _uiState.update { currentState ->
             currentState.copy(
-                imageId = currentItem.background.value,
-                answer = currentItem.isSameShape.value.toBoolean(),
+                imageId = currentItem.background,
+                answer = currentItem.isSameShape,
                 restartTrigger = roundIdx
             )
         }

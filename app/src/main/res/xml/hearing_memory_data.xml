@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <word>buben</word>
+        <word>kure</word>
+        <word>kuzel</word>
+        <word>lyze</word>
+        <word>opice</word>
+        <toBePlayedCount>3</toBePlayedCount>
+    </round>
+    <round>
+        <word>ovecka</word>
+        <word>cmelak</word>
+        <word>sekacka</word>
+        <word>vajicko</word>
+        <word>zajic</word>
+        <word>zub</word>
+        <word>dopis</word>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+</data>

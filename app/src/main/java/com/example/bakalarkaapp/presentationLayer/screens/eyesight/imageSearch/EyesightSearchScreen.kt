@@ -203,23 +203,23 @@ class EyesightSearchScreen : AppCompatActivity() {
                 )
 
                 for (item in uiState.items) {
-                    val xPerc = item.x.value.toFloat()
-                    val yPerc = item.y.value.toFloat()
+                    val xPerc = item.x
+                    val yPerc = item.y
                     val x = (xPerc / 100f) * imageSize.width
                     val y = (yPerc / 100f) * imageSize.height
 
                     key(item) {
                         ItemOverlay(
                             viewModel = viewModel,
-                            width = item.width.value.toInt().dp,
-                            height = item.height.value.toInt().dp,
+                            width = item.width.dp,
+                            height = item.height.dp,
                             xPos = x,
                             yPos = y,
                             itemColor = Color
                                 (
-                                item.color.r.value.toInt(),
-                                item.color.g.value.toInt(),
-                                item.color.b.value.toInt()
+                                item.color.r,
+                                item.color.g,
+                                item.color.b
                             )
                         )
                     }

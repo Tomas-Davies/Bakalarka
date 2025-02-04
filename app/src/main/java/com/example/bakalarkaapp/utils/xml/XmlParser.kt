@@ -8,10 +8,8 @@ import org.xmlpull.v1.XmlPullParser
 object XmlParser {
     fun <T:Any> parseXmlData(context: Context, resourceId: Int, mappingClass: Class<T>): T{
         val xmlString = readXmlFile(context, resourceId)
-        val xmlMapper = XmlMapper().apply {
-            registerKotlinModule()
-        }
-
+        val xmlMapper = XmlMapper()
+        xmlMapper.registerKotlinModule()
         return xmlMapper.readValue(xmlString, mappingClass)
     }
 

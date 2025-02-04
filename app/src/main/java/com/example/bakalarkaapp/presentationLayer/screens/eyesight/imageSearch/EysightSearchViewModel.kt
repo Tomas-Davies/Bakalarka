@@ -28,7 +28,7 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app
     private var currentRound = rounds[roundIdx]
     private var _uiState = MutableStateFlow(
         EyesightSearchUiState(
-            bgImageResource = currentRound.background.value,
+            bgImageResource = currentRound.background,
             items = currentRound.items
         )
     )
@@ -80,7 +80,7 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app
         currentRound = rounds[roundIdx]
         _uiState.update { state ->
             state.copy(
-                bgImageResource = currentRound.background.value,
+                bgImageResource = currentRound.background,
                 items = currentRound.items
             )
         }

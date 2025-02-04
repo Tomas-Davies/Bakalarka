@@ -73,6 +73,8 @@ dependencies {
     implementation("javax.xml.stream:stax-api:1.0-2")
     // Confetti
     implementation("nl.dionsegijn:konfetti-compose:2.0.4")
+    // Animated Drawables
+    implementation("com.google.accompanist:accompanist-drawablepainter:0.35.0-alpha")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

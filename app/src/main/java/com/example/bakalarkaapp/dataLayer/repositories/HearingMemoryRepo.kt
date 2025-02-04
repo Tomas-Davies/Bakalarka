@@ -5,25 +5,22 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.utils.xml.XmlParser
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-class HearingFonematicRepo(val context: Context) {
+class HearingMemoryRepo(ctx: Context) {
     private val mappedClass = XmlParser.
-        parseXmlData(context, R.xml.hearing_fonematic_data, FonematicData::class.java)
-    val data: List<FonematicRound> = mappedClass.data
+        parseXmlData(ctx, R.xml.hearing_memory_data, HearingMemoryData::class.java)
+    val data = mappedClass.data
 }
 
-
-@JacksonXmlRootElement(localName = "round")
-class FonematicRound {
+class HearingMemoryRound {
     @JacksonXmlProperty(localName = "word")
     @JacksonXmlElementWrapper(useWrapping = false)
     val words = emptyList<String>()
+    val toBePlayedCount: Int = 0
 }
 
-@JacksonXmlRootElement(localName = "data")
-class FonematicData {
+class HearingMemoryData {
     @JacksonXmlProperty(localName = "round")
     @JacksonXmlElementWrapper(useWrapping = false)
-    val data = emptyList<FonematicRound>()
+    val data = emptyList<HearingMemoryRound>()
 }

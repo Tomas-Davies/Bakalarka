@@ -39,7 +39,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
 
     private val _uiState = MutableStateFlow(
         EyesightDifferUiState(
-            imageId = currentItem.background.value,
+            imageId = currentItem.background,
             answers = getPossibleAnswers(),
             correctAnswers =  getCorrectAnswers(),
             question = getQuestion(),
@@ -121,7 +121,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
     private fun completeUiStateUpdate(){
         _uiState.update { currentState ->
             currentState.copy(
-                imageId = currentItem.background.value,
+                imageId = currentItem.background,
                 answers = getPossibleAnswers(),
                 correctAnswers = getCorrectAnswers(),
                 question = getQuestion(),
@@ -134,14 +134,14 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
     private fun getPossibleAnswers(): MutableList<String> {
         var answerOptions: MutableList<String> = mutableListOf()
         for (pair in currentItem.rounds){
-            answerOptions.addAll(pair.answers.map { textValue ->  textValue.value })
+            answerOptions.addAll(pair.answers)
         }
         if (answerOptions.size > 1) answerOptions = answerOptions.distinct().toMutableList()
         return answerOptions
     }
 
     private fun getCorrectAnswers(): List<String> {
-        return currentItem.rounds[questionIdx].answers.map { textValue ->  textValue.value }
+        return currentItem.rounds[questionIdx].answers
     }
 
     private fun getQuestions(): List<Round>{
@@ -149,7 +149,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
     }
 
     private fun getQuestion(): String {
-        return currentItem.rounds[questionIdx].question.value
+        return currentItem.rounds[questionIdx].question
     }
 
     private fun getTotalQuestionsCount() {
