@@ -23,16 +23,18 @@ data class EyesightDifferUiState(
     val count: Int
 )
 
-class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseViewModel(app) {
+class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseViewModel(app) {
     init {
         roundIdx = levelIndex
     }
+
     private val differRepo = app.eyesightDifferRepository
     private val data = differRepo.data
     private var questionIdx = 0
     private var currentItem = data[roundIdx]
     private var questionNumber = 1
     private var countFromLevel = 0
+
     init {
         getTotalQuestionsCount()
     }
@@ -41,7 +43,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
         EyesightDifferUiState(
             imageId = currentItem.background,
             answers = getPossibleAnswers(),
-            correctAnswers =  getCorrectAnswers(),
+            correctAnswers = getCorrectAnswers(),
             question = getQuestion(),
             questionNumber = questionNumber,
             count = countFromLevel
@@ -49,48 +51,50 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
     )
     val uiState: StateFlow<EyesightDifferUiState> = _uiState.asStateFlow()
 
-
     fun validateAnswer(answer: String): Boolean {
-        val correctAnswers = getCorrectAnswers()
-        if (correctAnswers.contains(answer)){
-            if (isFirstCorrectAttempt) {
+        if (answer in getCorrectAnswers()) {
+            playResultSound(result = true)
+            viewModelScope.launch {
                 score++
-                isFirstCorrectAttempt = false
+                _buttonsEnabled.emit(false)
+                showMessage(result = true)
+                delay(1500)
             }
-            showMessage(result = true)
-            nextQuestion()
             return true
         } else {
-            if (isFirstWrongAttempt) {
-                score--
-                isFirstWrongAttempt = false
-            }
+            scoreDesc()
+            playResultSound(result = false)
             showMessage(result = false)
             return false
         }
     }
 
-    override fun doRestart(){
+    fun onButonClick(answer: String){
+        if (validateAnswer(answer)){
+            nextQuestion()
+        }
+    }
+
+    override fun doRestart() {
         questionIdx = 0
         currentItem = data[roundIdx]
         questionNumber = 1
         completeUiStateUpdate()
     }
 
-    private fun nextQuestion(){
+    private fun nextQuestion() {
         val questions = getQuestions()
         viewModelScope.launch {
-            delay(1500)
-            if (questionIdx < questions.size-1){
+            if (questionIdx < questions.size - 1) {
                 updateData()
             } else {
                 nextRound()
             }
+            _buttonsEnabled.emit(true)
         }
     }
 
     override fun updateData() {
-        resetAttemptFlags()
         questionNumber++
         questionIdx++
         _uiState.update { currentState ->
@@ -98,15 +102,13 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
                 correctAnswers = getCorrectAnswers(),
                 question = getQuestion(),
                 questionNumber = questionNumber
-
             )
         }
     }
 
-    override fun nextRound(): Boolean{
+    override fun nextRound(): Boolean {
         questionIdx = 0
-        if (roundIdx < data.size-1){
-            resetAttemptFlags()
+        if (roundIdx < data.size - 1) {
             questionNumber++
             roundIdx++
             currentItem = data[roundIdx]
@@ -118,7 +120,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
         }
     }
 
-    private fun completeUiStateUpdate(){
+    private fun completeUiStateUpdate() {
         _uiState.update { currentState ->
             currentState.copy(
                 imageId = currentItem.background,
@@ -126,14 +128,13 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
                 correctAnswers = getCorrectAnswers(),
                 question = getQuestion(),
                 questionNumber = questionNumber
-
             )
         }
     }
 
     private fun getPossibleAnswers(): MutableList<String> {
         var answerOptions: MutableList<String> = mutableListOf()
-        for (pair in currentItem.rounds){
+        for (pair in currentItem.rounds) {
             answerOptions.addAll(pair.answers)
         }
         if (answerOptions.size > 1) answerOptions = answerOptions.distinct().toMutableList()
@@ -144,7 +145,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
         return currentItem.rounds[questionIdx].answers
     }
 
-    private fun getQuestions(): List<Round>{
+    private fun getQuestions(): List<Round> {
         return currentItem.rounds
     }
 
@@ -154,7 +155,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
 
     private fun getTotalQuestionsCount() {
         for (setIdx in data.indices) {
-            for (i in data[setIdx].rounds){
+            for (i in data[setIdx].rounds) {
                 count++
                 if (setIdx >= levelIndex) countFromLevel++
             }
@@ -166,10 +167,11 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int): BaseVi
     }
 }
 
-class EyesightDifferViewModelFactory(private val app: LogoApp, private val levelIndex: Int): ViewModelProvider.Factory {
+class EyesightDifferViewModelFactory(private val app: LogoApp, private val levelIndex: Int) :
+    ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EyesightDifferViewModel::class.java)){
+        if (modelClass.isAssignableFrom(EyesightDifferViewModel::class.java)) {
             return EyesightDifferViewModel(app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightDifferViewModel")

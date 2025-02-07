@@ -18,4 +18,13 @@
         <word>dopis</word>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
+    <round>
+        <word>bouda</word>
+        <word>chata</word>
+        <word>brambory</word>
+        <word>beruska</word>
+        <word>bochnik</word>
+        <word>baba</word>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
 </data>

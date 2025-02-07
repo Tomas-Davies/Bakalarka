@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonematic
+package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthesis
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,31 +11,27 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class HearingFonematicUiState(
+data class HearingSynthesisUiState(
     val words: List<String>,
-    val playedWord: String
+    val initWord: String
 )
 
-class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
-    private val repo = app.hearingFonematicRepository
-    private val rounds = repo.data.shuffled().sortedBy { round -> round.words.size }
-    private var currentRound = rounds[roundIdx]
-    private var currentWords = currentRound.words
-    private val _uiState = MutableStateFlow(
-        HearingFonematicUiState(
-            words = currentWords,
-            playedWord = currentWords.random()
-        )
-    )
+class HearingSynthesisViewModel(app: LogoApp) : BaseViewModel(app) {
+    val repo = app.hearingSynthesisRepository
+    val rounds = repo.data
+    var currentRound = rounds[roundIdx]
+    var currentWords = currentRound.words
+    var spellingWord = currentWords.random()
+    private var _uiState = MutableStateFlow(HearingSynthesisUiState(currentWords, spellingWord))
     val uiState = _uiState.asStateFlow()
 
     init {
-        count = rounds.count()
+        count = rounds.size
         viewModelScope.launch { _buttonsEnabled.emit(false) }
     }
 
-    fun validateAnswer(answer: String) {
-        if (answer == _uiState.value.playedWord) {
+    fun validateAnswer(word: String) {
+        if (word == spellingWord) {
             playResultSound(result = true)
             viewModelScope.launch {
                 _buttonsEnabled.emit(false)
@@ -45,34 +41,37 @@ class HearingFonematicViewModel(app: LogoApp) : BaseViewModel(app) {
                 if (nextRound()) updateData()
             }
         } else {
+            scoreDesc()
             playResultSound(result = false)
             showMessage(result = false)
-            scoreDesc()
         }
     }
 
     override fun updateData() {
-        currentRound = rounds[roundIdx]
-        currentWords = currentRound.words
-
-        _uiState.update { state ->
-            state.copy(
-                words = currentWords,
-                playedWord = currentWords.random()
-            )
+        viewModelScope.launch {
+            currentRound = rounds[roundIdx]
+            currentWords = currentRound.words
+            spellingWord = currentWords.random()
+            _uiState.update { state ->
+                state.copy(
+                    words = currentWords,
+                    initWord = spellingWord
+                )
+            }
         }
     }
 
     override fun doRestart() {
         updateData()
     }
+
 }
 
-class HearingFonematicFactory(private val app: LogoApp) : ViewModelProvider.Factory {
+class HearingSynthesisViewModelFactory(private val app: LogoApp) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HearingFonematicViewModel::class.java)) {
-            return HearingFonematicViewModel(app) as T
+        if (modelClass.isAssignableFrom(HearingSynthesisViewModel::class.java)) {
+            return HearingSynthesisViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

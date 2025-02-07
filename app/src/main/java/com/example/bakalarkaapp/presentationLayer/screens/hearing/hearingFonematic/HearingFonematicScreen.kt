@@ -6,16 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -32,7 +28,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -41,6 +36,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
+import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
 import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
@@ -109,6 +105,7 @@ class HearingFonematicScreen : AppCompatActivity() {
     @Composable
     private fun HearingFonematicRunning(viewModel: HearingFonematicViewModel) {
         val uiState = viewModel.uiState.collectAsState().value
+        val enabled = viewModel.buttonsEnabled.collectAsState().value
         val soundId = resources.getIdentifier(uiState.playedWord, "raw", packageName)
 
         Box {
@@ -123,36 +120,33 @@ class HearingFonematicScreen : AppCompatActivity() {
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Top
-                ) {
-                    uiState.words.forEach { word ->
-                        val imageId = resources.getIdentifier(word, "drawable", packageName)
-                        AnimatedContent(
-                            modifier = Modifier
-                                .fillMaxWidth(0.7f),
-                            targetState = imageId,
-                            label = ""
-                        ) { targetImage ->
-                            Image(
-                                modifier = Modifier
-                                    .clickable {
-                                        val result = viewModel.validateAnswer(word)
-                                        viewModel.playResultSound(result)
-                                    },
-                                painter = painterResource(id = targetImage),
-                                contentDescription = "image"
+                AnimatedContent(
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f),
+                    targetState = uiState.words,
+                    label = ""
+                ) { targetList ->
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Top
+                    ) {
+                        targetList.forEach { word ->
+                            val drawable = resources.getIdentifier(word, "drawable", packageName)
+                            ImageCard(
+                                drawable = drawable,
+                                enabled = enabled,
+                                onClick = { viewModel.validateAnswer(word) }
                             )
-
-                            Spacer(modifier = Modifier.height(60.dp))
                         }
                     }
                 }
 
                 PlaySoundButton(
-                    onClick = { viewModel.playSound(soundId) }
+                    onClick = {
+                        viewModel.playSound(soundId)
+                        viewModel.enableButtons()
+                    }
                 )
             }
             AnswerResult(

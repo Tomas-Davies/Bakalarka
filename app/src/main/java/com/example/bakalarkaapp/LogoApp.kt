@@ -8,6 +8,7 @@ import com.example.bakalarkaapp.dataLayer.repositories.EyesightSearchRepo
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightSynthesisRepo
 import com.example.bakalarkaapp.dataLayer.repositories.HearingFonematicRepo
 import com.example.bakalarkaapp.dataLayer.repositories.HearingMemoryRepo
+import com.example.bakalarkaapp.dataLayer.repositories.HearingSynthesisRepo
 
 class LogoApp: Application() {
     val eyesightDifferRepository by lazy { EyesightDifferRepo(this) }
@@ -17,4 +18,5 @@ class LogoApp: Application() {
     val eyesightSynthesisRepository by lazy { EyesightSynthesisRepo(this) }
     val hearingFonematicRepository by lazy { HearingFonematicRepo(this) }
     val hearingMemoryRepository by lazy { HearingMemoryRepo(this) }
+    val hearingSynthesisRepository by lazy { HearingSynthesisRepo(this) }
 }

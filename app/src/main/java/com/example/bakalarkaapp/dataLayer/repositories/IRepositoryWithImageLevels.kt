@@ -1,5 +1,5 @@
 package com.example.bakalarkaapp.dataLayer.repositories
 
-interface IRepository<T> {
+interface IRepositoryWithImageLevels<T> {
     val data: List<T>
 }

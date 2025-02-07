@@ -23,10 +23,12 @@ class HearingMemoryViewModel(private val app: LogoApp) : BaseViewModel(app) {
     private var currRound = rounds[roundIdx]
     private var allWords = currRound.words
     private var initialWords = getInitialWords()
-    private val _uiState = MutableStateFlow(HearingMemoryUiState(
-        showingImages = emptyList(),
-        round = roundIdx + 1
-        ))
+    private val _uiState = MutableStateFlow(
+        HearingMemoryUiState(
+            showingImages = emptyList(),
+            round = roundIdx + 1
+        )
+    )
     val uiState = _uiState.asStateFlow()
     private var correctAnswerCount = 0
 
@@ -34,11 +36,11 @@ class HearingMemoryViewModel(private val app: LogoApp) : BaseViewModel(app) {
         count = rounds.size
     }
 
-    fun playInitialWords(onFinish: () -> Unit){
+    fun playInitialWords(onFinish: () -> Unit) {
         viewModelScope.launch {
             initialWords.forEach { word ->
-                val ctx = app.applicationContext
-                val soundId = ctx.resources.getIdentifier(word, "raw", ctx.packageName)
+                val appCtx = app.applicationContext
+                val soundId = appCtx.resources.getIdentifier(word, "raw", appCtx.packageName)
                 playSound(soundId)
                 delay(2500)
             }
@@ -47,25 +49,31 @@ class HearingMemoryViewModel(private val app: LogoApp) : BaseViewModel(app) {
         }
     }
 
-    fun validateAnswer(answer: String): Boolean {
-        if (answer in initialWords){
-            playResultSound(result = true)
-            score++
-            correctAnswerCount++
-            if (correctAnswerCount == currRound.toBePlayedCount){
-                viewModelScope.launch {
-                    showMessage(result = true)
-                    delay(1500)
-                    if (nextRound()) updateData()
-                }
+    fun validateAnswer(): Boolean {
+        if (correctAnswerCount == currRound.toBePlayedCount) {
+            viewModelScope.launch {
+                _buttonsEnabled.emit(false)
+                showMessage(result = true)
+                delay(1500)
+                if (nextRound()) updateData()
+                _buttonsEnabled.emit(true)
             }
             return true
         } else {
-            score--
+            scoreDesc()
             showMessage(result = false)
             playResultSound(result = false)
             return false
         }
+    }
+
+    fun onCardClick(answer: String): Boolean {
+        if (answer in initialWords) {
+            playResultSound(result = true)
+            score++
+            correctAnswerCount++
+        }
+        return validateAnswer()
     }
 
     override fun scorePercentage(): Int {

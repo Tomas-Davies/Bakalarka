@@ -79,10 +79,6 @@ class EyesightSynthesisViewModel(
         }
     }
 
-    private fun scoreInc() {
-        score++
-    }
-
     override fun updateData() {
         if (nextRound()) {
             currImage = bitmaps[roundIdx]

@@ -2,13 +2,13 @@ package com.example.bakalarkaapp.dataLayer.repositories
 
 import android.content.Context
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelWithImage
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.utils.xml.XmlParser
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-class EyesightDifferRepo(context: Context): IRepository<DifferItem> {
+class EyesightDifferRepo(context: Context): IRepositoryWithImageLevels<DifferItem> {
     private val mappedClass = XmlParser.
         parseXmlData(context, R.xml.eyesight_differ_data, DifferData::class.java)
     override val data = mappedClass.data
@@ -27,7 +27,7 @@ class Round {
 }
 
 @JacksonXmlRootElement(localName = "differItem")
-class DifferItem: LevelWithImage {
+class DifferItem: ImageLevel {
     @JacksonXmlProperty(localName = "imageId")
     override val background = ""
 

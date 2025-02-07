@@ -172,14 +172,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 label = stringResource(id = R.string.identical),
                                 bgColor = colorResource(id = R.color.correct),
                                 enabled = enabled,
-                                onClick = {
-                                    onCompareButtonClick(
-                                        true,
-                                        viewModel,
-                                        R.raw.correct_answer,
-                                        R.raw.wrong_answer
-                                    )
-                                }
+                                onClick = { viewModel.validateAnswer(true) }
                             )
                             Spacer(modifier = Modifier.weight(0.3f))
                             CompareButton(
@@ -188,14 +181,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 label = stringResource(id = R.string.different),
                                 bgColor = colorResource(id = R.color.incorrect),
                                 enabled = enabled,
-                                onClick = {
-                                    onCompareButtonClick(
-                                        false,
-                                        viewModel,
-                                        R.raw.correct_answer,
-                                        R.raw.wrong_answer
-                                    )
-                                }
+                                onClick = { viewModel.validateAnswer(false) }
                             )
                         }
                     }
@@ -250,18 +236,5 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 )
             }
         }
-    }
-}
-
-fun onCompareButtonClick(
-    userAnswer: Boolean,
-    viewModel: EyesightComparisonViewModel,
-    correctSoundId: Int,
-    wrongSoundId: Int
-) {
-    if (viewModel.validateAnswer(userAnswer)){
-        viewModel.playSound(correctSoundId)
-    } else {
-        viewModel.playSound(wrongSoundId)
     }
 }

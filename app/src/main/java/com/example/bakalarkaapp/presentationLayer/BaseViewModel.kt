@@ -26,13 +26,13 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
     protected var score = 0
     protected val _screenState = MutableStateFlow<ScreenState>(ScreenState.Running)
     val screenState: StateFlow<ScreenState> = _screenState.asStateFlow()
-    protected var isFirstCorrectAttempt = true
-    protected var isFirstWrongAttempt = true
     var count = 0
     private var _answerResultState = MutableStateFlow(AnswerResultState())
     val answerResultState = _answerResultState.asStateFlow()
     protected var _buttonsEnabled = MutableStateFlow(true)
     val buttonsEnabled = _buttonsEnabled.asStateFlow()
+
+    protected abstract fun updateData()
 
     protected open fun nextRound(): Boolean {
         if (roundIdx + 1 < count) {
@@ -53,16 +53,6 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
         _screenState.value = ScreenState.Running
     }
 
-    open fun scorePercentage(): Int {
-        return (score * 100) / count
-    }
-
-    protected fun resetAttemptFlags(){
-        isFirstCorrectAttempt = true
-        isFirstWrongAttempt = true
-    }
-
-    protected abstract fun updateData()
 
     private fun updateAnswerResultState(result: Boolean = false, show: Boolean = false, message: String = ""){
         _answerResultState.update { state ->
@@ -81,7 +71,6 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
             updateAnswerResultState(show = false, result = result, message = message)
         }
     }
-
 
     fun playSound(soundId: Int) {
         viewModelScope.launch {
@@ -104,15 +93,15 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
     }
 
     private fun getVibrator(): Vibrator {
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibrator: Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager =
                 appContext.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vibratorManager.defaultVibrator
+            vibrator = vibratorManager.defaultVibrator
         } else {
             @Suppress("DEPRECATION")
-            appContext.getSystemService(AppCompatActivity.VIBRATOR_SERVICE) as Vibrator
+            vibrator = appContext.getSystemService(AppCompatActivity.VIBRATOR_SERVICE) as Vibrator
         }
-
         return vibrator
     }
 
@@ -122,6 +111,65 @@ abstract class BaseViewModel(application: LogoApp): ViewModel() {
             vibrator.cancel()
             vibrator.vibrate(vibrationEffect)
         }
+    }
+
+    fun enableButtons(){
+        viewModelScope.launch { _buttonsEnabled.emit(true) }
+    }
+
+    protected fun doValidateAnswer(): Boolean {
+        if (validationCond()){
+            playOnCorrectSound()                        // Hearing Memory nema
+            viewModelScope.launch {
+                scoreInc()                              // Hearing Memory nema
+                beforeNewDataButtonEnable()             // Hearing Fonematic ma emit false, Eyesight Differ taky ne
+                messageShowCorrect()
+                newData()
+                afterNewDataButtonEnable()              // Hearing Fonematic nema, Eyesight Differ taky ne, Hearing Synth taky ne
+            }
+            return true
+        } else {
+            scoreDesc()
+            showMessage(result = false)
+            scoreDesc()
+            return false
+        }
+    }
+
+    protected open fun newData(){
+        if (nextRound()) updateData()
+    }
+
+    protected open fun playOnCorrectSound(){
+        playResultSound(result = true)
+    }
+
+    protected open suspend fun beforeNewDataButtonEnable(){
+        _buttonsEnabled.emit(false)
+    }
+    protected open suspend fun afterNewDataButtonEnable(){
+        _buttonsEnabled.emit(true)
+    }
+
+    protected open suspend fun scoreInc(){
+        score++
+    }
+
+    open fun scorePercentage(): Int {
+        return (score * 100) / count
+    }
+
+    protected open fun scoreDesc() {
+        if (score > 0) score --
+    }
+
+    protected open suspend fun messageShowCorrect(){
+        showMessage(result = true)
+        delay(1500)
+    }
+
+    protected open fun validationCond(): Boolean {
+        throw Exception("Has to be rewritten!")
     }
 
 }

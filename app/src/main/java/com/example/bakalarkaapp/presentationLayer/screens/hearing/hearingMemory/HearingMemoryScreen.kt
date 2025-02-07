@@ -6,10 +6,12 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -148,7 +150,7 @@ class HearingMemoryScreen : AppCompatActivity() {
                             Image(
                                 modifier = Modifier.fillMaxWidth(0.6f),
                                 painter = rememberDrawablePainter(
-                                    drawable = getDrawable(R.drawable.sound_playing)
+                                    drawable = AppCompatResources.getDrawable(LocalContext.current, R.drawable.sound_playing)
                                 ),
                                 contentDescription = "animated gif"
                             )
@@ -156,10 +158,12 @@ class HearingMemoryScreen : AppCompatActivity() {
                     }
                 } else {
                     Box(
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         LazyVerticalGrid(
-                            columns = GridCells.Adaptive(minSize = 150.dp)
+                            columns = GridCells.Adaptive(minSize = 150.dp),
+                            verticalArrangement = Arrangement.Center
                         ) {
                             items(uiState.showingImages){image ->
                                 HearingMemoryCard(
@@ -184,16 +188,20 @@ class HearingMemoryScreen : AppCompatActivity() {
         val cardColors = if (isMarkedAsCorrect) cardColors(
             disabledContainerColor = Color.Green.copy(alpha = 0.5f),
         ) else cardColors()
+        val enabled = viewModel.buttonsEnabled.collectAsState().value
 
         Card(
-            modifier = Modifier.padding(9.dp),
+            modifier = Modifier
+                .padding(9.dp)
+                .aspectRatio(1f),
             onClick = {
-                isMarkedAsCorrect = viewModel.validateAnswer(drawableName)
+                isMarkedAsCorrect = viewModel.onCardClick(drawableName)
             },
             colors = cardColors,
-            enabled = !isMarkedAsCorrect
+            enabled = !isMarkedAsCorrect && enabled
         ) {
             Image(
+                modifier = Modifier.fillMaxSize(),
                 painter = painterResource(id = drawableId),
                 contentScale = ContentScale.Inside,
                 contentDescription = "hearing memory image"

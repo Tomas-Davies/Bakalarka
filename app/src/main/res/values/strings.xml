@@ -261,7 +261,7 @@
     <array name="level_K">
         <item>K_</item>
         <item>_K_</item>
-        <item>_K_K_</item>
+        <item>K_K</item>
         <item>_K</item>
     </array>
     <array name="level_G">
@@ -445,7 +445,7 @@
     <string-array name="_J">
         <item>Boj</item>
         <item>Pokoj</item>
-        <item>Hokejistka</item>
+        <item>Hokej</item>
     </string-array>
     <string-array name="T_">
         <item>Tanec</item>
@@ -743,7 +743,7 @@
     <string-array name="S_Š">
         <item>Sešit</item>
         <item>Sušenka</item><!-- TODO zvk -->
-        <item>Sáša</item>
+        <item>Saša</item>
     </string-array>
     <string-array name="Š_S">
         <item>Šest</item><!-- TODO zvk -->
@@ -771,7 +771,7 @@
         <item>Česnek</item><!-- TODO zvk -->
     </string-array>
     <string-array name="Z_Š">
-        <item>Žašel</item><!-- TODO zvk -->
+        <item>Zašel</item><!-- TODO zvk -->
         <item>Zašil</item><!-- TODO zvk -->
         <item>Zašeptal</item><!-- TODO zvk -->
     </string-array>

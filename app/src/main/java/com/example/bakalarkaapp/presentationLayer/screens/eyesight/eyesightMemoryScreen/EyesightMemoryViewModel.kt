@@ -27,11 +27,11 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
     private var currentExtraObject = ""
     private var _uiState = MutableStateFlow(EyesightMemoryUiState(currentObjects, roundIdx + 1))
     val uiState = _uiState.asStateFlow()
-    var enabled = false
 
     init {
         count = data.size
         chooseExtraObject()
+        viewModelScope.launch { _buttonsEnabled.emit(false) }
     }
 
     private fun chooseExtraObject(){
@@ -42,22 +42,19 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
 
     fun validateAnswer(answer: String): Boolean {
         if (answer == currentExtraObject){
-            if (isFirstCorrectAttempt) {
-                score++
-                isFirstCorrectAttempt = false
-            }
+            playResultSound(result = true)
             viewModelScope.launch {
+                score++
+                _buttonsEnabled.emit(false)
                 showMessage(result = true)
                 delay(1500)
                 if (nextRound()) updateData()
             }
             return true
         } else {
+            playResultSound(result = false)
             showMessage(result = false)
-            if (isFirstWrongAttempt){
-                score--
-                isFirstWrongAttempt = false
-            }
+            scoreDesc()
             return false
         }
     }
@@ -67,26 +64,28 @@ class EyesightMemoryViewModel(app: LogoApp): BaseViewModel(app) {
     }
 
     fun showExtraItem(){
-        currentObjects.add(currentExtraObject)
-        enabled = true
-        _uiState.update { state ->
-            state.copy(
-                objectDrawableIds = currentObjects.shuffled(),
-            )
+        viewModelScope.launch {
+            currentObjects.add(currentExtraObject)
+            _buttonsEnabled.emit(true)
+            _uiState.update { state ->
+                state.copy(
+                    objectDrawableIds = currentObjects.shuffled(),
+                )
+            }
         }
     }
 
     override fun updateData(){
-        enabled = false
-        resetAttemptFlags()
-        currentObjects = data[roundIdx].objects
-            .toMutableList()
-        chooseExtraObject()
-        _uiState.update { state ->
-            state.copy(
-                objectDrawableIds = currentObjects,
-                round = roundIdx + 1
-            )
+        viewModelScope.launch {
+            currentObjects = data[roundIdx].objects
+                .toMutableList()
+            chooseExtraObject()
+            _uiState.update { state ->
+                state.copy(
+                    objectDrawableIds = currentObjects,
+                    round = roundIdx + 1
+                )
+            }
         }
     }
 }

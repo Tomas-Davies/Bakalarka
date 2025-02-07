@@ -22,7 +22,6 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
     init {
         roundIdx = levelIndex
     }
-
     private val comparisonDataRepository = app.eyesightComparisonRepository
     private var data = comparisonDataRepository.data
     private var currentItem = data[roundIdx]
@@ -33,36 +32,11 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
         )
     )
     val uiState: StateFlow<EyesightComparisonUiState> = _uiState.asStateFlow()
-    private var btnOneClickedFlag: Boolean = false
-    private var btnTwoClickedFlag: Boolean = false
 
     init {
         count = data.size
     }
 
-    private fun scoreInc() {
-        if (!btnOneClickedFlag) {
-            score++
-            btnOneClickedFlag = true
-        }
-    }
-
-    private fun scoreDesc() {
-        if (!btnTwoClickedFlag) {
-            score--
-            btnTwoClickedFlag = true
-        }
-    }
-
-    private fun moveNext(){
-        viewModelScope.launch {
-            delay(1500)
-            _buttonsEnabled.value = true
-            if (nextRound()) {
-                updateData()
-            }
-        }
-    }
 
     override fun scorePercentage(): Int {
         val count = count - levelIndex
@@ -70,21 +44,30 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
     }
 
     fun onTimerFinish(){
-        moveNext()
-        scoreDesc()
+        viewModelScope.launch {
+            delay(1500)
+            _buttonsEnabled.value = true
+            if (nextRound()) updateData()
+            scoreDesc()
+        }
     }
 
-    fun validateAnswer(answer: Boolean): Boolean {
+    fun validateAnswer(answer: Boolean) {
         if (answer == _uiState.value.answer){
-            _buttonsEnabled.value = false
-            showMessage(result = true)
-            scoreInc()
-            moveNext()
-            return true
+            playResultSound(result = true)
+            viewModelScope.launch {
+                score++
+                _buttonsEnabled.emit(false)
+                showMessage(result = true)
+                delay(1500)
+                _buttonsEnabled.value = true
+                if (nextRound()) updateData()
+            }
+        } else {
+            playResultSound(result = false)
+            showMessage(result = false)
+            scoreDesc()
         }
-        showMessage(result = false)
-        scoreDesc()
-        return false
     }
 
     public override fun updateData() {
@@ -96,8 +79,6 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
                 restartTrigger = roundIdx
             )
         }
-        btnOneClickedFlag = false
-        btnTwoClickedFlag = false
     }
 
     override fun doRestart() {

@@ -111,7 +111,7 @@ class LevelsScreen : AppCompatActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun LevelsScreenContent(viewModel: LevelsViewModel<out LevelWithImage>, nextActivityClass: Class<*>?) {
+    fun LevelsScreenContent(viewModel: LevelsViewModel<out ImageLevel>, nextActivityClass: Class<*>?) {
         val ctx = LocalContext.current
         Scaffold(
             topBar = {

@@ -152,6 +152,8 @@ class EyesightMemoryScreen : AppCompatActivity() {
                     modifier = Modifier.weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
+                    val enabled = viewModel.buttonsEnabled.collectAsState().value
+
                     LazyVerticalGrid(
                         modifier = Modifier.fillMaxWidth(),
                         columns = GridCells.Fixed(2),
@@ -166,13 +168,10 @@ class EyesightMemoryScreen : AppCompatActivity() {
                                     drawable = drawable,
                                     onClick = {
                                         if(viewModel.validateAnswer(id)){
-                                            viewModel.playSound(R.raw.correct_answer)
                                             messageId = R.string.eyesight_memory_label_1
-                                        } else {
-                                            viewModel.playSound(R.raw.wrong_answer)
                                         }
                                     },
-                                    enabled = viewModel.enabled
+                                    enabled = enabled
                                 )
                             }
                         }

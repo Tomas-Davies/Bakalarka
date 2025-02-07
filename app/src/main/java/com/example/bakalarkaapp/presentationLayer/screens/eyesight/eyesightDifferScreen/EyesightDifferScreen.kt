@@ -165,6 +165,7 @@ class EyesightDifferScreen: AppCompatActivity() {
                         textAlign = TextAlign.Center
                     )
                 }
+                val btnEnabledState = viewModel.buttonsEnabled.collectAsState().value
                 FlowRow(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -172,13 +173,10 @@ class EyesightDifferScreen: AppCompatActivity() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     for (answer in uiState.answers){
-                        Button(onClick = {
-                            if (viewModel.validateAnswer(answer)){
-                                viewModel.playSound(R.raw.correct_answer)
-                            } else {
-                                viewModel.playSound(R.raw.wrong_answer)
-                            }
-                        }) {
+                        Button(
+                            onClick = { viewModel.onButonClick(answer) },
+                            enabled = btnEnabledState
+                        ) {
                             Text(text = answer)
                         }
                     }
