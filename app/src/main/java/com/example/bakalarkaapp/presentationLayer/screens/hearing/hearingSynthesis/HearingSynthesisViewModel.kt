@@ -3,26 +3,27 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthe
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.presentationLayer.BaseViewModel
-import kotlinx.coroutines.delay
+import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.dataLayer.models.RoundContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class HearingSynthesisUiState(
-    val words: List<String>,
-    val initWord: String
+    val roundObjects: List<RoundContent>,
+    val initObject: RoundContent
 )
 
-class HearingSynthesisViewModel(app: LogoApp) : BaseViewModel(app) {
-    val repo = app.hearingSynthesisRepository
-    val rounds = repo.data
-    var currentRound = rounds[roundIdx]
-    var currentWords = currentRound.words
-    var spellingWord = currentWords.random()
-    private var _uiState = MutableStateFlow(HearingSynthesisUiState(currentWords, spellingWord))
+class HearingSynthesisViewModel(app: LogoApp) : ValidatableViewModel(app) {
+    private val repo = app.hearingSynthesisRepository
+    private val rounds = repo.data
+    private var currentRound = rounds[roundIdx]
+    private var currentObject = currentRound.objects
+    private var spellingObject = currentObject.random()
+    private var _uiState = MutableStateFlow(HearingSynthesisUiState(currentObject, spellingObject))
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -30,32 +31,21 @@ class HearingSynthesisViewModel(app: LogoApp) : BaseViewModel(app) {
         viewModelScope.launch { _buttonsEnabled.emit(false) }
     }
 
-    fun validateAnswer(word: String) {
-        if (word == spellingWord) {
-            playResultSound(result = true)
-            viewModelScope.launch {
-                _buttonsEnabled.emit(false)
-                score++
-                showMessage(result = true)
-                delay(1500)
-                if (nextRound()) updateData()
-            }
-        } else {
-            scoreDesc()
-            playResultSound(result = false)
-            showMessage(result = false)
-        }
+    override fun validationCond(answer: IValidationAnswer): Boolean {
+        if (answer is IValidationAnswer.StringAnswer) return answer.value == spellingObject.imgName
+        throw IllegalArgumentException("$this expects answer of type String")
     }
+    override suspend fun afterNewData() {}
 
     override fun updateData() {
         viewModelScope.launch {
             currentRound = rounds[roundIdx]
-            currentWords = currentRound.words
-            spellingWord = currentWords.random()
+            currentObject = currentRound.objects
+            spellingObject = currentObject.random()
             _uiState.update { state ->
                 state.copy(
-                    words = currentWords,
-                    initWord = spellingWord
+                    roundObjects = currentObject,
+                    initObject = spellingObject
                 )
             }
         }

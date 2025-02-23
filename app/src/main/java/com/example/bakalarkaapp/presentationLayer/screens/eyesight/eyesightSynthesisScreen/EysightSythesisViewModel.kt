@@ -10,12 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.dataLayer.repositories.SynthRound
-import com.example.bakalarkaapp.presentationLayer.BaseViewModel
-import com.example.bakalarkaapp.utils.string.toDrawableId
+import com.example.bakalarkaapp.dataLayer.models.EyesightSynthRound
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,8 +34,7 @@ data class ImagePiece(
     var imageY: Int,
     var width: Int,
     var height: Int,
-    var startingX: Float = 0f,
-    var startingY: Float = 0f
+    var initialOffset: Offset = Offset.Zero
 )
 
 data class Rect(
@@ -51,7 +48,7 @@ class EyesightSynthesisViewModel(
     app: LogoApp,
     levelIndex: Int,
     private val appContext: Context
-) : BaseViewModel(app)
+) : RoundsViewModel(app)
 {
     init {
         roundIdx = levelIndex
@@ -65,7 +62,7 @@ class EyesightSynthesisViewModel(
     private var placedPieces = 0
     private val _uiState =
         MutableStateFlow(EyesightSynthesisUiState(currImage, pieceCount))
-    val uiState: StateFlow<EyesightSynthesisUiState> = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
     init {
         count = rounds.size
     }
@@ -170,32 +167,32 @@ class EyesightSynthesisViewModel(
         }
     }
 
-    fun setCorrectPos(
+    fun setCorrectOffset(
         piece: ImagePiece,
         currOffset: Offset,
-        bitmapPosition: Offset,
-        imageScale: Float,
+        contentOffset: Offset,
+        contentScale: Float,
         bottomBoxOffset: Offset
     ): Offset
     {
-        val currInBitmapX = currOffset.x - bitmapPosition.x
-        val currInBitmapY = (bottomBoxOffset.y + currOffset.y) - bitmapPosition.y
-        val scaledTargetX = piece.imageX * imageScale
-        val scaledTargetY = piece.imageY * imageScale
-        val dist = distance(scaledTargetX, scaledTargetY, currInBitmapX, currInBitmapY)
+        val inContentX = currOffset.x - contentOffset.x
+        val inContentY = (bottomBoxOffset.y + currOffset.y) - contentOffset.y
+        val scaledTargetX = piece.imageX * contentScale
+        val scaledTargetY = piece.imageY * contentScale
+        val dist = distance(scaledTargetX, scaledTargetY, inContentX, inContentY)
 
         if (dist <= threshold) {
-            val pos = Offset(
-                x = (scaledTargetX + bitmapPosition.x) - bottomBoxOffset.x,
-                y = (scaledTargetY + bitmapPosition.y) - bottomBoxOffset.y
+            val offset = Offset(
+                x = (scaledTargetX + contentOffset.x) - bottomBoxOffset.x,
+                y = (scaledTargetY + contentOffset.y) - bottomBoxOffset.y
             )
             placedPieces++
             playResultSound(true)
             vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
-            return pos
+            return offset
         } else {
             playResultSound(result = false)
-            return Offset(piece.startingX, piece.startingY)
+            return piece.initialOffset
         }
     }
 
@@ -214,8 +211,8 @@ class EyesightSynthesisViewModel(
         }
     }
 
-    fun getInitialPositions(containerWidth: Int, containerHeight: Int, scaledPieces: List<ImagePiece>): MutableList<Offset>{
-        val positions = mutableListOf<Offset>()
+    fun getInitialOffsets(containerWidth: Float, containerHeight: Float, scaledPieces: List<ImagePiece>): MutableList<Offset>{
+        val offsets = mutableListOf<Offset>()
         val colCount = findSquare(scaledPieces.size)
         val rowCount = colCount
         val pieceWidth = containerWidth / colCount
@@ -224,19 +221,19 @@ class EyesightSynthesisViewModel(
             for (col in 0 until colCount) {
                 val index = row * colCount + col
                 if (index < scaledPieces.size) {
-                    val x = col * pieceWidth.toFloat()
-                    val y = row * pieceHeight.toFloat()
-                    positions.add(Offset(x, y))
+                    val x = col * pieceWidth
+                    val y = row * pieceHeight
+                    offsets.add(Offset(x, y))
                 }
             }
         }
-        return positions
+        return offsets
     }
 
-    private fun imageNamesToBitmaps(rounds: List<SynthRound>): List<Bitmap> {
+    private fun imageNamesToBitmaps(rounds: List<EyesightSynthRound>): List<Bitmap> {
         val bitmaps = mutableListOf<Bitmap>()
-        for (round in rounds){
-            val drawableId = appContext.resources.getIdentifier(round.background.toDrawableId(), "drawable", appContext.packageName)
+        rounds.forEach { round ->
+            val drawableId = getDrawableId(round.imageName)
             val options = BitmapFactory.Options()
             options.inScaled = false
             val bitmap = BitmapFactory.decodeResource(appContext.resources, drawableId, options)

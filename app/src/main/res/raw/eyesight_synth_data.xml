@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <imageName>playground</imageName>
+        <pieceCount>4</pieceCount>
+    </round>
+    <round>
+        <imageName>classroom</imageName>
+        <pieceCount>5</pieceCount>
+    </round>
+    <round>
+        <imageName>ant_bg</imageName>
+        <pieceCount>6</pieceCount>
+    </round>
+    <round>
+        <imageName>kitchen</imageName>
+        <pieceCount>7</pieceCount>
+    </round>
+</data>

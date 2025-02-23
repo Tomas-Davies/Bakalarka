@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <roundContent imgName="bota" soundName="bota_spelling"/>
+        <roundContent imgName="buvol" soundName="buvol_spelling"/>
+        <roundContent imgName="buchta" soundName="buchta_spelling"/>
+    </round>
+    <round>
+        <roundContent imgName="cibule" soundName="cibule_spelling"/>
+        <roundContent imgName="cihla" soundName="cihla_spelling"/>
+        <roundContent imgName="datel" soundName="datel_spelling"/>
+        <roundContent imgName="duch" soundName="duch_spelling"/>
+    </round>
+    <round>
+        <roundContent imgName="bouda" soundName="bouda_spelling"/>
+        <roundContent imgName="casopis" soundName="casopis_spelling"/>
+        <roundContent imgName="chata" soundName="chata_spelling"/>
+        <roundContent imgName="brambory" soundName="brambory_spelling"/>
+        <roundContent imgName="beruska" soundName="beruska_spelling"/>
+        <roundContent imgName="bochnik" soundName="bochnik_spelling"/>
+    </round>
+</data>

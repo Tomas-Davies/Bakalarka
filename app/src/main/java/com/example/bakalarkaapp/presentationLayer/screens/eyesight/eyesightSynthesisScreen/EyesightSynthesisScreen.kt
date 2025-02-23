@@ -17,22 +17,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -56,9 +47,13 @@ import androidx.compose.ui.zIndex
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
+import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
+import com.example.bakalarkaapp.utils.image.getContentOffsetInImage
+import com.example.bakalarkaapp.utils.image.getFitContentScaleInImage
+import com.example.bakalarkaapp.utils.image.getContentSizeInImage
 import kotlin.math.roundToInt
 
 
@@ -86,24 +81,11 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     }
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun EyesightSynthesisScreenContent(viewModel: EyesightSynthesisViewModel) {
         val ctx = LocalContext.current
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.eyesight_menu_label_5)) },
-                    navigationIcon = {
-                        IconButton(onClick = { (ctx as Activity).finish() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back button"
-                            )
-                        }
-                    }
-                )
-            }
+        ScreenWrapper(
+            headerLabel = stringResource(id = R.string.eyesight_menu_label_5)
         ) {
             Column(
                 modifier = Modifier
@@ -111,10 +93,11 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val screenState = viewModel.screenState.collectAsState().value
-                when (screenState) {
-                    is ScreenState.Running -> EyesightSynthesisScreenRunning(viewModel)
-                    is ScreenState.Finished -> (ctx as Activity).finish()
+                RunningOrFinishedRoundScreen(
+                    viewModel = viewModel,
+                    onFinish = { (ctx as Activity).finish() }
+                ) {
+                    EyesightSynthesisScreenRunning(viewModel = viewModel)
                 }
             }
         }
@@ -124,10 +107,10 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun EyesightSynthesisScreenRunning(viewModel: EyesightSynthesisViewModel) {
         val uiState = viewModel.uiState.collectAsState().value
-        var imageScale by remember { mutableFloatStateOf(1f) }
-        var imageOffset by remember { mutableStateOf(Offset.Zero) }
-        var containerWidth by remember { mutableIntStateOf(0) }
-        var containerHeight by remember { mutableIntStateOf(0) }
+        var contentScale by remember { mutableFloatStateOf(1f) }
+        var contentOffsetInRoot by remember { mutableStateOf(Offset.Zero) }
+        var imgWidth by remember { mutableFloatStateOf(0f) }
+        var imgHeight by remember { mutableFloatStateOf(0f) }
         val pieces by remember(uiState.image.hashCode()) {
             mutableStateOf(
                 viewModel.cutImage(
@@ -136,72 +119,73 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 )
             )
         }
-        val scaledPieces = remember(uiState.image.hashCode(), pieces, imageScale) {
+        val scaledPieces = remember(uiState.image.hashCode(), pieces, contentScale) {
             pieces.map { piece ->
                 piece.copy(
-                    width = (piece.width.toFloat() * imageScale).toInt(),
-                    height = (piece.height.toFloat() * imageScale).toInt(),
+                    width = (piece.width.toFloat() * contentScale).toInt(),
+                    height = (piece.height.toFloat() * contentScale).toInt(),
                     bitmap = piece.bitmap
                 )
             }
         }
-        var initialPositions by remember(uiState.image.hashCode()) { mutableStateOf(emptyList<Offset>()) }
+        var initialOffsets by remember(uiState.image.hashCode()) { mutableStateOf(emptyList<Offset>()) }
 
-        LaunchedEffect(containerWidth, containerHeight, scaledPieces, uiState.image.hashCode()) {
-            if (containerWidth > 0 && containerHeight > 0 && scaledPieces.isNotEmpty()) {
-                initialPositions = viewModel.getInitialPositions(containerWidth, containerHeight, scaledPieces)
+        LaunchedEffect(
+            imgWidth, imgHeight, scaledPieces, uiState.image
+                .hashCode()
+        ) {
+            if (imgWidth > 0 && imgHeight > 0 && scaledPieces.isNotEmpty()) {
+                initialOffsets = viewModel.getInitialOffsets(imgWidth, imgHeight, scaledPieces)
             }
         }
 
-        var bottomBoxPosition by remember(uiState.image) { mutableStateOf(Offset.Zero) }
+        var bottomBoxOffset by remember(uiState.image) { mutableStateOf(Offset.Zero) }
 
-        Box(
-            modifier = Modifier.fillMaxSize()
+        AnswerResultBox(
+            modifier = Modifier.fillMaxSize(),
+            viewModel = viewModel
         ) {
-                val bitmap = uiState.image.asImageBitmap()
-                Image(
-                    modifier = Modifier
-                        .fillMaxHeight(0.5f)
-                        .fillMaxWidth()
-                        .alpha(0.3f)
-                        .onGloballyPositioned { cords ->
-                            containerWidth = cords.size.width
-                            containerHeight = cords.size.height
-                            val widthScale = containerWidth.toFloat() / bitmap.width
-                            val heightScale = containerHeight.toFloat() / bitmap.height
-                            imageScale = minOf(widthScale, heightScale)
-                            val imageX = (containerWidth - (bitmap.width * imageScale)) / 2
-                            val imageY = (containerHeight - (bitmap.height * imageScale)) / 2
+            val imgContent = uiState.image.asImageBitmap()
+            Image(
+                modifier = Modifier
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth()
+                    .alpha(0.3f)
+                    .onGloballyPositioned { cords ->
+                        imgWidth = cords.size.width.toFloat()
+                        imgHeight = cords.size.height.toFloat()
+                        contentScale = getFitContentScaleInImage(imgWidth, imgHeight, imgContent)
+                        val contentSize = getContentSizeInImage(imgContent, contentScale)
+                        val contentOffset = getContentOffsetInImage(contentSize, imgWidth, imgHeight)
 
-                            imageOffset = Offset(
-                                cords.positionInRoot().x + imageX,
-                                cords.positionInRoot().y + imageY
-                            )
-                        },
-                    bitmap = bitmap,
-                    contentDescription = "puzzle image"
-                )
-
+                        contentOffsetInRoot = Offset(
+                            cords.positionInRoot().x + contentOffset.x,
+                            cords.positionInRoot().y + contentOffset.y
+                        )
+                    },
+                bitmap = imgContent,
+                contentDescription = "puzzle img"
+            )
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.5f)
                     .onGloballyPositioned { cords ->
-                        bottomBoxPosition = cords.positionInRoot()
+                        bottomBoxOffset = cords.positionInRoot()
                     }
                     .align(Alignment.BottomCenter)
                     .background(Color.LightGray.copy(alpha = 0.2f))
             ) {
-                if (bottomBoxPosition != Offset.Zero){
+                if (bottomBoxOffset != Offset.Zero) {
                     scaledPieces.forEachIndexed { index, piece ->
-                        if (index < initialPositions.size) {
+                        if (index < initialOffsets.size) {
                             Piece(
                                 piece = piece,
-                                initialPosition = initialPositions[index],
-                                bottomBoxPosition = bottomBoxPosition,
-                                imagePosition = imageOffset,
-                                imageScale = imageScale,
+                                initialOffset = initialOffsets[index],
+                                bottomBoxOffset = bottomBoxOffset,
+                                contentOffsetInRoot = contentOffsetInRoot,
+                                contentScale = contentScale,
                                 viewModel = viewModel,
                                 key = uiState.image.hashCode()
                             )
@@ -209,10 +193,6 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     }
                 }
             }
-            AnswerResult(
-                viewModel = viewModel,
-                modifier = Modifier.align(Alignment.Center)
-            )
         }
     }
 
@@ -220,16 +200,15 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun Piece(
         piece: ImagePiece,
-        initialPosition: Offset,
-        bottomBoxPosition: Offset,
-        imagePosition: Offset,
-        imageScale: Float,
+        initialOffset: Offset,
+        bottomBoxOffset: Offset,
+        contentOffsetInRoot: Offset,
+        contentScale: Float,
         viewModel: EyesightSynthesisViewModel,
         key: Int
     ) {
-        var pos by remember { mutableStateOf(initialPosition) }
-        piece.startingX = initialPosition.x
-        piece.startingY = initialPosition.y
+        var offset by remember { mutableStateOf(initialOffset) }
+        piece.initialOffset = initialOffset
 
         var isDragging by remember(key) { mutableStateOf(false) }
         var dragStarted by remember(key) { mutableStateOf(false) }
@@ -240,7 +219,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
         val modifier = Modifier
             .size(width, height)
-            .offset { IntOffset(pos.x.roundToInt(), pos.y.roundToInt()) }
+            .offset { IntOffset(offset.x.roundToInt(), offset.y.roundToInt()) }
             .zIndex(if (isDragging) 1f else 0f)
             .pointerInput(Unit) {
                 detectDragGestures(
@@ -256,25 +235,30 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     },
                     onDrag = { change, dragAmount ->
                         change.consume()
-                        if(!correctlyPlaced) pos += dragAmount
-
+                        if (!correctlyPlaced) offset += dragAmount
                     }
                 )
             }
             .graphicsLayer(
                 alpha = if (isDragging) 0.8f else 1f
             )
-        val isInImage = bottomBoxPosition.y > (pos.y + bottomBoxPosition.y)
+        val isInImage = bottomBoxOffset.y > (offset.y + bottomBoxOffset.y)
 
-        if (isInImage && dragEnded && !correctlyPlaced){
-            val newPos = viewModel.setCorrectPos(piece, pos, imagePosition, imageScale, bottomBoxPosition)
-            val placedWrong = Offset(piece.startingX, piece.startingY)
-            if (newPos != placedWrong) {
+        if (isInImage && dragEnded && !correctlyPlaced) {
+            val newOffset = viewModel.setCorrectOffset(
+                piece,
+                offset,
+                contentOffsetInRoot,
+                contentScale,
+                bottomBoxOffset
+            )
+            val placedWrong = piece.initialOffset
+            if (newOffset != placedWrong) {
                 viewModel.onAllPiecesPlaced()
                 correctlyPlaced = true
             }
             dragEnded = false
-            pos = newPos
+            offset = newOffset
         }
 
         Image(

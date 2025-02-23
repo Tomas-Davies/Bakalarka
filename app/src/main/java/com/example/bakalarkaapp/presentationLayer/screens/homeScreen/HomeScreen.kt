@@ -15,16 +15,12 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -36,12 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
@@ -49,8 +45,9 @@ import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightScree
 import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingScreen.HearingScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmScreen.RythmScreen
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechScreen.SpeechScreen
-import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesScreen
+import com.example.bakalarkaapp.presentationLayer.screens.tales.talesMenu.TalesScreen
 import com.example.bakalarkaapp.theme.AppTheme
+
 
 class HomeScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,15 +73,8 @@ class HomeScreen: AppCompatActivity() {
                 TopAppBar(
                     title = {
                         Text(text = stringResource(id = R.string.app_name))
-                    },
-                    actions = {
-                        IconButton(onClick = { openProfileDetail() }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.profile_icon),
-                                contentDescription = "Profile Icon",
-                                modifier = Modifier.size(32.dp))
-                        }
-                    }) 
+                    }
+                )
             }
         ) {pdVal ->  
             MainContent(pdVal)
@@ -163,8 +153,6 @@ class HomeScreen: AppCompatActivity() {
                     ) }
             }
 
-            val configuration = LocalConfiguration.current
-            val screenWidth = configuration.screenWidthDp.dp
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -172,14 +160,17 @@ class HomeScreen: AppCompatActivity() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    modifier = Modifier.width(screenWidth / 2),
+                    modifier = Modifier.weight(4f),
                     text = stringResource(id = R.string.home_screen_decor_label),
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center
                 )
                 Image(
+                    modifier = Modifier
+                        .scale(2.5f)
+                        .weight(2f),
                     painter = painterResource(id = R.drawable.home_screen_decor),
                     contentDescription = "decoration",
-                    modifier = Modifier.scale(2.5f),
                 )
             }
 
@@ -217,9 +208,7 @@ class HomeScreen: AppCompatActivity() {
         }
     }
 
-    private fun openProfileDetail(){
-        
-    }
+
     private fun onCardClicked(ctx: Context, id: Int){
 
         var intent = Intent(ctx, SpeechScreen::class.java)

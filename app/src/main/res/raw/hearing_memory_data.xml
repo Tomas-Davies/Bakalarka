@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <roundContent imgName="buben" soundName="buben"/>
+        <roundContent imgName="kure" soundName="kure"/>
+        <roundContent imgName="kuzel" soundName="kuzel"/>
+        <roundContent imgName="lyze" soundName="lyze"/>
+        <roundContent imgName="opice" soundName="opice"/>
+        <toBePlayedCount>3</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imgName="ovecka" soundName="ovecka"/>
+        <roundContent imgName="cmelak" soundName="cmelak"/>
+        <roundContent imgName="sekacka" soundName="sekacka"/>
+        <roundContent imgName="vajicko" soundName="vajicko"/>
+        <roundContent imgName="zajic" soundName="zajic"/>
+        <roundContent imgName="zub" soundName="zub"/>
+        <roundContent imgName="dopis" soundName="dopis"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imgName="bouda" soundName="bouda"/>
+        <roundContent imgName="chata" soundName="chata"/>
+        <roundContent imgName="brambory" soundName="brambory"/>
+        <roundContent imgName="beruska" soundName="beruska"/>
+        <roundContent imgName="bochnik" soundName="bochnik"/>
+        <roundContent imgName="baba" soundName="baba"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+</data>

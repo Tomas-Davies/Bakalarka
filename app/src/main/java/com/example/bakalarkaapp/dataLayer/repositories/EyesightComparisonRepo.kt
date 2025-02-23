@@ -2,32 +2,14 @@ package com.example.bakalarkaapp.dataLayer.repositories
 
 import android.content.Context
 import com.example.bakalarkaapp.R
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
-import com.example.bakalarkaapp.utils.xml.XmlParser
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import com.example.bakalarkaapp.dataLayer.models.ComparisonData
+import com.example.bakalarkaapp.dataLayer.models.ComparisonItem
 
-
-class EyesightComparisonRepo(context: Context): IRepositoryWithImageLevels<ComparisonItem> {
-    private val mappedClass = XmlParser.
-    parseXmlData(context, R.xml.eyesight_comparison_data, ComparisonData::class.java)
-    override val data = mappedClass.data
+class EyesightComparisonRepo(ctx: Context) :
+    XmlRepository<ComparisonData, ComparisonItem>(
+        ctx,
+        R.raw.eyesight_comparison_data,
+        ComparisonData::class.java
+    ) {
+    override val data = mappedClass?.items ?: ComparisonData().items
 }
-
-@JacksonXmlRootElement(localName = "comparisonItem")
-class ComparisonItem: ImageLevel {
-    @JacksonXmlProperty(localName = "imageId")
-    override val background = ""
-
-    @JacksonXmlProperty(localName = "isSameShape")
-    val isSameShape = true
-}
-
-@JacksonXmlRootElement(localName = "data")
-class ComparisonData {
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "comparisonItem")
-    val data = emptyList<ComparisonItem>()
-}
-

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,16 +26,18 @@ fun IconButton(
     onClick: () -> Unit,
     style: TextStyle = MaterialTheme.typography.labelLarge,
 ){
+    val cardColors = CardColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = CardDefaults.cardColors().contentColor,
+        disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
+        disabledContentColor = CardDefaults.cardColors().disabledContentColor
+    )
+
     Card(
         modifier = modifier,
         onClick = { onClick() },
         shape = RoundedCornerShape(9.dp),
-        colors = CardColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            disabledContainerColor = MaterialTheme.colorScheme.onPrimary,
-            disabledContentColor = MaterialTheme.colorScheme.primary
-        )
+        colors = cardColors
     ) {
         Row(
             modifier = Modifier
@@ -43,10 +46,15 @@ fun IconButton(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(imageVector = iconId, contentDescription = "Icon")
+            Icon(
+                imageVector = iconId,
+                contentDescription = "Icon",
+                tint = MaterialTheme.colorScheme.onPrimary
+            )
             Text(
                 text = label,
-                style = style
+                style = style,
+                color = MaterialTheme.colorScheme.onPrimary
             )
         }
     }

@@ -59,7 +59,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.tales.TalesScreen"
+            android:name=".presentationLayer.screens.tales.talesMenu.TalesScreen"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -158,7 +158,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.rythm.rythmPexesoScreen.RythmPexesoScreen"
+            android:name=".presentationLayer.screens.rythm.rythmShelvesScreen.RythmShelvesScreen"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -167,7 +167,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.rythm.rythmClapScreen.RythmClapScreen"
+            android:name=".presentationLayer.screens.rythm.rythmSyllablesScreen.RythmSyllabelsScreen"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -177,6 +177,20 @@
         </activity>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmRepeatScreen.RythmRepeatScreen"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+
+
+
+
+        <activity
+            android:name=".presentationLayer.screens.tales.taleDetail.TaleDetailScreen"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

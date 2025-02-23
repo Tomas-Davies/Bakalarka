@@ -1,14 +1,11 @@
 package com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen
 
-import android.app.Activity
-import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,43 +14,39 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
+import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 
 class SpeechDetailScreen: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val label = intent.getStringExtra("LABEL") ?: ""
-        var words = emptyArray<String>()
-        val id = resources.getIdentifier(label, "array", this.packageName)
-        if (id != 0) words = resources.getStringArray(id)
+        val letterLabel = intent.getStringExtra("LETTER_LABEL") ?: ""
+        val posLabel = intent.getStringExtra("POS_LABEL") ?: ""
 
+        val app = application as LogoApp
         val viewModel: SpeechDetailViewModel by viewModels {
-            SpeechDetailViewModelFactory(words)
+            SpeechDetailViewModelFactory(app, letterLabel, posLabel)
         }
 
         setContent {
@@ -62,45 +55,32 @@ class SpeechDetailScreen: ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SpeechDetailContent(viewModel)
+                    SpeechDetailContent(viewModel, letterLabel, posLabel)
                 }
             }
         }
     }
 
-
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun SpeechDetailContent(viewModel: SpeechDetailViewModel){
-        val ctx = LocalContext.current
-        val activity = (ctx as Activity)
-        val label = activity.intent.getStringExtra("LABEL") ?: ""
-
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.category_speech) + " - " + label) },
-                    navigationIcon = {
-                        IconButton(onClick = { activity.finish() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back button"
-                            )
-                        }
-                    }
-                )
-            }
+    private fun SpeechDetailContent(
+        viewModel: SpeechDetailViewModel,
+        letterLabel: String,
+        posLabel: String
+    ){
+        val category = if (posLabel != "NONE") posLabel else letterLabel
+        ScreenWrapper(
+            headerLabel = stringResource(id = R.string.category_speech) + " - " + category
         ){pdVal ->
             SpeechDetail(pdVal, viewModel)
         }
     }
+
 
     @Composable
     private fun SpeechDetail(
         pdVal: PaddingValues,
         viewModel: SpeechDetailViewModel
     ){
-        val ctx = LocalContext.current
         val uiState = viewModel.uiState.collectAsState().value
         Column(
             modifier = Modifier
@@ -109,29 +89,24 @@ class SpeechDetailScreen: ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            val imageId = resources.getIdentifier(uiState.wordResourcesId, "drawable", ctx.packageName)
+            val imageId = viewModel.getDrawableId(uiState.currentWord.imgName)
 
             Column(
                 modifier = Modifier.weight(3f),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(3f),
-                    contentAlignment = Alignment.Center
-                ){
-                    if (imageId != 0){
-                        Image(painter = painterResource(id = imageId), contentDescription = "image")
-                    } else {
-                        Image(painter = painterResource(id = R.drawable.image_not_available), contentDescription = "image")
-                    }
-                }
+                    Image(
+                        modifier = Modifier
+                            .weight(3f)
+                            .fillMaxWidth(),
+                        painter = painterResource(id = imageId),
+                        contentDescription = "image"
+                    )
                 Text(
                     modifier = Modifier
                         .weight(1f)
                         .wrapContentHeight(),
-                    text = uiState.currentWord,
+                    text = uiState.currentWord.text,
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -164,13 +139,10 @@ class SpeechDetailScreen: ComponentActivity() {
                     )
                 }
 
-                val audioId = resources.getIdentifier(uiState.wordResourcesId, "raw", ctx.packageName)
-                var mp: MediaPlayer? = null
-                if(audioId != 0){
-                    mp = MediaPlayer.create(ctx, audioId)
-                }
+                val soundId = viewModel.getSoundId(uiState.currentWord.soundName)
+
                 PlaySoundButton(
-                    onClick = { mp?.start() }
+                    onClick = { viewModel.playSound(soundId) }
                 )
                 IconButton(
                     modifier = Modifier.scale(1.5f),

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <roundContent imgName="kovar" soundName="kovar"/>
+        <roundContent imgName="drevar" soundName="drevar"/>
+        <roundContent imgName="pekar" soundName="pekar"/>
+    </round>
+    <round>
+        <roundContent imgName="more" soundName="more"/>
+        <roundContent imgName="kure" soundName="kure"/>
+        <roundContent imgName="orech" soundName="orech"/>
+    </round>
+    <round>
+        <roundContent imgName="mouka" soundName="mouka"/>
+        <roundContent imgName="moucha" soundName="moucha"/>
+    </round>
+    <round>
+        <roundContent imgName="chleba" soundName="chleba"/>
+        <roundContent imgName="chyba" soundName="chyba"/>
+    </round>
+</data>

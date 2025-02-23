@@ -1,7 +1,6 @@
 package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemory
 
 import Countdown
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -18,19 +17,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardColors
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -50,10 +42,11 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
-import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
+import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
+
 
 class HearingMemoryScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +59,7 @@ class HearingMemoryScreen : AppCompatActivity() {
             AppTheme(ThemeType.THEME_HEARING) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+        //            color = MaterialTheme.colorScheme.background
                 ) {
                     HearingMemoryScreenContent(viewModel)
                 }
@@ -74,36 +67,18 @@ class HearingMemoryScreen : AppCompatActivity() {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun HearingMemoryScreenContent(viewModel: HearingMemoryViewModel){
-        val ctx = LocalContext.current
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.hearing_menu_label_2)) },
-                    navigationIcon = {
-                        IconButton(onClick = { (ctx as Activity).finish() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back button"
-                            )
-                        }
-                    }
-                )
-            }
+        ScreenWrapper(
+            headerLabel = stringResource(id = R.string.hearing_menu_label_2)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
-                val screenState = viewModel.screenState.collectAsState().value
-                when(screenState){
-                    ScreenState.Running -> HearingMemoryRunning(viewModel)
-                    ScreenState.Finished -> ResultScreen(
-                        scorePercentage = viewModel.scorePercentage(),
-                        onRestartBtnClick = { viewModel.restart() })
+                RunningOrFinishedRoundScreen(viewModel = viewModel) {
+                    HearingMemoryRunning(viewModel = viewModel)
                 }
             }
         }
@@ -112,8 +87,9 @@ class HearingMemoryScreen : AppCompatActivity() {
     @Composable
     private fun HearingMemoryRunning(viewModel: HearingMemoryViewModel){
         val uiState = viewModel.uiState.collectAsState().value
-        Box(
+        AnswerResultBox(
             modifier = Modifier.fillMaxSize(),
+            viewModel = viewModel,
             contentAlignment = Alignment.Center
         ) {
             Column(
@@ -126,21 +102,21 @@ class HearingMemoryScreen : AppCompatActivity() {
                     fontWeight = FontWeight.Bold
                 )
 
-                if (uiState.showingImages.isEmpty()){
+                if (uiState.showingObjects.isEmpty()){
                     Column(
                         modifier = Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        var showButton by remember(uiState.showingImages.hashCode()) { mutableStateOf(false) }
-                        var showSoundPlayingIndicator by remember(uiState.showingImages.hashCode()) { mutableStateOf(false) }
+                        var showButton by remember(uiState.showingObjects.hashCode()) { mutableStateOf(false) }
+                        var showSoundPlayingIndicator by remember(uiState.showingObjects.hashCode()) { mutableStateOf(false) }
                         if (!showButton){
                             Button(onClick = { showButton = true }) {
                                 Text(text = stringResource(id = R.string.play_sound_label))
                             }
                         } else {
                             Countdown(onCountdownFinish = {
-                                viewModel.playInitialWords(
+                                viewModel.playInitallObjects (
                                     onFinish = { showSoundPlayingIndicator = false }
                                 )
                                 showSoundPlayingIndicator = true
@@ -163,11 +139,13 @@ class HearingMemoryScreen : AppCompatActivity() {
                     ) {
                         LazyVerticalGrid(
                             columns = GridCells.Adaptive(minSize = 150.dp),
-                            verticalArrangement = Arrangement.Center
+                            verticalArrangement = Arrangement.spacedBy(18.dp),
+                            horizontalArrangement = Arrangement.spacedBy(18.dp)
                         ) {
-                            items(uiState.showingImages){image ->
+                            items(uiState.showingObjects){ obj ->
+                                val drawableName = obj.imgName ?: ""
                                 HearingMemoryCard(
-                                    drawableName = image,
+                                    drawableName = drawableName,
                                     viewModel = viewModel
                                 )
                             }
@@ -175,15 +153,12 @@ class HearingMemoryScreen : AppCompatActivity() {
                     }
                 }
             }
-
-            AnswerResult(viewModel = viewModel)
         }
     }
 
     @Composable
     private fun HearingMemoryCard(drawableName: String, viewModel: HearingMemoryViewModel){
-        val ctx = LocalContext.current
-        val drawableId = ctx.resources.getIdentifier(drawableName, "drawable", ctx.packageName)
+        val drawableId = viewModel.getDrawableId(drawableName)
         var isMarkedAsCorrect by remember(drawableName) { mutableStateOf(false) }
         val cardColors = if (isMarkedAsCorrect) cardColors(
             disabledContainerColor = Color.Green.copy(alpha = 0.5f),
@@ -191,9 +166,7 @@ class HearingMemoryScreen : AppCompatActivity() {
         val enabled = viewModel.buttonsEnabled.collectAsState().value
 
         Card(
-            modifier = Modifier
-                .padding(9.dp)
-                .aspectRatio(1f),
+            modifier = Modifier.aspectRatio(1f),
             onClick = {
                 isMarkedAsCorrect = viewModel.onCardClick(drawableName)
             },

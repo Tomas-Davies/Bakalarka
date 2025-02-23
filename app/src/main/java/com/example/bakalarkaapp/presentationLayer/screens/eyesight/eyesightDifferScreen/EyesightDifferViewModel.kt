@@ -3,19 +3,18 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiff
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.dataLayer.repositories.Round
-import com.example.bakalarkaapp.presentationLayer.BaseViewModel
+import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.dataLayer.models.Round
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class EyesightDifferUiState(
-    val imageId: String,
+    val imageName: String,
     val answers: List<String>,
     val correctAnswers: List<String>,
     val question: String,
@@ -23,7 +22,9 @@ data class EyesightDifferUiState(
     val count: Int
 )
 
-class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseViewModel(app) {
+class EyesightDifferViewModel(
+    app: LogoApp, private val levelIndex: Int
+) : ValidatableViewModel(app){
     init {
         roundIdx = levelIndex
     }
@@ -41,7 +42,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseV
 
     private val _uiState = MutableStateFlow(
         EyesightDifferUiState(
-            imageId = currentItem.background,
+            imageName = currentItem.imageName,
             answers = getPossibleAnswers(),
             correctAnswers = getCorrectAnswers(),
             question = getQuestion(),
@@ -49,31 +50,17 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseV
             count = countFromLevel
         )
     )
-    val uiState: StateFlow<EyesightDifferUiState> = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
-    fun validateAnswer(answer: String): Boolean {
-        if (answer in getCorrectAnswers()) {
-            playResultSound(result = true)
-            viewModelScope.launch {
-                score++
-                _buttonsEnabled.emit(false)
-                showMessage(result = true)
-                delay(1500)
-            }
-            return true
-        } else {
-            scoreDesc()
-            playResultSound(result = false)
-            showMessage(result = false)
-            return false
-        }
+    override fun validationCond(answer: IValidationAnswer): Boolean {
+        if (answer is IValidationAnswer.StringAnswer) return (answer.value in getCorrectAnswers())
+        throw IllegalArgumentException("$this expects answer of type String")
     }
 
-    fun onButonClick(answer: String){
-        if (validateAnswer(answer)){
-            nextQuestion()
-        }
+    override fun newData() {
+        nextQuestion()
     }
+    override suspend fun afterNewData() {}
 
     override fun doRestart() {
         questionIdx = 0
@@ -115,7 +102,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseV
             completeUiStateUpdate()
             return true
         } else {
-            _screenState.value = ScreenState.Finished
+            _screenState.value = ScreenState.FINISHED
             return false
         }
     }
@@ -123,7 +110,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseV
     private fun completeUiStateUpdate() {
         _uiState.update { currentState ->
             currentState.copy(
-                imageId = currentItem.background,
+                imageName = currentItem.imageName,
                 answers = getPossibleAnswers(),
                 correctAnswers = getCorrectAnswers(),
                 question = getQuestion(),
@@ -134,7 +121,7 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseV
 
     private fun getPossibleAnswers(): MutableList<String> {
         var answerOptions: MutableList<String> = mutableListOf()
-        for (pair in currentItem.rounds) {
+        currentItem.rounds.forEach { pair ->
             answerOptions.addAll(pair.answers)
         }
         if (answerOptions.size > 1) answerOptions = answerOptions.distinct().toMutableList()
@@ -154,9 +141,9 @@ class EyesightDifferViewModel(app: LogoApp, private val levelIndex: Int) : BaseV
     }
 
     private fun getTotalQuestionsCount() {
-        for (setIdx in data.indices) {
-            for (i in data[setIdx].rounds) {
-                count++
+        data.indices.forEach { setIdx ->
+           data[setIdx].rounds.forEach { _ ->
+               count++
                 if (setIdx >= levelIndex) countFromLevel++
             }
         }

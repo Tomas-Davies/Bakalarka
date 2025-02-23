@@ -1,12 +1,17 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
 
+import android.os.VibrationEffect
+import android.util.Log
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.dataLayer.repositories.SearchItem
-import com.example.bakalarkaapp.presentationLayer.BaseViewModel
+import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.dataLayer.models.SearchItem
+import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +23,7 @@ data class EyesightSearchUiState(
     val items: List<SearchItem>
 )
 
-class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app) {
+class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -28,19 +33,17 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app
     private var currentRound = rounds[roundIdx]
     private var _uiState = MutableStateFlow(
         EyesightSearchUiState(
-            bgImageResource = currentRound.background,
+            bgImageResource = currentRound.imageName,
             items = currentRound.items
         )
     )
     val uiState = _uiState.asStateFlow()
-    private var _foundAll = MutableStateFlow(false)
-    val foundAll = _foundAll.asStateFlow()
     private var _itemsFound = MutableStateFlow(0)
     var itemsFound = _itemsFound.asStateFlow()
     private var clickCounter = 0
     private var foundCatsCounter = 0
-    private var _missIndicatorPos = MutableStateFlow(Offset(0f,0f))
-    var missIndicatorPos = _missIndicatorPos.asStateFlow()
+    private var _missIndicatorOffset = MutableStateFlow(Offset(0f,0f))
+    var missIndicatorOffset = _missIndicatorOffset.asStateFlow()
     private var _showMissIndicator = MutableStateFlow(false)
     val showMissIndicator = _showMissIndicator.asStateFlow()
 
@@ -49,23 +52,24 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app
         count = rounds.size - levelIndex
     }
 
+    override fun validationCond(answer: IValidationAnswer): Boolean {
+        return itemsFound.value == currentRound.items.size
+    }
+    override fun playOnCorrectSound() {}
+    override fun playOnWrongSound() {}
+    override fun scoreDesc() {}
+    override fun messageShowWrong() {}
+    override suspend fun afterNewData() {
+        _itemsFound.emit(0)
+    }
+
     fun onItemClick() {
+        playResultSound(true)
+        vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         clickCounter++
         foundCatsCounter++
         _itemsFound.value++
-        if (itemsFound.value == currentRound.items.size) {
-            viewModelScope.launch {
-                _foundAll.emit(true)
-                score++
-                delay(2000)
-                _foundAll.emit(false)
-                delay(500)
-                if (nextRound()) {
-                    updateData()
-                }
-                _itemsFound.value = 0
-            }
-        }
+        validateAnswer(IValidationAnswer.BlankAnswer)
     }
 
     fun missClick(){
@@ -80,7 +84,7 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app
         currentRound = rounds[roundIdx]
         _uiState.update { state ->
             state.copy(
-                bgImageResource = currentRound.background,
+                bgImageResource = currentRound.imageName,
                 items = currentRound.items
             )
         }
@@ -92,10 +96,48 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : BaseViewModel(app
 
     fun moveMissIndicator(offset: Offset){
         viewModelScope.launch {
-            _missIndicatorPos.emit(offset)
+            _missIndicatorOffset.emit(offset)
             _showMissIndicator.emit(true)
             delay(500)
             _showMissIndicator.emit(false)
+        }
+    }
+
+    data class OverlayStats(val xInImage: Float, val yInImage: Float, val width: Float, val height: Float)
+    fun imgPercToSize(item: SearchItem, imgSize: Size, imgOffset: Offset): OverlayStats {
+        val x = (item.xPerc / 100f) * imgSize.width
+        val y = (item.yPerc / 100f) * imgSize.height
+        val overlayStats = OverlayStats(
+            xInImage = imgOffset.x + x,
+            yInImage = imgOffset.y + y,
+            width = (item.widthPerc / 100f) * imgSize.width,
+            height = (item.heightPerc / 100f) * imgSize.height
+        )
+        return overlayStats
+    }
+
+    fun logClickPercInImage(
+        clickOffset: Offset,
+        imgOffset: Offset,
+        imgContent: ImageBitmap,
+        contentScale: Float
+    ){
+        val offsetInImage = clickOffset - imgOffset
+        val width = imgContent.width * contentScale
+        val height = imgContent.height * contentScale
+        if (offsetInImage.x in 0f..width
+            &&
+            offsetInImage.y in 0f..height
+        ) {
+            val xPercentage =
+                (100 * offsetInImage.x) / width
+            val yPercentage =
+                (100 * offsetInImage.y) / height
+
+            Log.w(
+                "SEARCH_IMAGE_PERC_CORDS",
+                "\n\n\nx = $xPercentage%, y = $yPercentage%\n\n\n"
+            )
         }
     }
 }

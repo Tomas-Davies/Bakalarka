@@ -3,6 +3,7 @@ package com.example.bakalarkaapp.presentationLayer.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -31,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -40,25 +41,24 @@ import com.example.bakalarkaapp.R
 
 @Composable
 fun CategoryButton(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     label: String,
     labelLong: String,
     popUpHeading: String,
     popUpContent: String,
     imgId: Int,
-    onClick: () -> Unit,
-    bgColorPrimary: Color,
-    bgColorSecondary: Color,
-    textColor: Color
+    onClick: () -> Unit
 ){
     ElevatedCard(
         shape = RoundedCornerShape(25.dp),
         onClick = { onClick() },
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .border(3.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(25.dp)),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardColors(
             contentColor = CardDefaults.cardColors().contentColor,
-            containerColor = bgColorPrimary,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
             disabledContentColor = CardDefaults.cardColors().disabledContentColor,
             disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
         )
@@ -68,9 +68,7 @@ fun CategoryButton(
             labelLong = labelLong,
             popUpHeading = popUpHeading,
             popUpContent = popUpContent,
-            imgId = imgId,
-            showMoreLabelColor = bgColorSecondary,
-            textColor = textColor
+            imgId = imgId
         )
     }
     Spacer(modifier = Modifier.height(15.dp))
@@ -83,9 +81,7 @@ private fun CardContent(
     labelLong: String,
     popUpHeading: String,
     popUpContent: String,
-    imgId: Int,
-    showMoreLabelColor: Color,
-    textColor: Color
+    imgId: Int
 ){
     var showPopUp by remember { mutableStateOf(false) }
     if (showPopUp){ DetailPopUp(popUpHeading = popUpHeading, popUpBody = popUpContent, onExit = { showPopUp = false }) }
@@ -96,44 +92,40 @@ private fun CardContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
-            modifier = Modifier.weight(3f),
+            modifier = Modifier
+                .weight(3f)
+                .padding(0.dp, 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = labelLong,
-                color = textColor,
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Normal
             )
             Text(
-                color = textColor,
                 text = label,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
-            ShowMoreLabel(
-                bgColor = showMoreLabelColor,
-                textColor = textColor
-            )
+            ShowMoreLabel()
         }
 
-        Column(
-            modifier = Modifier.align(Alignment.Top)
-        ) {
-            IconButton(onClick = { showPopUp = true }) {
+            IconButton(
+                modifier = Modifier.align(Alignment.Top),
+                onClick = { showPopUp = true }
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Info,
                     contentDescription = "button detail info",
-                    tint = textColor
                 )
             }
-        }
 
         Image(
             modifier = Modifier
                 .weight(2f)
-                .scale(0.8f),
+                .scale(1.2f)
+                .sizeIn(maxHeight = 125.dp),
             painter = painterResource(id = imgId),
             contentDescription = "decor image")
     }
@@ -141,25 +133,23 @@ private fun CardContent(
 
 
 @Composable
-fun ShowMoreLabel(bgColor: Color, textColor: Color) {
+fun ShowMoreLabel() {
     Row(
         modifier = Modifier
             .clip(RoundedCornerShape(25.dp))
-            .background(bgColor)
+            .background(MaterialTheme.colorScheme.outline)
             .padding(8.dp, 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = stringResource(id = R.string.label_show),
-            color = textColor,
             style = MaterialTheme.typography.labelMedium
         )
         Icon(
             modifier = Modifier.size(12.dp),
             imageVector = Icons.Filled.PlayArrow,
             contentDescription = "play icon",
-            tint = textColor
         )
     }
 }

@@ -1,12 +1,10 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComparisonScreen
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
@@ -22,90 +20,64 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
-import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
+import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightComparisonScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val levelIdx = intent.getIntExtra("LEVEL_INDEX", 0)
+        val app = application as LogoApp
+        val viewModel: EyesightComparisonViewModel by viewModels {
+            EyesightComparionViewModelFactory(app, levelIdx)
+        }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val levelIdx = intent.getIntExtra("LEVEL_INDEX", 0)
-                    val app = application as LogoApp
-                    val viewModel: EyesightComparisonViewModel by viewModels {
-                        EyesightComparionViewModelFactory(app, levelIdx)
-                    }
-                    val screenState = viewModel.screenState.collectAsState().value
-                    when (screenState) {
-                        is ScreenState.Running -> EyesightComparisonRunning(viewModel)
-                        is ScreenState.Finished -> ResultScreen(
-                            viewModel.scorePercentage(),
-                            onRestartBtnClick = { viewModel.restart() }
-                        )
+                    RunningOrFinishedRoundScreen(viewModel = viewModel) {
+                        EyesightComparisonRunning(viewModel = viewModel)
                     }
                 }
             }
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
     @Composable
     private fun EyesightComparisonRunning(viewModel: EyesightComparisonViewModel) {
-        val ctx = LocalContext.current
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.eyesight_menu_label_1)) },
-                    navigationIcon = {
-                        IconButton(onClick = { (ctx as Activity).finish() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back button"
-                            )
-                        }
-                    }
-                )
-            }
+        ScreenWrapper(
+            headerLabel = stringResource(id = R.string.eyesight_menu_label_1)
         ) {
             val uiState = viewModel.uiState.collectAsState().value
-            Box {
+            AnswerResultBox(viewModel = viewModel) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -125,7 +97,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                         restartTrigger = uiState.restartTrigger
                     )
                     Spacer(modifier = Modifier.height(50.dp))
-                    val imageResId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
+                    val imageResId = viewModel.getDrawableId(uiState.imageName)
                     AnimatedContent(
                         modifier = Modifier
                             .weight(1.5f)
@@ -172,7 +144,9 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 label = stringResource(id = R.string.identical),
                                 bgColor = colorResource(id = R.color.correct),
                                 enabled = enabled,
-                                onClick = { viewModel.validateAnswer(true) }
+                                onClick = {
+                                    viewModel.validateAnswer(IValidationAnswer.BooleanAnswer(true))
+                                }
                             )
                             Spacer(modifier = Modifier.weight(0.3f))
                             CompareButton(
@@ -181,15 +155,13 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 label = stringResource(id = R.string.different),
                                 bgColor = colorResource(id = R.color.incorrect),
                                 enabled = enabled,
-                                onClick = { viewModel.validateAnswer(false) }
+                                onClick = {
+                                    viewModel.validateAnswer(IValidationAnswer.BooleanAnswer(false))
+                                }
                             )
                         }
                     }
                 }
-                AnswerResult(
-                    viewModel = viewModel,
-                    modifier = Modifier.align(Alignment.Center)
-                )
             }
         }
     }
@@ -204,15 +176,16 @@ class EyesightComparisonScreen : AppCompatActivity() {
         enabled: Boolean,
         onClick: () -> Unit
     ) {
+        val cardColors = CardColors(
+            contentColor = CardDefaults.cardColors().contentColor,
+            containerColor = bgColor,
+            disabledContentColor = CardDefaults.cardColors().disabledContentColor,
+            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
+        )
         ElevatedCard(
             modifier = modifier,
             onClick = { onClick() },
-            colors = CardColors(
-                contentColor = CardDefaults.cardColors().contentColor,
-                containerColor = bgColor,
-                disabledContentColor = CardDefaults.cardColors().disabledContentColor,
-                disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
-            ),
+            colors = cardColors,
             enabled = enabled
         ) {
             Column(

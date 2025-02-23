@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDifferScreen
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -19,34 +18,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResult
-import com.example.bakalarkaapp.presentationLayer.components.ResultScreen
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
+import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightDifferScreen: AppCompatActivity() {
@@ -69,38 +61,18 @@ class EyesightDifferScreen: AppCompatActivity() {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun EyesightDifferScreenContent(viewModel: EyesightDifferViewModel){
-        val ctx = LocalContext.current
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.eyesight_menu_label_3)) },
-                    navigationIcon = {
-                        IconButton(onClick = { (ctx as Activity).finish() }) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back button"
-                            )
-                        }
-                    }
-                )
-            }
+        ScreenWrapper(
+            headerLabel = stringResource(id = R.string.eyesight_menu_label_3)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
-                val screenState = viewModel.screenState.collectAsState().value
-                when(screenState){
-                    is ScreenState.Running -> { EyesightDifferRunning(viewModel) }
-                    is ScreenState.Finished -> {
-                        ResultScreen(
-                            scorePercentage = viewModel.scorePercentage(),
-                            onRestartBtnClick = { viewModel.restart() })
-                    }
+                RunningOrFinishedRoundScreen(viewModel = viewModel) {
+                    EyesightDifferRunning(viewModel = viewModel)
                 }
             }
         }
@@ -109,13 +81,12 @@ class EyesightDifferScreen: AppCompatActivity() {
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun EyesightDifferRunning(viewModel: EyesightDifferViewModel){
-        Box {
+        AnswerResultBox(viewModel = viewModel) {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                val ctx = LocalContext.current
                 val uiState = viewModel.uiState.collectAsState().value
-                val imageId = resources.getIdentifier(uiState.imageId, "drawable", ctx.packageName)
+                val imageId = viewModel.getDrawableId(uiState.imageName)
 
                 Column(
                     modifier = Modifier.weight(3f),
@@ -172,9 +143,11 @@ class EyesightDifferScreen: AppCompatActivity() {
                         .weight(1f),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    for (answer in uiState.answers){
+                    uiState.answers.forEach { answer ->
                         Button(
-                            onClick = { viewModel.onButonClick(answer) },
+                            onClick = {
+                                viewModel.validateAnswer(IValidationAnswer.StringAnswer(answer))
+                            },
                             enabled = btnEnabledState
                         ) {
                             Text(text = answer)
@@ -182,11 +155,6 @@ class EyesightDifferScreen: AppCompatActivity() {
                     }
                 }
             }
-            
-            AnswerResult(
-                viewModel = viewModel,
-                modifier = Modifier.align(Alignment.Center)
-            )
         }
     }
 }

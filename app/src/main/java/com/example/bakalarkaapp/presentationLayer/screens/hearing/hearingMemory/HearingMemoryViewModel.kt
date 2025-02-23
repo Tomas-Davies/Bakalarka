@@ -3,8 +3,10 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.presentationLayer.BaseViewModel
+import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.dataLayer.models.RoundContent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,19 +15,20 @@ import kotlinx.coroutines.launch
 
 
 data class HearingMemoryUiState(
-    val showingImages: List<String> = mutableListOf(),
+    val showingObjects: List<RoundContent> = mutableListOf(),
     val round: Int
 )
 
-class HearingMemoryViewModel(private val app: LogoApp) : BaseViewModel(app) {
+class HearingMemoryViewModel(app: LogoApp) : ValidatableViewModel(app) {
     private val repo = app.hearingMemoryRepository
     private val rounds = repo.data
     private var currRound = rounds[roundIdx]
-    private var allWords = currRound.words
-    private var initialWords = getInitialWords()
+    private var allObjects = currRound.objects
+    private var initallObjects = getInitallObjects()
+    private var initiallObjImgNames = getInitiallObJImages()
     private val _uiState = MutableStateFlow(
         HearingMemoryUiState(
-            showingImages = emptyList(),
+            showingObjects = emptyList(),
             round = roundIdx + 1
         )
     )
@@ -36,44 +39,41 @@ class HearingMemoryViewModel(private val app: LogoApp) : BaseViewModel(app) {
         count = rounds.size
     }
 
-    fun playInitialWords(onFinish: () -> Unit) {
-        viewModelScope.launch {
-            initialWords.forEach { word ->
-                val appCtx = app.applicationContext
-                val soundId = appCtx.resources.getIdentifier(word, "raw", appCtx.packageName)
-                playSound(soundId)
-                delay(2500)
-            }
-            onFinish()
-            showAllWords()
-        }
+    override fun validationCond(answer: IValidationAnswer): Boolean {
+       return correctAnswerCount == currRound.toBePlayedCount
     }
 
-    fun validateAnswer(): Boolean {
-        if (correctAnswerCount == currRound.toBePlayedCount) {
-            viewModelScope.launch {
-                _buttonsEnabled.emit(false)
-                showMessage(result = true)
-                delay(1500)
-                if (nextRound()) updateData()
-                _buttonsEnabled.emit(true)
+    override fun playOnCorrectSound() {}
+    override fun playOnWrongSound() {}
+    override fun scoreInc() {}
+    override fun scoreDesc() {}
+    override fun messageShowWrong() {}
+
+    fun playInitallObjects(onFinish: () -> Unit) {
+        viewModelScope.launch {
+            initallObjects.forEach { obj ->
+                val soundName = obj.soundName ?: ""
+                val soundId = getSoundId(soundName)
+                playSound(soundId)
+                delay(2000)
             }
-            return true
-        } else {
-            scoreDesc()
-            showMessage(result = false)
-            playResultSound(result = false)
-            return false
+            onFinish()
+            showallObjects()
         }
     }
 
     fun onCardClick(answer: String): Boolean {
-        if (answer in initialWords) {
+        if (answer in initiallObjImgNames) {
             playResultSound(result = true)
             score++
             correctAnswerCount++
+            validateAnswer(IValidationAnswer.BlankAnswer)
+            return true
         }
-        return validateAnswer()
+        playResultSound(result = false)
+        showMessage(result = false)
+        if (score > 0) score--
+        return false
     }
 
     override fun scorePercentage(): Int {
@@ -85,11 +85,12 @@ class HearingMemoryViewModel(private val app: LogoApp) : BaseViewModel(app) {
     override fun updateData() {
         correctAnswerCount = 0
         currRound = rounds[roundIdx]
-        allWords = currRound.words
-        initialWords = getInitialWords()
+        allObjects = currRound.objects
+        initallObjects = getInitallObjects()
+        initiallObjImgNames = getInitiallObJImages()
         _uiState.update { state ->
             state.copy(
-                showingImages = emptyList(),
+                showingObjects = emptyList(),
                 round = roundIdx + 1
             )
         }
@@ -99,18 +100,24 @@ class HearingMemoryViewModel(private val app: LogoApp) : BaseViewModel(app) {
         updateData()
     }
 
-    private fun showAllWords() {
+    private fun showallObjects() {
         _uiState.update { state ->
             state.copy(
-                showingImages = allWords
+                showingObjects = allObjects
             )
         }
     }
 
-    private fun getInitialWords(): List<String> {
-        val mixed = allWords.shuffled()
+    private fun getInitallObjects(): List<RoundContent> {
+        val mixed = allObjects.shuffled()
         return mixed.subList(0, currRound.toBePlayedCount)
     }
+
+    private fun getInitiallObJImages(): List<String> {
+        return initallObjects.map { obj -> obj.imgName ?: "" }
+    }
+
+
 
 }
 

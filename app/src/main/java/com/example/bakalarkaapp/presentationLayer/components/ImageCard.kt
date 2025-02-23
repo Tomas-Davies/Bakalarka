@@ -1,6 +1,7 @@
 package com.example.bakalarkaapp.presentationLayer.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
@@ -18,12 +19,14 @@ fun ImageCard(
     imageModifier: Modifier = Modifier
 ){
     Card(
-        modifier = modifier.padding(9.dp),
+        modifier = modifier,
         enabled = enabled,
-        onClick = { onClick() }
+        onClick = { onClick() },
     ) {
         Image(
-            modifier = imageModifier.padding(9.dp),
+            modifier = imageModifier
+                .fillMaxSize()
+                .padding(9.dp),
             painter = painterResource(id = drawable),
             contentDescription = ""
         )

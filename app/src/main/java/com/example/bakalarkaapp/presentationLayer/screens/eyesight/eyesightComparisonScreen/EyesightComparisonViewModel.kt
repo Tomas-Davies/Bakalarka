@@ -3,22 +3,24 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.presentationLayer.BaseViewModel
+import com.example.bakalarkaapp.ValidatableViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class EyesightComparisonUiState(
-    val imageId: String,
+    val imageName: String,
     val answer: Boolean,
     val restartTrigger: Int = 0
 )
 
-class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : BaseViewModel(app) {
+class EyesightComparisonViewModel(
+    app: LogoApp, private val levelIndex: Int
+) : ValidatableViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -27,16 +29,22 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
     private var currentItem = data[roundIdx]
     private val _uiState = MutableStateFlow(
         EyesightComparisonUiState(
-            currentItem.background,
+            currentItem.imageName,
             currentItem.isSameShape
         )
     )
-    val uiState: StateFlow<EyesightComparisonUiState> = _uiState.asStateFlow()
+    val uiState = _uiState.asStateFlow()
 
     init {
         count = data.size
     }
 
+    override fun validationCond(answer: IValidationAnswer): Boolean {
+        if (answer is IValidationAnswer.BooleanAnswer){
+            return answer.value == _uiState.value.answer
+        }
+        throw IllegalArgumentException("$this expects answer of type Boolean")
+    }
 
     override fun scorePercentage(): Int {
         val count = count - levelIndex
@@ -52,29 +60,11 @@ class EyesightComparisonViewModel(app: LogoApp, private val levelIndex: Int) : B
         }
     }
 
-    fun validateAnswer(answer: Boolean) {
-        if (answer == _uiState.value.answer){
-            playResultSound(result = true)
-            viewModelScope.launch {
-                score++
-                _buttonsEnabled.emit(false)
-                showMessage(result = true)
-                delay(1500)
-                _buttonsEnabled.value = true
-                if (nextRound()) updateData()
-            }
-        } else {
-            playResultSound(result = false)
-            showMessage(result = false)
-            scoreDesc()
-        }
-    }
-
     public override fun updateData() {
         currentItem = data[roundIdx]
         _uiState.update { currentState ->
             currentState.copy(
-                imageId = currentItem.background,
+                imageName = currentItem.imageName,
                 answer = currentItem.isSameShape,
                 restartTrigger = roundIdx
             )
