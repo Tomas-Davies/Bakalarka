@@ -49,7 +49,7 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewMo
 
 
     init {
-        count = rounds.size - levelIndex
+        count = rounds.size
     }
 
     override fun validationCond(answer: IValidationAnswer): Boolean {

@@ -91,7 +91,7 @@
     <string name="rythm_menu_label_3">Opakování</string>
 
     <string name="rythm_menu_label_long_1">Hledání rýmů</string>
-    <string name="rythm_menu_label_long_2">Vytleskávání slabik</string>
+    <string name="rythm_menu_label_long_2">Rytmické slabikování</string>
     <string name="rythm_menu_label_long_3">Rytmické opakování</string>
 
 <!-- todo description -->
@@ -137,4 +137,7 @@
 
     <string name="hearing_fonematic_label"> Přehraj si nahrávku a poté vyber obrázek</string>
     <string name="round">Úroveň</string>
+
+    <string name="tales_images_description_heading">Přehled obrázků</string>
+    <string name="tales_images_description_label">Klikni na obrázek pro přehrání zvuku</string>
 </resources>

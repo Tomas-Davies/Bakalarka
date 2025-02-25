@@ -53,8 +53,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableViewModel(app) {
         viewModelScope.launch {
             initallObjects.forEach { obj ->
                 val soundName = obj.soundName ?: ""
-                val soundId = getSoundId(soundName)
-                playSound(soundId)
+                playSoundByName(soundName)
                 delay(2000)
             }
             onFinish()

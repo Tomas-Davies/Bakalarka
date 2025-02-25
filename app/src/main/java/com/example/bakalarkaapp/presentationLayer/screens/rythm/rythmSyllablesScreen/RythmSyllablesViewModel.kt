@@ -34,11 +34,11 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewMo
     val uiState = _uiState.asStateFlow()
     private var userSyllabSum: Int = 0
 
-    private val _buttonsStates = MutableStateFlow(List(4){ true })
+    private val _buttonsStates = MutableStateFlow(List(4) { false })
     val buttonStates = _buttonsStates.asStateFlow()
 
     init {
-        count = rounds.size - levelIndex
+        count = rounds.size
     }
 
     override fun validationCond(answer: IValidationAnswer): Boolean {
@@ -48,7 +48,7 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewMo
     override fun updateData() {
         currRound = rounds[roundIdx]
         userSyllabSum = 0
-        _buttonsStates.update { l -> l.map { true } }
+        _buttonsStates.update { l -> l.map { false } }
         _uiState.update { state ->
             state.copy(
                 imgName = currRound.imageName,
@@ -60,22 +60,28 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewMo
 
     fun onItemClick(idx: Int) {
         viewModelScope.launch {
-            // is enabled
-            if (_buttonsStates.value[idx]){
-                if (idx == 0 || !_buttonsStates.value[idx-1]){
+            // not selected -> selected
+            if (!_buttonsStates.value[idx]) {
+                if (idx == 0 || _buttonsStates.value[idx - 1]) {
                     userSyllabSum++
                     vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
                     val newList = _buttonsStates.value.toMutableList()
-                    newList[idx] = false
+                    newList[idx] = true
                     _buttonsStates.emit(newList.toList())
                 }
             }
-            // is not enabled
+            // selected -> not selected
             else {
-                if ((idx == 0 && !_buttonsStates.value[idx+1]) || idx == _buttonsStates.value.size-1 || _buttonsStates.value[idx+1]){
+                if (
+                    (idx == 0 && !_buttonsStates.value[1])
+                                    ||
+                    idx == _buttonsStates.value.size - 1
+                                    ||
+                    (idx != 0 && !_buttonsStates.value[idx + 1])
+                    ) {
                     userSyllabSum--
                     val newList = _buttonsStates.value.toMutableList()
-                    newList[idx] = true
+                    newList[idx] = false
                     _buttonsStates.emit(newList.toList())
                 }
             }

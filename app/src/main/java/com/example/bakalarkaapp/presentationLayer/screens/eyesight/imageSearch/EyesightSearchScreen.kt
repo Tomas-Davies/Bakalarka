@@ -102,7 +102,7 @@ class EyesightSearchScreen : AppCompatActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(0.dp, it.calculateTopPadding(), 0.dp, 0.dp)
+                    .padding(top = it.calculateTopPadding())
             ) {
                 RunningOrFinishedRoundScreen(
                     viewModel = viewModel,

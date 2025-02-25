@@ -28,8 +28,9 @@ object TalesXmlParser {
                         }
                         "image" -> {
                             val imageName = parser.getAttributeValue(null, "imgName") ?: ""
+                            val nounFormSoundName = parser.getAttributeValue(null, "nounFormSoundName") ?: ""
                             val soundName = parser.getAttributeValue(null, "soundName") ?: ""
-                            val image = TaleContent.Image(imageName, soundName)
+                            val image = TaleContent.Image(imageName, nounFormSoundName, soundName)
                             content.add(image)
                         }
                         else -> {}

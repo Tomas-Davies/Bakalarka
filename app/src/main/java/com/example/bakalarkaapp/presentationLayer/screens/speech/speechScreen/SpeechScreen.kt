@@ -9,20 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.BasicAlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -42,6 +35,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.SpeechLetter
+import com.example.bakalarkaapp.presentationLayer.components.CustomAlertDialog
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen
 import com.example.bakalarkaapp.theme.AppTheme
@@ -85,7 +79,7 @@ class SpeechScreen : AppCompatActivity() {
         val ctx = LocalContext.current
 
         LazyVerticalGrid(
-            modifier = Modifier.padding(0.dp, pdVal.calculateTopPadding(), 0.dp, 18.dp),
+            modifier = Modifier.padding(top = pdVal.calculateTopPadding(), bottom = 18.dp),
             columns = GridCells.Adaptive(100.dp)
         ) {
             items(letters) { letter ->
@@ -104,76 +98,28 @@ class SpeechScreen : AppCompatActivity() {
             }
         }
         if (showLetterOptions) {
-            LetterOptions(
-                letterData = letterOptionsData,
+            CustomAlertDialog(
+                heading = stringResource(id = R.string.speech_options_label),
                 onExit = { showLetterOptions = false }
-            )
-        }
-    }
-
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun LetterOptions(
-        letterData: SpeechLetter,
-        onExit: () -> Unit
-    ) {
-        val ctx = LocalContext.current
-        BasicAlertDialog(
-            onDismissRequest = { onExit() }
-        ) {
-            val cardColors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = CardDefaults.cardColors().contentColor,
-                disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
-                disabledContentColor = CardDefaults.cardColors().disabledContentColor
-            )
-            Card(
-                colors = cardColors
             ) {
-                Text(
-                    modifier = Modifier
-                        .padding(9.dp)
-                        .align(Alignment.CenterHorizontally),
-                    text = stringResource(id = R.string.speech_options_label),
-                    textAlign = TextAlign.Center,
-                    style = typography.titleLarge
-                )
-                Spacer(modifier = Modifier.height(15.dp))
                 LazyVerticalGrid(
                     modifier = Modifier.weight(1f, fill = false),
                     columns = GridCells.Adaptive(100.dp),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    items(letterData.positions) { pos ->
+                    items(letterOptionsData.positions) { pos ->
                         SpeechButton(
                             onClick = {
-                                onCategoryClicked(ctx, letterData.label, pos.label)
+                                onCategoryClicked(ctx, letterOptionsData.label, pos.label)
                             },
                             text = pos.label
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(9.dp),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Button(
-                        onClick = { onExit() }
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.pop_up_dismiss_label),
-                            style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.Bold
                         )
                     }
                 }
             }
         }
     }
+
 
 
     @Composable
@@ -190,11 +136,13 @@ class SpeechScreen : AppCompatActivity() {
         )
 
         Card(
-            modifier = Modifier.padding(9.dp).border(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = CardDefaults.shape
-            ),
+            modifier = Modifier
+                .padding(9.dp)
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = CardDefaults.shape
+                ),
             onClick = { onClick() },
             colors = cardColors
         ) {

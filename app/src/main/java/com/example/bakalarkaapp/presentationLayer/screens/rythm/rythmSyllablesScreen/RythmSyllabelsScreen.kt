@@ -133,13 +133,13 @@ class RythmSyllabelsScreen : AppCompatActivity() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
 
-            buttonsStates.forEachIndexed { idx, enabled ->
+            buttonsStates.forEachIndexed { idx, selected ->
                 SyllableIndicator(
                     modifier = Modifier.weight(1f),
                     onClick = { },
                     idx = idx,
                     viewModel = viewModel,
-                    enabled = enabled
+                    selected = selected
                 )
             }
         }
@@ -151,11 +151,11 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         onClick: () -> Unit,
         idx: Int,
         viewModel: RythmSyllablesViewModel,
-        enabled: Boolean
+        selected: Boolean
     ) {
 
         val color =
-            if (enabled) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.primary
+            if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
         val buttonColors = ButtonDefaults.buttonColors(
             containerColor = color,
             contentColor = ButtonDefaults.buttonColors().contentColor,
@@ -163,9 +163,9 @@ class RythmSyllabelsScreen : AppCompatActivity() {
             disabledContentColor = ButtonDefaults.buttonColors().disabledContentColor
         )
 
-        val border = if (enabled)
-            BorderStroke(0.dp, MaterialTheme.colorScheme.surfaceDim)
-        else BorderStroke(3.dp, MaterialTheme.colorScheme.surfaceDim)
+        val border = if (selected)
+            BorderStroke(3.dp, MaterialTheme.colorScheme.surfaceDim)
+        else BorderStroke(0.dp, MaterialTheme.colorScheme.surfaceDim)
 
         OutlinedButton(
             modifier = modifier

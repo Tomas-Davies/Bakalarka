@@ -25,6 +25,11 @@ abstract class BaseViewModel(app: LogoApp): ViewModel() {
         }
     }
 
+    fun playSoundByName(name: String){
+        val soundId = getSoundId(name)
+        playSound(soundId)
+    }
+
     private fun getVibrator(): Vibrator {
         val vibrator: Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
