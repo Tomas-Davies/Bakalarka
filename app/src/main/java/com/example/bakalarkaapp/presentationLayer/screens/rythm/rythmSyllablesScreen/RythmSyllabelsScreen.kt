@@ -25,13 +25,13 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
@@ -75,7 +75,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         ScreenWrapper(
             headerLabel = stringResource(id = R.string.rythm_menu_label_2)
         ) {
-            val uiState = viewModel.uiState.collectAsState().value
+            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
             AnswerResultBox(viewModel = viewModel) {
                 Column(
                     modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
@@ -105,7 +105,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                         viewModel = viewModel
                     )
 
-                    val enabled = viewModel.buttonsEnabled.collectAsState().value
+                    val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
                     Box(
                         modifier = Modifier.weight(1f),
                         contentAlignment = Alignment.Center
@@ -114,7 +114,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                             onClick = { viewModel.validateAnswer(IValidationAnswer.BlankAnswer) },
                             enabled = enabled
                         ) {
-                            Text(text = "Hotovo")
+                            Text(text = stringResource(id = R.string.done_btn_label))
                         }
                     }
                 }
@@ -124,7 +124,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
 
     @Composable
     private fun SyllablesRow(modifier: Modifier, viewModel: RythmSyllablesViewModel) {
-        val buttonsStates = viewModel.buttonStates.collectAsState().value
+        val buttonsStates = viewModel.buttonStates.collectAsStateWithLifecycle().value
 
         Row(
             modifier = modifier

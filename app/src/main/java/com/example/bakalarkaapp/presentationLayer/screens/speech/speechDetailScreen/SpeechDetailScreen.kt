@@ -22,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -31,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
@@ -81,7 +81,7 @@ class SpeechDetailScreen: ComponentActivity() {
         pdVal: PaddingValues,
         viewModel: SpeechDetailViewModel
     ){
-        val uiState = viewModel.uiState.collectAsState().value
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         Column(
             modifier = Modifier
                 .fillMaxSize()

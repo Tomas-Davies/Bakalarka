@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
     <round>
-        <roundContent imgName="kovar" soundName="kovar"/>
-        <roundContent imgName="drevar" soundName="drevar"/>
-        <roundContent imgName="pekar" soundName="pekar"/>
+        <roundContent imgName="koza" soundName="koza"/>
+        <roundContent imgName="kosa" soundName="kosa"/>
     </round>
     <round>
-        <roundContent imgName="more" soundName="more"/>
-        <roundContent imgName="kure" soundName="kure"/>
-        <roundContent imgName="orech" soundName="orech"/>
+        <roundContent imgName="fenka" soundName="pes"/>
+        <roundContent imgName="les" soundName="les"/>
     </round>
     <round>
-        <roundContent imgName="mouka" soundName="mouka"/>
-        <roundContent imgName="moucha" soundName="moucha"/>
+        <roundContent imgName="kos" soundName="kos"/>
+        <roundContent imgName="nos" soundName="nos"/>
     </round>
     <round>
-        <roundContent imgName="chleba" soundName="chleba"/>
-        <roundContent imgName="chyba" soundName="chyba"/>
+        <roundContent imgName="rohy" soundName="rohy"/>
+        <roundContent imgName="nohy" soundName="nohy"/>
+    </round>
+    <round>
+        <roundContent imgName="pusa" soundName="pusa"/>
+        <roundContent imgName="husa" soundName="husa"/>
     </round>
 </data>

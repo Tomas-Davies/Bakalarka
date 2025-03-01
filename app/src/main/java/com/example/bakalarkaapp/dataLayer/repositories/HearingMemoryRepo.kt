@@ -11,5 +11,5 @@ class HearingMemoryRepo(ctx: Context):
         R.raw.hearing_memory_data,
         HearingMemoryData::class.java
     ) {
-    override val data = mappedClass?.rounds ?: HearingMemoryData().rounds
+    override val data = mappedClass?.rounds ?: emptyList()
 }

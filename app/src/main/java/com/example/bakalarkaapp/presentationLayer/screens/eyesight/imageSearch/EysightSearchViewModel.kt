@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.SearchItem
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import kotlinx.coroutines.delay
@@ -23,7 +23,7 @@ data class EyesightSearchUiState(
     val items: List<SearchItem>
 )
 
-class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewModel(app) {
+class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -59,8 +59,8 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewMo
     override fun playOnWrongSound() {}
     override fun scoreDesc() {}
     override fun messageShowWrong() {}
-    override suspend fun afterNewData() {
-        _itemsFound.emit(0)
+    override fun afterNewData() {
+        _itemsFound.update { 0 }
     }
 
     fun onItemClick() {
@@ -96,10 +96,10 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewMo
 
     fun moveMissIndicator(offset: Offset){
         viewModelScope.launch {
-            _missIndicatorOffset.emit(offset)
-            _showMissIndicator.emit(true)
+            _missIndicatorOffset.update { offset }
+            _showMissIndicator.update { true }
             delay(500)
-            _showMissIndicator.emit(false)
+            _showMissIndicator.update { false }
         }
     }
 

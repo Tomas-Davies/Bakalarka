@@ -11,5 +11,5 @@ class EyesightComparisonRepo(ctx: Context) :
         R.raw.eyesight_comparison_data,
         ComparisonData::class.java
     ) {
-    override val data = mappedClass?.items ?: ComparisonData().items
+    override val data = mappedClass?.items ?: emptyList()
 }

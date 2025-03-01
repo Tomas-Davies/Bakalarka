@@ -88,18 +88,25 @@
 
     <string name="rythm_menu_label_1">Poličky</string>
     <string name="rythm_menu_label_2">Slabikování</string>
-    <string name="rythm_menu_label_3">Opakování</string>
+    <string name="rythm_menu_label_3">Vytleskávání</string>
 
     <string name="rythm_menu_label_long_1">Hledání rýmů</string>
     <string name="rythm_menu_label_long_2">Rytmické slabikování</string>
     <string name="rythm_menu_label_long_3">Rytmické opakování</string>
 
-<!-- todo description -->
+
     <string name="rythm_pop_up_body_1">
-        TODO
+        Hledání rýmů je technika, která rozvíjí fonologické uvědomění prostřednictvím rozpoznávání
+        podobně znějících koncových částí slov. Když děti vyhledávají rýmy jako
+        „pes-les“ nebo „kostel-postel“, učí se vnímat zvukové shody a rozdíly mezi slovy.
+        Schopnost identifikovat rýmující se slova je důležitým předpokladem pro budoucí čtenářské
+        dovednosti a přispívá k celkovému rozvoji řečových schopností.
     </string>
     <string name="rythm_pop_up_body_2">
-        TODO
+        Určování počtu slabik ve slovech pomáhá lépe chápat, jak se slova skládají
+        ze zvuků. Když se děti učí rozpoznávat slabiky jako „ma-min-ka“ nebo „au-to“,
+        trénují svůj sluch pro jazyk. Tato technika dětem pomáhá lépe mluvit, připravuje je
+        na čtení a psaní, a zlepšuje jejich výslovnost.
     </string>
     <string name="rythm_pop_up_body_3">
         Rytmické opakování zahrnuje reprodukci slyšených rytmických vzorů, například pomocí tleskání
@@ -108,7 +115,8 @@
         napodobovat rytmické struktury, což pozitivně ovlivňuje schopnost naslouchat a
         zpracovávat sluchové podněty.
     </string>
-
+    <string name="rythm_sound_card_label">Rytmus</string>
+    <string name="rythm_repeat_heading">Vytleskej rytmus</string>
     <string name="identical">Stejné</string>
     <string name="different">Rozdílné</string>
     <string name="eyesight_comparison_label">Jsou dané tvary stejné či rozdílné?</string>
@@ -140,4 +148,6 @@
 
     <string name="tales_images_description_heading">Přehled obrázků</string>
     <string name="tales_images_description_label">Klikni na obrázek pro přehrání zvuku</string>
+    <string name="done_btn_label">Hotovo</string>
+
 </resources>

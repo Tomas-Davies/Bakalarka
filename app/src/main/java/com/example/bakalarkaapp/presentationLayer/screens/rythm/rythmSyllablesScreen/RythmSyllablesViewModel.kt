@@ -3,14 +3,12 @@ package com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmSyllablesS
 import android.os.VibrationEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class RythmSyllabUiState(
     val imgName: String,
@@ -18,7 +16,7 @@ data class RythmSyllabUiState(
     val syllabCount: Int
 )
 
-class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewModel(app) {
+class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -59,33 +57,32 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableViewMo
     }
 
     fun onItemClick(idx: Int) {
-        viewModelScope.launch {
-            // not selected -> selected
-            if (!_buttonsStates.value[idx]) {
-                if (idx == 0 || _buttonsStates.value[idx - 1]) {
-                    userSyllabSum++
-                    vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
-                    val newList = _buttonsStates.value.toMutableList()
-                    newList[idx] = true
-                    _buttonsStates.emit(newList.toList())
-                }
-            }
-            // selected -> not selected
-            else {
-                if (
-                    (idx == 0 && !_buttonsStates.value[1])
-                                    ||
-                    idx == _buttonsStates.value.size - 1
-                                    ||
-                    (idx != 0 && !_buttonsStates.value[idx + 1])
-                    ) {
-                    userSyllabSum--
-                    val newList = _buttonsStates.value.toMutableList()
-                    newList[idx] = false
-                    _buttonsStates.emit(newList.toList())
-                }
+        // not selected -> selected
+        if (!_buttonsStates.value[idx]) {
+            if (idx == 0 || _buttonsStates.value[idx - 1]) {
+                userSyllabSum++
+                vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
+                val newList = _buttonsStates.value.toMutableList()
+                newList[idx] = true
+                _buttonsStates.update { newList.toList() }
             }
         }
+        // selected -> not selected
+        else {
+            if (
+                (idx == 0 && !_buttonsStates.value[1])
+                ||
+                idx == _buttonsStates.value.size - 1
+                ||
+                (idx != 0 && !_buttonsStates.value[idx + 1])
+            ) {
+                userSyllabSum--
+                val newList = _buttonsStates.value.toMutableList()
+                newList[idx] = false
+                _buttonsStates.update { newList.toList() }
+            }
+        }
+
     }
 
     override fun scoreInc() {}

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.RoundContent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ data class HearingMemoryUiState(
     val round: Int
 )
 
-class HearingMemoryViewModel(app: LogoApp) : ValidatableViewModel(app) {
+class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     private val repo = app.hearingMemoryRepository
     private val rounds = repo.data
     private var currRound = rounds[roundIdx]

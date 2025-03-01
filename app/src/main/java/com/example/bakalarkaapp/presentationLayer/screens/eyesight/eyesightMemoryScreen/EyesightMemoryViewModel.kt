@@ -2,14 +2,12 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 data class EyesightMemoryUiState(
@@ -17,7 +15,7 @@ data class EyesightMemoryUiState(
     var round: Int
 )
 
-class EyesightMemoryViewModel(app: LogoApp): ValidatableViewModel(app) {
+class EyesightMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     private val memoryRepo = app.eyesightMemoryRepository
     private val data = memoryRepo.data
         .shuffled()
@@ -32,17 +30,17 @@ class EyesightMemoryViewModel(app: LogoApp): ValidatableViewModel(app) {
     init {
         count = data.size
         chooseExtraObject()
-        viewModelScope.launch { _buttonsEnabled.emit(false) }
+        _buttonsEnabled.update { false }
     }
 
     override fun validationCond(answer: IValidationAnswer): Boolean {
-       if (answer is IValidationAnswer.StringAnswer) return answer.value == currentExtraObject
+        if (answer is IValidationAnswer.StringAnswer) return answer.value == currentExtraObject
         throw IllegalArgumentException("$this expects answer of type String")
     }
 
-    override suspend fun afterNewData() {}
+    override fun afterNewData() {}
 
-    private fun chooseExtraObject(){
+    private fun chooseExtraObject() {
         val randomIndex = Random.nextInt(currentObjects.size)
         currentExtraObject = currentObjects[randomIndex]
         currentObjects.removeAt(randomIndex)
@@ -52,38 +50,34 @@ class EyesightMemoryViewModel(app: LogoApp): ValidatableViewModel(app) {
         updateData()
     }
 
-    fun showExtraItem(){
-        viewModelScope.launch {
-            currentObjects.add(currentExtraObject)
-            _buttonsEnabled.emit(true)
-            _uiState.update { state ->
-                state.copy(
-                    objectDrawableIds = currentObjects.shuffled(),
-                )
-            }
+    fun showExtraItem() {
+        currentObjects.add(currentExtraObject)
+        _buttonsEnabled.update { true }
+        _uiState.update { state ->
+            state.copy(
+                objectDrawableIds = currentObjects.shuffled(),
+            )
         }
     }
 
-    override fun updateData(){
-        viewModelScope.launch {
-            currentObjects = data[roundIdx].objects
-                .map { obj -> obj.text ?: "" }
-                .toMutableList()
-            chooseExtraObject()
-            _uiState.update { state ->
-                state.copy(
-                    objectDrawableIds = currentObjects,
-                    round = roundIdx + 1
-                )
-            }
+    override fun updateData() {
+        currentObjects = data[roundIdx].objects
+            .map { obj -> obj.text ?: "" }
+            .toMutableList()
+        chooseExtraObject()
+        _uiState.update { state ->
+            state.copy(
+                objectDrawableIds = currentObjects,
+                round = roundIdx + 1
+            )
         }
     }
 }
 
-class EyesightMemoryViewModelFactory(private val app: LogoApp): ViewModelProvider.Factory {
+class EyesightMemoryViewModelFactory(private val app: LogoApp) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(EyesightMemoryViewModel::class.java)){
+        if (modelClass.isAssignableFrom(EyesightMemoryViewModel::class.java)) {
             return EyesightMemoryViewModel(app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")

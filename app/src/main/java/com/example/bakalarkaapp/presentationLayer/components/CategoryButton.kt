@@ -31,7 +31,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -125,7 +124,7 @@ private fun CardContent(
             modifier = Modifier
                 .weight(2f)
                 .scale(1.2f)
-                .sizeIn(maxHeight = 125.dp),
+                .sizeIn(maxHeight = 115.dp),
             painter = painterResource(id = imgId),
             contentDescription = "decor image")
     }
@@ -136,8 +135,7 @@ private fun CardContent(
 fun ShowMoreLabel() {
     Row(
         modifier = Modifier
-            .clip(RoundedCornerShape(25.dp))
-            .background(MaterialTheme.colorScheme.outline)
+            .background(MaterialTheme.colorScheme.outline, RoundedCornerShape(25.dp))
             .padding(8.dp, 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

@@ -18,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
@@ -78,7 +78,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
 
     @Composable
     private fun EyesightMemoryRunning(viewModel: EyesightMemoryViewModel) {
-        val uiState = viewModel.uiState.collectAsState().value
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
         AnswerResultBox(viewModel = viewModel) {
             Column(
@@ -114,7 +114,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
-                val enabled = viewModel.buttonsEnabled.collectAsState().value
+                val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
                 Box(
                     modifier = Modifier.weight(1f),
                     contentAlignment = Alignment.Center

@@ -18,13 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
@@ -47,7 +47,6 @@ class HearingSynthesisScreen : AppCompatActivity() {
             AppTheme(ThemeType.THEME_HEARING) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-     //               color = MaterialTheme.colorScheme.background
                 ) {
                     HearingSynthScreenContent(viewModel)
                 }
@@ -74,7 +73,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
 
     @Composable
     private fun HearingSynthRunning(viewModel: HearingSynthesisViewModel) {
-        val uiState = viewModel.uiState.collectAsState().value
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         AnswerResultBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
@@ -104,7 +103,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
                     ) {
                         items(uiState.roundObjects) { obj ->
                             val drawableName = obj.imgName ?: ""
-                            val enabled = viewModel.buttonsEnabled.collectAsState().value
+                            val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
                             val drawable = viewModel.getDrawableId(drawableName)
                             ImageCard(
                                 modifier = Modifier.aspectRatio(1f),

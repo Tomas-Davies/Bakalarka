@@ -16,7 +16,7 @@ fun ImageCard(
     enabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    imageModifier: Modifier = Modifier
+    imageModifier: Modifier = Modifier.fillMaxSize()
 ){
     Card(
         modifier = modifier,
@@ -24,9 +24,7 @@ fun ImageCard(
         onClick = { onClick() },
     ) {
         Image(
-            modifier = imageModifier
-                .fillMaxSize()
-                .padding(9.dp),
+            modifier = imageModifier.padding(9.dp),
             painter = painterResource(id = drawable),
             contentDescription = ""
         )

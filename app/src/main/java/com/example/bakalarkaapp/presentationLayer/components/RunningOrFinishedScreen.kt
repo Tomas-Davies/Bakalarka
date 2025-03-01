@@ -1,8 +1,8 @@
 package com.example.bakalarkaapp.presentationLayer.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
@@ -20,7 +20,7 @@ fun RunningOrFinishedRoundScreen(
     },
     runningContent: @Composable () -> Unit,
 ){
-    val screenState = viewModel.screenState.collectAsState().value
+    val screenState = viewModel.screenState.collectAsStateWithLifecycle().value
     when (screenState) {
         ScreenState.RUNNING -> runningContent()
         ScreenState.FINISHED -> onFinish()

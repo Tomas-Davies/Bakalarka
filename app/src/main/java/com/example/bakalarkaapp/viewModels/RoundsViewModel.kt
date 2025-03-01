@@ -71,17 +71,15 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 
     fun playResultSound(result: Boolean) {
-        viewModelScope.launch {
-            if (result) {
-                playSound(R.raw.correct_answer)
-            } else {
-                playSound(R.raw.wrong_answer)
-            }
+        if (result) {
+            playSound(R.raw.correct_answer)
+        } else {
+            playSound(R.raw.wrong_answer)
         }
     }
 
     fun enableButtons() {
-        viewModelScope.launch { _buttonsEnabled.emit(true) }
+        _buttonsEnabled.update { true }
     }
 
     protected open fun scoreInc() {
@@ -89,7 +87,7 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 
     protected open fun scoreDesc() {
-        if (score > 0) score--
+        if (score >= 0) score--
     }
 
     open fun scorePercentage(): Int {

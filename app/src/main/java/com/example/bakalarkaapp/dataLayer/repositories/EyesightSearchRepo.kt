@@ -11,5 +11,5 @@ class EyesightSearchRepo(ctx: Context):
         R.raw.eyesight_search_data,
         SearchData::class.java
     ) {
-    override val data = mappedClass?.rounds ?: SearchData().rounds
+    override val data = mappedClass?.rounds ?: emptyList()
 }

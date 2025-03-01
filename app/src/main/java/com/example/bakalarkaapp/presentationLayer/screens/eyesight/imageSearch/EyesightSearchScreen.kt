@@ -27,7 +27,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
@@ -57,6 +56,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
@@ -116,7 +116,7 @@ class EyesightSearchScreen : AppCompatActivity() {
 
     @Composable
     fun EyesightImageSearchRunning(viewModel: EyesightSearchViewModel) {
-        val uiState = viewModel.uiState.collectAsState().value
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         val imgId = viewModel.getDrawableId(uiState.bgImageResource)
         var imgWidth by remember { mutableFloatStateOf(0f) }
         var imgHeight by remember { mutableFloatStateOf(0f) }
@@ -153,8 +153,8 @@ class EyesightSearchScreen : AppCompatActivity() {
                     )
                 }
             }
-            val showMissIndicator = viewModel.showMissIndicator.collectAsState().value
-            val missIndicatorOffset = viewModel.missIndicatorOffset.collectAsState().value
+            val showMissIndicator = viewModel.showMissIndicator.collectAsStateWithLifecycle().value
+            val missIndicatorOffset = viewModel.missIndicatorOffset.collectAsStateWithLifecycle().value
 
             MissIndicator(
                 offset = missIndicatorOffset,
@@ -166,7 +166,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                     .align(Alignment.BottomCenter)
                     .padding(10.dp)
             ) {
-                val found = viewModel.itemsFound.collectAsState().value
+                val found = viewModel.itemsFound.collectAsStateWithLifecycle().value
                 Text(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background) // todo change

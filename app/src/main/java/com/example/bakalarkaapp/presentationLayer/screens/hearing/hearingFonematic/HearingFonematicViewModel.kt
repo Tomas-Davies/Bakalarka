@@ -2,22 +2,20 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonema
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.RoundContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class HearingFonematicUiState(
     val objects: List<RoundContent>,
     val playedObject: RoundContent
 )
 
-class HearingFonematicViewModel(app: LogoApp) : ValidatableViewModel(app) {
+class HearingFonematicViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     private val repo = app.hearingFonematicRepository
     private val rounds = repo.data.shuffled().sortedBy { round -> round.objects.size }
     private var currentRound = rounds[roundIdx]
@@ -32,7 +30,7 @@ class HearingFonematicViewModel(app: LogoApp) : ValidatableViewModel(app) {
 
     init {
         count = rounds.count()
-        viewModelScope.launch { _buttonsEnabled.emit(false) }
+        _buttonsEnabled.update { false }
     }
 
     override fun validationCond(answer: IValidationAnswer): Boolean {
@@ -40,10 +38,10 @@ class HearingFonematicViewModel(app: LogoApp) : ValidatableViewModel(app) {
         throw IllegalArgumentException("$this expects answer of type String")
     }
 
-    override suspend fun beforeNewData() {
-        _buttonsEnabled.emit(false)
+    override fun beforeNewData() {
+        _buttonsEnabled.update { false }
     }
-    override suspend fun afterNewData() {}
+    override fun afterNewData() {}
 
     override fun updateData() {
         currentRound = rounds[roundIdx]

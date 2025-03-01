@@ -105,7 +105,8 @@ class TalesScreen : AppCompatActivity() {
             Text(
                 modifier = Modifier.padding(9.dp),
                 text = tale.name,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.SemiBold,
+                minLines = 2
             )
         }
     }

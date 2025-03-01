@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -121,12 +122,11 @@ class LevelsScreen : AppCompatActivity() {
             headerLabel = stringResource(viewModel.headingId)
         ) {
             LazyVerticalGrid(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
+                modifier = Modifier.fillMaxWidth(),
                 columns = GridCells.Adaptive(150.dp),
                 horizontalArrangement = Arrangement.spacedBy(18.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
+                contentPadding = PaddingValues(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
                 itemsIndexed(viewModel.levels) { i, level ->
                     val image = viewModel.getDrawableId("${level}_low")
@@ -184,7 +184,7 @@ class LevelsScreen : AppCompatActivity() {
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.primaryContainer)
                         .padding(0.dp, 10.dp),
-                    text = "${stringResource(id = R.string.eyesight_search_level_info_label)}: ${i + 1}",
+                    text = stringResource(id = R.string.eyesight_search_level_info_label) + ": ${i + 1}",
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center
                 )

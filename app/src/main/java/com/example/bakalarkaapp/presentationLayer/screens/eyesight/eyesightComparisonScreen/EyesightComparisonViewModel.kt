@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +20,7 @@ data class EyesightComparisonUiState(
 
 class EyesightComparisonViewModel(
     app: LogoApp, private val levelIndex: Int
-) : ValidatableViewModel(app) {
+) : ValidatableRoundViewModel(app) {
     init {
         roundIdx = levelIndex
     }

@@ -1,12 +1,12 @@
-package com.example.bakalarkaapp
+package com.example.bakalarkaapp.viewModels
 
 import androidx.lifecycle.viewModelScope
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
-import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.LogoApp
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-abstract class ValidatableViewModel(app: LogoApp): RoundsViewModel(app) {
+abstract class ValidatableRoundViewModel(app: LogoApp): RoundsViewModel(app) {
     fun validateAnswer(answer: IValidationAnswer): Boolean {
         if (validationCond(answer)){
             playOnCorrectSound()
@@ -40,12 +40,12 @@ abstract class ValidatableViewModel(app: LogoApp): RoundsViewModel(app) {
         playResultSound(result = false)
     }
 
-    protected open suspend fun beforeNewData(){
-        _buttonsEnabled.emit(false)
+    protected open fun beforeNewData(){
+        _buttonsEnabled.update { false }
     }
 
-    protected open suspend fun afterNewData(){
-        _buttonsEnabled.emit(true)
+    protected open fun afterNewData(){
+        _buttonsEnabled.update { true }
     }
 
     protected open suspend fun messageShowCorrect(){

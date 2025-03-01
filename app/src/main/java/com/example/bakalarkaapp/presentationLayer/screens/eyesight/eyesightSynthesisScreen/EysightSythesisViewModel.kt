@@ -48,11 +48,11 @@ class EyesightSynthesisViewModel(
     app: LogoApp,
     levelIndex: Int,
     private val appContext: Context
-) : RoundsViewModel(app)
-{
+) : RoundsViewModel(app) {
     init {
         roundIdx = levelIndex
     }
+
     private val rounds = app.eyesightSynthesisRepository.data
     private val bitmaps = imageNamesToBitmaps(rounds)
     private var currImage = bitmaps[roundIdx]
@@ -63,13 +63,17 @@ class EyesightSynthesisViewModel(
     private val _uiState =
         MutableStateFlow(EyesightSynthesisUiState(currImage, pieceCount))
     val uiState = _uiState.asStateFlow()
+
     init {
         count = rounds.size
     }
 
     private fun moveNext() {
         viewModelScope.launch {
-            showMessage(result = true, message = appContext.resources.getString(R.string.message_positive))
+            showMessage(
+                result = true,
+                message = appContext.resources.getString(R.string.message_positive)
+            )
             scoreInc()
             delay(1500)
             updateData()
@@ -100,8 +104,7 @@ class EyesightSynthesisViewModel(
     fun cutImage(
         image: Bitmap,
         pieceCount: Int
-    ): List<ImagePiece>
-    {
+    ): List<ImagePiece> {
         val rects = generateRects(image.width, image.height, pieceCount)
 
         val pieces = rects.map { rect ->
@@ -130,11 +133,10 @@ class EyesightSynthesisViewModel(
         imageWidth: Int,
         imageHeight: Int,
         pieceCount: Int
-    ): List<Rect>
-    {
+    ): List<Rect> {
         val rects = mutableListOf(Rect(0, 0, imageWidth, imageHeight))
 
-        while (rects.size < pieceCount){
+        while (rects.size < pieceCount) {
             val largestPiece = rects.maxByOrNull { piece -> piece.width * piece.height } ?: break
             rects.remove(largestPiece)
             val (rect1, rect2) = splitRectangle(largestPiece)
@@ -152,7 +154,7 @@ class EyesightSynthesisViewModel(
         else splitVerticaly = rect.width > rect.height
         val splitRatio = Random.nextDouble(0.3, 0.7)
 
-        if (splitVerticaly){
+        if (splitVerticaly) {
             val splitAt = (rect.width * splitRatio).toInt()
             return Pair(
                 Rect(rect.x, rect.y, splitAt, rect.height),
@@ -173,8 +175,7 @@ class EyesightSynthesisViewModel(
         contentOffset: Offset,
         contentScale: Float,
         bottomBoxOffset: Offset
-    ): Offset
-    {
+    ): Offset {
         val inContentX = currOffset.x - contentOffset.x
         val inContentY = (bottomBoxOffset.y + currOffset.y) - contentOffset.y
         val scaledTargetX = piece.imageX * contentScale
@@ -203,15 +204,17 @@ class EyesightSynthesisViewModel(
         return dist
     }
 
-    fun onAllPiecesPlaced(){
-        viewModelScope.launch {
-            if (placedPieces == pieceCount){
-                moveNext()
-            }
+    fun onAllPiecesPlaced() {
+        if (placedPieces == pieceCount) {
+            moveNext()
         }
     }
 
-    fun getInitialOffsets(containerWidth: Float, containerHeight: Float, scaledPieces: List<ImagePiece>): MutableList<Offset>{
+    fun getInitialOffsets(
+        containerWidth: Float,
+        containerHeight: Float,
+        scaledPieces: List<ImagePiece>
+    ): MutableList<Offset> {
         val offsets = mutableListOf<Offset>()
         val colCount = findSquare(scaledPieces.size)
         val rowCount = colCount
@@ -244,7 +247,9 @@ class EyesightSynthesisViewModel(
 
     private fun findSquare(num: Int): Int {
         var sq = 1
-        while(sq * sq < num){ sq++ }
+        while (sq * sq < num) {
+            sq++
+        }
         return sq
     }
 
@@ -255,8 +260,7 @@ class EyesightSynthesisViewModelFactory(
     private val app: LogoApp,
     private val levelIndex: Int,
     private val appContext: Context
-) : ViewModelProvider.Factory
-{
+) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSynthesisViewModel::class.java)) {

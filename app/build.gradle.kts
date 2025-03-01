@@ -46,26 +46,15 @@ android {
 }
 
 dependencies {
-
     val composeBom = platform("androidx.compose:compose-bom:2024.02.02")
     implementation(composeBom)
     androidTestImplementation(composeBom)
     implementation("androidx.activity:activity-compose:1.8.2")
-    // Room database
-    val roomVersion = "2.6.1"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    val kspVersion = "2.5.0"
-    ksp("androidx.room:room-compiler:$kspVersion")
     // ViewModel & Flow lifecycles
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
     // Material Design 3
     implementation("androidx.compose.material3:material3")
-    // Android Studio Preview support
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
     // XML to class mapping
     val jacksonVersion = "2.18.0"
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
@@ -75,6 +64,10 @@ dependencies {
     implementation("nl.dionsegijn:konfetti-compose:2.0.4")
     // Animated Drawables
     implementation("com.google.accompanist:accompanist-drawablepainter:0.35.0-alpha")
+    // Amplituda
+    implementation("com.github.lincollincol:Amplituda:2.3.0")
+    // AudioWave
+    implementation("com.github.lincollincol:compose-audiowaveform:1.1.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

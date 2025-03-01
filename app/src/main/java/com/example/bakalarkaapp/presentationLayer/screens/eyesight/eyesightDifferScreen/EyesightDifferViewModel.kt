@@ -2,16 +2,15 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiff
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.Round
 import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+
 
 data class EyesightDifferUiState(
     val imageName: String,
@@ -24,7 +23,7 @@ data class EyesightDifferUiState(
 
 class EyesightDifferViewModel(
     app: LogoApp, private val levelIndex: Int
-) : ValidatableViewModel(app){
+) : ValidatableRoundViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -60,7 +59,8 @@ class EyesightDifferViewModel(
     override fun newData() {
         nextQuestion()
     }
-    override suspend fun afterNewData() {}
+
+    override fun afterNewData() {}
 
     override fun doRestart() {
         questionIdx = 0
@@ -71,14 +71,12 @@ class EyesightDifferViewModel(
 
     private fun nextQuestion() {
         val questions = getQuestions()
-        viewModelScope.launch {
-            if (questionIdx < questions.size - 1) {
-                updateData()
-            } else {
-                nextRound()
-            }
-            _buttonsEnabled.emit(true)
+        if (questionIdx < questions.size - 1) {
+            updateData()
+        } else {
+            nextRound()
         }
+        _buttonsEnabled.update { true }
     }
 
     override fun updateData() {
@@ -142,8 +140,8 @@ class EyesightDifferViewModel(
 
     private fun getTotalQuestionsCount() {
         data.indices.forEach { setIdx ->
-           data[setIdx].rounds.forEach { _ ->
-               count++
+            data[setIdx].rounds.forEach { _ ->
+                count++
                 if (setIdx >= levelIndex) countFromLevel++
             }
         }

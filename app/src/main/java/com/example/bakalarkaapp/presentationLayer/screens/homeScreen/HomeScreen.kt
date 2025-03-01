@@ -30,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -111,6 +110,7 @@ class HomeScreen: AppCompatActivity() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
+
             LazyVerticalGrid(
                 horizontalArrangement = Arrangement.spacedBy(18.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
@@ -152,10 +152,8 @@ class HomeScreen: AppCompatActivity() {
                         imgId = R.drawable.home_tales_btn_img
                     ) }
             }
-
-
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxSize(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -167,10 +165,11 @@ class HomeScreen: AppCompatActivity() {
                 )
                 Image(
                     modifier = Modifier
-                        .scale(2.5f)
-                        .weight(2f),
+                        .weight(3f)
+                        .align(Alignment.Bottom),
                     painter = painterResource(id = R.drawable.home_screen_decor),
                     contentDescription = "decoration",
+                    contentScale = ContentScale.FillWidth
                 )
             }
 

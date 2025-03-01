@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,13 +16,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
@@ -72,8 +73,8 @@ class HearingFonematicScreen : AppCompatActivity() {
 
     @Composable
     private fun HearingFonematicRunning(viewModel: HearingFonematicViewModel) {
-        val uiState = viewModel.uiState.collectAsState().value
-        val enabled = viewModel.buttonsEnabled.collectAsState().value
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+        val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
         val soundName = uiState.playedObject.soundName ?: ""
         val soundId = viewModel.getSoundId(soundName)
 
@@ -84,6 +85,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
+                    modifier = Modifier.weight(0.5f),
                     text = stringResource(id = R.string.hearing_fonematic_label),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
@@ -91,7 +93,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                 )
                 AnimatedContent(
                     modifier = Modifier
-                        .weight(4f)
+                        .weight(3f)
                         .fillMaxWidth(0.7f),
                     targetState = uiState.objects,
                     label = ""
@@ -119,12 +121,17 @@ class HearingFonematicScreen : AppCompatActivity() {
                         }
                     }
                 }
-                PlaySoundButton(
-                    onClick = {
-                        viewModel.playSound(soundId)
-                        viewModel.enableButtons()
-                    }
-                )
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.Center
+                ){
+                    PlaySoundButton(
+                        onClick = {
+                            viewModel.playSound(soundId)
+                            viewModel.enableButtons()
+                        }
+                    )
+                }
             }
         }
     }

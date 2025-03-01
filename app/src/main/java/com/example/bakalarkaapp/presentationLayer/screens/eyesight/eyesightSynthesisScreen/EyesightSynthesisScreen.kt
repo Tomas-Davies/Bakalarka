@@ -21,7 +21,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +43,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
@@ -106,7 +106,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
     @Composable
     private fun EyesightSynthesisScreenRunning(viewModel: EyesightSynthesisViewModel) {
-        val uiState = viewModel.uiState.collectAsState().value
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         var contentScale by remember { mutableFloatStateOf(1f) }
         var contentOffsetInRoot by remember { mutableStateOf(Offset.Zero) }
         var imgWidth by remember { mutableFloatStateOf(0f) }

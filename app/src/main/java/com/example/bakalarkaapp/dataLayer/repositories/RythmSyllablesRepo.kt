@@ -12,5 +12,5 @@ class RythmSyllablesRepo(ctx: Context):
         RythmSyllabData::class.java
     )
 {
-    override val data = mappedClass?.rounds ?: RythmSyllabData().rounds
+    override val data = mappedClass?.rounds ?: emptyList()
 }

@@ -24,7 +24,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.R
@@ -86,7 +86,7 @@ class HearingMemoryScreen : AppCompatActivity() {
 
     @Composable
     private fun HearingMemoryRunning(viewModel: HearingMemoryViewModel){
-        val uiState = viewModel.uiState.collectAsState().value
+        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
         AnswerResultBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
@@ -163,7 +163,7 @@ class HearingMemoryScreen : AppCompatActivity() {
         val cardColors = if (isMarkedAsCorrect) cardColors(
             disabledContainerColor = Color.Green.copy(alpha = 0.5f),
         ) else cardColors()
-        val enabled = viewModel.buttonsEnabled.collectAsState().value
+        val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
 
         Card(
             modifier = Modifier.aspectRatio(1f),

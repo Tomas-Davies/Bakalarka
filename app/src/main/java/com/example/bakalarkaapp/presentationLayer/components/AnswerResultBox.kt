@@ -14,7 +14,6 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +21,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.states.ResultMessageState
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
@@ -46,7 +46,7 @@ fun AnswerResultBox(
 
         content()
 
-        val answerResultState = viewModel.resultMessageState.collectAsState().value
+        val answerResultState = viewModel.resultMessageState.collectAsStateWithLifecycle().value
 
         AnswerResult(
             answerResultState = answerResultState,

@@ -12,7 +12,7 @@ class SpeechRepo(ctx: Context) :
         R.raw.speech_data,
         SpeechData::class.java
     ) {
-    override val data: List<SpeechLetter> = mappedClass?.letters ?: SpeechData().letters
+    override val data: List<SpeechLetter> = mappedClass?.letters ?: emptyList()
 
     fun getWords(letterLabel: String, posLabel: String): List<WordEntry>? {
         val letter = data.find { letter -> letter.label == letterLabel }

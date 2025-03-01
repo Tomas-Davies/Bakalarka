@@ -7,6 +7,8 @@ import com.example.bakalarkaapp.dataLayer.repositories.EyesightSearchRepo
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightSynthesisRepo
 import com.example.bakalarkaapp.dataLayer.repositories.BasicWordsRepo
 import com.example.bakalarkaapp.dataLayer.repositories.HearingMemoryRepo
+import com.example.bakalarkaapp.dataLayer.repositories.RythmRepeatRepo
+import com.example.bakalarkaapp.dataLayer.repositories.RythmShelvesRepo
 import com.example.bakalarkaapp.dataLayer.repositories.RythmSyllablesRepo
 import com.example.bakalarkaapp.dataLayer.repositories.SpeechRepo
 import com.example.bakalarkaapp.dataLayer.repositories.TalesRepo
@@ -22,5 +24,7 @@ class LogoApp: Application() {
     val hearingMemoryRepository by lazy { HearingMemoryRepo(this) }
     val hearingSynthesisRepository by lazy { BasicWordsRepo(this, R.raw.hearing_synthesis_data) }
     val rythmSyllablesRepository by lazy { RythmSyllablesRepo(this) }
+    val rythmShelvesRepository by lazy { RythmShelvesRepo(this) }
+    val rythmRepeatRepository by lazy { RythmRepeatRepo(this) }
     val talesRepository by lazy { TalesRepo(this) }
 }

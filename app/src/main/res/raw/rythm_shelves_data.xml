@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <rhymes>
+            <word imgName="fenka" soundName="pes" />
+            <word imgName="les_2" soundName="les" />
+        </rhymes>
+        <rhymes>
+            <word imgName="kost" soundName="kost" />
+            <word imgName="most" soundName="most" />
+        </rhymes>
+        <rhymes>
+            <word imgName="liska" soundName="liska" />
+            <word imgName="siska" soundName="siska" />
+        </rhymes>
+        <rhymes>
+            <word imgName="drak" soundName="drak" />
+            <word imgName="mrak" soundName="mrak" />
+        </rhymes>
+    </round>
+    <round>
+        <rhymes>
+            <word imgName="kostel" soundName="kostel" />
+            <word imgName="postel" soundName="postel" />
+        </rhymes>
+        <rhymes>
+            <word imgName="bota" soundName="bota" />
+            <word imgName="nota" soundName="nota" />
+        </rhymes>
+        <rhymes>
+            <word imgName="zvon" soundName="zvon" />
+            <word imgName="slon" soundName="slon" />
+        </rhymes>
+        <rhymes>
+            <word imgName="nos" soundName="nos" />
+            <word imgName="kos" soundName="kos" />
+        </rhymes>
+    </round>
+</data>

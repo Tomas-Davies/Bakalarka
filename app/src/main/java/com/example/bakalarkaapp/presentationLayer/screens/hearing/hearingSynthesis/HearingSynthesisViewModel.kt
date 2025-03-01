@@ -2,22 +2,20 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthe
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.ValidatableViewModel
+import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.RoundContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 data class HearingSynthesisUiState(
     val roundObjects: List<RoundContent>,
     val initObject: RoundContent
 )
 
-class HearingSynthesisViewModel(app: LogoApp) : ValidatableViewModel(app) {
+class HearingSynthesisViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     private val repo = app.hearingSynthesisRepository
     private val rounds = repo.data
     private var currentRound = rounds[roundIdx]
@@ -28,26 +26,25 @@ class HearingSynthesisViewModel(app: LogoApp) : ValidatableViewModel(app) {
 
     init {
         count = rounds.size
-        viewModelScope.launch { _buttonsEnabled.emit(false) }
+        _buttonsEnabled.update { false }
     }
 
     override fun validationCond(answer: IValidationAnswer): Boolean {
         if (answer is IValidationAnswer.StringAnswer) return answer.value == spellingObject.imgName
         throw IllegalArgumentException("$this expects answer of type String")
     }
-    override suspend fun afterNewData() {}
+
+    override fun afterNewData() {}
 
     override fun updateData() {
-        viewModelScope.launch {
-            currentRound = rounds[roundIdx]
-            currentObject = currentRound.objects
-            spellingObject = currentObject.random()
-            _uiState.update { state ->
-                state.copy(
-                    roundObjects = currentObject,
-                    initObject = spellingObject
-                )
-            }
+        currentRound = rounds[roundIdx]
+        currentObject = currentRound.objects
+        spellingObject = currentObject.random()
+        _uiState.update { state ->
+            state.copy(
+                roundObjects = currentObject,
+                initObject = spellingObject
+            )
         }
     }
 
