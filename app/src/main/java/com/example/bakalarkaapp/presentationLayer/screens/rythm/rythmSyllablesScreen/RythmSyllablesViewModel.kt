@@ -57,11 +57,11 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
     }
 
     fun onItemClick(idx: Int) {
+        vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         // not selected -> selected
         if (!_buttonsStates.value[idx]) {
             if (idx == 0 || _buttonsStates.value[idx - 1]) {
                 userSyllabSum++
-                vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
                 val newList = _buttonsStates.value.toMutableList()
                 newList[idx] = true
                 _buttonsStates.update { newList.toList() }
@@ -71,10 +71,8 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         else {
             if (
                 (idx == 0 && !_buttonsStates.value[1])
-                ||
-                idx == _buttonsStates.value.size - 1
-                ||
-                (idx != 0 && !_buttonsStates.value[idx + 1])
+                || (idx == _buttonsStates.value.size - 1)
+                || (idx != 0 && !_buttonsStates.value[idx + 1])
             ) {
                 userSyllabSum--
                 val newList = _buttonsStates.value.toMutableList()
@@ -82,7 +80,6 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
                 _buttonsStates.update { newList.toList() }
             }
         }
-
     }
 
     override fun scoreInc() {}

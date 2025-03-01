@@ -10,9 +10,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -36,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
@@ -108,6 +111,15 @@ class HearingMemoryScreen : AppCompatActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Text(
+                            text = stringResource(id = R.string.hearing_memory_label_1),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        
                         var showButton by remember(uiState.showingObjects.hashCode()) { mutableStateOf(false) }
                         var showSoundPlayingIndicator by remember(uiState.showingObjects.hashCode()) { mutableStateOf(false) }
                         if (!showButton){
@@ -131,23 +143,36 @@ class HearingMemoryScreen : AppCompatActivity() {
                                 contentDescription = "animated gif"
                             )
                         }
+                        Spacer(modifier = Modifier.weight(1f))
                     }
                 } else {
-                    Box(
+                    Column(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        LazyVerticalGrid(
-                            columns = GridCells.Adaptive(minSize = 150.dp),
-                            verticalArrangement = Arrangement.spacedBy(18.dp),
-                            horizontalArrangement = Arrangement.spacedBy(18.dp)
-                        ) {
-                            items(uiState.showingObjects){ obj ->
-                                val drawableName = obj.imgName ?: ""
-                                HearingMemoryCard(
-                                    drawableName = drawableName,
-                                    viewModel = viewModel
-                                )
+                        Spacer(modifier = Modifier.height(18.dp))
+                        Text(
+                            text = stringResource(id = R.string.hearing_memory_label_2),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ){
+                            LazyVerticalGrid(
+                                columns = GridCells.Adaptive(minSize = 150.dp),
+                                verticalArrangement = Arrangement.spacedBy(18.dp),
+                                horizontalArrangement = Arrangement.spacedBy(18.dp)
+                            ) {
+                                items(uiState.showingObjects){ obj ->
+                                    val drawableName = obj.imgName ?: ""
+                                    HearingMemoryCard(
+                                        drawableName = drawableName,
+                                        viewModel = viewModel
+                                    )
+                                }
                             }
                         }
                     }

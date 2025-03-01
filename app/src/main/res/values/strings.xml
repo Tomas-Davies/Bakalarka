@@ -115,8 +115,6 @@
         napodobovat rytmické struktury, což pozitivně ovlivňuje schopnost naslouchat a
         zpracovávat sluchové podněty.
     </string>
-    <string name="rythm_sound_card_label">Rytmus</string>
-    <string name="rythm_repeat_heading">Vytleskej rytmus</string>
     <string name="identical">Stejné</string>
     <string name="different">Rozdílné</string>
     <string name="eyesight_comparison_label">Jsou dané tvary stejné či rozdílné?</string>
@@ -145,6 +143,12 @@
 
     <string name="hearing_fonematic_label"> Přehraj si nahrávku a poté vyber obrázek</string>
     <string name="round">Úroveň</string>
+    <string name="hearing_memory_label_1">Zapamatuj si co nejvíce slov</string>
+    <string name="hearing_memory_label_2">Označ slova, která si pamatuješ</string>
+    <string name="rythm_sound_card_label">Rytmus</string>
+    <string name="rythm_syllables_label">Klikni na tolik koleček, kolik má slovo slabik</string>
+    <string name="rythm_shelves_label">Najdi dvojice rýmů</string>
+    <string name="rythm_repeat_heading">Vytleskej rytmus</string>
 
     <string name="tales_images_description_heading">Přehled obrázků</string>
     <string name="tales_images_description_label">Klikni na obrázek pro přehrání zvuku</string>
