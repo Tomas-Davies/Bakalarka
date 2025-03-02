@@ -2,7 +2,6 @@ package com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmSyllablesS
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +40,7 @@ import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 
@@ -49,13 +49,12 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
-        val levelIndex = intent.getIntExtra("LEVEL_INDEX", 0)
-        Log.e("LEVEL INDEX", "INDEX: $levelIndex")
+        val levelIndex = intent.getIntExtra(ImageLevel.TAG, 0)
         val viewModel: RythmSyllablesViewModel by viewModels {
             RythmSyllablesViewModelFactory(app, levelIndex)
         }
         setContent {
-            AppTheme(ThemeType.THEME_RYTHM) {
+            AppTheme(ThemeType.THEME_RYTHM.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -75,7 +74,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     @Composable
     private fun RythmSyllableScreenContent(viewModel: RythmSyllablesViewModel) {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.rythm_menu_label_2)
+            title = stringResource(id = R.string.rythm_menu_label_2)
         ) {
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
             AnswerResultBox(viewModel = viewModel) {

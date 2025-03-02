@@ -1,9 +1,14 @@
 package com.example.bakalarkaapp
 
-object ThemeType {
-    const val THEME_SPEECH = 0
-    const val THEME_EYESIGHT = 1
-    const val THEME_RYTHM = 2
-    const val THEME_HEARING = 3
-    const val THEME_TALES = 4
+enum class ThemeType(val id: Int) {
+    THEME_SPEECH(0),
+    THEME_EYESIGHT(1),
+    THEME_RYTHM(2),
+    THEME_HEARING(3),
+    THEME_TALES(4);
+
+    companion object {
+        const val TAG = "THYME_TYPE"
+    }
+
 }

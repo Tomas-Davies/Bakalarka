@@ -8,8 +8,11 @@ import com.example.bakalarkaapp.dataLayer.repositories.XmlRepository
 
 interface ImageLevel {
     val imageName: String
+    companion object {
+        const val TAG = "LEVEL_INDEX"
+        const val NEXT_CLASS_TAG = "NEXT_ACTIVITY_CLASS"
+    }
 }
-
 
 class LevelsViewModel<T, R: ImageLevel>(
     app: LogoApp,

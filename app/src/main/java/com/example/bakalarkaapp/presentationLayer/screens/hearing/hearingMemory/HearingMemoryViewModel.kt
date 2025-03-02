@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
-import com.example.bakalarkaapp.dataLayer.models.RoundContent
+import com.example.bakalarkaapp.dataLayer.models.WordContent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 
 data class HearingMemoryUiState(
-    val showingObjects: List<RoundContent> = mutableListOf(),
+    val showingObjects: List<WordContent> = mutableListOf(),
     val round: Int
 )
 
@@ -107,7 +107,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         }
     }
 
-    private fun getInitallObjects(): List<RoundContent> {
+    private fun getInitallObjects(): List<WordContent> {
         val mixed = allObjects.shuffled()
         return mixed.subList(0, currRound.toBePlayedCount)
     }

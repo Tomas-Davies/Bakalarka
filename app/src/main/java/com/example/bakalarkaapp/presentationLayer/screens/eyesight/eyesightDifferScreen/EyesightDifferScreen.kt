@@ -39,18 +39,19 @@ import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightDifferScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme(ThemeType.THEME_EYESIGHT) {
+            AppTheme(ThemeType.THEME_EYESIGHT.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val levelIndex = intent.getIntExtra("LEVEL_INDEX", 0)
+                    val levelIndex = intent.getIntExtra(ImageLevel.TAG, 0)
                     val app = application as LogoApp
                     val viewModel: EyesightDifferViewModel by viewModels {
                         EyesightDifferViewModelFactory(app, levelIndex)
@@ -64,7 +65,7 @@ class EyesightDifferScreen: AppCompatActivity() {
     @Composable
     private fun EyesightDifferScreenContent(viewModel: EyesightDifferViewModel){
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.eyesight_menu_label_3)
+            title = stringResource(id = R.string.eyesight_menu_label_3)
         ) {
             Column(
                 modifier = Modifier

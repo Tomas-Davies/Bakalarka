@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.dataLayer.models.RoundContent
+import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class RythmShelvesUiState(
-    val objects: List<RoundContent>,
-    val firstPart: List<RoundContent>,
-    val secondPart: List<RoundContent>,
-    val thirdPart: List<RoundContent>
+    val objects: List<WordContent>,
+    val firstPart: List<WordContent>,
+    val secondPart: List<WordContent>,
+    val thirdPart: List<WordContent>
 )
 
 class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
@@ -120,7 +120,7 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
         updateData()
     }
 
-    private fun getRhymeSet(): List<Pair<RoundContent, RoundContent>> {
+    private fun getRhymeSet(): List<Pair<WordContent, WordContent>> {
         val l = currRound.rhymeSets.map { rythmSet ->
             val randRythm1 = rythmSet.rytmicWords.random()
             var randRythm2 = rythmSet.rytmicWords.random()
@@ -133,8 +133,8 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
         return l
     }
 
-    private fun getAllWords(): List<RoundContent> {
-        val words: MutableList<RoundContent> = mutableListOf()
+    private fun getAllWords(): List<WordContent> {
+        val words: MutableList<WordContent> = mutableListOf()
         currRhymesSet.forEach { rhymePair ->
             words.add(rhymePair.first)
             words.add(rhymePair.second)
@@ -152,7 +152,7 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
         return pair != null
     }
 
-    private fun getThreeParts(list: List<RoundContent>): Triple<List<RoundContent>, List<RoundContent>, List<RoundContent>> {
+    private fun getThreeParts(list: List<WordContent>): Triple<List<WordContent>, List<WordContent>, List<WordContent>> {
         val partLen = list.size / 3
         val remainder = list.size % 3
         val firstPartEndIdx = partLen + if (remainder > 0) 1 else 0

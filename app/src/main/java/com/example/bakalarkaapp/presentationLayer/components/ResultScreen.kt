@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -39,6 +40,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import com.example.bakalarkaapp.R
 
+
+/**
+ * Composable of Result Screen, showing medals, percentage and message.
+ *
+ * @param scorePercentage User score percentage.
+ * @param onRestartBtnClick Gets called when clicked on *restart button*.
+ * @param message Text displayed before the percentage value.
+ */
 @Composable
 fun ResultScreen(
     scorePercentage: Int,

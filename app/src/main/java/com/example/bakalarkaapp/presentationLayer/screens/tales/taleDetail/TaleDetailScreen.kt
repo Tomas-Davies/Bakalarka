@@ -41,7 +41,7 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.Tale
 import com.example.bakalarkaapp.dataLayer.models.TaleContent
-import com.example.bakalarkaapp.presentationLayer.components.CustomAlertDialog
+import com.example.bakalarkaapp.presentationLayer.components.CustomDialogMenu
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesViewModel
@@ -58,7 +58,7 @@ class TaleDetailScreen : AppCompatActivity() {
         val taleIdx = intent.getIntExtra("TALE_INDEX", 0)
         val tale = viewModel.getTaleByIdx(taleIdx)
         setContent {
-            AppTheme(ThemeType.THEME_TALES) {
+            AppTheme(ThemeType.THEME_TALES.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -84,7 +84,7 @@ class TaleDetailScreen : AppCompatActivity() {
         }
 
         ScreenWrapper(
-            headerLabel = tale.name
+            title = tale.name
         ) {
             Column(
                 modifier = Modifier
@@ -125,7 +125,7 @@ class TaleDetailScreen : AppCompatActivity() {
         viewModel: TalesViewModel,
         onExit: () -> Unit
     ) {
-        CustomAlertDialog(
+        CustomDialogMenu(
             heading = stringResource(id = R.string.tales_images_description_heading),
             onExit = { onExit() }
         ) {

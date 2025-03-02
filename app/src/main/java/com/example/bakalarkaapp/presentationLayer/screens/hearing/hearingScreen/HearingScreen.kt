@@ -27,7 +27,7 @@ class HearingScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme(ThemeType.THEME_HEARING) {
+            AppTheme(ThemeType.THEME_HEARING.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -42,7 +42,7 @@ class HearingScreen : AppCompatActivity() {
     private fun HearingScreenContent() {
         val ctx = LocalContext.current
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.category_hearing)
+            title = stringResource(id = R.string.category_hearing)
         ) {
             val buttons = listOf<@Composable () -> Unit>(
                 {

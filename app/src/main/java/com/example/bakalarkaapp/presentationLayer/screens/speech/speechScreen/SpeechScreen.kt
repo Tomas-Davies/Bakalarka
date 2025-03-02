@@ -35,7 +35,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.SpeechLetter
-import com.example.bakalarkaapp.presentationLayer.components.CustomAlertDialog
+import com.example.bakalarkaapp.presentationLayer.components.CustomDialogMenu
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen
 import com.example.bakalarkaapp.theme.AppTheme
@@ -50,7 +50,7 @@ class SpeechScreen : AppCompatActivity() {
             SpeechViewModelFactory(app)
         }
         setContent {
-            AppTheme(ThemeType.THEME_SPEECH) {
+            AppTheme(ThemeType.THEME_SPEECH.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -64,7 +64,7 @@ class SpeechScreen : AppCompatActivity() {
     @Composable
     private fun SpeechScreenContent(viewModel: SpeechViewModel) {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.category_speech)
+            title = stringResource(id = R.string.category_speech)
         ) { pdVal ->
             val letters = viewModel.lettersAndPositions
             SpeechScreenMenu(pdVal, letters)
@@ -98,7 +98,7 @@ class SpeechScreen : AppCompatActivity() {
             }
         }
         if (showLetterOptions) {
-            CustomAlertDialog(
+            CustomDialogMenu(
                 heading = stringResource(id = R.string.speech_options_label),
                 onExit = { showLetterOptions = false }
             ) {

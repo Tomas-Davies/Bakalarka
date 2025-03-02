@@ -52,7 +52,7 @@ class RythmRepeatScreen: AppCompatActivity() {
         }
 
         setContent {
-            AppTheme(ThemeType.THEME_RYTHM) {
+            AppTheme(ThemeType.THEME_RYTHM.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -69,7 +69,7 @@ class RythmRepeatScreen: AppCompatActivity() {
         val currentlyPlaying = viewModel.currentlyPlayngIdx.collectAsStateWithLifecycle().value
 
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.rythm_repeat_heading)
+            title = stringResource(id = R.string.rythm_repeat_heading)
         ){ pdVal ->
 
             LazyVerticalGrid(

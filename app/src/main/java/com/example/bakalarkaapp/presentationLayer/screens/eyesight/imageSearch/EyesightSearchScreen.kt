@@ -63,6 +63,7 @@ import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.utils.image.getContentOffsetInImage
 import com.example.bakalarkaapp.utils.image.getFitContentScaleInImage
@@ -78,12 +79,12 @@ class EyesightSearchScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme(ThemeType.THEME_EYESIGHT) {
+            AppTheme(ThemeType.THEME_EYESIGHT.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val levelIdx = intent.getIntExtra("LEVEL_INDEX", 0)
+                    val levelIdx = intent.getIntExtra(ImageLevel.TAG, 0)
                     val app = application as LogoApp
                     val viewModel: EyesightSearchViewModel by viewModels {
                         EyesightSearchViewModelFactory(app, levelIdx)
@@ -97,7 +98,7 @@ class EyesightSearchScreen : AppCompatActivity() {
     @Composable
     private fun EyesightImageSearchScreenContent(viewModel: EyesightSearchViewModel) {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.eyesight_search_label_1)
+            title = stringResource(id = R.string.eyesight_search_label_1)
         ) {
             Column(
                 modifier = Modifier
@@ -134,7 +135,7 @@ class EyesightSearchScreen : AppCompatActivity() {
             )
 
             uiState.items.forEach { item ->
-                val oStats = viewModel.imgPercToSize(item, imgSize, imgOffset)
+                val oStats = viewModel.getOverlayInfo(item, imgSize, imgOffset)
                 key(item) {
                     ItemOverlay(
                         viewModel = viewModel,

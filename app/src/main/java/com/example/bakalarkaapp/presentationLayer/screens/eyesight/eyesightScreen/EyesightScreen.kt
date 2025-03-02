@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.RepositoryType
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
 import com.example.bakalarkaapp.presentationLayer.components.CategoryMenu
@@ -22,6 +23,7 @@ import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiffe
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -29,7 +31,7 @@ class EyesightScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppTheme(ThemeType.THEME_EYESIGHT) {
+            AppTheme(ThemeType.THEME_EYESIGHT.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -43,7 +45,7 @@ class EyesightScreen : AppCompatActivity() {
     @Composable
     private fun EyesightScreenContent() {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.category_eyesight)
+            title = stringResource(id = R.string.category_eyesight)
         ) {
             val ctx = LocalContext.current
 
@@ -112,27 +114,27 @@ class EyesightScreen : AppCompatActivity() {
         var intent = Intent(ctx, LevelsScreen::class.java)
         when (id) {
             0 -> {
-                intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightComparisonScreen::class.java)
-                intent.putExtra("REPOSITORY_TYPE", "COMPARISON")
+                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightComparisonScreen::class.java)
+                intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_COMPARISON.id)
             }
 
             1 -> {
-                intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightSearchScreen::class.java)
-                intent.putExtra("REPOSITORY_TYPE", "SEARCH")
+                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightSearchScreen::class.java)
+                intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_SEARCH.id)
             }
 
             2 -> {
-                intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightDifferScreen::class.java)
-                intent.putExtra("REPOSITORY_TYPE", "DIFFER")
+                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightDifferScreen::class.java)
+                intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_DIFFER.id)
             }
 
             3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
             4 -> {
-                intent.putExtra("NEXT_ACTIVITY_CLASS", EyesightSynthesisScreen::class.java)
-                intent.putExtra("REPOSITORY_TYPE", "SYNTHESIS")
+                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightSynthesisScreen::class.java)
+                intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_SYNTHESIS.id)
             }
         }
-        intent.putExtra("THEME_TYPE", ThemeType.THEME_EYESIGHT)
+        intent.putExtra(ThemeType.TAG, ThemeType.THEME_EYESIGHT.id)
         ctx.startActivity(intent)
     }
 }

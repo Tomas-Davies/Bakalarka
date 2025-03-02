@@ -13,10 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.RepositoryType
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
 import com.example.bakalarkaapp.presentationLayer.components.CategoryMenu
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmSyllablesScreen.RythmSyllabelsScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmShelvesScreen.RythmShelvesScreen
@@ -28,7 +30,7 @@ class RythmScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AppTheme(ThemeType.THEME_RYTHM) {
+            AppTheme(ThemeType.THEME_RYTHM.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -43,7 +45,7 @@ class RythmScreen : AppCompatActivity() {
     private fun RythmScreenContent() {
         val ctx = LocalContext.current
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.category_rythm)
+            title = stringResource(id = R.string.category_rythm)
         ) {
             val buttons = listOf<@Composable ()->Unit>(
                 {
@@ -91,12 +93,12 @@ class RythmScreen : AppCompatActivity() {
         when (id) {
             1 -> {
                 intent = Intent(ctx, LevelsScreen::class.java)
-                intent.putExtra("NEXT_ACTIVITY_CLASS", RythmSyllabelsScreen::class.java)
-                intent.putExtra("REPOSITORY_TYPE", "SYLLABLES")
+                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, RythmSyllabelsScreen::class.java)
+                intent.putExtra(RepositoryType.TAG, RepositoryType.RYTHM_SYLLABLES.id)
             }
             2 -> intent = Intent(ctx, RythmRepeatScreen::class.java)
         }
-        intent.putExtra("THEME_TYPE", ThemeType.THEME_RYTHM)
+        intent.putExtra(ThemeType.TAG, ThemeType.THEME_RYTHM)
         ctx.startActivity(intent)
     }
 }

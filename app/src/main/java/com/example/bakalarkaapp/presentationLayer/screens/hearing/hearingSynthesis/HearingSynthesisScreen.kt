@@ -44,9 +44,10 @@ class HearingSynthesisScreen : AppCompatActivity() {
             HearingSynthesisViewModelFactory(app)
         }
         setContent {
-            AppTheme(ThemeType.THEME_HEARING) {
+            AppTheme(ThemeType.THEME_HEARING.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     HearingSynthScreenContent(viewModel)
                 }
@@ -57,7 +58,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun HearingSynthScreenContent(viewModel: HearingSynthesisViewModel) {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.hearing_menu_label_3)
+            title = stringResource(id = R.string.hearing_menu_label_3)
         ) {
             Column(
                 modifier = Modifier

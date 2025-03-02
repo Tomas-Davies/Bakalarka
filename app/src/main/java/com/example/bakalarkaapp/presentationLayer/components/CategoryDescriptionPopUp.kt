@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.bakalarkaapp.R
 
 @Composable
-fun DetailPopUp(
+fun CategoryDetailPopUp(
     onExit: () -> Unit,
     popUpHeading: String,
     popUpBody: String

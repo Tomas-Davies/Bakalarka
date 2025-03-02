@@ -3,6 +3,8 @@ package com.example.bakalarkaapp.presentationLayer.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -24,12 +26,12 @@ fun PlaySoundButton(
         modifier = modifier,
         onClick = onClick,
         shape = CircleShape,
-        contentPadding = PaddingValues(20.dp),
+        contentPadding = PaddingValues(15.dp),
         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.speech_500)),
         border = BorderStroke(2.dp, MaterialTheme.colorScheme.primaryContainer)
     ) {
         Image(
-            modifier = Modifier.scale(2f),
+            modifier = Modifier.size(32.dp),
             painter = painterResource(id = R.drawable.sound_on_icon),
             contentDescription = "sound on icon"
         )

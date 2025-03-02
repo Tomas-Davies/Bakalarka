@@ -5,6 +5,9 @@ import com.example.bakalarkaapp.dataLayer.models.Tale
 import com.example.bakalarkaapp.dataLayer.models.TaleContent
 import org.xmlpull.v1.XmlPullParser
 
+/**
+ * Xml parser providing xml parsing functionality for tales_data.xml resource file containing *mixed xml elements*.
+ */
 object TalesXmlParser {
     fun parse(ctx: Context, resId: Int): List<Tale> {
         val parser = ctx.resources.getXml(resId)

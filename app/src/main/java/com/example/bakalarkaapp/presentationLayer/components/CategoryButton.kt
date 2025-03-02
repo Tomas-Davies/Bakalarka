@@ -38,6 +38,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
 
+/**
+ * Composable representing button used in Category Menu.
+ *
+ * @param modifier Modifier to be applied to the layout.
+ * @param label Main label of the button.
+ * @param labelLong Secondary label with longer text.
+ * @param popUpHeading Heading of [CategoryDetailPopUp].
+ * @param popUpContent Content of [CategoryDetailPopUp].
+ * @param imgId Drawable resource ID.
+ * @param onClick Called when this button is clicked
+ */
 @Composable
 fun CategoryButton(
     modifier: Modifier = Modifier,
@@ -83,7 +94,13 @@ private fun CardContent(
     imgId: Int
 ){
     var showPopUp by remember { mutableStateOf(false) }
-    if (showPopUp){ DetailPopUp(popUpHeading = popUpHeading, popUpBody = popUpContent, onExit = { showPopUp = false }) }
+    if (showPopUp){
+        CategoryDetailPopUp(
+            popUpHeading = popUpHeading,
+            popUpBody = popUpContent,
+            onExit = { showPopUp = false }
+        )
+    }
     Row(
         modifier = Modifier
             .fillMaxWidth()

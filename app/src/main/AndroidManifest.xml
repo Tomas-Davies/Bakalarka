@@ -184,11 +184,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-
-
-
-
-
         <activity
             android:name=".presentationLayer.screens.tales.taleDetail.TaleDetailScreen"
             android:screenOrientation="portrait"

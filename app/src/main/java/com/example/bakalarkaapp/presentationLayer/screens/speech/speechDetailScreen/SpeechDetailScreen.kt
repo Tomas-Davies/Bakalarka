@@ -50,7 +50,7 @@ class SpeechDetailScreen: ComponentActivity() {
         }
 
         setContent {
-            AppTheme(ThemeType.THEME_SPEECH) {
+            AppTheme(ThemeType.THEME_SPEECH.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -69,7 +69,7 @@ class SpeechDetailScreen: ComponentActivity() {
     ){
         val category = if (posLabel != "NONE") posLabel else letterLabel
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.category_speech) + " - " + category
+            title = stringResource(id = R.string.category_speech) + " - " + category
         ){pdVal ->
             SpeechDetail(pdVal, viewModel)
         }
@@ -88,8 +88,8 @@ class SpeechDetailScreen: ComponentActivity() {
                 .padding(15.dp, pdVal.calculateTopPadding(), 15.dp, 0.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            val imageId = viewModel.getDrawableId(uiState.currentWord.imgName)
+            val drawableName = uiState.currentWord.imgName ?: ""
+            val drawableId = viewModel.getDrawableId(drawableName)
 
             Column(
                 modifier = Modifier.weight(3f),
@@ -99,14 +99,14 @@ class SpeechDetailScreen: ComponentActivity() {
                         modifier = Modifier
                             .weight(3f)
                             .fillMaxWidth(),
-                        painter = painterResource(id = imageId),
+                        painter = painterResource(id = drawableId),
                         contentDescription = "image"
                     )
                 Text(
                     modifier = Modifier
                         .weight(1f)
                         .wrapContentHeight(),
-                    text = uiState.currentWord.text,
+                    text = uiState.currentWord.text ?: "",
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -138,8 +138,8 @@ class SpeechDetailScreen: ComponentActivity() {
                         contentDescription = "button previous"
                     )
                 }
-
-                val soundId = viewModel.getSoundId(uiState.currentWord.soundName)
+                val soundName = uiState.currentWord.soundName ?: ""
+                val soundId = viewModel.getSoundId(soundName)
 
                 PlaySoundButton(
                     onClick = { viewModel.playSound(soundId) }

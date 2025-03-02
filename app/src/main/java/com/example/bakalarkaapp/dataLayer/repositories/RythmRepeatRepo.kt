@@ -11,5 +11,5 @@ class RythmRepeatRepo(ctx: Context) :
         RythmRepeatData::class.java
     )
 {
-    override val data: List<String> = mappedClass?.soundNames ?: emptyList()
+    override val data = mappedClass?.soundNames ?: emptyList()
 }

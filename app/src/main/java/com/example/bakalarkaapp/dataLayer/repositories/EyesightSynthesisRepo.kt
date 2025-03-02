@@ -11,5 +11,5 @@ class EyesightSynthesisRepo(ctx: Context):
         R.raw.eyesight_synth_data,
         EyesightSynthData::class.java
     ) {
-    override val data: List<EyesightSynthRound> = mappedClass?.rounds ?: emptyList()
+    override val data = mappedClass?.rounds ?: emptyList()
 }

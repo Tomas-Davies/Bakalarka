@@ -59,10 +59,10 @@ class HearingMemoryScreen : AppCompatActivity() {
             HearingMemoryViewModelFactory(app)
         }
         setContent {
-            AppTheme(ThemeType.THEME_HEARING) {
+            AppTheme(ThemeType.THEME_HEARING.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-        //            color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     HearingMemoryScreenContent(viewModel)
                 }
@@ -73,7 +73,7 @@ class HearingMemoryScreen : AppCompatActivity() {
     @Composable
     private fun HearingMemoryScreenContent(viewModel: HearingMemoryViewModel){
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.hearing_menu_label_2)
+            title = stringResource(id = R.string.hearing_menu_label_2)
         ) {
             Column(
                 modifier = Modifier

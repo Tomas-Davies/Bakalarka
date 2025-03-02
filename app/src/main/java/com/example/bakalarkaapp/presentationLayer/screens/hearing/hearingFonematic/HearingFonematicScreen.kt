@@ -37,16 +37,16 @@ import com.example.bakalarkaapp.theme.AppTheme
 class HearingFonematicScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val app = application as LogoApp
+        val viewModel: HearingFonematicViewModel by viewModels {
+            HearingFonematicFactory(app)
+        }
         setContent {
-            AppTheme(ThemeType.THEME_HEARING) {
+            AppTheme(ThemeType.THEME_HEARING.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-       //             color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
-                    val app = application as LogoApp
-                    val viewModel: HearingFonematicViewModel by viewModels {
-                        HearingFonematicFactory(app)
-                    }
                     HearingFonematicScreenContent(viewModel)
                 }
             }
@@ -56,7 +56,7 @@ class HearingFonematicScreen : AppCompatActivity() {
     @Composable
     private fun HearingFonematicScreenContent(viewModel: HearingFonematicViewModel) {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.hearing_menu_label_1)
+            title = stringResource(id = R.string.hearing_menu_label_1)
         ) {
             Column(
                 modifier = Modifier

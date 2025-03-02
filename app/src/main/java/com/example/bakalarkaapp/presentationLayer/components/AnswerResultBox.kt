@@ -32,6 +32,15 @@ import nl.dionsegijn.konfetti.core.emitter.Emitter
 import nl.dionsegijn.konfetti.core.models.Size
 import java.util.concurrent.TimeUnit
 
+
+/**
+ * A wrapper composable that provides *Result feedback* animation.
+ *
+ * @param modifier Modifier to be applied to the layout.
+ * @param viewModel RoundsViewModel providing answerResultState, which controls the animation.
+ * @param contentAlignment Alignment to be applied on the content.
+ * @param content The content of the Box
+ */
 @Composable
 fun AnswerResultBox(
     modifier: Modifier = Modifier,
@@ -48,9 +57,9 @@ fun AnswerResultBox(
 
         val answerResultState = viewModel.resultMessageState.collectAsStateWithLifecycle().value
 
-        AnswerResult(
-            answerResultState = answerResultState,
-            modifier = Modifier.align(Alignment.Center)
+        AnswerResultCard(
+            modifier = Modifier.align(Alignment.Center),
+            answerResultState = answerResultState
         )
 
         val width = with(LocalDensity.current){ maxWidth.toPx() }
@@ -98,10 +107,17 @@ fun AnswerResultBox(
     }
 }
 
-
+/**
+ * A Card displaying the Result
+ *
+ * @param modifier Modifier to be applied to the layout.
+ * @param answerResultState State, which controls the animation.
+ */
 @Composable
-private fun AnswerResult(answerResultState: ResultMessageState, modifier: Modifier = Modifier){
-
+private fun AnswerResultCard(
+    modifier: Modifier = Modifier,
+    answerResultState: ResultMessageState
+){
     AnimatedVisibility(
         modifier = modifier,
         visible = answerResultState.showMessage,
@@ -114,7 +130,7 @@ private fun AnswerResult(answerResultState: ResultMessageState, modifier: Modifi
             chosenColor = Color.Green
             txt = stringResource(id = R.string.correct_label)
         }
-        if (answerResultState.message != "") txt = answerResultState.message
+        if (answerResultState.message.isNotEmpty()) txt = answerResultState.message
 
         ElevatedCard(
             modifier = Modifier.padding(15.dp),

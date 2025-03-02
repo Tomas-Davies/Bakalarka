@@ -4,13 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.bakalarkaapp.viewModels.BaseViewModel
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.dataLayer.models.WordEntry
+import com.example.bakalarkaapp.dataLayer.models.WordContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class SpeechDetailUiState(
-    val currentWord: WordEntry,
+    val currentWord: WordContent,
     val index: Int,
     val isOnFirstWord:Boolean,
     val isOnLastWord:Boolean
@@ -18,10 +18,10 @@ data class SpeechDetailUiState(
 
 class SpeechDetailViewModel(app: LogoApp, letterLabel: String, posLabel: String): BaseViewModel(app) {
     private val repo = app.speechRepository
-    private val words = repo.getWords(letterLabel, posLabel) ?: listOf(WordEntry())
+    private val words = repo.getWords(letterLabel, posLabel) ?: listOf(WordContent())
     private var index = 0
     val count = words.size
-    val word = words[index]
+    private val word = words[index]
     private val _uiState = MutableStateFlow(SpeechDetailUiState(word, index, index == 0, index == words.size-1))
     val uiState = _uiState.asStateFlow()
 

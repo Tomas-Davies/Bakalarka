@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
-import com.example.bakalarkaapp.dataLayer.models.SearchItem
+import com.example.bakalarkaapp.dataLayer.models.SearchItemOverlay
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 data class EyesightSearchUiState(
     val bgImageResource: String,
-    val items: List<SearchItem>
+    val items: List<SearchItemOverlay>
 )
 
 class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundViewModel(app) {
@@ -103,18 +103,20 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         }
     }
 
-    data class OverlayStats(val xInImage: Float, val yInImage: Float, val width: Float, val height: Float)
-    fun imgPercToSize(item: SearchItem, imgSize: Size, imgOffset: Offset): OverlayStats {
+    data class OverlayInfo(val xInImage: Float, val yInImage: Float, val width: Float, val height: Float)
+
+    fun getOverlayInfo(item: SearchItemOverlay, imgSize: Size, imgOffset: Offset): OverlayInfo {
         val x = (item.xPerc / 100f) * imgSize.width
         val y = (item.yPerc / 100f) * imgSize.height
-        val overlayStats = OverlayStats(
+
+        return OverlayInfo(
             xInImage = imgOffset.x + x,
             yInImage = imgOffset.y + y,
             width = (item.widthPerc / 100f) * imgSize.width,
             height = (item.heightPerc / 100f) * imgSize.height
         )
-        return overlayStats
     }
+
 
     fun logClickPercInImage(
         clickOffset: Offset,

@@ -50,6 +50,7 @@ import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.utils.image.getContentOffsetInImage
 import com.example.bakalarkaapp.utils.image.getFitContentScaleInImage
@@ -63,13 +64,13 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
         setContent {
             val app = application as LogoApp
-            val levelIndex = intent.getIntExtra("LEVEL_INDEX", 0)
+            val levelIndex = intent.getIntExtra(ImageLevel.TAG, 0)
 
             val viewModel: EyesightSynthesisViewModel by viewModels {
                 EyesightSynthesisViewModelFactory(app, levelIndex, applicationContext)
             }
 
-            AppTheme(ThemeType.THEME_EYESIGHT) {
+            AppTheme(ThemeType.THEME_EYESIGHT.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -85,7 +86,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     private fun EyesightSynthesisScreenContent(viewModel: EyesightSynthesisViewModel) {
         val ctx = LocalContext.current
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.eyesight_menu_label_5)
+            title = stringResource(id = R.string.eyesight_menu_label_5)
         ) {
             Column(
                 modifier = Modifier
@@ -130,10 +131,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         }
         var initialOffsets by remember(uiState.image.hashCode()) { mutableStateOf(emptyList<Offset>()) }
 
-        LaunchedEffect(
-            imgWidth, imgHeight, scaledPieces, uiState.image
-                .hashCode()
-        ) {
+        LaunchedEffect(imgWidth, imgHeight, scaledPieces, uiState.image.hashCode()) {
             if (imgWidth > 0 && imgHeight > 0 && scaledPieces.isNotEmpty()) {
                 initialOffsets = viewModel.getInitialOffsets(imgWidth, imgHeight, scaledPieces)
             }

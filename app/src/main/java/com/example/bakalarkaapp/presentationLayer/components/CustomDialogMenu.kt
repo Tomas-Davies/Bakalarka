@@ -28,7 +28,7 @@ import com.example.bakalarkaapp.theme.typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomAlertDialog(
+fun CustomDialogMenu(
     heading: String,
     onExit: () -> Unit,
     content: @Composable ColumnScope.() -> Unit

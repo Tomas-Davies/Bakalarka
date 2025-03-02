@@ -33,7 +33,7 @@ class EyesightDifferViewModel(
     private var questionIdx = 0
     private var currentItem = data[roundIdx]
     private var questionNumber = 1
-    private var countFromLevel = 0
+    private var countFromLevelIdx = 0
 
     init {
         getTotalQuestionsCount()
@@ -46,7 +46,7 @@ class EyesightDifferViewModel(
             correctAnswers = getCorrectAnswers(),
             question = getQuestion(),
             questionNumber = questionNumber,
-            count = countFromLevel
+            count = countFromLevelIdx
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -142,13 +142,13 @@ class EyesightDifferViewModel(
         data.indices.forEach { setIdx ->
             data[setIdx].rounds.forEach { _ ->
                 count++
-                if (setIdx >= levelIndex) countFromLevel++
+                if (setIdx >= levelIndex) countFromLevelIdx++
             }
         }
     }
 
     override fun scorePercentage(): Int {
-        return (score * 100) / countFromLevel
+        return (score * 100) / countFromLevelIdx
     }
 }
 

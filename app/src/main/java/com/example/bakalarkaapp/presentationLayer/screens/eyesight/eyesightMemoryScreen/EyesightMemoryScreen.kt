@@ -37,7 +37,7 @@ import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
+import com.example.bakalarkaapp.presentationLayer.components.LinearTimerIndicator
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightMemoryScreen : AppCompatActivity() {
@@ -48,7 +48,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
             EyesightMemoryViewModelFactory(app)
         }
         setContent {
-            AppTheme(ThemeType.THEME_EYESIGHT) {
+            AppTheme(ThemeType.THEME_EYESIGHT.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -62,7 +62,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
     @Composable
     private fun EyesightMemoryScreenContent(viewModel: EyesightMemoryViewModel) {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.eyesight_menu_label_4)
+            title = stringResource(id = R.string.eyesight_menu_label_4)
         ) {
             Column(
                 modifier = Modifier
@@ -97,7 +97,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
 
                 var messageId by remember { mutableIntStateOf(R.string.eyesight_memory_label_1) }
 
-                TimerIndicator(
+                LinearTimerIndicator(
                     msDuration = 15000,
                     onFinish = {
                         viewModel.showExtraItem()

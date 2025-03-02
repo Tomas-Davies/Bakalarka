@@ -33,7 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.dataLayer.models.RoundContent
+import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
@@ -50,7 +50,7 @@ class RythmShelvesScreen : AppCompatActivity() {
             RythmShelvesViewModelFactory(app)
         }
         setContent {
-            AppTheme(ThemeType.THEME_RYTHM) {
+            AppTheme(ThemeType.THEME_RYTHM.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -79,7 +79,7 @@ class RythmShelvesScreen : AppCompatActivity() {
         val btnEnabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
 
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.rythm_menu_label_1)
+            title = stringResource(id = R.string.rythm_menu_label_1)
         ) { pdVal ->
             AnswerResultBox(viewModel = viewModel) {
                 Column(
@@ -190,8 +190,8 @@ class RythmShelvesScreen : AppCompatActivity() {
     @Composable
     private fun ShelveCard(
         modifier: Modifier,
-        obj: RoundContent,
-        objects: List<RoundContent>,
+        obj: WordContent,
+        objects: List<WordContent>,
         viewModel: RythmShelvesViewModel,
         firstClickedIdx: Int,
         secondClickedIdx: Int,

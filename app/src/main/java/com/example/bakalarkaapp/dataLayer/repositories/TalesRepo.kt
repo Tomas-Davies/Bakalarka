@@ -9,8 +9,8 @@ import com.example.bakalarkaapp.utils.xml.TalesXmlParser
 class TalesRepo(val ctx: Context) {
     var tales = try {
         TalesXmlParser.parse(ctx, R.xml.tales_data)
-    } catch(err: Exception){
-        Log.e("TALE PARSING ERROR", err.stackTraceToString())
+    } catch(e: Exception){
+        Log.e("TALE PARSING ERROR", e.stackTraceToString())
         emptyList()
     }
 }

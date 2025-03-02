@@ -47,7 +47,7 @@ class TalesScreen : AppCompatActivity() {
             TalesViewModelFactory(app)
         }
         setContent {
-            AppTheme(ThemeType.THEME_TALES) {
+            AppTheme(ThemeType.THEME_TALES.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -62,7 +62,7 @@ class TalesScreen : AppCompatActivity() {
     private fun TalesScreenContent(viewModel: TalesViewModel) {
         val ctx = LocalContext.current
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.category_tales)
+            title = stringResource(id = R.string.category_tales)
         ) {
             LazyVerticalGrid(
                 modifier = Modifier

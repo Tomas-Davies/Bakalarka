@@ -16,6 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
+/**
+ * Composable displaying a numerical countdown..
+ *
+ * @param from Value from which the countdown starts.
+ * @param onCountdownFinish Gets called when *count* reaches zero.
+ */
 @Composable
 fun Countdown(
     from: Int = 3,
@@ -23,6 +29,7 @@ fun Countdown(
 ) {
     var count by remember { mutableIntStateOf(from) }
     var isRunning by remember { mutableStateOf(true) }
+
     LaunchedEffect(key1 = count, key2 = isRunning) {
         if (isRunning && count > 0) {
             delay(1000)

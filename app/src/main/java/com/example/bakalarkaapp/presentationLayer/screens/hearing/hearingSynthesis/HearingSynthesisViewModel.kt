@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
-import com.example.bakalarkaapp.dataLayer.models.RoundContent
+import com.example.bakalarkaapp.dataLayer.models.WordContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class HearingSynthesisUiState(
-    val roundObjects: List<RoundContent>,
-    val initObject: RoundContent
+    val roundObjects: List<WordContent>,
+    val initObject: WordContent
 )
 
 class HearingSynthesisViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {

@@ -104,31 +104,17 @@ private val TalesDarkColors = darkColorScheme(
 
 @Composable
 fun AppTheme(
-    type: Int = ThemeType.THEME_SPEECH,
+    type: Int = ThemeType.THEME_SPEECH.id,
     content: @Composable () -> Unit
 ) {
     var colors = SpeechDarkColors
 
     when (type) {
-        ThemeType.THEME_SPEECH -> {
-            colors = SpeechDarkColors
-        }
-
-        ThemeType.THEME_EYESIGHT -> {
-            colors = EyesightDarkColors
-        }
-
-        ThemeType.THEME_HEARING -> {
-            colors = HearingDarkColors
-        }
-
-        ThemeType.THEME_RYTHM -> {
-            colors = RythmDarkColors
-        }
-
-        ThemeType.THEME_TALES -> {
-            colors = TalesDarkColors
-        }
+        ThemeType.THEME_SPEECH.id -> colors = SpeechDarkColors
+        ThemeType.THEME_EYESIGHT.id -> colors = EyesightDarkColors
+        ThemeType.THEME_HEARING.id -> colors = HearingDarkColors
+        ThemeType.THEME_RYTHM.id -> colors = RythmDarkColors
+        ThemeType.THEME_TALES.id -> colors = TalesDarkColors
     }
 
     val view = LocalView.current

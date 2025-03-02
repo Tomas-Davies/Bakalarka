@@ -45,20 +45,21 @@ import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.components.TimerIndicator
+import com.example.bakalarkaapp.presentationLayer.components.LinearTimerIndicator
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightComparisonScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val levelIdx = intent.getIntExtra("LEVEL_INDEX", 0)
+        val levelIdx = intent.getIntExtra(ImageLevel.TAG, 0)
         val app = application as LogoApp
         val viewModel: EyesightComparisonViewModel by viewModels {
             EyesightComparionViewModelFactory(app, levelIdx)
         }
         setContent {
-            AppTheme(ThemeType.THEME_EYESIGHT) {
+            AppTheme(ThemeType.THEME_EYESIGHT.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -74,7 +75,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
     @Composable
     private fun EyesightComparisonRunning(viewModel: EyesightComparisonViewModel) {
         ScreenWrapper(
-            headerLabel = stringResource(id = R.string.eyesight_menu_label_1)
+            title = stringResource(id = R.string.eyesight_menu_label_1)
         ) {
             val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
             AnswerResultBox(viewModel = viewModel) {
@@ -86,7 +87,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 ) {
                     val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
 
-                    TimerIndicator(
+                    LinearTimerIndicator(
                         msDuration = 15000,
                         onFinish = {
                             if(enabled){

@@ -1,11 +1,9 @@
 package com.example.bakalarkaapp.presentationLayer.screens.levelsScreen
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,6 +38,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
+import com.example.bakalarkaapp.RepositoryType
+import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.DifferData
 import com.example.bakalarkaapp.dataLayer.models.ComparisonItem
 import com.example.bakalarkaapp.dataLayer.models.DifferItem
@@ -55,13 +55,51 @@ import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.E
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.utils.bundle.serializable
 
-
 class LevelsScreen : AppCompatActivity() {
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val themeType = intent.getIntExtra("THEME_TYPE", 0)
+        val app = application as LogoApp
+        val repoTypeName = intent.getIntExtra(RepositoryType.TAG, 0)
+        val viewModel = when(repoTypeName) {
+            RepositoryType.EYESIGHT_SEARCH.id -> {
+                val repo = app.eyesightSearchRepository
+                val tmpViewModel: LevelsViewModel<SearchData, SearchRound> by viewModels {
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_2)
+                }
+                tmpViewModel
+            }
+            RepositoryType.EYESIGHT_DIFFER.id -> {
+                val repo = app.eyesightDifferRepository
+                val tmpViewModel: LevelsViewModel<DifferData, DifferItem> by viewModels {
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_3)
+                }
+                tmpViewModel
+            }
+            RepositoryType.EYESIGHT_COMPARISON.id -> {
+                val repo = app.eyesightComparisonRepository
+                val tmpViewModel: LevelsViewModel<ComparisonData, ComparisonItem> by viewModels {
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_1)
+                }
+                tmpViewModel
+            }
+            RepositoryType.EYESIGHT_SYNTHESIS.id -> {
+                val repo = app.eyesightSynthesisRepository
+                val tmpViewModel: LevelsViewModel<EyesightSynthData, EyesightSynthRound> by viewModels {
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_5)
+                }
+                tmpViewModel
+            }
+            RepositoryType.RYTHM_SYLLABLES.id -> {
+                val repo = app.rythmSyllablesRepository
+                val tmpViewModel: LevelsViewModel<RythmSyllabData, RythmSyllabRound> by viewModels {
+                    LevelsViewModelFactory(app, repo, R.string.rythm_menu_label_2)
+                }
+                tmpViewModel
+            }
+            else -> throw IllegalArgumentException("Unknown repository type")
+        }
+        val themeType = intent.getIntExtra(ThemeType.TAG, 0)
 
         setContent {
             AppTheme(themeType) {
@@ -69,46 +107,6 @@ class LevelsScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val app = application as LogoApp
-
-                    val viewModel = when(intent.getStringExtra("REPOSITORY_TYPE")) {
-                        "SEARCH" -> {
-                            val repo = app.eyesightSearchRepository
-                            val tmpViewModel: LevelsViewModel<SearchData, SearchRound> by viewModels {
-                                LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_2)
-                            }
-                            tmpViewModel
-                        }
-                        "DIFFER" -> {
-                            val repo = app.eyesightDifferRepository
-                            val tmpViewModel: LevelsViewModel<DifferData, DifferItem> by viewModels {
-                                LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_3)
-                            }
-                            tmpViewModel
-                        }
-                        "COMPARISON" -> {
-                            val repo = app.eyesightComparisonRepository
-                            val tmpViewModel: LevelsViewModel<ComparisonData, ComparisonItem> by viewModels {
-                                LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_1)
-                            }
-                            tmpViewModel
-                        }
-                        "SYNTHESIS" -> {
-                            val repo = app.eyesightSynthesisRepository
-                            val tmpViewModel: LevelsViewModel<EyesightSynthData, EyesightSynthRound> by viewModels {
-                                LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_5)
-                            }
-                            tmpViewModel
-                        }
-                        "SYLLABLES" -> {
-                            val repo = app.rythmSyllablesRepository
-                            val tmpViewModel: LevelsViewModel<RythmSyllabData, RythmSyllabRound> by viewModels {
-                                LevelsViewModelFactory(app, repo, R.string.rythm_menu_label_2)
-                            }
-                            tmpViewModel
-                        }
-                        else -> throw IllegalArgumentException("Unknown repository type")
-                    }
                     LevelsScreenContent(viewModel)
                 }
             }
@@ -119,7 +117,7 @@ class LevelsScreen : AppCompatActivity() {
     @Composable
     fun <T, S: ImageLevel> LevelsScreenContent(viewModel: LevelsViewModel<T, S>) {
         ScreenWrapper(
-            headerLabel = stringResource(viewModel.headingId)
+            title = stringResource(viewModel.headingId)
         ) {
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxWidth(),
@@ -140,12 +138,12 @@ class LevelsScreen : AppCompatActivity() {
     @Composable
     private fun LevelIcon(imageId: Int, i: Int){
         val ctx = LocalContext.current
-        val nextActivityClass = intent.serializable("NEXT_ACTIVITY_CLASS", Class::class.java)
+        val nextActivityClass = intent.serializable(ImageLevel.NEXT_CLASS_TAG, Class::class.java)
 
         ElevatedCard(
             onClick = {
                 val intent = Intent(ctx, nextActivityClass)
-                intent.putExtra("LEVEL_INDEX", i)
+                intent.putExtra(ImageLevel.TAG, i)
                 startActivity(intent)
             },
             colors = CardColors(
