@@ -113,7 +113,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen"
+            android:name=".presentationLayer.screens.eyesight.eyesightSearch.EyesightSearchScreen"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

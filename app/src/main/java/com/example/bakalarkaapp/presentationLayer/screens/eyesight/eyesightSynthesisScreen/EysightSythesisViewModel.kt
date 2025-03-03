@@ -25,9 +25,19 @@ import kotlin.random.Random
 
 data class EyesightSynthesisUiState(
     val image: Bitmap,
-    val pieceCount: Int = 9
+    val pieces: List<ImagePiece>
 )
 
+/**
+ * Holds information about a piece that was cut from image.
+ *
+ * @property bitmap A bitmap piece from the original bitmap.
+ * @property imageX An x-coordinate inside the original bitmap.
+ * @property imageY An y-coordinate iniside the original bitmap.
+ * @property width The width of the piece bitmap.
+ * @property height The height of the piece bitmap.
+ * @property initialOffset
+ */
 data class ImagePiece(
     val bitmap: Bitmap,
     var imageX: Int,
@@ -61,7 +71,7 @@ class EyesightSynthesisViewModel(
     private val threshold = 200
     private var placedPieces = 0
     private val _uiState =
-        MutableStateFlow(EyesightSynthesisUiState(currImage, pieceCount))
+        MutableStateFlow(EyesightSynthesisUiState(currImage, cutImage(currImage, pieceCount)))
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -93,7 +103,7 @@ class EyesightSynthesisViewModel(
         _uiState.update { currentState ->
             currentState.copy(
                 image = currImage,
-                pieceCount = pieceCount
+                pieces = cutImage(currImage, pieceCount)
             )
         }
     }
@@ -101,6 +111,13 @@ class EyesightSynthesisViewModel(
 
     //                                PUZZLE LOGIKA
 
+    /**
+     * This function will generate Rectangular pieces from given bitmap.
+     *
+     * @param image The image that is going to be cut to pieces.
+     * @param pieceCount The count of pieces that are going to be cut out of the image.
+     * @return a list of [ImagePiece], holding data about individual image pieces.
+     */
     fun cutImage(
         image: Bitmap,
         pieceCount: Int

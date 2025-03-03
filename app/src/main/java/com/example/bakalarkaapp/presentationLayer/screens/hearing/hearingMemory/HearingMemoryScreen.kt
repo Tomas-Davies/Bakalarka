@@ -89,7 +89,7 @@ class HearingMemoryScreen : AppCompatActivity() {
 
     @Composable
     private fun HearingMemoryRunning(viewModel: HearingMemoryViewModel){
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         AnswerResultBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
@@ -120,8 +120,8 @@ class HearingMemoryScreen : AppCompatActivity() {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         
-                        var showButton by remember(uiState.showingObjects.hashCode()) { mutableStateOf(false) }
-                        var showSoundPlayingIndicator by remember(uiState.showingObjects.hashCode()) { mutableStateOf(false) }
+                        var showButton by remember(uiState.showingObjects) { mutableStateOf(false) }
+                        var showSoundPlayingIndicator by remember(uiState.showingObjects) { mutableStateOf(false) }
                         if (!showButton){
                             Button(onClick = { showButton = true }) {
                                 Text(text = stringResource(id = R.string.play_sound_label))
@@ -188,7 +188,7 @@ class HearingMemoryScreen : AppCompatActivity() {
         val cardColors = if (isMarkedAsCorrect) cardColors(
             disabledContainerColor = Color.Green.copy(alpha = 0.5f),
         ) else cardColors()
-        val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
+        val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
         Card(
             modifier = Modifier.aspectRatio(1f),

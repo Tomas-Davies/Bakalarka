@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
+package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSearch
 
 import android.os.VibrationEffect
 import android.util.Log
@@ -63,7 +63,7 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         _itemsFound.update { 0 }
     }
 
-    fun onItemClick() {
+    fun onOverlayClick() {
         playResultSound(true)
         vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         clickCounter++
@@ -103,21 +103,37 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         }
     }
 
-    data class OverlayInfo(val xInImage: Float, val yInImage: Float, val width: Float, val height: Float)
+    data class OverlayInfo(
+        val xInImage: Float,
+        val yInImage: Float,
+        val width: Float,
+        val height: Float
+    )
 
-    fun getOverlayInfo(item: SearchItemOverlay, imgSize: Size, imgOffset: Offset): OverlayInfo {
-        val x = (item.xPerc / 100f) * imgSize.width
-        val y = (item.yPerc / 100f) * imgSize.height
+    /**
+     * Calculates the overlay positioning and size based on its percentage values relative to the image.
+     *
+     * @param overlay The overlay item containing percentage-based position and size.
+     * @param imgSize The size of the image on which the overlay will be placed.
+     * @param imgOffset The offset of the image's position on the screen.
+     * @return [OverlayInfo] containing the absolute positioning and size data of the overlay.
+     */
+    fun getOverlayInfo(overlay: SearchItemOverlay, imgSize: Size, imgOffset: Offset): OverlayInfo {
+        val x = (overlay.xPerc / 100f) * imgSize.width
+        val y = (overlay.yPerc / 100f) * imgSize.height
 
         return OverlayInfo(
             xInImage = imgOffset.x + x,
             yInImage = imgOffset.y + y,
-            width = (item.widthPerc / 100f) * imgSize.width,
-            height = (item.heightPerc / 100f) * imgSize.height
+            width = (overlay.widthPerc / 100f) * imgSize.width,
+            height = (overlay.heightPerc / 100f) * imgSize.height
         )
     }
 
-
+    /**
+     * This function is used for logging the percentage values of user clicks inside the Image.
+     * It is used only as a tool when developing new search levels.
+     */
     fun logClickPercInImage(
         clickOffset: Offset,
         imgOffset: Offset,

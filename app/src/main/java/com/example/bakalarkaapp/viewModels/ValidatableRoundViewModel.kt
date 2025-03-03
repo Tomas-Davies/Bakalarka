@@ -56,7 +56,7 @@ abstract class ValidatableRoundViewModel(app: LogoApp): RoundsViewModel(app) {
 
     /**
      * Defines the validation condition for determining if an answer is correct.
-     * Must be implemented by subclasses with game-specific logic.
+     * Must be implemented by subclasses with its specific logic.
      *
      * @param answer The answer to validate.
      * @return true if the answer is correct, false otherwise.

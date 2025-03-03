@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -77,7 +78,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
         ScreenWrapper(
             title = stringResource(id = R.string.eyesight_menu_label_1)
         ) {
-            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             AnswerResultBox(viewModel = viewModel) {
                 Column(
                     modifier = Modifier
@@ -85,7 +86,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                         .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
+                    val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
                     LinearTimerIndicator(
                         msDuration = 15000,

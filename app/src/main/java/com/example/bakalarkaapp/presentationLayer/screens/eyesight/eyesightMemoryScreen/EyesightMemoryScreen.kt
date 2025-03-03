@@ -78,7 +78,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
 
     @Composable
     private fun EyesightMemoryRunning(viewModel: EyesightMemoryViewModel) {
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
         AnswerResultBox(viewModel = viewModel) {
             Column(
@@ -114,7 +114,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
-                val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
+                val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
                 Box(
                     modifier = Modifier.weight(1f),
                     contentAlignment = Alignment.Center

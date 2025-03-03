@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -74,7 +75,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
 
     @Composable
     private fun HearingSynthRunning(viewModel: HearingSynthesisViewModel) {
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         AnswerResultBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
@@ -104,7 +105,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
                     ) {
                         items(uiState.roundObjects) { obj ->
                             val drawableName = obj.imgName ?: ""
-                            val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
+                            val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
                             val drawable = viewModel.getDrawableId(drawableName)
                             ImageCard(
                                 modifier = Modifier.aspectRatio(1f),

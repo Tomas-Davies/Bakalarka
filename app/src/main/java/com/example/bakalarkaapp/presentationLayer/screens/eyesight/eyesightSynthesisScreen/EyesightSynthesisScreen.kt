@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -107,37 +108,31 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
     @Composable
     private fun EyesightSynthesisScreenRunning(viewModel: EyesightSynthesisViewModel) {
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         var contentScale by remember { mutableFloatStateOf(1f) }
         var contentOffsetInRoot by remember { mutableStateOf(Offset.Zero) }
         var imgWidth by remember { mutableFloatStateOf(0f) }
         var imgHeight by remember { mutableFloatStateOf(0f) }
-        val pieces by remember(uiState.image.hashCode()) {
-            mutableStateOf(
-                viewModel.cutImage(
-                    uiState.image,
-                    uiState.pieceCount
-                )
-            )
-        }
-        val scaledPieces = remember(uiState.image.hashCode(), pieces, contentScale) {
-            pieces.map { piece ->
-                piece.copy(
-                    width = (piece.width.toFloat() * contentScale).toInt(),
-                    height = (piece.height.toFloat() * contentScale).toInt(),
-                    bitmap = piece.bitmap
-                )
+        val scaledPieces by remember {
+            derivedStateOf {
+                uiState.pieces.map { piece ->
+                    piece.copy(
+                        width = (piece.width.toFloat() * contentScale).toInt(),
+                        height = (piece.height.toFloat() * contentScale).toInt(),
+                        bitmap = piece.bitmap
+                    )
+                }
             }
         }
-        var initialOffsets by remember(uiState.image.hashCode()) { mutableStateOf(emptyList<Offset>()) }
+        var initialOffsets by remember(uiState) { mutableStateOf(emptyList<Offset>()) }
 
-        LaunchedEffect(imgWidth, imgHeight, scaledPieces, uiState.image.hashCode()) {
+        LaunchedEffect(imgWidth, imgHeight, scaledPieces, uiState) {
             if (imgWidth > 0 && imgHeight > 0 && scaledPieces.isNotEmpty()) {
                 initialOffsets = viewModel.getInitialOffsets(imgWidth, imgHeight, scaledPieces)
             }
         }
 
-        var bottomBoxOffset by remember(uiState.image) { mutableStateOf(Offset.Zero) }
+        var bottomBoxOffset by remember(uiState) { mutableStateOf(Offset.Zero) }
 
         AnswerResultBox(
             modifier = Modifier.fillMaxSize(),
@@ -154,7 +149,8 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                         imgHeight = cords.size.height.toFloat()
                         contentScale = getFitContentScaleInImage(imgWidth, imgHeight, imgContent)
                         val contentSize = getContentSizeInImage(imgContent, contentScale)
-                        val contentOffset = getContentOffsetInImage(contentSize, imgWidth, imgHeight)
+                        val contentOffset =
+                            getContentOffsetInImage(contentSize, imgWidth, imgHeight)
 
                         contentOffsetInRoot = Offset(
                             cords.positionInRoot().x + contentOffset.x,

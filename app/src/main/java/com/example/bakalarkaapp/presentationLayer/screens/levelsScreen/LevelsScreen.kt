@@ -56,7 +56,7 @@ import com.example.bakalarkaapp.dataLayer.models.ComparisonData
 import com.example.bakalarkaapp.dataLayer.models.RythmSyllabData
 import com.example.bakalarkaapp.dataLayer.models.RythmSyllabRound
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
+import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.utils.bundle.getSdkBasedSerializableExtra
 

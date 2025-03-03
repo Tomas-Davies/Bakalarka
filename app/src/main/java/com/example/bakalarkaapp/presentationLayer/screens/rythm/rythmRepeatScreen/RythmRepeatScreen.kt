@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,8 +66,8 @@ class RythmRepeatScreen: AppCompatActivity() {
 
     @Composable
     private fun RythmRepeatScreenContent(viewModel: RythmRepeatViewModel){
-        val rythmResources = viewModel.sounds.collectAsStateWithLifecycle().value
-        val currentlyPlaying = viewModel.currentlyPlayngIdx.collectAsStateWithLifecycle().value
+        val rythmResources by viewModel.sounds.collectAsStateWithLifecycle()
+        val currentlyPlaying by viewModel.currentlyPlayngIdx.collectAsStateWithLifecycle()
 
         ScreenWrapper(
             title = stringResource(id = R.string.rythm_repeat_heading)

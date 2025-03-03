@@ -1,4 +1,4 @@
-package com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch
+package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSearch
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -117,7 +117,7 @@ class EyesightSearchScreen : AppCompatActivity() {
 
     @Composable
     fun EyesightImageSearchRunning(viewModel: EyesightSearchViewModel) {
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         val imgId = viewModel.getDrawableId(uiState.bgImageResource)
         var imgWidth by remember { mutableFloatStateOf(0f) }
         var imgHeight by remember { mutableFloatStateOf(0f) }
@@ -154,8 +154,8 @@ class EyesightSearchScreen : AppCompatActivity() {
                     )
                 }
             }
-            val showMissIndicator = viewModel.showMissIndicator.collectAsStateWithLifecycle().value
-            val missIndicatorOffset = viewModel.missIndicatorOffset.collectAsStateWithLifecycle().value
+            val showMissIndicator by viewModel.showMissIndicator.collectAsStateWithLifecycle()
+            val missIndicatorOffset by viewModel.missIndicatorOffset.collectAsStateWithLifecycle()
 
             MissIndicator(
                 offset = missIndicatorOffset,
@@ -167,10 +167,10 @@ class EyesightSearchScreen : AppCompatActivity() {
                     .align(Alignment.BottomCenter)
                     .padding(10.dp)
             ) {
-                val found = viewModel.itemsFound.collectAsStateWithLifecycle().value
+                val found by viewModel.itemsFound.collectAsStateWithLifecycle()
                 Text(
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background) // todo change
+                        .background(MaterialTheme.colorScheme.background)
                         .padding(10.dp),
                     text = "${found}/${uiState.items.size}",
                     style = MaterialTheme.typography.titleLarge,
@@ -216,7 +216,6 @@ class EyesightSearchScreen : AppCompatActivity() {
                     setImageHeight(imgHeight)
                     setImageSize(contentSize)
                 }
-                // Pro zjistovani souradnic pri implementaci noveho levelu
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onTap = { offset ->
@@ -336,7 +335,7 @@ class EyesightSearchScreen : AppCompatActivity() {
             .size(DpSize(widthDp, heightDp))
             .clickable {
                 overlayShow = false
-                viewModel.onItemClick()
+                viewModel.onOverlayClick()
             }
 
         val parties = listOf(

@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -72,11 +73,11 @@ class RythmShelvesScreen : AppCompatActivity() {
 
     @Composable
     private fun RythmShelvesScreenRunning(viewModel: RythmShelvesViewModel) {
-        val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-        val enabledStates = viewModel.rhymePairsEnabled.collectAsStateWithLifecycle().value
-        val firstClickedIdx = viewModel.firstIdxClicked.collectAsStateWithLifecycle().value
-        val secondClickedIdx = viewModel.secondIdxClicked.collectAsStateWithLifecycle().value
-        val btnEnabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+        val enabledStates by viewModel.rhymePairsEnabled.collectAsStateWithLifecycle()
+        val firstClickedIdx by viewModel.firstIdxClicked.collectAsStateWithLifecycle()
+        val secondClickedIdx by viewModel.secondIdxClicked.collectAsStateWithLifecycle()
+        val btnEnabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
         ScreenWrapper(
             title = stringResource(id = R.string.rythm_menu_label_1)

@@ -24,6 +24,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -75,7 +76,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         ScreenWrapper(
             title = stringResource(id = R.string.rythm_menu_label_2)
         ) {
-            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             AnswerResultBox(viewModel = viewModel) {
                 Column(
                     modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
@@ -111,7 +112,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                         viewModel = viewModel
                     )
 
-                    val enabled = viewModel.buttonsEnabled.collectAsStateWithLifecycle().value
+                    val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
                     Box(
                         modifier = Modifier.weight(1f),
                         contentAlignment = Alignment.Center
@@ -130,7 +131,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
 
     @Composable
     private fun SyllablesRow(modifier: Modifier, viewModel: RythmSyllablesViewModel) {
-        val buttonsStates = viewModel.buttonStates.collectAsStateWithLifecycle().value
+        val buttonsStates by viewModel.buttonStates.collectAsStateWithLifecycle()
 
         Row(
             modifier = modifier
@@ -138,7 +139,6 @@ class RythmSyllabelsScreen : AppCompatActivity() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-
             buttonsStates.forEachIndexed { idx, selected ->
                 SyllableIndicator(
                     modifier = Modifier.weight(1f),
