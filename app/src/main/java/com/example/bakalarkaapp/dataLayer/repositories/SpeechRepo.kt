@@ -14,6 +14,12 @@ class SpeechRepo(ctx: Context) :
     ) {
     override val data = mappedClass?.letters ?: emptyList()
 
+
+    /**
+     * @param letterLabel A label of the letter, for example "L".
+     * @param posLabel A label of position that groups the words, for example "L_L".
+     * @return list of [WordContent]
+     */
     fun getWords(letterLabel: String, posLabel: String): List<WordContent>? {
         val letter = data.find { letter -> letter.label == letterLabel }
         val pos = letter?.positions?.find { pos -> pos.label == posLabel }
