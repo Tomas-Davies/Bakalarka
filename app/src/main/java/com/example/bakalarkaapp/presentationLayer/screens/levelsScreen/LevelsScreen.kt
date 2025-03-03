@@ -53,7 +53,7 @@ import com.example.bakalarkaapp.dataLayer.models.RythmSyllabRound
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.imageSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.theme.AppTheme
-import com.example.bakalarkaapp.utils.bundle.serializable
+import com.example.bakalarkaapp.utils.bundle.getSdkBasedSerializableExtra
 
 class LevelsScreen : AppCompatActivity() {
 
@@ -138,7 +138,7 @@ class LevelsScreen : AppCompatActivity() {
     @Composable
     private fun LevelIcon(imageId: Int, i: Int){
         val ctx = LocalContext.current
-        val nextActivityClass = intent.serializable(ImageLevel.NEXT_CLASS_TAG, Class::class.java)
+        val nextActivityClass = intent.getSdkBasedSerializableExtra(ImageLevel.NEXT_CLASS_TAG, Class::class.java)
 
         ElevatedCard(
             onClick = {

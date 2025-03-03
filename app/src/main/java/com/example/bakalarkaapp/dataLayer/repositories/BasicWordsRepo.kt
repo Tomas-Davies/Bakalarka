@@ -6,7 +6,7 @@ import com.example.bakalarkaapp.dataLayer.models.BasicWordsRound
 
 
 class BasicWordsRepo(ctx: Context, resourceFileId: Int):
-    XmlRepository<BasicWordsRounds, BasicWordsRound>(
+    ResourceMappedRepository<BasicWordsRounds, BasicWordsRound>(
         ctx,
         resourceFileId,
         BasicWordsRounds::class.java

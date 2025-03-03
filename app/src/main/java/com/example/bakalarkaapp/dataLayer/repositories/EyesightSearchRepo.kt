@@ -6,7 +6,7 @@ import com.example.bakalarkaapp.dataLayer.models.SearchData
 import com.example.bakalarkaapp.dataLayer.models.SearchRound
 
 class EyesightSearchRepo(ctx: Context):
-    XmlRepository<SearchData, SearchRound>(
+    ResourceMappedRepository<SearchData, SearchRound>(
         ctx,
         R.raw.eyesight_search_data,
         SearchData::class.java

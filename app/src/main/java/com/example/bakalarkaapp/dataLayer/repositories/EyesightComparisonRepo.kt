@@ -6,7 +6,7 @@ import com.example.bakalarkaapp.dataLayer.models.ComparisonData
 import com.example.bakalarkaapp.dataLayer.models.ComparisonItem
 
 class EyesightComparisonRepo(ctx: Context) :
-    XmlRepository<ComparisonData, ComparisonItem>(
+    ResourceMappedRepository<ComparisonData, ComparisonItem>(
         ctx,
         R.raw.eyesight_comparison_data,
         ComparisonData::class.java

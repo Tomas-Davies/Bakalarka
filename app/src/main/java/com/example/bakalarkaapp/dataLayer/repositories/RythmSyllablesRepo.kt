@@ -6,7 +6,7 @@ import com.example.bakalarkaapp.dataLayer.models.RythmSyllabData
 import com.example.bakalarkaapp.dataLayer.models.RythmSyllabRound
 
 class RythmSyllablesRepo(ctx: Context):
-    XmlRepository<RythmSyllabData, RythmSyllabRound>(
+    ResourceMappedRepository<RythmSyllabData, RythmSyllabRound>(
         ctx,
         R.raw.rythm_syllabels_data,
         RythmSyllabData::class.java

@@ -7,18 +7,15 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
 /**
- * Abstract base repository for XML data loading and deserialization.
+ * Abstract base repository for resource data loading and deserialization.
  *
- * Provides common functionality for repositories that need to load and parse XML data
- * from raw resources using Jackson's XmlMapper.
- *
- * @param T The type of the root XML object being deserialized.
+ * @param T The type of the class that is going to be mapped.
  * @param R The type of the individual data items that will be exposed by the repository.
  * @param ctx The Android Context used to access resources.
  * @param resourceId The resource ID of the raw XML file to be loaded.
  * @param dataClass The Class object representing type T, used for deserialization.
  */
-abstract class XmlRepository<T, R>(
+abstract class ResourceMappedRepository<T, R>(
     ctx: Context,
     resourceId: Int,
     dataClass: Class<T>

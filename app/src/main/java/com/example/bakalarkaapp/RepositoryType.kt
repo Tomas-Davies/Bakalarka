@@ -1,5 +1,11 @@
 package com.example.bakalarkaapp
 
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
+
+/**
+ * Defines the different types of repositories used for [LevelsScreen] navigation.
+ * Also provides *key tag* for intent extras.
+ */
 enum class RepositoryType(val id: Int) {
     EYESIGHT_SEARCH(0),
     EYESIGHT_DIFFER(1),

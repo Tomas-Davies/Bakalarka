@@ -51,7 +51,7 @@ class EyesightDifferViewModel(
     )
     val uiState = _uiState.asStateFlow()
 
-    override fun validationCond(answer: IValidationAnswer): Boolean {
+    override fun validationCond(answer: IValidationAnswer?): Boolean {
         if (answer is IValidationAnswer.StringAnswer) return (answer.value in getCorrectAnswers())
         throw IllegalArgumentException("$this expects answer of type String")
     }

@@ -6,7 +6,7 @@ import com.example.bakalarkaapp.dataLayer.models.ShelvesRound
 import com.example.bakalarkaapp.dataLayer.models.ShelvesRounds
 
 class RythmShelvesRepo(ctx: Context) :
-    XmlRepository<ShelvesRounds, ShelvesRound>(
+    ResourceMappedRepository<ShelvesRounds, ShelvesRound>(
         ctx,
         R.raw.rythm_shelves_data,
         ShelvesRounds::class.java

@@ -11,6 +11,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * Abstract base ViewModel that provides common functionality for rounds-based activities.
+ *
+ * It manages:
+ * - Round progression.
+ * - Score tracking.
+ * - Game state (running, finished).
+ * - Result messaging.
+ * - Button enabling / disabling.
+ *
+ * @param app The application instance that provides the application context.
+ */
 abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
     private val appContext = app.applicationContext
     protected var roundIdx = 0
@@ -35,6 +47,10 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         }
     }
 
+    /**
+     * Performs additional restart operations.
+     * Can be overridden by subclasses to handle game-specific restart logic.
+     */
     protected open fun doRestart() {}
 
     fun restart() {
@@ -64,9 +80,9 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         message: String = ""
     ) {
         viewModelScope.launch {
-            updateAnswerResultState(show = true, result = result, message = message)
+            updateAnswerResultState(true, result, message)
             delay(1000)
-            updateAnswerResultState(show = false, result = result, message = message)
+            updateAnswerResultState(false, result, message)
         }
     }
 

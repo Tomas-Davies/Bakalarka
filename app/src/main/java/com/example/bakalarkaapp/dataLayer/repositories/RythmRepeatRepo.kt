@@ -5,7 +5,7 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.dataLayer.models.RythmRepeatData
 
 class RythmRepeatRepo(ctx: Context) :
-    XmlRepository<RythmRepeatData, String>(
+    ResourceMappedRepository<RythmRepeatData, String>(
         ctx,
         R.raw.rythm_repeat_data,
         RythmRepeatData::class.java

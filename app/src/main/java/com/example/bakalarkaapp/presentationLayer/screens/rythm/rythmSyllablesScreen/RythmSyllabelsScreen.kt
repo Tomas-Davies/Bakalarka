@@ -42,7 +42,6 @@ import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRo
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 
 
 class RythmSyllabelsScreen : AppCompatActivity() {
@@ -118,7 +117,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
-                            onClick = { viewModel.validateAnswer(IValidationAnswer.BlankAnswer) },
+                            onClick = { viewModel.validateAnswer(null) },
                             enabled = enabled
                         ) {
                             Text(text = stringResource(id = R.string.done_btn_label))

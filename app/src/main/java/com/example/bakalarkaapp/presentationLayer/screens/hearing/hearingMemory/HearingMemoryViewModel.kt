@@ -39,7 +39,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         count = rounds.size
     }
 
-    override fun validationCond(answer: IValidationAnswer): Boolean {
+    override fun validationCond(answer: IValidationAnswer?): Boolean {
        return correctAnswerCount == currRound.toBePlayedCount
     }
 
@@ -57,7 +57,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
                 delay(2000)
             }
             onFinish()
-            showallObjects()
+            showAllObjects()
         }
     }
 
@@ -66,7 +66,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
             playResultSound(result = true)
             score++
             correctAnswerCount++
-            validateAnswer(IValidationAnswer.BlankAnswer)
+            validateAnswer(null)
             return true
         }
         playResultSound(result = false)
@@ -99,7 +99,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         updateData()
     }
 
-    private fun showallObjects() {
+    private fun showAllObjects() {
         _uiState.update { state ->
             state.copy(
                 showingObjects = allObjects

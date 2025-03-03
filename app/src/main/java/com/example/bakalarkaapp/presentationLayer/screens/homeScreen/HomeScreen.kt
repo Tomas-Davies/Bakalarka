@@ -209,7 +209,6 @@ class HomeScreen: AppCompatActivity() {
 
 
     private fun onCardClicked(ctx: Context, id: Int){
-
         var intent = Intent(ctx, SpeechScreen::class.java)
         when(id) {
             1 -> {intent = Intent(ctx, EyesightScreen::class.java)}

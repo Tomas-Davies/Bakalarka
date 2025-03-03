@@ -6,7 +6,7 @@ import com.example.bakalarkaapp.dataLayer.models.DifferData
 import com.example.bakalarkaapp.dataLayer.models.DifferItem
 
 class EyesightDifferRepo(ctx: Context) :
-    XmlRepository<DifferData, DifferItem>(
+    ResourceMappedRepository<DifferData, DifferItem>(
         ctx,
         R.raw.eyesight_differ_data,
         DifferData::class.java

@@ -39,7 +39,7 @@ class EyesightComparisonViewModel(
         count = data.size
     }
 
-    override fun validationCond(answer: IValidationAnswer): Boolean {
+    override fun validationCond(answer: IValidationAnswer?): Boolean {
         if (answer is IValidationAnswer.BooleanAnswer){
             return answer.value == _uiState.value.answer
         }

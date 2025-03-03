@@ -52,7 +52,7 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         count = rounds.size
     }
 
-    override fun validationCond(answer: IValidationAnswer): Boolean {
+    override fun validationCond(answer: IValidationAnswer?): Boolean {
         return itemsFound.value == currentRound.items.size
     }
     override fun playOnCorrectSound() {}
@@ -69,7 +69,7 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         clickCounter++
         foundCatsCounter++
         _itemsFound.value++
-        validateAnswer(IValidationAnswer.BlankAnswer)
+        validateAnswer(null)
     }
 
     fun missClick(){
@@ -124,17 +124,17 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         imgContent: ImageBitmap,
         contentScale: Float
     ){
-        val offsetInImage = clickOffset - imgOffset
+        val offsetInImg = clickOffset - imgOffset
         val width = imgContent.width * contentScale
         val height = imgContent.height * contentScale
-        if (offsetInImage.x in 0f..width
+        if (offsetInImg.x in 0f..width
             &&
-            offsetInImage.y in 0f..height
+            offsetInImg.y in 0f..height
         ) {
             val xPercentage =
-                (100 * offsetInImage.x) / width
+                (100 * offsetInImg.x) / width
             val yPercentage =
-                (100 * offsetInImage.y) / height
+                (100 * offsetInImg.y) / height
 
             Log.w(
                 "SEARCH_IMAGE_PERC_CORDS",

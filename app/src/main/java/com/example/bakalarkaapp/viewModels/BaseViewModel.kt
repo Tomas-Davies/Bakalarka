@@ -10,11 +10,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.example.bakalarkaapp.LogoApp
 
-
+/**
+ * Abstract base ViewModel that provides common functionality for audio, vibration, and resource management.
+ *
+ * This class serves as a foundation for majority of ViewModels in the application.
+ *
+ * It manages:
+ * - Playing sound effects.
+ * - Creating vibration feedback.
+ * - Accessing drawable resources.
+ *
+ * @param app The application instance that provides the application context.
+ */
 abstract class BaseViewModel(app: LogoApp) : ViewModel() {
     private val appContext = app.applicationContext
 
-    open fun playSound(soundId: Int) {
+    fun playSound(soundId: Int) {
         val mediaPlayer: MediaPlayer = MediaPlayer.create(appContext, soundId)
         mediaPlayer.start()
         mediaPlayer.setOnCompletionListener { mp ->
@@ -26,6 +37,30 @@ abstract class BaseViewModel(app: LogoApp) : ViewModel() {
         val soundId = getSoundId(name)
         playSound(soundId)
     }
+
+
+    fun vibrate(vibrationEffect: VibrationEffect) {
+        val vibrator = getVibrator()
+        vibrator.cancel()
+        vibrator.vibrate(vibrationEffect)
+    }
+
+    fun getDrawableId(drawableName: String): Int {
+        var id = appContext.resources.getIdentifier(drawableName, "drawable", appContext.packageName)
+        if (id == 0) {
+            id = appContext.resources.getIdentifier("dummy_img_500", "drawable", appContext.packageName)
+        }
+        return id
+    }
+
+    fun getSoundId(soundName: String): Int {
+        var id = appContext.resources.getIdentifier(soundName, "raw", appContext.packageName)
+        if (id == 0) {
+            id = appContext.resources.getIdentifier("wrong_answer", "raw", appContext.packageName)
+        }
+        return id
+    }
+
 
     private fun getVibrator(): Vibrator {
         val vibrator: Vibrator
@@ -39,31 +74,4 @@ abstract class BaseViewModel(app: LogoApp) : ViewModel() {
         }
         return vibrator
     }
-
-    fun vibrate(vibrationEffect: VibrationEffect) {
-        val vibrator = getVibrator()
-        vibrator.cancel()
-        vibrator.vibrate(vibrationEffect)
-    }
-
-    fun getDrawableId(drawableName: String): Int {
-        var id = appContext.resources.getIdentifier(drawableName, "drawable", appContext.packageName)
-        if (id == 0) {
-            id = appContext.resources.getIdentifier(
-                "dummy_img_500",
-                "drawable",
-                appContext.packageName
-            )
-        }
-        return id
-    }
-
-    fun getSoundId(soundName: String): Int {
-        var id = appContext.resources.getIdentifier(soundName, "raw", appContext.packageName)
-        if (id == 0) {
-            id = appContext.resources.getIdentifier("wrong_answer", "raw", appContext.packageName)
-        }
-        return id
-    }
-
 }

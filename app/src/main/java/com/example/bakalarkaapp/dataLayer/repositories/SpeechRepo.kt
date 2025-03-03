@@ -7,7 +7,7 @@ import com.example.bakalarkaapp.dataLayer.models.SpeechLetter
 import com.example.bakalarkaapp.dataLayer.models.WordContent
 
 class SpeechRepo(ctx: Context) :
-    XmlRepository<SpeechData, SpeechLetter>(
+    ResourceMappedRepository<SpeechData, SpeechLetter>(
         ctx,
         R.raw.speech_data,
         SpeechData::class.java
