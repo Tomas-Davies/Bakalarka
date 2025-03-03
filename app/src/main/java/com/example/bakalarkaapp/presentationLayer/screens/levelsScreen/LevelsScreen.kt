@@ -10,6 +10,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,9 +19,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -177,15 +182,26 @@ class LevelsScreen : AppCompatActivity() {
                     alignment = alignment
                 )
 
-                Text(
+                Row (
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.primaryContainer)
                         .padding(0.dp, 10.dp),
-                    text = stringResource(id = R.string.eyesight_search_level_info_label) + ": ${i + 1}",
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                )
+                    verticalAlignment = Alignment.CenterVertically
+                ){
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        modifier = Modifier.weight(3f),
+                        text = stringResource(id = R.string.eyesight_search_level_info_label) + ": " + "${i + 1}",
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center
+                    )
+                    Icon(
+                        modifier = Modifier.weight(1f),
+                        imageVector =  Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = ""
+                    )
+                }
             }
         }
     }

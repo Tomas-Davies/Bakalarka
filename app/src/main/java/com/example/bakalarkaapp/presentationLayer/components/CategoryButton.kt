@@ -115,13 +115,12 @@ private fun CardContent(
         ) {
             Text(
                 text = labelLong,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Normal
+                style = MaterialTheme.typography.titleSmall
             )
             Text(
                 text = label,
                 style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Black
             )
             Spacer(modifier = Modifier.height(8.dp))
             ShowMoreLabel()

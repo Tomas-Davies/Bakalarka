@@ -114,7 +114,6 @@ class EyesightComparisonScreen : AppCompatActivity() {
                             contentDescription = "comparison image"
                         )
                     }
-
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -133,7 +132,6 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 textAlign = TextAlign.Center
                             )
                         }
-
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()

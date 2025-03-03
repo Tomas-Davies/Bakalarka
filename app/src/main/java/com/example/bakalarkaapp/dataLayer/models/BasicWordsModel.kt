@@ -18,7 +18,6 @@ class BasicWordsRound(
 /**
  * Represents rounds used by basic exercises.
  *
- *
  * @property rounds A list of [BasicWordsRound] items, holding data for each round.
  */
 

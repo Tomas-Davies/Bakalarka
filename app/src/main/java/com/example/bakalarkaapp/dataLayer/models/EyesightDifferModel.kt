@@ -8,7 +8,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 /**
  * Represents a round of the Eyesight Differ exercise.
  *
- *
  * @property question A [String] representing a *question*.
  * @property answers A list of [String] *answers* to the question.
  */
@@ -24,7 +23,6 @@ data class Round(
 
 /**
  * Represents a differItem in the XML structure, holding drawable resource for set of rounds.
- *
  *
  * @property imageName The name of the drawable resource file.
  * @property rounds A list of [Round] items.

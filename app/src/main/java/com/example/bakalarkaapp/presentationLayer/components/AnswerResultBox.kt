@@ -61,10 +61,8 @@ fun AnswerResultBox(
             modifier = Modifier.align(Alignment.Center),
             answerResultState = answerResultState
         )
-
         val width = with(LocalDensity.current){ maxWidth.toPx() }
         val height = with(LocalDensity.current){ maxHeight.toPx() }
-
         val party = Party(
             angle = 45,
             speed = 3f,
@@ -77,7 +75,6 @@ fun AnswerResultBox(
             size = listOf(Size.LARGE),
             emitter = Emitter(duration = 300L, TimeUnit.MILLISECONDS).max(50)
         )
-
         val parties = listOf(
             party,
             party.copy(

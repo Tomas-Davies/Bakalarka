@@ -86,7 +86,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     private fun EyesightSynthesisScreenContent(viewModel: EyesightSynthesisViewModel) {
         val ctx = LocalContext.current
         ScreenWrapper(
-            title = stringResource(id = R.string.eyesight_menu_label_5)
+            title = stringResource(id = R.string.eyesight_synth_label)
         ) {
             Column(
                 modifier = Modifier

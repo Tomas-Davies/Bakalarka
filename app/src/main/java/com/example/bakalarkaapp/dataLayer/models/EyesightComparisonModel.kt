@@ -9,8 +9,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 /**
  * Represents an item for round of Eyesight Comparison exercise.
  *
- * Configured for Xml deserialization using JacksonXml annotations.
- *
  * @property imageName The name of the drawable resource file.
  * @property isSameShape A value determining if shapes visible on the drawable resource with *imageName* are identical.
  */
