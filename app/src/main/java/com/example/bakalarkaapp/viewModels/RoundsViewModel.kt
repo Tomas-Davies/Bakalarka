@@ -80,9 +80,9 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         message: String = ""
     ) {
         viewModelScope.launch {
-            updateAnswerResultState(true, result, message)
+            updateAnswerResultState(result, true, message)
             delay(1000)
-            updateAnswerResultState(false, result, message)
+            updateAnswerResultState(result, false, message)
         }
     }
 

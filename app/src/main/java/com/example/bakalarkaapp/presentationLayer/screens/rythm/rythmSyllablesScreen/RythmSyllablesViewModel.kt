@@ -39,7 +39,7 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         count = rounds.size
     }
 
-    override fun validationCond(answer: IValidationAnswer): Boolean {
+    override fun validationCond(answer: IValidationAnswer?): Boolean {
         return userSyllabSum == _uiState.value.syllabCount
     }
 
