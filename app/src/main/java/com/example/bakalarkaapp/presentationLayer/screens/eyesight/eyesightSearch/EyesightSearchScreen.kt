@@ -60,6 +60,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.dataLayer.models.ItemColor
 import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
@@ -118,11 +119,11 @@ class EyesightSearchScreen : AppCompatActivity() {
     @Composable
     fun EyesightImageSearchRunning(viewModel: EyesightSearchViewModel) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        val imgId = viewModel.getDrawableId(uiState.bgImageResource)
         var imgWidth by remember { mutableFloatStateOf(0f) }
         var imgHeight by remember { mutableFloatStateOf(0f) }
         var imgSize by remember { mutableStateOf(Size.Zero) }
         var imgOffset by remember { mutableStateOf(Offset.Zero) }
+        val imgId = viewModel.getDrawableId(uiState.bgImageResource)
 
         AnswerResultBox(viewModel = viewModel) {
             SearchImage(
@@ -135,22 +136,17 @@ class EyesightSearchScreen : AppCompatActivity() {
             )
 
             uiState.items.forEach { item ->
-                val oStats = viewModel.getOverlayInfo(item, imgSize, imgOffset)
+                val oInfo = viewModel.getOverlayInfo(item, imgSize, imgOffset)
                 key(item) {
                     ItemOverlay(
                         viewModel = viewModel,
-                        width = oStats.width,
-                        height = oStats.height,
+                        width = oInfo.width,
+                        height = oInfo.height,
                         offset = Offset(
-                            oStats.xInImage,
-                            oStats.yInImage
+                            oInfo.xInImage,
+                            oInfo.yInImage
                         ),
-                        itemColor = Color
-                            (
-                            item.color.r,
-                            item.color.g,
-                            item.color.b
-                        )
+                        itemColor = item.color
                     )
                 }
             }
@@ -274,7 +270,7 @@ class EyesightSearchScreen : AppCompatActivity() {
         height: Float,
         width: Float,
         offset: Offset,
-        itemColor: Color
+        itemColor: ItemColor
     ) {
         var overlayShow by remember { mutableStateOf(true) }
         var trX: Float
@@ -293,38 +289,28 @@ class EyesightSearchScreen : AppCompatActivity() {
 
         val filteredColorModifier = positionModifier
             .drawBehind {
-                val whiteComplement = Color(
-                    -(255 - itemColor.red).toInt(),
-                    (255 - itemColor.green).toInt(),
-                    (255 - itemColor.blue).toInt()
-                )
-                val paint = Paint()
-                paint.color = whiteComplement
-                paint.blendMode = BlendMode.Plus
-                drawIntoCanvas {
-                    it.drawRect(
+                drawIntoCanvas { canvas ->
+                    val whiteComplement = Color(
+                        (255 - itemColor.r),
+                        (255 - itemColor.g),
+                        (255 - itemColor.b)
+                    )
+                    val paint = Paint()
+                    paint.color = whiteComplement
+                    paint.blendMode = BlendMode.Plus
+                    canvas.drawRect(
                         overlayLayer,
                         paint
                     )
-                }
-            }
-            .drawBehind {
-                val paint = Paint()
-                paint.color = Color.Black
-                paint.blendMode = BlendMode.Saturation
-                drawIntoCanvas {
-                    it.drawRect(
+                    paint.color = Color.Black
+                    paint.blendMode = BlendMode.Saturation
+                    canvas.drawRect(
                         overlayLayer,
                         paint
                     )
-                }
-            }
-            .drawBehind {
-                val paint = Paint()
-                paint.color = Color.DarkGray
-                paint.blendMode = BlendMode.ColorBurn
-                drawIntoCanvas {
-                    it.drawRect(
+                    paint.color = Color.DarkGray
+                    paint.blendMode = BlendMode.ColorBurn
+                    canvas.drawRect(
                         overlayLayer,
                         paint
                     )
