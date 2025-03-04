@@ -44,7 +44,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -157,7 +156,6 @@ class EyesightSearchScreen : AppCompatActivity() {
                 offset = missIndicatorOffset,
                 show = showMissIndicator
             )
-
             ElevatedCard(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -273,21 +271,15 @@ class EyesightSearchScreen : AppCompatActivity() {
         itemColor: ItemColor
     ) {
         var overlayShow by remember { mutableStateOf(true) }
-        var trX: Float
-        var trY: Float
+        val x = offset.x - width / 2
+        val y = offset.y - height / 2
+        val xDp = with(LocalDensity.current) { x.toDp() }
+        val yDp = with(LocalDensity.current) { y.toDp() }
         val widthDp = with(LocalDensity.current) { width.toDp() }
         val heightDp = with(LocalDensity.current) { height.toDp() }
+        val overlayLayer = Rect(Offset(x, y), Size(width, height))
 
-        val overlayLayer = Rect(Offset(0f, 0f), Size(width, height))
-        val positionModifier = Modifier
-            .graphicsLayer {
-                trX = offset.x - width / 2
-                trY = offset.y - height / 2
-                translationX = trX
-                translationY = trY
-            }
-
-        val filteredColorModifier = positionModifier
+        val filteredColorModifier = Modifier
             .drawBehind {
                 drawIntoCanvas { canvas ->
                     val whiteComplement = Color(
@@ -317,8 +309,9 @@ class EyesightSearchScreen : AppCompatActivity() {
                 }
             }
 
-        val modifier = filteredColorModifier
+        val overlayModifier = filteredColorModifier
             .size(DpSize(widthDp, heightDp))
+            .offset(xDp, yDp)
             .clickable {
                 overlayShow = false
                 viewModel.onOverlayClick()
@@ -339,11 +332,16 @@ class EyesightSearchScreen : AppCompatActivity() {
 
         if (overlayShow) {
             Box(
-                modifier = modifier//.border(2.dp, Color.Red)
+                modifier = overlayModifier//.border(2.dp, Color.Red)
             ) {}
         } else {
             Box(
-                modifier = positionModifier.size(widthDp.times(1.5f), heightDp.times(1.5f)),
+                modifier = Modifier
+                    .offset(xDp, yDp)
+                    .size(
+                        widthDp.times(1.5f),
+                        heightDp.times(1.5f)
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 KonfettiView(parties = parties, modifier = Modifier.fillMaxSize())
