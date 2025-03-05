@@ -38,7 +38,8 @@ import java.util.concurrent.TimeUnit
  * A wrapper composable that provides *Result feedback* animation.
  *
  * @param modifier Modifier to be applied to the layout.
- * @param viewModel RoundsViewModel providing answerResultState, which controls the animation.
+ * @param viewModel RoundsViewModel providing answerResultState, which controls the result
+ * indication.
  * @param contentAlignment Alignment to be applied on the content.
  * @param content The content of the Box
  */

@@ -51,11 +51,6 @@ data class SearchRound(
 ) : ImageLevel
 
 
-/**
- * Represents the root XML structure containing multiple rounds for Eyesight Search exercises.
- *
- * @property rounds A list of [SearchRound] items, holding data for each round.
- */
 @JacksonXmlRootElement(localName = "data")
 data class SearchData(
     @JacksonXmlElementWrapper(useWrapping = false)

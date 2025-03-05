@@ -2,8 +2,9 @@ package com.example.bakalarkaapp.presentationLayer.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -39,9 +40,7 @@ fun IconButton(
         colors = cardColors
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .padding(12.dp),
+            modifier = Modifier.padding(28.dp, 12.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -50,6 +49,7 @@ fun IconButton(
                 contentDescription = "Icon",
                 tint = MaterialTheme.colorScheme.onPrimary
             )
+            Spacer(modifier = Modifier.width(32.dp))
             Text(
                 text = label,
                 style = style,

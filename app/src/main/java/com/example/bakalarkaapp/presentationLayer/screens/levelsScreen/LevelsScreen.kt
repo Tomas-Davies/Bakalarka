@@ -66,6 +66,7 @@ class LevelsScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
         val repoTypeName = intent.getIntExtra(RepositoryType.TAG, 0)
+
         val viewModel = when(repoTypeName) {
             RepositoryType.EYESIGHT_SEARCH.id -> {
                 val repo = app.eyesightSearchRepository

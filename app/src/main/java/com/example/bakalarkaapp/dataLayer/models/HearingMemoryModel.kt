@@ -17,11 +17,6 @@ data class HearingMemoryRound(
 )
 
 
-/**
- * Represents multiple rounds for Hearing Memory exercise.
- *
- * @property rounds A list of [HearingMemoryRound] items, holding data for each round.
- */
 data class HearingMemoryData(
     @JacksonXmlProperty(localName = "round")
     @JacksonXmlElementWrapper(useWrapping = false)

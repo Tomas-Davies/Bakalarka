@@ -67,7 +67,6 @@ class EyesightSynthesisViewModel(
     private val bitmaps = imageNamesToBitmaps(rounds)
     private var currImage = bitmaps[roundIdx]
     private var pieceCount = rounds[roundIdx].pieceCount
-    private var pieceMinSize = 100
     private val threshold = 200
     private var placedPieces = 0
     private val _uiState =
@@ -109,16 +108,15 @@ class EyesightSynthesisViewModel(
     }
 
 
-    //                                PUZZLE LOGIKA
-
+    //                                IMAGE PIECE LOGIC
     /**
      * This function will generate Rectangular pieces from given bitmap.
      *
      * @param image The image that is going to be cut to pieces.
      * @param pieceCount The count of pieces that are going to be cut out of the image.
-     * @return a list of [ImagePiece], holding data about individual image pieces.
+     * @return a list of [pieces][ImagePiece], holding data about individual image pieces.
      */
-    fun cutImage(
+    private fun cutImage(
         image: Bitmap,
         pieceCount: Int
     ): List<ImagePiece> {
@@ -145,7 +143,18 @@ class EyesightSynthesisViewModel(
         return pieces
     }
 
-
+    /**
+     * This function generates list of [rectangles][Rect] representing image pieces by repeatedly splitting
+     * the largest rectangle using the [splitRectangle] method.
+     *
+     * Splitting starts from rectangle that represents whole image, until the amount of
+     * rectangles isn't equal to *pieceCount*.
+     *
+     * @param imageWidth The width of the *image* in pixels.
+     * @param imageHeight The height of the *image* in pixels.
+     * @param pieceCount The desired count of rectangles to generate.
+     * @return A list of [rectangles][Rect] representing all image pieces.
+     */
     private fun generateRects(
         imageWidth: Int,
         imageHeight: Int,
@@ -157,14 +166,21 @@ class EyesightSynthesisViewModel(
             val largestPiece = rects.maxByOrNull { piece -> piece.width * piece.height } ?: break
             rects.remove(largestPiece)
             val (rect1, rect2) = splitRectangle(largestPiece)
-
-            if (rect1.width >= pieceMinSize && rect1.height >= pieceMinSize) rects.add(rect1)
-            if (rect2.width >= pieceMinSize && rect2.height >= pieceMinSize) rects.add(rect2)
+            rects.add(rect1)
+            rects.add(rect2)
         }
         return rects
     }
 
 
+    /**
+     * Generates two [rectangles][Rect] from the given rectangle *rect*.
+     *
+     * Takes in account the size proportions of the given rectangle (vertical or horizontal split).
+     *
+     * @param rect The rectangle from which will the new rectangles originate.
+     * @return A [pair][Pair] of two [rectangles][Rect] representing the split parts of the original rectangle.
+     */
     private fun splitRectangle(rect: Rect): Pair<Rect, Rect> {
         val splitVerticaly: Boolean
         if (rect.width == rect.height) splitVerticaly = Random.nextBoolean()
@@ -186,6 +202,15 @@ class EyesightSynthesisViewModel(
         }
     }
 
+
+    /**
+     * @param piece The piece which holds data about the original position.
+     * @param currOffset The current offset of the piece composable.
+     * @param contentOffset The offset of the content inside the Image composable.
+     * @param contentScale The scale of the content inside the Image composable.
+     * @param bottomBoxOffset The offset of the image piece container.
+     * @return [Offset] which aligns the *image piece* into the original image.
+     */
     fun setCorrectOffset(
         piece: ImagePiece,
         currOffset: Offset,
@@ -194,20 +219,20 @@ class EyesightSynthesisViewModel(
         bottomBoxOffset: Offset
     ): Offset {
         val inContentX = currOffset.x - contentOffset.x
-        val inContentY = (bottomBoxOffset.y + currOffset.y) - contentOffset.y
+        val inContentY = currOffset.y - contentOffset.y
         val scaledTargetX = piece.imageX * contentScale
         val scaledTargetY = piece.imageY * contentScale
         val dist = distance(scaledTargetX, scaledTargetY, inContentX, inContentY)
 
         if (dist <= threshold) {
             val offset = Offset(
-                x = (scaledTargetX + contentOffset.x) - bottomBoxOffset.x,
-                y = (scaledTargetY + contentOffset.y) - bottomBoxOffset.y
+                x = contentOffset.x + scaledTargetX,
+                y = contentOffset.y + scaledTargetY
             )
             placedPieces++
             playResultSound(true)
             vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
-            return offset
+            return offset - bottomBoxOffset
         } else {
             playResultSound(result = false)
             return piece.initialOffset
@@ -221,12 +246,21 @@ class EyesightSynthesisViewModel(
         return dist
     }
 
-    fun onAllPiecesPlaced() {
+    fun onCorrectlyPlaced() {
         if (placedPieces == pieceCount) {
             moveNext()
         }
     }
 
+
+    /**
+     * Calculates initial offsets of image pieces to properly place them within a container.
+     *
+     * @param containerWidth The width of the container where the pieces will be placed.
+     * @param containerHeight The height of the container where the pieces will be placed.
+     * @param scaledPieces List of image pieces that have already been scaled appropriately.
+     * @return A mutable list of [offsets][Offset] for each piece.
+     */
     fun getInitialOffsets(
         containerWidth: Float,
         containerHeight: Float,
@@ -250,6 +284,14 @@ class EyesightSynthesisViewModel(
         return offsets
     }
 
+    private fun findSquare(num: Int): Int {
+        var sq = 1
+        while (sq * sq < num) {
+            sq++
+        }
+        return sq
+    }
+
     private fun imageNamesToBitmaps(rounds: List<EyesightSynthRound>): List<Bitmap> {
         val bitmaps = mutableListOf<Bitmap>()
         rounds.forEach { round ->
@@ -261,15 +303,6 @@ class EyesightSynthesisViewModel(
         }
         return bitmaps
     }
-
-    private fun findSquare(num: Int): Int {
-        var sq = 1
-        while (sq * sq < num) {
-            sq++
-        }
-        return sq
-    }
-
 }
 
 

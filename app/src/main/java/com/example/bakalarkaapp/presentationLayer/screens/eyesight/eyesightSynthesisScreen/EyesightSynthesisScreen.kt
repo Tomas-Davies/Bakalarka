@@ -106,6 +106,14 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     }
 
 
+    /**
+     *  A composable that displays the content of a running eyesight synthesis exercise,
+     *  consisting of main image on top half of the screen and area of cut pieces from the image
+     *  on bottom half of the screen. It manages correct positioning, scaling and initialization of
+     *  every image [piece][Piece].
+     *
+     *  @param viewModel Provides game logic functionality.
+     */
     @Composable
     private fun EyesightSynthesisScreenRunning(viewModel: EyesightSynthesisViewModel) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -125,15 +133,13 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             }
         }
         var initialOffsets by remember(uiState) { mutableStateOf(emptyList<Offset>()) }
+        var bottomBoxOffset by remember { mutableStateOf(Offset.Zero) }
 
-        LaunchedEffect(imageWidth, imageHeight, scaledPieces, uiState) {
+        LaunchedEffect(scaledPieces) {
             if (imageWidth > 0 && imageHeight > 0 && scaledPieces.isNotEmpty()) {
                 initialOffsets = viewModel.getInitialOffsets(imageWidth, imageHeight, scaledPieces)
             }
         }
-
-        var bottomBoxOffset by remember(uiState) { mutableStateOf(Offset.Zero) }
-
         AnswerResultBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel
@@ -149,9 +155,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                         imageHeight = cords.size.height.toFloat()
                         imageContentScale = getFitContentScaleInImage(imageWidth, imageHeight, imageContent)
                         val contentSize = getContentSizeInImage(imageContent, imageContentScale)
-                        val contentOffset =
-                            getContentOffsetInImage(contentSize, imageWidth, imageHeight)
-
+                        val contentOffset = getContentOffsetInImage(contentSize, imageWidth, imageHeight)
                         imageContentOffsetInRoot = Offset(
                             cords.positionInRoot().x + contentOffset.x,
                             cords.positionInRoot().y + contentOffset.y
@@ -181,7 +185,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                                 contentOffsetInRoot = imageContentOffsetInRoot,
                                 contentScale = imageContentScale,
                                 viewModel = viewModel,
-                                key = uiState.image.hashCode()
+                                key = uiState
                             )
                         }
                     }
@@ -191,6 +195,28 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     }
 
 
+    /**
+     * A draggable puzzle piece composable used in the eyesight synthesis exercise.
+     *
+     * This composable renders a single image piece that can be dragged and placed into a target image.
+     * It handles the drag gesture detection and validates correct placement of the piece.
+     * When a piece is correctly placed, it triggers the appropriate callback in the viewModel and
+     * becomes locked in place.
+     *
+     * The piece displays differently based on whether it's in the target image area:
+     * - Inside image area: Normal size with no border.
+     * - Outside image area: Scaled to 80% with a black border.
+     *
+     * @param piece Holds data about the piece.
+     * @param initialOffset The starting position of the piece.
+     * @param bottomBoxOffset The offset of the bottom box holding the pieces.
+     * @param contentOffsetInRoot The offset of the content, inside the top image composable,
+     * relative to the root composable.
+     * @param contentScale The scale factor applied to the content, inside the top image composable.
+     * @param viewModel Manages the exercise state and validates
+     * placements.
+     * @param key A unique identifier for this piece, used to reset state when pieces are reordered.
+     */
     @Composable
     private fun Piece(
         piece: ImagePiece,
@@ -199,14 +225,14 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         contentOffsetInRoot: Offset,
         contentScale: Float,
         viewModel: EyesightSynthesisViewModel,
-        key: Int
+        key: EyesightSynthesisUiState
     ) {
         var offset by remember { mutableStateOf(initialOffset) }
         piece.initialOffset = initialOffset
 
-        var isDragging by remember(key) { mutableStateOf(false) }
-        var dragStarted by remember(key) { mutableStateOf(false) }
-        var dragEnded by remember(key) { mutableStateOf(false) }
+        var isDragging by remember { mutableStateOf(false) }
+        var dragStarted by remember { mutableStateOf(false) }
+        var dragEnded by remember { mutableStateOf(false) }
         var correctlyPlaced by remember(key) { mutableStateOf(false) }
         val width = with(LocalDensity.current) { piece.width.toDp() }
         val height = with(LocalDensity.current) { piece.height.toDp() }
@@ -241,14 +267,14 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         if (isInImage && dragEnded && !correctlyPlaced) {
             val newOffset = viewModel.setCorrectOffset(
                 piece,
-                offset,
+                bottomBoxOffset + offset,
                 contentOffsetInRoot,
                 contentScale,
                 bottomBoxOffset
             )
             val placedWrong = piece.initialOffset
             if (newOffset != placedWrong) {
-                viewModel.onAllPiecesPlaced()
+                viewModel.onCorrectlyPlaced()
                 correctlyPlaced = true
             }
             dragEnded = false

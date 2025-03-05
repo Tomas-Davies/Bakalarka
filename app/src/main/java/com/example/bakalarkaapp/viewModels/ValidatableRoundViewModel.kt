@@ -64,59 +64,31 @@ abstract class ValidatableRoundViewModel(app: LogoApp): RoundsViewModel(app) {
     abstract fun validationCond(answer: IValidationAnswer?): Boolean
 
 
-    /**
-     * Loads new data for the next round if available.
-     * Can be overridden by subclasses to customize round progression.
-     */
     protected open fun newData(){
         if (nextRound()) updateData()
     }
 
-    /**
-     * Plays the sound for a correct answer.
-     * Can be overridden to customize sound behavior.
-     */
     protected open fun playOnCorrectSound(){
         playResultSound(result = true)
     }
 
-    /**
-     * Plays the sound for a wrong answer.
-     * Can be overridden to customize sound behavior.
-     */
     protected open fun playOnWrongSound(){
         playResultSound(result = false)
     }
 
-    /**
-     * Performs actions before loading new data, such as disabling buttons.
-     * Can be overridden to customize pre-load behavior.
-     */
     protected open fun beforeNewData(){
         _buttonsEnabled.update { false }
     }
 
-    /**
-     * Performs actions after loading new data, such as re-enabling buttons.
-     * Can be overridden to customize post-load behavior.
-     */
     protected open fun afterNewData(){
         _buttonsEnabled.update { true }
     }
 
-    /**
-     * Shows the correct answer message and adds a delay before proceeding.
-     * Can be overridden to customize messaging behavior.
-     */
     protected open suspend fun messageShowCorrect(){
         showMessage(result = true)
         delay(1500)
     }
 
-    /**
-     * Shows the wrong answer message.
-     * Can be overridden to customize messaging behavior.
-     */
     protected open fun messageShowWrong(){
         showMessage(result = false)
     }
