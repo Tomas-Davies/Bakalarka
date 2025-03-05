@@ -114,19 +114,19 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
      * Calculates the overlay positioning and size based on its percentage values relative to the image.
      *
      * @param overlay The overlay item containing percentage-based position and size.
-     * @param imgSize The size of the image on which the overlay will be placed.
-     * @param imgOffset The offset of the image's position on the screen.
+     * @param imageContentSize The size of the image on which the overlay will be placed.
+     * @param imageContentOffset The offset of the image's position on the screen.
      * @return [OverlayInfo] containing the absolute positioning and size data of the overlay.
      */
-    fun getOverlayInfo(overlay: SearchItemOverlay, imgSize: Size, imgOffset: Offset): OverlayInfo {
-        val x = (overlay.xPerc / 100f) * imgSize.width
-        val y = (overlay.yPerc / 100f) * imgSize.height
+    fun getOverlayInfo(overlay: SearchItemOverlay, imageContentSize: Size, imageContentOffset: Offset): OverlayInfo {
+        val x = (overlay.xPerc / 100f) * imageContentSize.width
+        val y = (overlay.yPerc / 100f) * imageContentSize.height
 
         return OverlayInfo(
-            xInImage = imgOffset.x + x,
-            yInImage = imgOffset.y + y,
-            width = (overlay.widthPerc / 100f) * imgSize.width,
-            height = (overlay.heightPerc / 100f) * imgSize.height
+            xInImage = imageContentOffset.x + x,
+            yInImage = imageContentOffset.y + y,
+            width = (overlay.widthPerc / 100f) * imageContentSize.width,
+            height = (overlay.heightPerc / 100f) * imageContentSize.height
         )
     }
 
@@ -136,13 +136,13 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
      */
     fun logClickPercInImage(
         clickOffset: Offset,
-        imgOffset: Offset,
-        imgContent: ImageBitmap,
+        imageContentOffset: Offset,
+        imageContent: ImageBitmap,
         contentScale: Float
     ){
-        val offsetInImg = clickOffset - imgOffset
-        val width = imgContent.width * contentScale
-        val height = imgContent.height * contentScale
+        val offsetInImg = clickOffset - imageContentOffset
+        val width = imageContent.width * contentScale
+        val height = imageContent.height * contentScale
         if (offsetInImg.x in 0f..width
             &&
             offsetInImg.y in 0f..height

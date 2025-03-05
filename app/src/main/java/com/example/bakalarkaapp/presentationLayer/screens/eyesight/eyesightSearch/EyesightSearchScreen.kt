@@ -74,6 +74,7 @@ import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import java.util.concurrent.TimeUnit
 
+
 class EyesightSearchScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,24 +119,19 @@ class EyesightSearchScreen : AppCompatActivity() {
     @Composable
     fun EyesightImageSearchRunning(viewModel: EyesightSearchViewModel) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        var imgWidth by remember { mutableFloatStateOf(0f) }
-        var imgHeight by remember { mutableFloatStateOf(0f) }
-        var imgSize by remember { mutableStateOf(Size.Zero) }
-        var imgOffset by remember { mutableStateOf(Offset.Zero) }
-        val imgId = viewModel.getDrawableId(uiState.bgImageResource)
+        var imageContentSize by remember { mutableStateOf(Size.Zero) }
+        var imageContentOffset by remember { mutableStateOf(Offset.Zero) }
+        val imageId = viewModel.getDrawableId(uiState.bgImageResource)
 
         AnswerResultBox(viewModel = viewModel) {
             SearchImage(
                 viewModel = viewModel,
-                drawableId = imgId,
-                setImageWidth = { width -> imgWidth = width },
-                setImageHeight = { height -> imgHeight = height },
-                setImageSize = { newSize -> imgSize = newSize },
-                setContentOffset = { off -> imgOffset = off }
+                drawableId = imageId,
+                setContentSize = { newSize -> imageContentSize = newSize },
+                setContentOffset = { off -> imageContentOffset = off }
             )
-
             uiState.items.forEach { item ->
-                val oInfo = viewModel.getOverlayInfo(item, imgSize, imgOffset)
+                val oInfo = viewModel.getOverlayInfo(item, imageContentSize, imageContentOffset)
                 key(item) {
                     ItemOverlay(
                         viewModel = viewModel,
@@ -174,49 +170,59 @@ class EyesightSearchScreen : AppCompatActivity() {
         }
     }
 
+
+    /**
+     * A composable that displays interactive search image and handles its layout calculations.
+     *
+     * This component renders a bitmap image from a drawable resource and calculates various
+     * positioning metrics needed for the overlay components in the eyesight search.
+     *
+     * @param viewModel An [EyesightSearchViewModel] providing responses for images tap gestures.
+     * @param drawableId The Id of drawable resource file.
+     * @param setContentSize Callback that receives the calculated [Size] of the content inside the
+     * image.
+     * @param setContentOffset Callback that receives the calculated [Offset] of the content inside
+     * the image.
+     */
     @Composable
     private fun SearchImage(
         viewModel: EyesightSearchViewModel,
         drawableId: Int,
-        setImageWidth: (width: Float) -> Unit,
-        setImageHeight: (height: Float) -> Unit,
-        setImageSize: (newSize: Size) -> Unit,
+        setContentSize: (newSize: Size) -> Unit,
         setContentOffset: (pos: Offset) -> Unit
     ) {
         val ctx = LocalContext.current
         var contentScale by remember { mutableFloatStateOf(0f) }
-
+        var imageOffset by remember { mutableStateOf(Offset.Zero) }
         val options = BitmapFactory.Options()
         options.inScaled = false
         val bitmap = BitmapFactory.decodeResource(ctx.resources, drawableId, options)
-        val imgContent = bitmap.asImageBitmap()
-        var imgOffset by remember { mutableStateOf(Offset.Zero) }
+        val imageContent = bitmap.asImageBitmap()
+
         Image(
-            bitmap = imgContent,
-            contentDescription = "Clickable img",
+            bitmap = imageContent,
+            contentDescription = "Clickable image",
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.White)
                 .onGloballyPositioned { cords ->
-                    imgOffset = cords.positionInRoot()
-                    val imgWidth = cords.size.width.toFloat()
-                    val imgHeight = cords.size.height.toFloat()
-                    contentScale =
-                        getFitContentScaleInImage(imgWidth, imgHeight, imgContent)
-                    val contentSize = getContentSizeInImage(imgContent, contentScale)
-                    val contentOffset = getContentOffsetInImage(contentSize, imgWidth, imgHeight)
+                    imageOffset = cords.positionInRoot()
+                    val imageWidth = cords.size.width.toFloat()
+                    val imageHeight = cords.size.height.toFloat()
+                    contentScale = getFitContentScaleInImage(imageWidth, imageHeight, imageContent)
+                    val contentSize = getContentSizeInImage(imageContent, contentScale)
+                    val contentOffset =
+                        getContentOffsetInImage(contentSize, imageWidth, imageHeight)
                     setContentOffset(contentOffset)
-                    setImageWidth(imgWidth)
-                    setImageHeight(imgHeight)
-                    setImageSize(contentSize)
+                    setContentSize(contentSize)
                 }
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onTap = { offset ->
                             viewModel.logClickPercInImage(
                                 offset,
-                                imgOffset,
-                                imgContent,
+                                imageOffset,
+                                imageContent,
                                 contentScale
                             )
                             viewModel.moveMissIndicator(offset)
@@ -231,42 +237,68 @@ class EyesightSearchScreen : AppCompatActivity() {
         )
     }
 
+
+    /**
+     * A composable that displays a red cross for miss click indication.
+     *
+     * @param offset The [Offset] of the indicator.
+     * @param show Boolean flag that controls the visibility of the indicator.
+     */
     @Composable
-    private fun MissIndicator(offset: Offset, show: Boolean) {
+    private fun MissIndicator(
+        offset: Offset,
+        show: Boolean
+    ) {
         val boxSize = 30.dp
         val x = with(LocalDensity.current) { offset.x.toDp() - boxSize / 2 }
         val y = with(LocalDensity.current) { offset.y.toDp() - boxSize / 2 }
 
-        Box(
+        AnimatedVisibility(
             modifier = Modifier
                 .size(boxSize)
                 .offset(x, y),
-            contentAlignment = Alignment.Center
+            visible = show,
+            enter = scaleIn(
+                animationSpec = tween(durationMillis = 100)
+            ),
+            exit = scaleOut(
+                animationSpec = tween(durationMillis = 100)
+            )
         ) {
-            AnimatedVisibility(
-                visible = show,
-                enter = scaleIn(
-                    animationSpec = tween(durationMillis = 100)
-                ),
-                exit = scaleOut(
-                    animationSpec = tween(durationMillis = 100)
-                )
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = R.drawable.miss_click_icon),
-                    contentDescription = "miss click icon",
-                    contentScale = ContentScale.FillWidth
-                )
-            }
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = painterResource(id = R.drawable.miss_click_icon),
+                contentDescription = "miss click icon",
+                contentScale = ContentScale.FillWidth
+            )
         }
     }
 
+
+    /**
+     * A composable that displays a color filtering overlay to hide the search item.
+     *
+     * This component draws into the [SearchImage] behind it, using [drawBehind] and
+     * [drawIntoCanvas]. It applies the filtering through three rectangular layers:
+     *
+     * - First layer: Calculates the complementary color of the searched item color and uses [BlendMode.Plus]
+     * to filter out the color of search item.
+     * - Second layer: Uses [BlendMode.Saturation] to preserve darker outlines that would otherwise
+     * be affected by the first layer.
+     * - Third layer: uses [BlendMode.ColorBurn] to turn dark outlines to be indistinguishable
+     * from the original outlines.
+     *
+     * @param viewModel An [EyesightSearchViewModel] that processes overlay click events.
+     * @param width Width of the overlay in pixels.
+     * @param height Height of the overlay in pixels.
+     * @param offset Offset of the overlay, relative to the image content,
+     * @param itemColor Color of the search item, that should be filtered out.
+     */
     @Composable
     private fun ItemOverlay(
         viewModel: EyesightSearchViewModel,
-        height: Float,
         width: Float,
+        height: Float,
         offset: Offset,
         itemColor: ItemColor
     ) {
@@ -282,13 +314,13 @@ class EyesightSearchScreen : AppCompatActivity() {
         val filteredColorModifier = Modifier
             .drawBehind {
                 drawIntoCanvas { canvas ->
-                    val whiteComplement = Color(
+                    val complementaryColor = Color(
                         (255 - itemColor.r),
                         (255 - itemColor.g),
                         (255 - itemColor.b)
                     )
                     val paint = Paint()
-                    paint.color = whiteComplement
+                    paint.color = complementaryColor
                     paint.blendMode = BlendMode.Plus
                     canvas.drawRect(
                         overlayLayer,
