@@ -46,7 +46,7 @@ import com.example.bakalarkaapp.R
  * @param labelLong Secondary label with longer text.
  * @param popUpHeading Heading of [CategoryDetailPopUp].
  * @param popUpContent Content of [CategoryDetailPopUp].
- * @param imgId Drawable resource ID.
+ * @param imageId Drawable resource ID.
  * @param onClick Called when this button is clicked
  */
 @Composable
@@ -56,7 +56,7 @@ fun CategoryButton(
     labelLong: String,
     popUpHeading: String,
     popUpContent: String,
-    imgId: Int,
+    imageId: Int,
     onClick: () -> Unit
 ){
     ElevatedCard(
@@ -78,7 +78,7 @@ fun CategoryButton(
             labelLong = labelLong,
             popUpHeading = popUpHeading,
             popUpContent = popUpContent,
-            imgId = imgId
+            imageId = imageId
         )
     }
     Spacer(modifier = Modifier.height(15.dp))
@@ -91,7 +91,7 @@ private fun CardContent(
     labelLong: String,
     popUpHeading: String,
     popUpContent: String,
-    imgId: Int
+    imageId: Int
 ){
     var showPopUp by remember { mutableStateOf(false) }
     if (showPopUp){
@@ -141,7 +141,7 @@ private fun CardContent(
                 .weight(2f)
                 .scale(1.2f)
                 .sizeIn(maxHeight = 115.dp),
-            painter = painterResource(id = imgId),
+            painter = painterResource(id = imageId),
             contentDescription = "decor image")
     }
 }

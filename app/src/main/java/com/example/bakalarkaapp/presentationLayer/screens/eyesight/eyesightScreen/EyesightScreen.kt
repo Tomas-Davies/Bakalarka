@@ -57,7 +57,7 @@ class EyesightScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_1),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_1),
                         popUpContent = stringResource(id = R.string.eyesight_pop_up_body_1),
-                        imgId = R.drawable.eyesight_btn_1_logo
+                        imageId = R.drawable.eyesight_btn_1_logo
                     )
                 },
                 {
@@ -67,7 +67,7 @@ class EyesightScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_2),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_2),
                         popUpContent = stringResource(id = R.string.eyesight_pop_up_body_2),
-                        imgId = R.drawable.eyesight_btn_2_logo
+                        imageId = R.drawable.eyesight_btn_2_logo
                     )
                 },
                 {
@@ -77,7 +77,7 @@ class EyesightScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_3),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_3),
                         popUpContent = stringResource(id = R.string.eyesight_pop_up_body_3),
-                        imgId = R.drawable.eyesight_btn_3_logo
+                        imageId = R.drawable.eyesight_btn_3_logo
                     )
                 },
                 {
@@ -87,7 +87,7 @@ class EyesightScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_4),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_4),
                         popUpContent = stringResource(id = R.string.eyesight_pop_up_body_4),
-                        imgId = R.drawable.eyesight_btn_4_logo
+                        imageId = R.drawable.eyesight_btn_4_logo
                     )
                 },
                 {
@@ -97,7 +97,7 @@ class EyesightScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_5),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_5),
                         popUpContent = stringResource(id = R.string.eyesight_pop_up_body_5),
-                        imgId = R.drawable.eyesight_btn_5_logo
+                        imageId = R.drawable.eyesight_btn_5_logo
                     )
                 }
             )

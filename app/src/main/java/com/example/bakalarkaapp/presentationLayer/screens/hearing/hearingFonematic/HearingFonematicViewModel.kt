@@ -34,7 +34,7 @@ class HearingFonematicViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     }
 
     override fun validationCond(answer: IValidationAnswer?): Boolean {
-        if (answer is IValidationAnswer.StringAnswer) return (answer.value == _uiState.value.playedObject.imgName)
+        if (answer is IValidationAnswer.StringAnswer) return (answer.value == _uiState.value.playedObject.imageName)
         throw IllegalArgumentException("$this expects answer of type String")
     }
 

@@ -167,7 +167,7 @@ class HearingMemoryScreen : AppCompatActivity() {
                                 horizontalArrangement = Arrangement.spacedBy(18.dp)
                             ) {
                                 items(uiState.showingObjects){ obj ->
-                                    val drawableName = obj.imgName ?: ""
+                                    val drawableName = obj.imageName ?: ""
                                     HearingMemoryCard(
                                         drawableName = drawableName,
                                         viewModel = viewModel

@@ -13,7 +13,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
  * @property isSameShape A value determining if shapes visible on the drawable resource with *imageName* are identical.
  */
 data class ComparisonItem(
-    @JacksonXmlProperty(localName = "imageId")
     override val imageName: String = "",
     val isSameShape: Boolean = true
 ) : ImageLevel

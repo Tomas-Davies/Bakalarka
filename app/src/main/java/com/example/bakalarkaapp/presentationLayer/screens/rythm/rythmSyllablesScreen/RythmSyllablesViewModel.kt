@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class RythmSyllabUiState(
-    val imgName: String,
+    val imageName: String,
     val soundName: String,
     val syllabCount: Int
 )
@@ -49,7 +49,7 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         _buttonsStates.update { l -> l.map { false } }
         _uiState.update { state ->
             state.copy(
-                imgName = currRound.imageName,
+                imageName = currRound.imageName,
                 soundName = currRound.soundName,
                 syllabCount = currRound.syllabCount
             )

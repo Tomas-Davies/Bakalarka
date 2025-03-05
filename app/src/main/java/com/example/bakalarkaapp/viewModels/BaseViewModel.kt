@@ -48,7 +48,7 @@ abstract class BaseViewModel(app: LogoApp) : ViewModel() {
     fun getDrawableId(drawableName: String): Int {
         var id = appContext.resources.getIdentifier(drawableName, "drawable", appContext.packageName)
         if (id == 0) {
-            id = appContext.resources.getIdentifier("dummy_img_500", "drawable", appContext.packageName)
+            id = appContext.resources.getIdentifier("dummy_image_500", "drawable", appContext.packageName)
         }
         return id
     }

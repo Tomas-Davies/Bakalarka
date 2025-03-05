@@ -113,7 +113,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     }
 
     private fun getInitiallObJImages(): List<String> {
-        return initallObjects.map { obj -> obj.imgName ?: "" }
+        return initallObjects.map { obj -> obj.imageName ?: "" }
     }
 
 

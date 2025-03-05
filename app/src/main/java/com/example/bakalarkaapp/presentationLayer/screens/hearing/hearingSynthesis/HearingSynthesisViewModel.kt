@@ -30,7 +30,7 @@ class HearingSynthesisViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     }
 
     override fun validationCond(answer: IValidationAnswer?): Boolean {
-        if (answer is IValidationAnswer.StringAnswer) return answer.value == spellingObject.imgName
+        if (answer is IValidationAnswer.StringAnswer) return answer.value == spellingObject.imageName
         throw IllegalArgumentException("$this expects answer of type String")
     }
 

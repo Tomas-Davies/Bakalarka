@@ -104,7 +104,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
                         horizontalArrangement = Arrangement.spacedBy(18.dp)
                     ) {
                         items(uiState.roundObjects) { obj ->
-                            val drawableName = obj.imgName ?: ""
+                            val drawableName = obj.imageName ?: ""
                             val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
                             val drawable = viewModel.getDrawableId(drawableName)
                             ImageCard(

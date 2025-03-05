@@ -88,7 +88,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
-                    val imageId = viewModel.getDrawableId(uiState.imgName)
+                    val imageId = viewModel.getDrawableId(uiState.imageName)
                     Image(
                         modifier = Modifier
                             .fillMaxWidth()

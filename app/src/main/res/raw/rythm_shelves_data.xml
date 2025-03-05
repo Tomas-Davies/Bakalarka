@@ -2,38 +2,38 @@
 <data>
     <round>
         <rhymes>
-            <word imgName="fenka" soundName="pes" />
-            <word imgName="les_2" soundName="les" />
+            <word imageName="fenka" soundName="pes" />
+            <word imageName="les_2" soundName="les" />
         </rhymes>
         <rhymes>
-            <word imgName="kost" soundName="kost" />
-            <word imgName="most" soundName="most" />
+            <word imageName="kost" soundName="kost" />
+            <word imageName="most" soundName="most" />
         </rhymes>
         <rhymes>
-            <word imgName="liska" soundName="liska" />
-            <word imgName="siska" soundName="siska" />
+            <word imageName="liska" soundName="liska" />
+            <word imageName="siska" soundName="siska" />
         </rhymes>
         <rhymes>
-            <word imgName="drak" soundName="drak" />
-            <word imgName="mrak" soundName="mrak" />
+            <word imageName="drak" soundName="drak" />
+            <word imageName="mrak" soundName="mrak" />
         </rhymes>
     </round>
     <round>
         <rhymes>
-            <word imgName="kostel" soundName="kostel" />
-            <word imgName="postel" soundName="postel" />
+            <word imageName="kostel" soundName="kostel" />
+            <word imageName="postel" soundName="postel" />
         </rhymes>
         <rhymes>
-            <word imgName="bota" soundName="bota" />
-            <word imgName="nota" soundName="nota" />
+            <word imageName="bota" soundName="bota" />
+            <word imageName="nota" soundName="nota" />
         </rhymes>
         <rhymes>
-            <word imgName="zvon" soundName="zvon" />
-            <word imgName="slon" soundName="slon" />
+            <word imageName="zvon" soundName="zvon" />
+            <word imageName="slon" soundName="slon" />
         </rhymes>
         <rhymes>
-            <word imgName="nos" soundName="nos" />
-            <word imgName="kos" soundName="kos" />
+            <word imageName="nos" soundName="nos" />
+            <word imageName="kos" soundName="kos" />
         </rhymes>
     </round>
 </data>

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
     <round>
-        <roundContent imgName="bota" soundName="bota_spelling"/>
-        <roundContent imgName="buvol" soundName="buvol_spelling"/>
-        <roundContent imgName="buchta" soundName="buchta_spelling"/>
+        <roundContent imageName="bota" soundName="bota_spelling"/>
+        <roundContent imageName="buvol" soundName="buvol_spelling"/>
+        <roundContent imageName="buchta" soundName="buchta_spelling"/>
     </round>
     <round>
-        <roundContent imgName="cibule" soundName="cibule_spelling"/>
-        <roundContent imgName="cihla" soundName="cihla_spelling"/>
-        <roundContent imgName="datel" soundName="datel_spelling"/>
-        <roundContent imgName="duch" soundName="duch_spelling"/>
+        <roundContent imageName="cibule" soundName="cibule_spelling"/>
+        <roundContent imageName="cihla" soundName="cihla_spelling"/>
+        <roundContent imageName="datel" soundName="datel_spelling"/>
+        <roundContent imageName="duch" soundName="duch_spelling"/>
     </round>
     <round>
-        <roundContent imgName="bouda" soundName="bouda_spelling"/>
-        <roundContent imgName="casopis" soundName="casopis_spelling"/>
-        <roundContent imgName="chata" soundName="chata_spelling"/>
-        <roundContent imgName="brambory" soundName="brambory_spelling"/>
-        <roundContent imgName="beruska" soundName="beruska_spelling"/>
-        <roundContent imgName="bochnik" soundName="bochnik_spelling"/>
+        <roundContent imageName="bouda" soundName="bouda_spelling"/>
+        <roundContent imageName="casopis" soundName="casopis_spelling"/>
+        <roundContent imageName="chata" soundName="chata_spelling"/>
+        <roundContent imageName="brambory" soundName="brambory_spelling"/>
+        <roundContent imageName="beruska" soundName="beruska_spelling"/>
+        <roundContent imageName="bochnik" soundName="bochnik_spelling"/>
     </round>
 </data>

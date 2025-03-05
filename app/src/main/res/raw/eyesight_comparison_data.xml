@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
     <comparisonItem>
-        <imageId>comparison_image_1</imageId>
+        <imageName>comparison_image_1</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_2</imageId>
+        <imageName>comparison_image_2</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_3</imageId>
+        <imageName>comparison_image_3</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_4</imageId>
+        <imageName>comparison_image_4</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_5</imageId>
+        <imageName>comparison_image_5</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_6</imageId>
+        <imageName>comparison_image_6</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_7</imageId>
+        <imageName>comparison_image_7</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_8</imageId>
+        <imageName>comparison_image_8</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_9</imageId>
+        <imageName>comparison_image_9</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_10</imageId>
+        <imageName>comparison_image_10</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_11</imageId>
+        <imageName>comparison_image_11</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
     <comparisonItem>
-        <imageId>comparison_image_12</imageId>
+        <imageName>comparison_image_12</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
 </data>

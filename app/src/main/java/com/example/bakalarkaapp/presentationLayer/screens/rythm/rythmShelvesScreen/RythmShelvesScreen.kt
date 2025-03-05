@@ -198,8 +198,8 @@ class RythmShelvesScreen : AppCompatActivity() {
         secondClickedIdx: Int,
         enabledStates: List<Boolean>
     ){
-        val imgName = obj.imgName ?: ""
-        val drawableId = viewModel.getDrawableId(imgName)
+        val imageName = obj.imageName ?: ""
+        val drawableId = viewModel.getDrawableId(imageName)
         val soundName = obj.soundName ?: ""
         val soundId = viewModel.getSoundId(soundName)
         val idx = objects.indexOf(obj)

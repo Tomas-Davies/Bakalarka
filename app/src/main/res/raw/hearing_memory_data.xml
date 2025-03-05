@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
     <round>
-        <roundContent imgName="buben" soundName="buben"/>
-        <roundContent imgName="kure" soundName="kure"/>
-        <roundContent imgName="kuzel" soundName="kuzel"/>
-        <roundContent imgName="lyze" soundName="lyze"/>
-        <roundContent imgName="opice" soundName="opice"/>
+        <roundContent imageName="buben" soundName="buben"/>
+        <roundContent imageName="kure" soundName="kure"/>
+        <roundContent imageName="kuzel" soundName="kuzel"/>
+        <roundContent imageName="lyze" soundName="lyze"/>
+        <roundContent imageName="opice" soundName="opice"/>
         <toBePlayedCount>3</toBePlayedCount>
     </round>
     <round>
-        <roundContent imgName="ovecka" soundName="ovecka"/>
-        <roundContent imgName="cmelak" soundName="cmelak"/>
-        <roundContent imgName="sekacka" soundName="sekacka"/>
-        <roundContent imgName="vajicko" soundName="vajicko"/>
-        <roundContent imgName="zajic" soundName="zajic"/>
-        <roundContent imgName="zub" soundName="zub"/>
-        <roundContent imgName="dopis" soundName="dopis"/>
+        <roundContent imageName="ovecka" soundName="ovecka"/>
+        <roundContent imageName="cmelak" soundName="cmelak"/>
+        <roundContent imageName="sekacka" soundName="sekacka"/>
+        <roundContent imageName="vajicko" soundName="vajicko"/>
+        <roundContent imageName="zajic" soundName="zajic"/>
+        <roundContent imageName="zub" soundName="zub"/>
+        <roundContent imageName="dopis" soundName="dopis"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
     <round>
-        <roundContent imgName="bouda" soundName="bouda"/>
-        <roundContent imgName="chata" soundName="chata"/>
-        <roundContent imgName="brambory" soundName="brambory"/>
-        <roundContent imgName="beruska" soundName="beruska"/>
-        <roundContent imgName="bochnik" soundName="bochnik"/>
-        <roundContent imgName="baba" soundName="baba"/>
+        <roundContent imageName="bouda" soundName="bouda"/>
+        <roundContent imageName="chata" soundName="chata"/>
+        <roundContent imageName="brambory" soundName="brambory"/>
+        <roundContent imageName="beruska" soundName="beruska"/>
+        <roundContent imageName="bochnik" soundName="bochnik"/>
+        <roundContent imageName="baba" soundName="baba"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
 </data>

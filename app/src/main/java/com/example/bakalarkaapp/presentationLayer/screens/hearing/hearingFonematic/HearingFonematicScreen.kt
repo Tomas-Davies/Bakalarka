@@ -105,7 +105,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                         verticalArrangement = Arrangement.Top
                     ) {
                         targetList.forEach { obj ->
-                            val drawableName = obj.imgName ?: ""
+                            val drawableName = obj.imageName ?: ""
                             val drawable = viewModel.getDrawableId(drawableName)
                             ImageCard(
                                 modifier = Modifier

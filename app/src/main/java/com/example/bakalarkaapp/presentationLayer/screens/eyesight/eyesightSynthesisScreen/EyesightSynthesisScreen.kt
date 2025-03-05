@@ -109,16 +109,16 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun EyesightSynthesisScreenRunning(viewModel: EyesightSynthesisViewModel) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        var contentScale by remember { mutableFloatStateOf(1f) }
-        var contentOffsetInRoot by remember { mutableStateOf(Offset.Zero) }
-        var imgWidth by remember { mutableFloatStateOf(0f) }
-        var imgHeight by remember { mutableFloatStateOf(0f) }
+        var imageContentScale by remember { mutableFloatStateOf(1f) }
+        var imageContentOffsetInRoot by remember { mutableStateOf(Offset.Zero) }
+        var imageWidth by remember { mutableFloatStateOf(0f) }
+        var imageHeight by remember { mutableFloatStateOf(0f) }
         val scaledPieces by remember {
             derivedStateOf {
                 uiState.pieces.map { piece ->
                     piece.copy(
-                        width = (piece.width.toFloat() * contentScale).toInt(),
-                        height = (piece.height.toFloat() * contentScale).toInt(),
+                        width = (piece.width.toFloat() * imageContentScale).toInt(),
+                        height = (piece.height.toFloat() * imageContentScale).toInt(),
                         bitmap = piece.bitmap
                     )
                 }
@@ -126,9 +126,9 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         }
         var initialOffsets by remember(uiState) { mutableStateOf(emptyList<Offset>()) }
 
-        LaunchedEffect(imgWidth, imgHeight, scaledPieces, uiState) {
-            if (imgWidth > 0 && imgHeight > 0 && scaledPieces.isNotEmpty()) {
-                initialOffsets = viewModel.getInitialOffsets(imgWidth, imgHeight, scaledPieces)
+        LaunchedEffect(imageWidth, imageHeight, scaledPieces, uiState) {
+            if (imageWidth > 0 && imageHeight > 0 && scaledPieces.isNotEmpty()) {
+                initialOffsets = viewModel.getInitialOffsets(imageWidth, imageHeight, scaledPieces)
             }
         }
 
@@ -138,27 +138,27 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel
         ) {
-            val imgContent = uiState.image.asImageBitmap()
+            val imageContent = uiState.image.asImageBitmap()
             Image(
                 modifier = Modifier
                     .fillMaxHeight(0.5f)
                     .fillMaxWidth()
                     .alpha(0.3f)
                     .onGloballyPositioned { cords ->
-                        imgWidth = cords.size.width.toFloat()
-                        imgHeight = cords.size.height.toFloat()
-                        contentScale = getFitContentScaleInImage(imgWidth, imgHeight, imgContent)
-                        val contentSize = getContentSizeInImage(imgContent, contentScale)
+                        imageWidth = cords.size.width.toFloat()
+                        imageHeight = cords.size.height.toFloat()
+                        imageContentScale = getFitContentScaleInImage(imageWidth, imageHeight, imageContent)
+                        val contentSize = getContentSizeInImage(imageContent, imageContentScale)
                         val contentOffset =
-                            getContentOffsetInImage(contentSize, imgWidth, imgHeight)
+                            getContentOffsetInImage(contentSize, imageWidth, imageHeight)
 
-                        contentOffsetInRoot = Offset(
+                        imageContentOffsetInRoot = Offset(
                             cords.positionInRoot().x + contentOffset.x,
                             cords.positionInRoot().y + contentOffset.y
                         )
                     },
-                bitmap = imgContent,
-                contentDescription = "puzzle img"
+                bitmap = imageContent,
+                contentDescription = "puzzle image"
             )
 
             Box(
@@ -178,8 +178,8 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                                 piece = piece,
                                 initialOffset = initialOffsets[index],
                                 bottomBoxOffset = bottomBoxOffset,
-                                contentOffsetInRoot = contentOffsetInRoot,
-                                contentScale = contentScale,
+                                contentOffsetInRoot = imageContentOffsetInRoot,
+                                contentScale = imageContentScale,
                                 viewModel = viewModel,
                                 key = uiState.image.hashCode()
                             )

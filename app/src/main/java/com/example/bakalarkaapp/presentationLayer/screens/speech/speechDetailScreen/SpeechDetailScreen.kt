@@ -89,7 +89,7 @@ class SpeechDetailScreen: ComponentActivity() {
                 .padding(15.dp, pdVal.calculateTopPadding(), 15.dp, 0.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val drawableName = uiState.currentWord.imgName ?: ""
+            val drawableName = uiState.currentWord.imageName ?: ""
             val drawableId = viewModel.getDrawableId(drawableName)
 
             Column(

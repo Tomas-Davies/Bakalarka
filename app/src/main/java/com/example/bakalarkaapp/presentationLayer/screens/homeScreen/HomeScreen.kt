@@ -121,35 +121,35 @@ class HomeScreen: AppCompatActivity() {
                         title = stringResource(id = R.string.category_speech),
                         id = 0,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.home_speech_btn_img
+                        imageId = R.drawable.home_speech_btn_image
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_eyesight),
                         id = 1,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.home_eyesight_btn_img
+                        imageId = R.drawable.home_eyesight_btn_image
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_hearing),
                         id = 2,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.home_hearing_btn_img
+                        imageId = R.drawable.home_hearing_btn_image
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_rythm),
                         id = 3,
                         ratio = menuItemRatio,
-                        imgId = R.drawable.home_rythm_btn_img
+                        imageId = R.drawable.home_rythm_btn_image
                     ) }
                 item(span = { GridItemSpan(2) }) {
                     MenuCard(
                         title = stringResource(id = R.string.category_tales),
                         id = 4,
                         ratio = menuItemWideRatio,
-                        imgId = R.drawable.home_tales_btn_img
+                        imageId = R.drawable.home_tales_btn_image
                     ) }
             }
             Row(
@@ -177,7 +177,12 @@ class HomeScreen: AppCompatActivity() {
     }
 
     @Composable
-    private fun MenuCard(title: String, id: Int, ratio: Float = 1f, imgId: Int = R.drawable.dummy_img_500){
+    private fun MenuCard(
+        title: String,
+        id: Int,
+        ratio: Float = 1f,
+        imageId: Int = R.drawable.dummy_image_500
+    ){
         val ctx = LocalContext.current
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -192,7 +197,7 @@ class HomeScreen: AppCompatActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .paint(painterResource(id = imgId), contentScale = ContentScale.FillBounds),
+                        .paint(painterResource(id = imageId), contentScale = ContentScale.FillBounds),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {

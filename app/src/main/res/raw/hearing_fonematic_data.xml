@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
     <round>
-        <roundContent imgName="koza" soundName="koza"/>
-        <roundContent imgName="kosa" soundName="kosa"/>
+        <roundContent imageName="koza" soundName="koza"/>
+        <roundContent imageName="kosa" soundName="kosa"/>
     </round>
     <round>
-        <roundContent imgName="fenka" soundName="pes"/>
-        <roundContent imgName="les" soundName="les"/>
+        <roundContent imageName="fenka" soundName="pes"/>
+        <roundContent imageName="les" soundName="les"/>
     </round>
     <round>
-        <roundContent imgName="kos" soundName="kos"/>
-        <roundContent imgName="nos" soundName="nos"/>
+        <roundContent imageName="kos" soundName="kos"/>
+        <roundContent imageName="nos" soundName="nos"/>
     </round>
     <round>
-        <roundContent imgName="rohy" soundName="rohy"/>
-        <roundContent imgName="nohy" soundName="nohy"/>
+        <roundContent imageName="rohy" soundName="rohy"/>
+        <roundContent imageName="nohy" soundName="nohy"/>
     </round>
     <round>
-        <roundContent imgName="pusa" soundName="pusa"/>
-        <roundContent imgName="husa" soundName="husa"/>
+        <roundContent imageName="pusa" soundName="pusa"/>
+        <roundContent imageName="husa" soundName="husa"/>
     </round>
 </data>
