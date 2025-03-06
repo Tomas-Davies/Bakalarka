@@ -138,7 +138,7 @@ fun ResultProgressBar(
     updateMedal: (progressAnimation: Float) -> Unit
 ) {
     var progress by remember { mutableFloatStateOf(0F) }
-    val animDuration = 1700
+    val animDuration = 1_700
     val progressAnimation by animateFloatAsState(
         targetValue = progress,
         animationSpec = tween(durationMillis = animDuration, easing = FastOutSlowInEasing),

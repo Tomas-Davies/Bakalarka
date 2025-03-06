@@ -56,7 +56,7 @@ data class Rect(
 
 class EyesightSynthesisViewModel(
     app: LogoApp,
-    levelIndex: Int,
+    private val levelIndex: Int,
     private val appContext: Context
 ) : RoundsViewModel(app) {
     init {
@@ -109,6 +109,7 @@ class EyesightSynthesisViewModel(
     }
 
     override fun doRestart() {
+        roundIdx = levelIndex
         currImage = bitmaps[roundIdx]
         pieceCount = rounds[roundIdx].pieceCount
         placedPieces = 0

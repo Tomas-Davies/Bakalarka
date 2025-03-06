@@ -98,7 +98,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
                 var messageId by remember { mutableIntStateOf(R.string.eyesight_memory_label_1) }
 
                 LinearTimerIndicator(
-                    msDuration = 15000,
+                    msDuration = 15_000,
                     onFinish = {
                         viewModel.showExtraItem()
                         messageId = R.string.eyesight_memory_label_2

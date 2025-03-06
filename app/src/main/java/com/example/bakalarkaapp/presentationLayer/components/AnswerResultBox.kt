@@ -49,7 +49,7 @@ fun AnswerResultBox(
     viewModel: RoundsViewModel,
     contentAlignment: Alignment = Alignment.TopStart,
     content: @Composable BoxScope.() -> Unit
-){
+) {
     BoxWithConstraints(
         modifier = modifier,
         contentAlignment = contentAlignment
@@ -63,8 +63,8 @@ fun AnswerResultBox(
             modifier = Modifier.align(Alignment.Center),
             answerResultState = answerResultState
         )
-        val width = with(LocalDensity.current){ maxWidth.toPx() }
-        val height = with(LocalDensity.current){ maxHeight.toPx() }
+        val width = with(LocalDensity.current) { maxWidth.toPx() }
+        val height = with(LocalDensity.current) { maxHeight.toPx() }
         val party = Party(
             angle = 45,
             speed = 3f,
@@ -93,7 +93,7 @@ fun AnswerResultBox(
             )
         )
 
-        if (answerResultState.showMessage && answerResultState.correctAnswer){
+        if (answerResultState.showMessage && answerResultState.correctAnswer) {
             Box(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -116,12 +116,12 @@ fun AnswerResultBox(
 private fun AnswerResultCard(
     modifier: Modifier = Modifier,
     answerResultState: ResultMessageState
-){
+) {
     AnimatedVisibility(
         modifier = modifier,
         visible = answerResultState.showMessage,
-        enter = slideInHorizontally(initialOffsetX = {fullWidth ->  -fullWidth * 2}),
-        exit = slideOutHorizontally(targetOffsetX = {fullWidth ->  fullWidth * 2})
+        enter = slideInHorizontally(initialOffsetX = { fullWidth -> -fullWidth * 2 }),
+        exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth * 2 })
     ) {
         var chosenColor = Color.Red
         var txt = stringResource(id = R.string.wrong_label)

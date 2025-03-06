@@ -23,7 +23,7 @@ data class EyesightSearchUiState(
     val items: List<SearchItemOverlay>
 )
 
-class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(app) {
+class EyesightSearchViewModel(app: LogoApp, private val levelIndex: Int): RoundsViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -85,19 +85,24 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(ap
 
     override fun updateData() {
         if (nextRound()){
-            currentRound = rounds[roundIdx]
-            _uiState.update { state ->
-                state.copy(
-                    bgImageResource = currentRound.imageName,
-                    items = currentRound.items
-                )
-            }
-            _itemsFound.update { 0 }
+            updateState()
         }
     }
 
+    private fun updateState(){
+        currentRound = rounds[roundIdx]
+        _uiState.update { state ->
+            state.copy(
+                bgImageResource = currentRound.imageName,
+                items = currentRound.items
+            )
+        }
+        _itemsFound.update { 0 }
+    }
+
     override fun doRestart() {
-        updateData()
+        roundIdx = levelIndex
+        updateState()
     }
 
     fun moveMissIndicator(offset: Offset){

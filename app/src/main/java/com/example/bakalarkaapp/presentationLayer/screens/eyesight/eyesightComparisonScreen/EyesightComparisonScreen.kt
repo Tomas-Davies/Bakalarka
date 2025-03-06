@@ -89,7 +89,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                     val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
                     LinearTimerIndicator(
-                        msDuration = 15000,
+                        msDuration = 15_000,
                         onFinish = {
                             if(enabled){
                                 viewModel.playSound(R.raw.wrong_answer)

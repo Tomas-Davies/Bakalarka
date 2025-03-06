@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -110,7 +111,6 @@ class HomeScreen: AppCompatActivity() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-
             LazyVerticalGrid(
                 horizontalArrangement = Arrangement.spacedBy(18.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp),
@@ -121,35 +121,40 @@ class HomeScreen: AppCompatActivity() {
                         title = stringResource(id = R.string.category_speech),
                         id = 0,
                         ratio = menuItemRatio,
-                        imageId = R.drawable.home_speech_btn_image
+                        imageId = R.drawable.home_speech_btn_image,
+                        colorId = R.color.speech_200
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_eyesight),
                         id = 1,
                         ratio = menuItemRatio,
-                        imageId = R.drawable.home_eyesight_btn_image
+                        imageId = R.drawable.home_eyesight_btn_image,
+                        colorId = R.color.eyesight_200
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_hearing),
                         id = 2,
                         ratio = menuItemRatio,
-                        imageId = R.drawable.home_hearing_btn_image
+                        imageId = R.drawable.home_hearing_btn_image,
+                        colorId = R.color.hearing_200
                     ) }
                 item {
                     MenuCard(
                         title = stringResource(id = R.string.category_rythm),
                         id = 3,
                         ratio = menuItemRatio,
-                        imageId = R.drawable.home_rythm_btn_image
+                        imageId = R.drawable.home_rythm_btn_image,
+                        colorId = R.color.rythm_200
                     ) }
                 item(span = { GridItemSpan(2) }) {
                     MenuCard(
                         title = stringResource(id = R.string.category_tales),
                         id = 4,
                         ratio = menuItemWideRatio,
-                        imageId = R.drawable.home_tales_btn_image
+                        imageId = R.drawable.home_tales_btn_image,
+                        colorId = R.color.tales_200
                     ) }
             }
             Row(
@@ -181,7 +186,8 @@ class HomeScreen: AppCompatActivity() {
         title: String,
         id: Int,
         ratio: Float = 1f,
-        imageId: Int = R.drawable.dummy_image_500
+        imageId: Int = R.drawable.dummy_image_500,
+        colorId: Int
     ){
         val ctx = LocalContext.current
         Column(
@@ -197,7 +203,11 @@ class HomeScreen: AppCompatActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .paint(painterResource(id = imageId), contentScale = ContentScale.FillBounds),
+                        .background(colorResource(id = colorId))
+                        .paint(
+                            painterResource(id = imageId),
+                            contentScale = ContentScale.Fit
+                        ),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
