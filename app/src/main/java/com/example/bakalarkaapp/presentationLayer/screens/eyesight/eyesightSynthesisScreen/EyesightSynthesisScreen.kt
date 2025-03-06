@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -38,7 +37,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.positionInRoot
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
@@ -85,7 +83,6 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
     @Composable
     private fun EyesightSynthesisScreenContent(viewModel: EyesightSynthesisViewModel) {
-        val ctx = LocalContext.current
         ScreenWrapper(
             title = stringResource(id = R.string.eyesight_synth_label)
         ) {
@@ -95,10 +92,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                RunningOrFinishedRoundScreen(
-                    viewModel = viewModel,
-                    onFinish = { (ctx as Activity).finish() }
-                ) {
+                RunningOrFinishedRoundScreen(viewModel = viewModel) {
                     EyesightSynthesisScreenRunning(viewModel = viewModel)
                 }
             }

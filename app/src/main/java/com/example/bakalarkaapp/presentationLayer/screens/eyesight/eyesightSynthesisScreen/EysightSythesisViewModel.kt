@@ -69,6 +69,7 @@ class EyesightSynthesisViewModel(
     private var pieceCount = rounds[roundIdx].pieceCount
     private val threshold = 200
     private var placedPieces = 0
+    private var pieceSum = pieceCount
     private val _uiState =
         MutableStateFlow(EyesightSynthesisUiState(currImage, cutImage(currImage, pieceCount)))
     val uiState = _uiState.asStateFlow()
@@ -83,7 +84,6 @@ class EyesightSynthesisViewModel(
                 result = true,
                 message = appContext.resources.getString(R.string.message_positive)
             )
-            scoreInc()
             delay(1500)
             updateData()
         }
@@ -94,6 +94,7 @@ class EyesightSynthesisViewModel(
             currImage = bitmaps[roundIdx]
             pieceCount = rounds[roundIdx].pieceCount
             placedPieces = 0
+            pieceSum += pieceCount
             updateState()
         }
     }
@@ -105,6 +106,18 @@ class EyesightSynthesisViewModel(
                 pieces = cutImage(currImage, pieceCount)
             )
         }
+    }
+
+    override fun doRestart() {
+        currImage = bitmaps[roundIdx]
+        pieceCount = rounds[roundIdx].pieceCount
+        placedPieces = 0
+        pieceSum = pieceCount
+        updateState()
+    }
+
+    override fun scorePercentage(): Int {
+        return (score * 100) / pieceSum
     }
 
 
@@ -230,10 +243,12 @@ class EyesightSynthesisViewModel(
                 y = contentOffset.y + scaledTargetY
             )
             placedPieces++
+            scoreInc()
             playResultSound(true)
             vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
             return offset - bottomBoxOffset
         } else {
+            scoreDesc()
             playResultSound(result = false)
             return piece.initialOffset
         }

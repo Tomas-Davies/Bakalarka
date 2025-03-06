@@ -67,6 +67,8 @@ class LevelsScreen : AppCompatActivity() {
         val app = application as LogoApp
         val repoTypeName = intent.getIntExtra(RepositoryType.TAG, 0)
 
+        // Chooses correct viewModel initialization based on repository type,
+        // as it supports more types of exercises
         val viewModel = when(repoTypeName) {
             RepositoryType.EYESIGHT_SEARCH.id -> {
                 val repo = app.eyesightSearchRepository

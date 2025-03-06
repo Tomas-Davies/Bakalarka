@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
+import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.dataLayer.models.SearchItemOverlay
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,11 +23,12 @@ data class EyesightSearchUiState(
     val items: List<SearchItemOverlay>
 )
 
-class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundViewModel(app) {
+class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(app) {
     init {
         roundIdx = levelIndex
     }
 
+    private val appContext = app.applicationContext
     private val searchRepo = app.eyesightSearchRepository
     private val rounds = searchRepo.data
     private var currentRound = rounds[roundIdx]
@@ -52,24 +53,26 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
         count = rounds.size
     }
 
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-        return itemsFound.value == currentRound.items.size
-    }
-    override fun playOnCorrectSound() {}
-    override fun playOnWrongSound() {}
-    override fun scoreDesc() {}
-    override fun messageShowWrong() {}
-    override fun afterNewData() {
-        _itemsFound.update { 0 }
-    }
-
     fun onOverlayClick() {
         playResultSound(true)
         vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         clickCounter++
         foundCatsCounter++
-        _itemsFound.value++
-        validateAnswer(null)
+        _itemsFound.update { _itemsFound.value + 1 }
+        if (itemsFound.value == currentRound.items.size){
+            moveNext()
+        }
+    }
+
+    private fun moveNext() {
+        viewModelScope.launch {
+            showMessage(
+                result = true,
+                message = appContext.resources.getString(R.string.message_positive)
+            )
+            delay(1500)
+            updateData()
+        }
     }
 
     fun missClick(){
@@ -81,12 +84,15 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
     }
 
     override fun updateData() {
-        currentRound = rounds[roundIdx]
-        _uiState.update { state ->
-            state.copy(
-                bgImageResource = currentRound.imageName,
-                items = currentRound.items
-            )
+        if (nextRound()){
+            currentRound = rounds[roundIdx]
+            _uiState.update { state ->
+                state.copy(
+                    bgImageResource = currentRound.imageName,
+                    items = currentRound.items
+                )
+            }
+            _itemsFound.update { 0 }
         }
     }
 
