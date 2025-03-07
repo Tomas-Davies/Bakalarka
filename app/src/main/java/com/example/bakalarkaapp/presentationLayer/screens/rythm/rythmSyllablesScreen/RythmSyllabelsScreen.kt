@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmSyllablesScreen
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -27,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,9 +35,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
@@ -59,13 +56,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val ctx = LocalContext.current
-                    RunningOrFinishedRoundScreen(
-                        viewModel = viewModel,
-                        onFinish = { (ctx as Activity).finish() }
-                    ){
-                        RythmSyllableScreenContent(viewModel)
-                    }
+                    RythmSyllableScreenContent(viewModel)
                 }
             }
         }
@@ -74,10 +65,14 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     @Composable
     private fun RythmSyllableScreenContent(viewModel: RythmSyllablesViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.rythm_menu_label_2)
         ) {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            AnswerResultBox(viewModel = viewModel) {
+            RoundsCompletedBox(
+                viewModel = viewModel,
+                onExit = { this.finish() }
+            ) {
                 Column(
                     modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -118,7 +113,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                         contentAlignment = Alignment.Center
                     ) {
                         Button(
-                            onClick = { viewModel.validateAnswer(null) },
+                            onClick = { viewModel.onBtnClick() },
                             enabled = enabled
                         ) {
                             Text(text = stringResource(id = R.string.done_btn_label))
@@ -142,7 +137,6 @@ class RythmSyllabelsScreen : AppCompatActivity() {
             buttonsStates.forEachIndexed { idx, selected ->
                 SyllableIndicator(
                     modifier = Modifier.weight(1f),
-                    onClick = { },
                     idx = idx,
                     viewModel = viewModel,
                     selected = selected
@@ -154,7 +148,6 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     @Composable
     private fun SyllableIndicator(
         modifier: Modifier,
-        onClick: () -> Unit,
         idx: Int,
         viewModel: RythmSyllablesViewModel,
         selected: Boolean
@@ -178,7 +171,6 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                 .padding(8.dp)
                 .aspectRatio(1f),
             onClick = {
-                onClick()
                 viewModel.onItemClick(idx)
             },
             shape = RoundedCornerShape(100),

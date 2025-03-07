@@ -70,6 +70,7 @@ class SpeechDetailScreen: ComponentActivity() {
     ){
         val category = if (posLabel != "NONE") posLabel else letterLabel
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.category_speech) + " - " + category
         ){pdVal ->
             SpeechDetail(pdVal, viewModel)

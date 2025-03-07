@@ -26,14 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -59,6 +57,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun HearingSynthScreenContent(viewModel: HearingSynthesisViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.hearing_menu_label_3)
         ) {
             Column(
@@ -66,9 +65,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
                     .fillMaxSize()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
-                RunningOrFinishedRoundScreen(viewModel = viewModel) {
-                    HearingSynthRunning(viewModel = viewModel)
-                }
+                HearingSynthRunning(viewModel = viewModel)
             }
         }
     }
@@ -76,10 +73,11 @@ class HearingSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun HearingSynthRunning(viewModel: HearingSynthesisViewModel) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        AnswerResultBox(
+        RoundsCompletedBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
+            onExit = { this.finish() }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -112,9 +110,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
                                 drawable = drawable,
                                 enabled = enabled,
                                 onClick = {
-                                    viewModel.validateAnswer(
-                                        IValidationAnswer.StringAnswer(drawableName)
-                                    )
+                                    viewModel.onCardClick(drawableName)
                                 }
                             )
                         }

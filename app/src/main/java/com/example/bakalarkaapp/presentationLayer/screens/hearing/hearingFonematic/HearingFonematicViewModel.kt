@@ -2,20 +2,21 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonema
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.WordContent
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class HearingFonematicUiState(
     val objects: List<WordContent>,
     val playedObject: WordContent
 )
 
-class HearingFonematicViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
+class HearingFonematicViewModel(app: LogoApp) : RoundsViewModel(app) {
     private val repo = app.hearingFonematicRepository
     private val rounds = repo.data.shuffled().sortedBy { round -> round.objects.size }
     private var currentRound = rounds[roundIdx]
@@ -27,21 +28,48 @@ class HearingFonematicViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         )
     )
     val uiState = _uiState.asStateFlow()
+    override var roundSetSize = 5
 
     init {
         count = rounds.count()
         _buttonsEnabled.update { false }
     }
 
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-        if (answer is IValidationAnswer.StringAnswer) return (answer.value == _uiState.value.playedObject.imageName)
-        throw IllegalArgumentException("$this expects answer of type String")
+    fun onCardClick(drawableName: String){
+        clickedCounterInc()
+        viewModelScope.launch {
+            if (drawableName == _uiState.value.playedObject.imageName){
+                onCorrectAnswer()
+            } else {
+                onWrongAnswer()
+            }
+        }
     }
 
-    override fun beforeNewData() {
-        _buttonsEnabled.update { false }
+    private suspend fun onCorrectAnswer(){
+        disableButtons()
+        playOnCorrectSound()
+        showCorrectMessage()
+        scoreInc()
+        roundsCompletedInc()
+
+        if (roundSetCompletedCheck()){
+            showRoundSetDialog()
+        } else {
+            doContinue()
+        }
     }
-    override fun afterNewData() {}
+
+    private suspend fun onWrongAnswer(){
+        playOnWrongSound()
+        showWrongMessage()
+    }
+
+    override fun doContinue() {
+        super.doContinue()
+        disableButtons()
+    }
+
 
     override fun updateData() {
         currentRound = rounds[roundIdx]
@@ -53,10 +81,6 @@ class HearingFonematicViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
                 playedObject = currentObject.random()
             )
         }
-    }
-
-    override fun doRestart() {
-        updateData()
     }
 }
 

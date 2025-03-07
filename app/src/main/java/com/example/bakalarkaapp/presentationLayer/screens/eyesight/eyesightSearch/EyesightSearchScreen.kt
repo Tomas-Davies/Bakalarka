@@ -60,8 +60,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.ItemColor
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
@@ -99,6 +98,7 @@ class EyesightSearchScreen : AppCompatActivity() {
     @Composable
     private fun EyesightImageSearchScreenContent(viewModel: EyesightSearchViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.eyesight_search_label_1)
         ) {
             Column(
@@ -106,15 +106,11 @@ class EyesightSearchScreen : AppCompatActivity() {
                     .fillMaxHeight()
                     .padding(top = it.calculateTopPadding())
             ) {
-                RunningOrFinishedRoundScreen(
-                    viewModel = viewModel,
-                    resultPercLabel = stringResource(id = R.string.accuracy_label)
-                ) {
-                    EyesightImageSearchRunning(viewModel = viewModel)
-                }
+                EyesightImageSearchRunning(viewModel = viewModel)
             }
         }
     }
+
 
     @Composable
     fun EyesightImageSearchRunning(viewModel: EyesightSearchViewModel) {
@@ -123,7 +119,10 @@ class EyesightSearchScreen : AppCompatActivity() {
         var imageContentOffset by remember { mutableStateOf(Offset.Zero) }
         val imageId = viewModel.getDrawableId(uiState.bgImageResource)
 
-        AnswerResultBox(viewModel = viewModel) {
+        RoundsCompletedBox(
+            viewModel = viewModel,
+            onExit = { this@EyesightSearchScreen.finish() }
+        ) {
             SearchImage(
                 viewModel = viewModel,
                 drawableId = imageId,

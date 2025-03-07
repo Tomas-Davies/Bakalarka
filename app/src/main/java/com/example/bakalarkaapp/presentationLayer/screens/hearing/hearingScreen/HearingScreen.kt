@@ -42,6 +42,7 @@ class HearingScreen : AppCompatActivity() {
     private fun HearingScreenContent() {
         val ctx = LocalContext.current
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.category_hearing)
         ) {
             val buttons = listOf<@Composable () -> Unit>(

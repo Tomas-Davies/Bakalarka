@@ -3,12 +3,13 @@ package com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmSyllablesS
 import android.os.VibrationEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class RythmSyllabUiState(
     val imageName: String,
@@ -16,7 +17,7 @@ data class RythmSyllabUiState(
     val syllabCount: Int
 )
 
-class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundViewModel(app) {
+class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : RoundsViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -34,14 +35,42 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
 
     private val _buttonsStates = MutableStateFlow(List(4) { false })
     val buttonStates = _buttonsStates.asStateFlow()
+    override var roundSetSize = 5
 
     init {
         count = rounds.size
     }
 
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-        return userSyllabSum == _uiState.value.syllabCount
+    fun onBtnClick(){
+        viewModelScope.launch {
+            clickedCounterInc()
+            if (userSyllabSum == _uiState.value.syllabCount){
+                onCorrectAnswer()
+            } else {
+                onWrongAnswer()
+            }
+        }
     }
+
+
+    private suspend fun onCorrectAnswer(){
+        playOnCorrectSound()
+        showCorrectMessage()
+        scoreInc()
+        roundsCompletedInc()
+        if (roundSetCompletedCheck()) {
+            showRoundSetDialog()
+        } else {
+            onContinue()
+        }
+    }
+
+
+    private suspend fun onWrongAnswer(){
+        playOnWrongSound()
+        showWrongMessage()
+    }
+
 
     override fun updateData() {
         currRound = rounds[roundIdx]
@@ -55,6 +84,7 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
             )
         }
     }
+
 
     fun onItemClick(idx: Int) {
         vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
@@ -81,9 +111,6 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : ValidatableRoundV
             }
         }
     }
-
-    override fun scoreInc() {}
-    override fun scoreDesc() {}
 }
 
 class RythmSyllablesViewModelFactory(private val app: LogoApp, private val levelIndex: Int) :

@@ -35,9 +35,8 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.WordContent
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -64,11 +63,7 @@ class RythmShelvesScreen : AppCompatActivity() {
 
     @Composable
     private fun RythmShelvesScreenContent(viewModel: RythmShelvesViewModel) {
-        RunningOrFinishedRoundScreen(
-            viewModel = viewModel
-        ) {
-            RythmShelvesScreenRunning(viewModel = viewModel)
-        }
+        RythmShelvesScreenRunning(viewModel = viewModel)
     }
 
     @Composable
@@ -80,9 +75,13 @@ class RythmShelvesScreen : AppCompatActivity() {
         val btnEnabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.rythm_menu_label_1)
         ) { pdVal ->
-            AnswerResultBox(viewModel = viewModel) {
+            RoundsCompletedBox(
+                viewModel = viewModel,
+                onExit = { this.finish() }
+            ) {
                 Column(
                     modifier = Modifier.padding(start = 18.dp, top = pdVal.calculateTopPadding(), end = 18.dp),
                     horizontalAlignment = Alignment.CenterHorizontally

@@ -41,14 +41,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import kotlinx.coroutines.launch
 
 
 class HearingMemoryScreen : AppCompatActivity() {
@@ -73,6 +74,7 @@ class HearingMemoryScreen : AppCompatActivity() {
     @Composable
     private fun HearingMemoryScreenContent(viewModel: HearingMemoryViewModel){
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.hearing_menu_label_2)
         ) {
             Column(
@@ -80,9 +82,7 @@ class HearingMemoryScreen : AppCompatActivity() {
                     .fillMaxSize()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
-                RunningOrFinishedRoundScreen(viewModel = viewModel) {
-                    HearingMemoryRunning(viewModel = viewModel)
-                }
+                HearingMemoryRunning(viewModel = viewModel)
             }
         }
     }
@@ -90,10 +90,11 @@ class HearingMemoryScreen : AppCompatActivity() {
     @Composable
     private fun HearingMemoryRunning(viewModel: HearingMemoryViewModel){
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        AnswerResultBox(
+        RoundsCompletedBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
+            onExit = { this.finish() }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -193,7 +194,9 @@ class HearingMemoryScreen : AppCompatActivity() {
         Card(
             modifier = Modifier.aspectRatio(1f),
             onClick = {
-                isMarkedAsCorrect = viewModel.onCardClick(drawableName)
+                viewModel.viewModelScope.launch {
+                    isMarkedAsCorrect = viewModel.onCardClick(drawableName)
+                }
             },
             colors = cardColors,
             enabled = !isMarkedAsCorrect && enabled

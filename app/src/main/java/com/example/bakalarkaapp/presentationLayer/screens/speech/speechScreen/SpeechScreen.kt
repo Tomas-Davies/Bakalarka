@@ -35,7 +35,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.SpeechLetter
-import com.example.bakalarkaapp.presentationLayer.components.CustomDialogMenu
+import com.example.bakalarkaapp.presentationLayer.components.CustomDialog
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen
 import com.example.bakalarkaapp.theme.AppTheme
@@ -64,6 +64,7 @@ class SpeechScreen : AppCompatActivity() {
     @Composable
     private fun SpeechScreenContent(viewModel: SpeechViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.category_speech)
         ) { pdVal ->
             val letters = viewModel.lettersAndPositions
@@ -98,7 +99,7 @@ class SpeechScreen : AppCompatActivity() {
             }
         }
         if (showLetterOptions) {
-            CustomDialogMenu(
+            CustomDialog(
                 heading = stringResource(id = R.string.speech_options_label),
                 onExit = { showLetterOptions = false }
             ) {

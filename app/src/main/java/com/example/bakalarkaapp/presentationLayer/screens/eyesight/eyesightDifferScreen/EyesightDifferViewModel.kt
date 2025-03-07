@@ -2,28 +2,25 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiff
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
-import com.example.bakalarkaapp.dataLayer.models.Round
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 
 data class EyesightDifferUiState(
     val imageName: String,
     val answers: List<String>,
     val correctAnswers: List<String>,
-    val question: String,
-    val questionNumber: Int,
-    val count: Int
+    val question: String
 )
 
 class EyesightDifferViewModel(
-    app: LogoApp, private val levelIndex: Int
-) : ValidatableRoundViewModel(app) {
+    app: LogoApp, levelIndex: Int
+) : RoundsViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -32,11 +29,13 @@ class EyesightDifferViewModel(
     private val data = differRepo.data
     private var questionIdx = 0
     private var currentItem = data[roundIdx]
-    private var questionNumber = 1
-    private var countFromLevelIdx = 0
+    private var _questionNumber = MutableStateFlow(1)
+    val questionNumber = _questionNumber.asStateFlow()
+    private var _questionCountInRound = MutableStateFlow(currentItem.rounds.size)
+    val questionCountInRound = _questionCountInRound.asStateFlow()
 
     init {
-        getTotalQuestionsCount()
+        count = data.size
     }
 
     private val _uiState = MutableStateFlow(
@@ -44,75 +43,79 @@ class EyesightDifferViewModel(
             imageName = currentItem.imageName,
             answers = getPossibleAnswers(),
             correctAnswers = getCorrectAnswers(),
-            question = getQuestion(),
-            questionNumber = questionNumber,
-            count = countFromLevelIdx
+            question = getQuestion()
         )
     )
     val uiState = _uiState.asStateFlow()
-
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-        if (answer is IValidationAnswer.StringAnswer) return (answer.value in getCorrectAnswers())
-        throw IllegalArgumentException("$this expects answer of type String")
-    }
-
-    override fun newData() {
-        nextQuestion()
-    }
-
-    override fun afterNewData() {}
-
-    override fun doRestart() {
-        questionIdx = 0
-        currentItem = data[roundIdx]
-        questionNumber = 1
-        completeUiStateUpdate()
-    }
-
-    private fun nextQuestion() {
-        val questions = getQuestions()
-        if (questionIdx < questions.size - 1) {
-            updateData()
-        } else {
-            nextRound()
+    override var roundSetSize = 2
+    fun onBtnClick(answer: String){
+        viewModelScope.launch {
+            clickedCounterInc()
+            if (answer in getCorrectAnswers()){
+                onCorrectAnswer()
+            } else {
+                onWrongAnswer()
+            }
         }
-        _buttonsEnabled.update { true }
     }
 
-    override fun updateData() {
-        questionNumber++
+    private suspend fun onCorrectAnswer(){
+        disableButtons()
+        playOnCorrectSound()
+        showCorrectMessage()
+        scoreInc()
+        if (!hasNextQuestion()) {
+            roundsCompletedInc()
+            if (roundSetCompletedCheck()) {
+                showRoundSetDialog()
+            } else {
+                doContinue()
+            }
+        } else {
+            updateQuestion()
+            enableButtons()
+        }
+    }
+
+    private suspend fun onWrongAnswer(){
+        playOnWrongSound()
+        showWrongMessage()
+    }
+
+    override fun doContinue() {
+        super.doContinue()
+        enableButtons()
+    }
+
+
+    private fun hasNextQuestion(): Boolean {
+        val questions = currentItem.rounds
+        return questionIdx < questions.size - 1
+    }
+
+    private fun updateQuestion() {
+        _questionNumber.update { _questionNumber.value + 1 }
         questionIdx++
         _uiState.update { currentState ->
             currentState.copy(
                 correctAnswers = getCorrectAnswers(),
-                question = getQuestion(),
-                questionNumber = questionNumber
+                question = getQuestion()
             )
         }
     }
 
-    override fun nextRound(): Boolean {
-        questionIdx = 0
-        if (roundIdx < data.size - 1) {
-            questionNumber++
-            roundIdx++
-            currentItem = data[roundIdx]
-            completeUiStateUpdate()
-            return true
-        } else {
-            _screenState.value = ScreenState.FINISHED
-            return false
-        }
-    }
 
-    private fun completeUiStateUpdate() {
+    override fun updateData() {
+        currentItem = data[roundIdx]
+        questionIdx = 0
+        _questionNumber.update { 1 }
+        _questionCountInRound.update { currentItem.rounds.size }
         _uiState.update { currentState ->
             currentState.copy(
                 imageName = currentItem.imageName,
                 answers = getPossibleAnswers(),
                 correctAnswers = getCorrectAnswers(),
-                question = getQuestion(),
-                questionNumber = questionNumber
+                question = getQuestion()
             )
         }
     }
@@ -130,25 +133,12 @@ class EyesightDifferViewModel(
         return currentItem.rounds[questionIdx].answers
     }
 
-    private fun getQuestions(): List<Round> {
-        return currentItem.rounds
-    }
-
     private fun getQuestion(): String {
         return currentItem.rounds[questionIdx].question
     }
 
-    private fun getTotalQuestionsCount() {
-        data.indices.forEach { setIdx ->
-            data[setIdx].rounds.forEach { _ ->
-                count++
-                if (setIdx >= levelIndex) countFromLevelIdx++
-            }
-        }
-    }
-
     override fun scorePercentage(): Int {
-        return (score * 100) / countFromLevelIdx
+        return (score * 100) / clickCounter
     }
 }
 

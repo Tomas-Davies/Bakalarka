@@ -29,16 +29,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.components.LinearTimerIndicator
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.theme.AppTheme
+import kotlinx.coroutines.launch
 
 class EyesightMemoryScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +62,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
     @Composable
     private fun EyesightMemoryScreenContent(viewModel: EyesightMemoryViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.eyesight_menu_label_4)
         ) {
             Column(
@@ -69,9 +70,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
                     .fillMaxSize()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
-                RunningOrFinishedRoundScreen(viewModel = viewModel) {
-                    EyesightMemoryRunning(viewModel = viewModel)
-                }
+                EyesightMemoryRunning(viewModel = viewModel)
             }
         }
     }
@@ -80,21 +79,14 @@ class EyesightMemoryScreen : AppCompatActivity() {
     private fun EyesightMemoryRunning(viewModel: EyesightMemoryViewModel) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-        AnswerResultBox(viewModel = viewModel) {
+        RoundsCompletedBox(
+            viewModel = viewModel,
+            onExit = { this.finish() }
+        ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    modifier = Modifier
-                        .weight(0.1f)
-                        .wrapContentHeight(),
-                    text = "${uiState.round} / ${viewModel.count}",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-
                 var messageId by remember { mutableIntStateOf(R.string.eyesight_memory_label_1) }
 
                 LinearTimerIndicator(
@@ -132,8 +124,10 @@ class EyesightMemoryScreen : AppCompatActivity() {
                                     modifier = Modifier.aspectRatio(1f),
                                     drawable = drawable,
                                     onClick = {
-                                        if (viewModel.validateAnswer(IValidationAnswer.StringAnswer(name))) {
-                                            messageId = R.string.eyesight_memory_label_1
+                                        viewModel.viewModelScope.launch {
+                                            if (viewModel.onCardClick(name)) {
+                                                messageId = R.string.eyesight_memory_label_1
+                                            }
                                         }
                                     },
                                     enabled = enabled

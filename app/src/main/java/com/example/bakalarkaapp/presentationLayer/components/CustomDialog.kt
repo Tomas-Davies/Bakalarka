@@ -28,13 +28,16 @@ import com.example.bakalarkaapp.theme.typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomDialogMenu(
-    heading: String,
+fun CustomDialog(
+    modifier: Modifier = Modifier,
+    heading: String = "",
     onExit: () -> Unit,
+    showHeading: Boolean = true,
+    showExitButton: Boolean = true,
     content: @Composable ColumnScope.() -> Unit
 ){
     BasicAlertDialog(
-        modifier = Modifier.padding(top = 18.dp, bottom = 18.dp),
+        modifier = Modifier.padding(top = 18.dp, bottom = 18.dp).then(modifier),
         onDismissRequest = { onExit() }
     ) {
         Surface(
@@ -47,33 +50,37 @@ fun CustomDialogMenu(
             tonalElevation = AlertDialogDefaults.TonalElevation,
         ) {
             Column {
-                Text(
-                    modifier = Modifier
-                        .padding(18.dp)
-                        .align(Alignment.CenterHorizontally),
-                    text = heading,
-                    textAlign = TextAlign.Center,
-                    style = typography.titleLarge
-                )
-                Spacer(modifier = Modifier.height(15.dp))
+                if (showHeading){
+                    Text(
+                        modifier = Modifier
+                            .padding(18.dp)
+                            .align(Alignment.CenterHorizontally),
+                        text = heading,
+                        textAlign = TextAlign.Center,
+                        style = typography.titleLarge
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
 
                 content()
 
-                Spacer(modifier = Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(18.dp),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Button(
-                        onClick = { onExit() }
+                if (showExitButton){
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(18.dp),
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        Text(
-                            text = stringResource(id = R.string.pop_up_dismiss_label),
-                            style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Button(
+                            onClick = { onExit() }
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.pop_up_dismiss_label),
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
             }

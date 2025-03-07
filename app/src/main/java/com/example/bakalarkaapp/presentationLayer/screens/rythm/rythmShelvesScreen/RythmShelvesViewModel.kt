@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -38,11 +37,13 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
     private var _secondIdxClicked = MutableStateFlow(-1)
     val secondIdxClicked = _secondIdxClicked.asStateFlow()
     private var pairCount = 0
+    override var roundSetSize = 1
 
     init {
-        _buttonsEnabled.update { false }
+        disableButtons()
         count = rounds.size
     }
+
 
     fun onCardClick(idx: Int, soundId: Int) {
         var didReset = false
@@ -54,41 +55,55 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
             _secondIdxClicked.update { -1 }
             didReset = true
         }
-        if (didReset) _buttonsEnabled.update { false }
+        if (didReset) disableButtons()
 
         if (!didReset){
             playSound(soundId)
             if (_firstIdxClicked.value == -1) _firstIdxClicked.update { idx }
-            else _secondIdxClicked.value = idx
+            else _secondIdxClicked.update { idx }
 
             if (_firstIdxClicked.value != -1 && _secondIdxClicked.value != -1){
-                _buttonsEnabled.update { true }
+                enableButtons()
             }
         }
     }
 
 
     fun onDoneBtnClick(){
+        clickedCounterInc()
         if (pairCorrect(_firstIdxClicked.value, _secondIdxClicked.value)){
-            playResultSound(true)
-            _rhymePairsEnabled.value[_firstIdxClicked.value] = false
-            _rhymePairsEnabled.value[_secondIdxClicked.value] = false
-            rhymeCounter++
-            scoreInc()
+            onMatchingPair()
             if (rhymeCounter == currRhymesSet.size) {
-                viewModelScope.launch {
-                    showMessage(result = true)
-                    delay(1500)
-                    if (nextRound()) updateData()
-                }
+                onAllPairsDone()
             }
         } else {
-            scoreDesc()
-            playResultSound(result = false)
+            playOnWrongSound()
         }
         _firstIdxClicked.update { -1 }
         _secondIdxClicked.update { -1 }
         _buttonsEnabled.update { false }
+    }
+
+
+    private fun onMatchingPair(){
+        playResultSound(true)
+        _rhymePairsEnabled.value[_firstIdxClicked.value] = false
+        _rhymePairsEnabled.value[_secondIdxClicked.value] = false
+        rhymeCounter++
+        scoreInc()
+    }
+
+
+    private fun onAllPairsDone(){
+        viewModelScope.launch {
+            showCorrectMessage()
+            roundsCompletedInc()
+            if(roundSetCompletedCheck()){
+                showRoundSetDialog()
+            } else {
+                doContinue()
+            }
+        }
     }
 
 
@@ -111,14 +126,6 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
         _secondIdxClicked.value = -1
     }
 
-    override fun scorePercentage(): Int {
-        return (score * 100) / pairCount
-    }
-
-    override fun doRestart() {
-        pairCount = 0
-        updateData()
-    }
 
     private fun getRhymeSet(): List<Pair<WordContent, WordContent>> {
         val l = currRound.rhymeSets.map { rythmSet ->
@@ -133,6 +140,7 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
         return l
     }
 
+
     private fun getAllWords(): List<WordContent> {
         val words: MutableList<WordContent> = mutableListOf()
         currRhymesSet.forEach { rhymePair ->
@@ -143,6 +151,7 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
         return words
     }
 
+
     private fun pairCorrect(first: Int, second: Int): Boolean {
         val pair = currRhymesSet.find { item ->
             item.first == allWords[first] && item.second == allWords[second]
@@ -151,6 +160,7 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
         }
         return pair != null
     }
+
 
     private fun getThreeParts(list: List<WordContent>): Triple<List<WordContent>, List<WordContent>, List<WordContent>> {
         val partLen = list.size / 3

@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.dataLayer.models.SearchItemOverlay
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
@@ -23,12 +22,11 @@ data class EyesightSearchUiState(
     val items: List<SearchItemOverlay>
 )
 
-class EyesightSearchViewModel(app: LogoApp, private val levelIndex: Int): RoundsViewModel(app) {
+class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(app) {
     init {
         roundIdx = levelIndex
     }
 
-    private val appContext = app.applicationContext
     private val searchRepo = app.eyesightSearchRepository
     private val rounds = searchRepo.data
     private var currentRound = rounds[roundIdx]
@@ -41,8 +39,6 @@ class EyesightSearchViewModel(app: LogoApp, private val levelIndex: Int): Rounds
     val uiState = _uiState.asStateFlow()
     private var _itemsFound = MutableStateFlow(0)
     var itemsFound = _itemsFound.asStateFlow()
-    private var clickCounter = 0
-    private var foundCatsCounter = 0
     private var _missIndicatorOffset = MutableStateFlow(Offset(0f,0f))
     var missIndicatorOffset = _missIndicatorOffset.asStateFlow()
     private var _showMissIndicator = MutableStateFlow(false)
@@ -57,21 +53,15 @@ class EyesightSearchViewModel(app: LogoApp, private val levelIndex: Int): Rounds
         playResultSound(true)
         vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         clickCounter++
-        foundCatsCounter++
+        scoreInc()
         _itemsFound.update { _itemsFound.value + 1 }
-        if (itemsFound.value == currentRound.items.size){
-            moveNext()
-        }
-    }
-
-    private fun moveNext() {
-        viewModelScope.launch {
-            showMessage(
-                result = true,
-                message = appContext.resources.getString(R.string.message_positive)
-            )
-            delay(1500)
-            updateData()
+        if (itemsFound.value == currentRound.items.size) {
+            roundsCompletedInc()
+            if(roundSetCompletedCheck()) {
+                showRoundSetDialog()
+            } else {
+                doContinue()
+            }
         }
     }
 
@@ -80,8 +70,10 @@ class EyesightSearchViewModel(app: LogoApp, private val levelIndex: Int): Rounds
     }
 
     override fun scorePercentage(): Int {
-        return (foundCatsCounter * 100) / clickCounter
+        return (score * 100) / clickCounter
     }
+
+    override var roundSetSize = 1
 
     override fun updateData() {
         if (nextRound()){
@@ -90,6 +82,7 @@ class EyesightSearchViewModel(app: LogoApp, private val levelIndex: Int): Rounds
     }
 
     private fun updateState(){
+        clickCounter = 0
         currentRound = rounds[roundIdx]
         _uiState.update { state ->
             state.copy(
@@ -100,10 +93,6 @@ class EyesightSearchViewModel(app: LogoApp, private val levelIndex: Int): Rounds
         _itemsFound.update { 0 }
     }
 
-    override fun doRestart() {
-        roundIdx = levelIndex
-        updateState()
-    }
 
     fun moveMissIndicator(offset: Offset){
         viewModelScope.launch {

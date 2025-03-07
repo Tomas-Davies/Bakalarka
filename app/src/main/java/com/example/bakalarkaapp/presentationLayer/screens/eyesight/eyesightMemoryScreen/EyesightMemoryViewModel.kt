@@ -2,9 +2,8 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -15,7 +14,7 @@ data class EyesightMemoryUiState(
     var round: Int
 )
 
-class EyesightMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
+class EyesightMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
     private val memoryRepo = app.eyesightMemoryRepository
     private val data = memoryRepo.data
         .shuffled()
@@ -26,19 +25,47 @@ class EyesightMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     private var currentExtraObject = ""
     private var _uiState = MutableStateFlow(EyesightMemoryUiState(currentObjects, roundIdx + 1))
     val uiState = _uiState.asStateFlow()
-
+    override var roundSetSize = 3
     init {
         count = data.size
         chooseExtraObject()
-        _buttonsEnabled.update { false }
+        disableButtons()
     }
 
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-        if (answer is IValidationAnswer.StringAnswer) return answer.value == currentExtraObject
-        throw IllegalArgumentException("$this expects answer of type String")
+    suspend fun onCardClick(name: String): Boolean {
+        clickedCounterInc()
+        if (name == currentExtraObject){
+            onCorrectAnswer()
+            return true
+        } else {
+            onWrongAnswer()
+            return false
+        }
     }
 
-    override fun afterNewData() {}
+    private suspend fun onCorrectAnswer(){
+        disableButtons()
+        playOnCorrectSound()
+        showCorrectMessage()
+        scoreInc()
+        roundsCompletedInc()
+
+        if (roundSetCompletedCheck()){
+            showRoundSetDialog()
+        } else {
+            doContinue()
+        }
+    }
+
+    private suspend fun onWrongAnswer(){
+        playOnWrongSound()
+        showWrongMessage()
+    }
+
+    override fun doContinue() {
+        super.doContinue()
+        disableButtons()
+    }
 
     private fun chooseExtraObject() {
         val randomIndex = Random.nextInt(currentObjects.size)
@@ -46,13 +73,10 @@ class EyesightMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         currentObjects.removeAt(randomIndex)
     }
 
-    override fun doRestart() {
-        updateData()
-    }
 
     fun showExtraItem() {
         currentObjects.add(currentExtraObject)
-        _buttonsEnabled.update { true }
+        enableButtons()
         _uiState.update { state ->
             state.copy(
                 objectDrawableIds = currentObjects.shuffled(),

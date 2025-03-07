@@ -1,15 +1,13 @@
 package com.example.bakalarkaapp.viewModels
 
-import androidx.lifecycle.viewModelScope
+import android.os.VibrationEffect
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.states.ResultMessageState
-import com.example.bakalarkaapp.presentationLayer.states.ScreenState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 /**
  * Abstract base ViewModel that provides common functionality for rounds-based activities.
@@ -24,42 +22,66 @@ import kotlinx.coroutines.launch
  * @param app The application instance that provides the application context.
  */
 abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
-    private val appContext = app.applicationContext
     protected var roundIdx = 0
+        set(value) {
+            field = value
+            updateHasNextRound()
+        }
     protected var score = 0
-    protected val _screenState = MutableStateFlow(ScreenState.RUNNING)
-    val screenState = _screenState.asStateFlow()
+    protected var clickCounter = 0
+
     var count = 0
+        set(value) {
+            field = value
+            updateHasNextRound()
+        }
+
     private var _resultMessageState = MutableStateFlow(ResultMessageState())
     val resultMessageState = _resultMessageState.asStateFlow()
     protected var _buttonsEnabled = MutableStateFlow(true)
     val buttonsEnabled = _buttonsEnabled.asStateFlow()
+    protected var _roundCompletedDialogShow = MutableStateFlow(false)
+    val roundCompletedDialogShow = _roundCompletedDialogShow.asStateFlow()
+    var hasNextRound = roundIdx + 1 < count
+        private set
 
+    protected abstract var roundSetSize: Int
+    private var roundsCompletedCount = 0
     protected abstract fun updateData()
 
     protected open fun nextRound(): Boolean {
-        if (roundIdx + 1 < count) {
+        if (hasNextRound) {
             roundIdx++
             return true
-        } else {
-            _screenState.value = ScreenState.FINISHED
-            return false
-        }
+        } else return false
     }
 
-    /**
-     * Performs additional restart operations.
-     * Can be overridden by subclasses to handle game-specific restart logic.
-     */
-    protected open fun doRestart() {}
+    protected fun roundSetCompletedCheck(): Boolean {
+        return !hasNextRound || roundsCompletedCount == roundSetSize
+    }
 
-    fun restart() {
+
+    fun onContinue(){
+        roundsCompletedCount = 0
+        clickCounter = 0
         score = 0
-        roundIdx = 0
-        doRestart()
-        _screenState.value = ScreenState.RUNNING
+        _roundCompletedDialogShow.update { false }
+        doContinue()
     }
 
+    protected fun showRoundSetDialog(){
+        playSound(R.raw.celebration)
+        vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
+        _roundCompletedDialogShow.update { true }
+    }
+
+    protected open fun doContinue(){
+        if (nextRound()) { updateData() }
+    }
+
+    private fun updateHasNextRound(){
+        hasNextRound = roundIdx + 1 < count
+    }
 
     private fun updateAnswerResultState(
         result: Boolean = false,
@@ -75,15 +97,29 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         }
     }
 
-    protected fun showMessage(
+    protected suspend fun showMessage(
         result: Boolean = resultMessageState.value.correctAnswer,
         message: String = ""
     ) {
-        viewModelScope.launch {
-            updateAnswerResultState(result, true, message)
-            delay(1000)
-            updateAnswerResultState(result, false, message)
-        }
+        updateAnswerResultState(result, true, message)
+        delay(1000)
+        updateAnswerResultState(result, false, message)
+    }
+
+    protected open fun playOnCorrectSound(){
+        playResultSound(result = true)
+    }
+
+    protected open fun playOnWrongSound(){
+        playResultSound(result = false)
+    }
+
+    protected open suspend fun showCorrectMessage(){
+        showMessage(result = true)
+    }
+
+    protected open suspend fun showWrongMessage(){
+        showMessage(result = false)
     }
 
     fun playResultSound(result: Boolean) {
@@ -98,16 +134,24 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         _buttonsEnabled.update { true }
     }
 
+    protected open fun disableButtons(){
+        _buttonsEnabled.update { false }
+    }
+
     protected open fun scoreInc() {
         score++
     }
 
-    protected open fun scoreDesc() {
-        if (score >= 0) score--
+    protected fun clickedCounterInc(){
+        clickCounter++
+    }
+
+    protected fun roundsCompletedInc(){
+        roundsCompletedCount++
     }
 
     open fun scorePercentage(): Int {
-        return (score * 100) / count
+        return (score * 100) / clickCounter
     }
 
 }

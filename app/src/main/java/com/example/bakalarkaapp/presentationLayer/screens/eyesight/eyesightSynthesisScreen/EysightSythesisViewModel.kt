@@ -7,16 +7,12 @@ import android.os.VibrationEffect
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.dataLayer.models.EyesightSynthRound
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -56,7 +52,7 @@ data class Rect(
 
 class EyesightSynthesisViewModel(
     app: LogoApp,
-    private val levelIndex: Int,
+    levelIndex: Int,
     private val appContext: Context
 ) : RoundsViewModel(app) {
     init {
@@ -69,34 +65,19 @@ class EyesightSynthesisViewModel(
     private var pieceCount = rounds[roundIdx].pieceCount
     private val threshold = 200
     private var placedPieces = 0
-    private var pieceSum = pieceCount
     private val _uiState =
         MutableStateFlow(EyesightSynthesisUiState(currImage, cutImage(currImage, pieceCount)))
     val uiState = _uiState.asStateFlow()
-
+    override var roundSetSize = 1
     init {
         count = rounds.size
     }
 
-    private fun moveNext() {
-        viewModelScope.launch {
-            showMessage(
-                result = true,
-                message = appContext.resources.getString(R.string.message_positive)
-            )
-            delay(1500)
-            updateData()
-        }
-    }
-
     override fun updateData() {
-        if (nextRound()) {
-            currImage = bitmaps[roundIdx]
-            pieceCount = rounds[roundIdx].pieceCount
-            placedPieces = 0
-            pieceSum += pieceCount
-            updateState()
-        }
+        currImage = bitmaps[roundIdx]
+        pieceCount = rounds[roundIdx].pieceCount
+        placedPieces = 0
+        updateState()
     }
 
     private fun updateState() {
@@ -106,19 +87,6 @@ class EyesightSynthesisViewModel(
                 pieces = cutImage(currImage, pieceCount)
             )
         }
-    }
-
-    override fun doRestart() {
-        roundIdx = levelIndex
-        currImage = bitmaps[roundIdx]
-        pieceCount = rounds[roundIdx].pieceCount
-        placedPieces = 0
-        pieceSum = pieceCount
-        updateState()
-    }
-
-    override fun scorePercentage(): Int {
-        return (score * 100) / pieceSum
     }
 
 
@@ -232,6 +200,8 @@ class EyesightSynthesisViewModel(
         contentScale: Float,
         bottomBoxOffset: Offset
     ): Offset {
+        clickedCounterInc()
+
         val inContentX = currOffset.x - contentOffset.x
         val inContentY = currOffset.y - contentOffset.y
         val scaledTargetX = piece.imageX * contentScale
@@ -243,13 +213,8 @@ class EyesightSynthesisViewModel(
                 x = contentOffset.x + scaledTargetX,
                 y = contentOffset.y + scaledTargetY
             )
-            placedPieces++
-            scoreInc()
-            playResultSound(true)
-            vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
             return offset - bottomBoxOffset
         } else {
-            scoreDesc()
             playResultSound(result = false)
             return piece.initialOffset
         }
@@ -263,8 +228,18 @@ class EyesightSynthesisViewModel(
     }
 
     fun onCorrectlyPlaced() {
-        if (placedPieces == pieceCount) {
-            moveNext()
+        placedPieces++
+        scoreInc()
+        if (placedPieces != pieceCount){
+            playResultSound(true)
+            vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
+        } else {
+            roundsCompletedInc()
+            if (roundSetCompletedCheck()) {
+                showRoundSetDialog()
+            } else {
+                doContinue()
+            }
         }
     }
 

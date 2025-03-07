@@ -3,10 +3,9 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.WordContent
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +18,7 @@ data class HearingMemoryUiState(
     val round: Int
 )
 
-class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
+class HearingMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
     private val repo = app.hearingMemoryRepository
     private val rounds = repo.data
     private var currRound = rounds[roundIdx]
@@ -39,15 +38,7 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         count = rounds.size
     }
 
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-       return correctAnswerCount == currRound.toBePlayedCount
-    }
-
-    override fun playOnCorrectSound() {}
-    override fun playOnWrongSound() {}
-    override fun scoreInc() {}
-    override fun scoreDesc() {}
-    override fun messageShowWrong() {}
+    override var roundSetSize = 1
 
     fun playInitallObjects(onFinish: () -> Unit) {
         viewModelScope.launch {
@@ -61,24 +52,34 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         }
     }
 
-    fun onCardClick(answer: String): Boolean {
+    suspend fun onCardClick(answer: String): Boolean {
+        clickedCounterInc()
         if (answer in initiallObjImgNames) {
-            playResultSound(result = true)
-            score++
-            correctAnswerCount++
-            validateAnswer(null)
+            onCorrectAnswer()
             return true
         }
-        playResultSound(result = false)
-        showMessage(result = false)
-        if (score > 0) score--
+        onWrongAnswer()
         return false
     }
 
-    override fun scorePercentage(): Int {
-        var maxScoreCount = 0
-        rounds.forEach { round -> maxScoreCount += round.toBePlayedCount }
-        return (score * 100) / maxScoreCount
+    private fun onCorrectAnswer(){
+        playResultSound(result = true)
+        scoreInc()
+        correctAnswerCount++
+        if (correctAnswerCount == currRound.toBePlayedCount){
+            roundsCompletedInc()
+            if (roundSetCompletedCheck()) {
+                showRoundSetDialog()
+            } else {
+                doContinue()
+            }
+        }
+    }
+
+
+    private suspend fun onWrongAnswer(){
+        playResultSound(result = false)
+        showWrongMessage()
     }
 
     override fun updateData() {
@@ -95,9 +96,6 @@ class HearingMemoryViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
         }
     }
 
-    override fun doRestart() {
-        updateData()
-    }
 
     private fun showAllObjects() {
         _uiState.update { state ->

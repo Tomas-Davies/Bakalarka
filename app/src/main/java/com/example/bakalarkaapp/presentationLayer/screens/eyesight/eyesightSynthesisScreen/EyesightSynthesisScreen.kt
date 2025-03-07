@@ -46,8 +46,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
@@ -84,6 +83,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun EyesightSynthesisScreenContent(viewModel: EyesightSynthesisViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.eyesight_synth_label)
         ) {
             Column(
@@ -92,9 +92,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                RunningOrFinishedRoundScreen(viewModel = viewModel) {
-                    EyesightSynthesisScreenRunning(viewModel = viewModel)
-                }
+                EyesightSynthesisScreenRunning(viewModel = viewModel)
             }
         }
     }
@@ -134,9 +132,10 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                 initialOffsets = viewModel.getInitialOffsets(imageWidth, imageHeight, scaledPieces)
             }
         }
-        AnswerResultBox(
+        RoundsCompletedBox(
             modifier = Modifier.fillMaxSize(),
-            viewModel = viewModel
+            viewModel = viewModel,
+            onExit = { this.finish() }
         ) {
             val imageContent = uiState.image.asImageBitmap()
             Image(

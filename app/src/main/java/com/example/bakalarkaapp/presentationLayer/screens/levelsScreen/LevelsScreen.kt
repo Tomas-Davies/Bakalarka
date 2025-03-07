@@ -125,6 +125,7 @@ class LevelsScreen : AppCompatActivity() {
     @Composable
     fun <T, S: ImageLevel> LevelsScreenContent(viewModel: LevelsViewModel<T, S>) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(viewModel.headingId)
         ) {
             LazyVerticalGrid(

@@ -3,9 +3,8 @@ package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightComp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,8 +18,8 @@ data class EyesightComparisonUiState(
 )
 
 class EyesightComparisonViewModel(
-    app: LogoApp, private val levelIndex: Int
-) : ValidatableRoundViewModel(app) {
+    app: LogoApp, levelIndex: Int
+) : RoundsViewModel(app) {
     init {
         roundIdx = levelIndex
     }
@@ -34,29 +33,56 @@ class EyesightComparisonViewModel(
         )
     )
     val uiState = _uiState.asStateFlow()
+    override var roundSetSize = 5
 
     init {
         count = data.size
     }
 
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-        if (answer is IValidationAnswer.BooleanAnswer){
-            return answer.value == _uiState.value.answer
+    fun onBtnClick(answer: Boolean){
+        viewModelScope.launch {
+            clickedCounterInc()
+            if (answer == _uiState.value.answer){
+                onCorrectAnswer()
+            } else {
+                onWrongAnswer()
+            }
         }
-        throw IllegalArgumentException("$this expects answer of type Boolean")
     }
 
-    override fun scorePercentage(): Int {
-        val count = count - levelIndex
-        return (score * 100) / count
+    private suspend fun onCorrectAnswer(){
+        disableButtons()
+        playOnCorrectSound()
+        showCorrectMessage()
+        scoreInc()
+        roundsCompletedInc()
+
+        if (roundSetCompletedCheck()){
+            showRoundSetDialog()
+        } else {
+            doContinue()
+        }
+    }
+
+    private suspend fun onWrongAnswer(){
+        playOnWrongSound()
+        showWrongMessage()
+    }
+
+
+    override fun doContinue() {
+        super.doContinue()
+        enableButtons()
     }
 
     fun onTimerFinish(){
-        viewModelScope.launch {
-            delay(1500)
-            _buttonsEnabled.value = true
-            if (nextRound()) updateData()
-            scoreDesc()
+        if (!roundSetCompletedCheck()){
+            viewModelScope.launch {
+                playOnWrongSound()
+                delay(1500)
+                doContinue()
+                clickCounter++
+            }
         }
     }
 
@@ -69,11 +95,6 @@ class EyesightComparisonViewModel(
                 restartTrigger = roundIdx
             )
         }
-    }
-
-    override fun doRestart() {
-        roundIdx = levelIndex
-        updateData()
     }
 }
 

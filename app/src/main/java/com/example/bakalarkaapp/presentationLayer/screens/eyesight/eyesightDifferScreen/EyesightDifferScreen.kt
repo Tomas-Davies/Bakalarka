@@ -33,12 +33,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
@@ -66,6 +64,7 @@ class EyesightDifferScreen: AppCompatActivity() {
     @Composable
     private fun EyesightDifferScreenContent(viewModel: EyesightDifferViewModel){
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.eyesight_menu_label_3)
         ) {
             Column(
@@ -73,9 +72,7 @@ class EyesightDifferScreen: AppCompatActivity() {
                     .fillMaxSize()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
-                RunningOrFinishedRoundScreen(viewModel = viewModel) {
-                    EyesightDifferRunning(viewModel = viewModel)
-                }
+                EyesightDifferRunning(viewModel = viewModel)
             }
         }
     }
@@ -83,13 +80,17 @@ class EyesightDifferScreen: AppCompatActivity() {
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun EyesightDifferRunning(viewModel: EyesightDifferViewModel){
-        AnswerResultBox(viewModel = viewModel) {
+        RoundsCompletedBox(
+            viewModel = viewModel,
+            onExit = { this.finish() }
+            ) {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val questionNumber by viewModel.questionNumber.collectAsStateWithLifecycle()
+                val questionCount by viewModel.questionCountInRound.collectAsStateWithLifecycle()
                 val imageId = viewModel.getDrawableId(uiState.imageName)
-
                 Column(
                     modifier = Modifier.weight(3f),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -123,7 +124,7 @@ class EyesightDifferScreen: AppCompatActivity() {
                         modifier = Modifier
                             .weight(0.2f)
                             .wrapContentHeight(),
-                        text = "${uiState.questionNumber} / ${uiState.count}",
+                        text = "$questionNumber / $questionCount",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
@@ -148,7 +149,7 @@ class EyesightDifferScreen: AppCompatActivity() {
                     uiState.answers.forEach { answer ->
                         Button(
                             onClick = {
-                                viewModel.validateAnswer(IValidationAnswer.StringAnswer(answer))
+                                viewModel.onBtnClick(answer)
                             },
                             enabled = btnEnabledState
                         ) {

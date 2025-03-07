@@ -24,7 +24,7 @@ fun ImageCard(
         onClick = { onClick() },
     ) {
         Image(
-            modifier = imageModifier.padding(9.dp),
+            modifier = Modifier.padding(9.dp).then(imageModifier),
             painter = painterResource(id = drawable),
             contentDescription = ""
         )

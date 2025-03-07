@@ -45,6 +45,7 @@ class RythmScreen : AppCompatActivity() {
     private fun RythmScreenContent() {
         val ctx = LocalContext.current
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.category_rythm)
         ) {
             val buttons = listOf<@Composable ()->Unit>(

@@ -2,20 +2,21 @@ package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthe
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
-import com.example.bakalarkaapp.viewModels.ValidatableRoundViewModel
 import com.example.bakalarkaapp.dataLayer.models.WordContent
+import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class HearingSynthesisUiState(
     val roundObjects: List<WordContent>,
     val initObject: WordContent
 )
 
-class HearingSynthesisViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
+class HearingSynthesisViewModel(app: LogoApp) : RoundsViewModel(app) {
     private val repo = app.hearingSynthesisRepository
     private val rounds = repo.data
     private var currentRound = rounds[roundIdx]
@@ -23,18 +24,41 @@ class HearingSynthesisViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
     private var spellingObject = currentObject.random()
     private var _uiState = MutableStateFlow(HearingSynthesisUiState(currentObject, spellingObject))
     val uiState = _uiState.asStateFlow()
-
+    override var roundSetSize = 3
     init {
         count = rounds.size
         _buttonsEnabled.update { false }
     }
 
-    override fun validationCond(answer: IValidationAnswer?): Boolean {
-        if (answer is IValidationAnswer.StringAnswer) return answer.value == spellingObject.imageName
-        throw IllegalArgumentException("$this expects answer of type String")
+    fun onCardClick(answer: String){
+        viewModelScope.launch {
+            clickedCounterInc()
+            if (answer == spellingObject.imageName){
+                onCorrectAnswer()
+            } else {
+                onWrongAnswer()
+            }
+        }
     }
 
-    override fun afterNewData() {}
+    private suspend fun onCorrectAnswer(){
+        disableButtons()
+        playOnCorrectSound()
+        showCorrectMessage()
+        scoreInc()
+        roundsCompletedInc()
+
+        if (roundSetCompletedCheck()){
+            showRoundSetDialog()
+        } else {
+            doContinue()
+        }
+    }
+
+    private suspend fun onWrongAnswer(){
+        playOnWrongSound()
+        showWrongMessage()
+    }
 
     override fun updateData() {
         currentRound = rounds[roundIdx]
@@ -47,11 +71,6 @@ class HearingSynthesisViewModel(app: LogoApp) : ValidatableRoundViewModel(app) {
             )
         }
     }
-
-    override fun doRestart() {
-        updateData()
-    }
-
 }
 
 class HearingSynthesisViewModelFactory(private val app: LogoApp) : ViewModelProvider.Factory {

@@ -44,8 +44,8 @@ import com.example.bakalarkaapp.R
  * @param modifier Modifier to be applied to the layout.
  * @param label Main label of the button.
  * @param labelLong Secondary label with longer text.
- * @param popUpHeading Heading of [CategoryDetailPopUp].
- * @param popUpContent Content of [CategoryDetailPopUp].
+ * @param popUpHeading Heading of [CategoryDetailDialog].
+ * @param popUpContent Content of [CategoryDetailDialog].
  * @param imageId Drawable resource ID.
  * @param onClick Called when this button is clicked
  */
@@ -95,7 +95,7 @@ private fun CardContent(
 ){
     var showPopUp by remember { mutableStateOf(false) }
     if (showPopUp){
-        CategoryDetailPopUp(
+        CategoryDetailDialog(
             popUpHeading = popUpHeading,
             popUpBody = popUpContent,
             onExit = { showPopUp = false }
@@ -157,7 +157,7 @@ fun ShowMoreLabel() {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = stringResource(id = R.string.label_show),
+            text = stringResource(id = R.string.show_label),
             style = MaterialTheme.typography.labelMedium
         )
         Icon(

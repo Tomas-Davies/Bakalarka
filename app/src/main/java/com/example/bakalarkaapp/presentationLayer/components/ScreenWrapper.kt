@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.components
 
-import android.app.Activity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -10,7 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+
 
 /**
  * A wrapper composable that provides Top App Bar functionality.
@@ -22,15 +21,15 @@ import androidx.compose.ui.platform.LocalContext
 @Composable
 fun ScreenWrapper(
     title: String,
+    onExit: () -> Unit,
     content: @Composable (pdVal: PaddingValues) -> Unit
 ){
-    val ctx = LocalContext.current
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = title) },
                 navigationIcon = {
-                    androidx.compose.material3.IconButton(onClick = { (ctx as Activity).finish() }) {
+                    androidx.compose.material3.IconButton(onClick = { onExit() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back button"

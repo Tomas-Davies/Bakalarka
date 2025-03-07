@@ -24,14 +24,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -57,6 +55,7 @@ class HearingFonematicScreen : AppCompatActivity() {
     @Composable
     private fun HearingFonematicScreenContent(viewModel: HearingFonematicViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.hearing_menu_label_1)
         ) {
             Column(
@@ -64,9 +63,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                     .fillMaxHeight()
                     .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
             ) {
-                RunningOrFinishedRoundScreen(viewModel = viewModel) {
-                    HearingFonematicRunning(viewModel = viewModel)
-                }
+                HearingFonematicRunning(viewModel = viewModel)
             }
         }
     }
@@ -79,7 +76,10 @@ class HearingFonematicScreen : AppCompatActivity() {
         val soundName = uiState.playedObject.soundName ?: ""
         val soundId = viewModel.getSoundId(soundName)
 
-        AnswerResultBox(viewModel = viewModel) {
+        RoundsCompletedBox(
+            viewModel = viewModel,
+            onExit = { this.finish() }
+        ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,11 +113,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                                     .weight(1f),
                                 drawable = drawable,
                                 enabled = enabled,
-                                onClick = {
-                                    viewModel.validateAnswer(
-                                        IValidationAnswer.StringAnswer(drawableName)
-                                    )
-                                }
+                                onClick = { viewModel.onCardClick(drawableName) }
                             )
                         }
                     }

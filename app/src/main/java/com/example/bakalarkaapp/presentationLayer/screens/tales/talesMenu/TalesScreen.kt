@@ -62,6 +62,7 @@ class TalesScreen : AppCompatActivity() {
     private fun TalesScreenContent(viewModel: TalesViewModel) {
         val ctx = LocalContext.current
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.category_tales)
         ) {
             LazyVerticalGrid(

@@ -41,7 +41,7 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.Tale
 import com.example.bakalarkaapp.dataLayer.models.TaleContent
-import com.example.bakalarkaapp.presentationLayer.components.CustomDialogMenu
+import com.example.bakalarkaapp.presentationLayer.components.CustomDialog
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesViewModel
@@ -84,6 +84,7 @@ class TaleDetailScreen : AppCompatActivity() {
         }
 
         ScreenWrapper(
+            onExit = { this.finish() },
             title = tale.name
         ) {
             Column(
@@ -125,7 +126,7 @@ class TaleDetailScreen : AppCompatActivity() {
         viewModel: TalesViewModel,
         onExit: () -> Unit
     ) {
-        CustomDialogMenu(
+        CustomDialog(
             heading = stringResource(id = R.string.tales_images_description_heading),
             onExit = { onExit() }
         ) {

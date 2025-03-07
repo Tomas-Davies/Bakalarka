@@ -39,14 +39,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.bakalarkaapp.viewModels.IValidationAnswer
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.presentationLayer.components.AnswerResultBox
-import com.example.bakalarkaapp.presentationLayer.components.RunningOrFinishedRoundScreen
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.components.LinearTimerIndicator
+import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -65,9 +63,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    RunningOrFinishedRoundScreen(viewModel = viewModel) {
-                        EyesightComparisonRunning(viewModel = viewModel)
-                    }
+                    EyesightComparisonRunning(viewModel = viewModel)
                 }
             }
         }
@@ -76,10 +72,14 @@ class EyesightComparisonScreen : AppCompatActivity() {
     @Composable
     private fun EyesightComparisonRunning(viewModel: EyesightComparisonViewModel) {
         ScreenWrapper(
+            onExit = { this.finish() },
             title = stringResource(id = R.string.eyesight_menu_label_1)
         ) {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            AnswerResultBox(viewModel = viewModel) {
+            RoundsCompletedBox(
+                viewModel = viewModel,
+                onExit = { this.finish() }
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -92,7 +92,6 @@ class EyesightComparisonScreen : AppCompatActivity() {
                         msDuration = 15_000,
                         onFinish = {
                             if(enabled){
-                                viewModel.playSound(R.raw.wrong_answer)
                                 viewModel.onTimerFinish()
                             }
                         },
@@ -145,7 +144,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 bgColor = colorResource(id = R.color.correct),
                                 enabled = enabled,
                                 onClick = {
-                                    viewModel.validateAnswer(IValidationAnswer.BooleanAnswer(true))
+                                    viewModel.onBtnClick(true)
                                 }
                             )
                             Spacer(modifier = Modifier.weight(0.3f))
@@ -156,7 +155,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                                 bgColor = colorResource(id = R.color.incorrect),
                                 enabled = enabled,
                                 onClick = {
-                                    viewModel.validateAnswer(IValidationAnswer.BooleanAnswer(false))
+                                    viewModel.onBtnClick(false)
                                 }
                             )
                         }
