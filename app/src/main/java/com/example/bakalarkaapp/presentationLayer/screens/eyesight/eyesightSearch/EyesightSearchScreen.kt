@@ -10,6 +10,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +19,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,15 +35,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -54,12 +50,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastRoundToInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
-import com.example.bakalarkaapp.dataLayer.models.ItemColor
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
@@ -98,7 +96,7 @@ class EyesightSearchScreen : AppCompatActivity() {
     @Composable
     private fun EyesightImageSearchScreenContent(viewModel: EyesightSearchViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.eyesight_search_label_1)
         ) {
             Column(
@@ -117,33 +115,50 @@ class EyesightSearchScreen : AppCompatActivity() {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         var imageContentSize by remember { mutableStateOf(Size.Zero) }
         var imageContentOffset by remember { mutableStateOf(Offset.Zero) }
+        var imageContentScale by remember { mutableFloatStateOf(0f) }
         val imageId = viewModel.getDrawableId(uiState.bgImageResource)
 
         RoundsCompletedBox(
             viewModel = viewModel,
             onExit = { this@EyesightSearchScreen.finish() }
         ) {
+            val imageModifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+
             SearchImage(
+                modifier = imageModifier,
                 viewModel = viewModel,
                 drawableId = imageId,
-                setContentSize = { newSize -> imageContentSize = newSize },
-                setContentOffset = { off -> imageContentOffset = off }
+                setContentSize = { size -> imageContentSize = size },
+                setContentOffset = { off -> imageContentOffset = off },
+                setContentScale = { scale -> imageContentScale = scale }
             )
-            uiState.items.forEach { item ->
-                val oInfo = viewModel.getOverlayInfo(item, imageContentSize, imageContentOffset)
-                key(item) {
-                    ItemOverlay(
-                        viewModel = viewModel,
-                        width = oInfo.width,
-                        height = oInfo.height,
-                        offset = Offset(
-                            oInfo.xInImage,
-                            oInfo.yInImage
-                        ),
-                        itemColor = item.color
-                    )
+            val nonColoredImageId = viewModel.getDrawableId(uiState.nonColorBgImageResource)
+            val options = BitmapFactory.Options()
+            options.inScaled = false
+            val bitmap = BitmapFactory.decodeResource(resources, nonColoredImageId, options)
+            val nonColoredImage = bitmap.asImageBitmap()
+
+            if (imageContentScale != 0f) {
+                uiState.items.forEach { item ->
+                    val oInfo = viewModel.getOverlayInfo(item, imageContentSize, imageContentOffset)
+                    key(item) {
+                        ItemOverlay(
+                            viewModel = viewModel,
+                            width = oInfo.width,
+                            height = oInfo.height,
+                            offset = Offset(
+                                oInfo.xInImage,
+                                oInfo.yInImage
+                            ),
+                            nonColoredImage = nonColoredImage,
+                            contentScale = imageContentScale
+                        )
+                    }
                 }
             }
+
             val showMissIndicator by viewModel.showMissIndicator.collectAsStateWithLifecycle()
             val missIndicatorOffset by viewModel.missIndicatorOffset.collectAsStateWithLifecycle()
 
@@ -176,19 +191,23 @@ class EyesightSearchScreen : AppCompatActivity() {
      * This component renders a bitmap image from a drawable resource and calculates various
      * positioning metrics needed for the overlay components in the eyesight search.
      *
-     * @param viewModel An [EyesightSearchViewModel] providing responses for images tap gestures.
+     * @param viewModel Provides responses for images tap gestures.
      * @param drawableId The Id of drawable resource file.
      * @param setContentSize Callback that receives the calculated [Size] of the content inside the
      * image.
      * @param setContentOffset Callback that receives the calculated [Offset] of the content inside
      * the image.
+     * @param setContentScale Callback that receives the calculated scale of the content inside
+     * the image.
      */
     @Composable
     private fun SearchImage(
+        modifier: Modifier = Modifier,
         viewModel: EyesightSearchViewModel,
         drawableId: Int,
-        setContentSize: (newSize: Size) -> Unit,
-        setContentOffset: (pos: Offset) -> Unit
+        setContentSize: (size: Size) -> Unit,
+        setContentOffset: (pos: Offset) -> Unit,
+        setContentScale: (scale: Float) -> Unit
     ) {
         val ctx = LocalContext.current
         var contentScale by remember { mutableFloatStateOf(0f) }
@@ -201,9 +220,7 @@ class EyesightSearchScreen : AppCompatActivity() {
         Image(
             bitmap = imageContent,
             contentDescription = "Clickable image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
+            modifier = modifier
                 .onGloballyPositioned { cords ->
                     imageOffset = cords.positionInRoot()
                     val imageWidth = cords.size.width.toFloat()
@@ -212,6 +229,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                     val contentSize = getContentSizeInImage(imageContent, contentScale)
                     val contentOffset =
                         getContentOffsetInImage(contentSize, imageWidth, imageHeight)
+                    setContentScale(contentScale)
                     setContentOffset(contentOffset)
                     setContentSize(contentSize)
                 }
@@ -273,25 +291,17 @@ class EyesightSearchScreen : AppCompatActivity() {
         }
     }
 
-
     /**
-     * A composable that displays a color filtering overlay to hide the search item.
+     * A composable that displays an overlay to hide the search item.
      *
-     * This component draws into the [SearchImage] behind it, using [drawBehind] and
-     * [drawIntoCanvas]. It applies the filtering through three rectangular layers:
-     *
-     * - First layer: Calculates the complementary color of the searched item color and uses [BlendMode.Plus]
-     * to filter out the color of search item.
-     * - Second layer: Uses [BlendMode.Saturation] to preserve darker outlines that would otherwise
-     * be affected by the first layer.
-     * - Third layer: uses [BlendMode.ColorBurn] to turn dark outlines to be indistinguishable
-     * from the original outlines.
+     * The overlay hides colors under it by drawing parts from non-colored image into the colored image.
      *
      * @param viewModel An [EyesightSearchViewModel] that processes overlay click events.
      * @param width Width of the overlay in pixels.
      * @param height Height of the overlay in pixels.
      * @param offset Offset of the overlay, relative to the image content,
-     * @param itemColor Color of the search item, that should be filtered out.
+     * @param nonColoredImage The non-colored version of the *main image*.
+     * @param contentScale The scale factor that was applied to the content inside Image composable container with ContentScale.Fit applied.
      */
     @Composable
     private fun ItemOverlay(
@@ -299,7 +309,8 @@ class EyesightSearchScreen : AppCompatActivity() {
         width: Float,
         height: Float,
         offset: Offset,
-        itemColor: ItemColor
+        nonColoredImage: ImageBitmap,
+        contentScale: Float
     ) {
         var overlayShow by remember { mutableStateOf(true) }
         val x = offset.x - width / 2
@@ -308,39 +319,8 @@ class EyesightSearchScreen : AppCompatActivity() {
         val yDp = with(LocalDensity.current) { y.toDp() }
         val widthDp = with(LocalDensity.current) { width.toDp() }
         val heightDp = with(LocalDensity.current) { height.toDp() }
-        val overlayLayer = Rect(Offset(x, y), Size(width, height))
 
-        val filteredColorModifier = Modifier
-            .drawBehind {
-                drawIntoCanvas { canvas ->
-                    val complementaryColor = Color(
-                        (255 - itemColor.r),
-                        (255 - itemColor.g),
-                        (255 - itemColor.b)
-                    )
-                    val paint = Paint()
-                    paint.color = complementaryColor
-                    paint.blendMode = BlendMode.Plus
-                    canvas.drawRect(
-                        overlayLayer,
-                        paint
-                    )
-                    paint.color = Color.Black
-                    paint.blendMode = BlendMode.Saturation
-                    canvas.drawRect(
-                        overlayLayer,
-                        paint
-                    )
-                    paint.color = Color.DarkGray
-                    paint.blendMode = BlendMode.ColorBurn
-                    canvas.drawRect(
-                        overlayLayer,
-                        paint
-                    )
-                }
-            }
-
-        val overlayModifier = filteredColorModifier
+        val overlayModifier = Modifier
             .size(DpSize(widthDp, heightDp))
             .offset(xDp, yDp)
             .clickable {
@@ -348,23 +328,24 @@ class EyesightSearchScreen : AppCompatActivity() {
                 viewModel.onOverlayClick()
             }
 
-        val parties = listOf(
-            Party(
-                speed = 3f,
-                damping = 1f,
-                spread = 360,
-                position = Position.Relative(0.2, 0.2),
-                timeToLive = 1000L,
-                fadeOutEnabled = true,
-                size = listOf(nl.dionsegijn.konfetti.core.models.Size.SMALL),
-                emitter = Emitter(duration = 50L, TimeUnit.MILLISECONDS).max(15)
-            )
-        )
 
         if (overlayShow) {
-            Box(
-                modifier = overlayModifier//.border(2.dp, Color.Red)
-            ) {}
+            Canvas(modifier = overlayModifier) {
+                val yOffsetAdjustment = 3
+                val srcX = (x / contentScale).fastRoundToInt()
+                val srcY = (y / contentScale).fastRoundToInt() - yOffsetAdjustment
+                val srcSize = IntSize(
+                    width = (width / contentScale).fastRoundToInt(),
+                    height = (height / contentScale).fastRoundToInt()
+                )
+                drawImage(
+                    image = nonColoredImage,
+                    srcOffset = IntOffset(srcX, srcY),
+                    srcSize = srcSize,
+                    dstOffset = IntOffset.Zero,
+                    dstSize = IntSize(width.fastRoundToInt(), height.fastRoundToInt())
+                )
+            }
         } else {
             Box(
                 modifier = Modifier
@@ -375,7 +356,19 @@ class EyesightSearchScreen : AppCompatActivity() {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                KonfettiView(parties = parties, modifier = Modifier.fillMaxSize())
+                val parties = listOf(
+                    Party(
+                        speed = 3f,
+                        damping = 1f,
+                        spread = 360,
+                        position = Position.Relative(0.2, 0.2),
+                        timeToLive = 1000L,
+                        fadeOutEnabled = true,
+                        size = listOf(nl.dionsegijn.konfetti.core.models.Size.SMALL),
+                        emitter = Emitter(duration = 50L, TimeUnit.MILLISECONDS).max(15)
+                    )
+                )
+               KonfettiView(parties = parties, modifier = Modifier.fillMaxSize())
             }
         }
     }

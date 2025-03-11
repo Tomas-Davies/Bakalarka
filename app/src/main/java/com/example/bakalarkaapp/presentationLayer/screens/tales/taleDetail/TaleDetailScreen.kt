@@ -84,7 +84,7 @@ class TaleDetailScreen : AppCompatActivity() {
         }
 
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = tale.name
         ) {
             Column(

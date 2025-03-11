@@ -75,12 +75,12 @@ class RythmShelvesScreen : AppCompatActivity() {
         val btnEnabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.rythm_menu_label_1)
         ) { pdVal ->
             RoundsCompletedBox(
                 viewModel = viewModel,
-                onExit = { this.finish() }
+                onExit = { finish() }
             ) {
                 Column(
                     modifier = Modifier.padding(start = 18.dp, top = pdVal.calculateTopPadding(), end = 18.dp),

@@ -74,7 +74,7 @@ class HearingMemoryScreen : AppCompatActivity() {
     @Composable
     private fun HearingMemoryScreenContent(viewModel: HearingMemoryViewModel){
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.hearing_menu_label_2)
         ) {
             Column(
@@ -94,7 +94,7 @@ class HearingMemoryScreen : AppCompatActivity() {
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
             contentAlignment = Alignment.Center,
-            onExit = { this.finish() }
+            onExit = { finish() }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

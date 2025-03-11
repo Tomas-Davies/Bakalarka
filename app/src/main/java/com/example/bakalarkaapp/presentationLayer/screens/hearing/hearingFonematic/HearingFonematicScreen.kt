@@ -55,7 +55,7 @@ class HearingFonematicScreen : AppCompatActivity() {
     @Composable
     private fun HearingFonematicScreenContent(viewModel: HearingFonematicViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.hearing_menu_label_1)
         ) {
             Column(
@@ -78,7 +78,7 @@ class HearingFonematicScreen : AppCompatActivity() {
 
         RoundsCompletedBox(
             viewModel = viewModel,
-            onExit = { this.finish() }
+            onExit = { finish() }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

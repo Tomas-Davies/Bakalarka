@@ -62,7 +62,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
     @Composable
     private fun EyesightMemoryScreenContent(viewModel: EyesightMemoryViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.eyesight_menu_label_4)
         ) {
             Column(
@@ -81,7 +81,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
 
         RoundsCompletedBox(
             viewModel = viewModel,
-            onExit = { this.finish() }
+            onExit = { finish() }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

@@ -64,7 +64,7 @@ class SpeechScreen : AppCompatActivity() {
     @Composable
     private fun SpeechScreenContent(viewModel: SpeechViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.category_speech)
         ) { pdVal ->
             val letters = viewModel.lettersAndPositions

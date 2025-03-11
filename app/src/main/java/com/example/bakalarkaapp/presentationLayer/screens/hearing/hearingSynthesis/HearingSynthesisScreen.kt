@@ -57,7 +57,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun HearingSynthScreenContent(viewModel: HearingSynthesisViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.hearing_menu_label_3)
         ) {
             Column(
@@ -77,7 +77,7 @@ class HearingSynthesisScreen : AppCompatActivity() {
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
             contentAlignment = Alignment.Center,
-            onExit = { this.finish() }
+            onExit = { finish() }
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

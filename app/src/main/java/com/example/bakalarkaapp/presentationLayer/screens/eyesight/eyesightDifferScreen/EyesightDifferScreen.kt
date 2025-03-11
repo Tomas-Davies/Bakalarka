@@ -64,7 +64,7 @@ class EyesightDifferScreen: AppCompatActivity() {
     @Composable
     private fun EyesightDifferScreenContent(viewModel: EyesightDifferViewModel){
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.eyesight_menu_label_3)
         ) {
             Column(
@@ -82,7 +82,7 @@ class EyesightDifferScreen: AppCompatActivity() {
     private fun EyesightDifferRunning(viewModel: EyesightDifferViewModel){
         RoundsCompletedBox(
             viewModel = viewModel,
-            onExit = { this.finish() }
+            onExit = { finish() }
             ) {
             Column(
                 modifier = Modifier.fillMaxSize()

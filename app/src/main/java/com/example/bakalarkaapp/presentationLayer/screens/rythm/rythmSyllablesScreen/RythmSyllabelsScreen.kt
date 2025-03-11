@@ -65,13 +65,13 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     @Composable
     private fun RythmSyllableScreenContent(viewModel: RythmSyllablesViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.rythm_menu_label_2)
         ) {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             RoundsCompletedBox(
                 viewModel = viewModel,
-                onExit = { this.finish() }
+                onExit = { finish() }
             ) {
                 Column(
                     modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),

@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 
 data class EyesightSearchUiState(
     val bgImageResource: String,
+    val nonColorBgImageResource: String,
     val items: List<SearchItemOverlay>
 )
 
@@ -32,7 +33,8 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(ap
     private var currentRound = rounds[roundIdx]
     private var _uiState = MutableStateFlow(
         EyesightSearchUiState(
-            bgImageResource = currentRound.imageName,
+            bgImageResource = currentRound.coloredImageName,
+            nonColorBgImageResource = currentRound.imageName,
             items = currentRound.items
         )
     )
@@ -76,17 +78,12 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(ap
     override var roundSetSize = 1
 
     override fun updateData() {
-        if (nextRound()){
-            updateState()
-        }
-    }
-
-    private fun updateState(){
         clickCounter = 0
         currentRound = rounds[roundIdx]
         _uiState.update { state ->
             state.copy(
-                bgImageResource = currentRound.imageName,
+                bgImageResource = currentRound.coloredImageName,
+                nonColorBgImageResource = currentRound.imageName,
                 items = currentRound.items
             )
         }

@@ -189,7 +189,7 @@ class EyesightSynthesisViewModel(
      * @param piece The piece which holds data about the original position.
      * @param currOffset The current offset of the piece composable.
      * @param contentOffset The offset of the content inside the Image composable.
-     * @param contentScale The scale of the content inside the Image composable.
+     * @param contentScale The scale factor that was applied to the content inside Image composable container with ContentScale.Fit applied.
      * @param bottomBoxOffset The offset of the image piece container.
      * @return [Offset] which aligns the *image piece* into the original image.
      */

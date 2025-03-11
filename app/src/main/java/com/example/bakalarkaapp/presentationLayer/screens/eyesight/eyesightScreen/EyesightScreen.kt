@@ -45,7 +45,7 @@ class EyesightScreen : AppCompatActivity() {
     @Composable
     private fun EyesightScreenContent() {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.category_eyesight)
         ) {
             val ctx = LocalContext.current

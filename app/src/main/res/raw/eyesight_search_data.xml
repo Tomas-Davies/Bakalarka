@@ -1,402 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
     <round>
-        <background>image_search_1</background>
+        <backgroundColored>image_search_1</backgroundColored>
+        <backgroundNonColored>image_search_1_blank</backgroundNonColored>
         <item>
             <xPosPercentage>28.5</xPosPercentage>
             <yPosPercentage>19</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>24.9</xPosPercentage>
             <yPosPercentage>39.9</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>29.9</xPosPercentage>
             <yPosPercentage>62.6</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>49.2</xPosPercentage>
             <yPosPercentage>66.1</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>77.8</xPosPercentage>
             <yPosPercentage>77.8</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>20</widthPercentage>
         </item>
     </round>
 
 
-
     <round>
-        <background>image_search_2</background>
+        <backgroundColored>image_search_2</backgroundColored>
+        <backgroundNonColored>image_search_2_blank</backgroundNonColored>
         <item>
             <xPosPercentage>21.3</xPosPercentage>
             <yPosPercentage>10.9</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>43.5</xPosPercentage>
             <yPosPercentage>21.8</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>19.2</xPosPercentage>
             <yPosPercentage>25.3</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>64.9</xPosPercentage>
             <yPosPercentage>61.3</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
         <item>
             <xPosPercentage>59.9</xPosPercentage>
             <yPosPercentage>79.6</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
     </round>
 
 
-
     <round>
-        <background>image_search_3</background>
+        <backgroundColored>image_search_3</backgroundColored>
+        <backgroundNonColored>image_search_3_blank</backgroundNonColored>
         <item>
             <xPosPercentage>51</xPosPercentage>
             <yPosPercentage>2.1</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
         <item>
             <xPosPercentage>53.5</xPosPercentage>
             <yPosPercentage>14</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>18</widthPercentage>
         </item>
         <item>
             <xPosPercentage>59.9</xPosPercentage>
             <yPosPercentage>45.4</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
         <item>
-        <xPosPercentage>27.7</xPosPercentage>
-        <yPosPercentage>57.7</yPosPercentage>
-        <color>
-            <r>255</r>
-            <g>126</g>
-            <b>35</b>
-        </color>
-        <heightPercentage>8</heightPercentage>
+            <xPosPercentage>27.7</xPosPercentage>
+            <yPosPercentage>57.7</yPosPercentage>
+            <heightPercentage>8</heightPercentage>
             <widthPercentage>12</widthPercentage>
-    </item>
+        </item>
         <item>
             <xPosPercentage>71.1</xPosPercentage>
             <yPosPercentage>63.1</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>12</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>65.3</xPosPercentage>
             <yPosPercentage>78.9</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>30</widthPercentage>
         </item>
         <item>
             <xPosPercentage>13</xPosPercentage>
             <yPosPercentage>88.3</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>12</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
     </round>
 
 
-
     <round>
-        <background>image_search_4</background>
+        <backgroundColored>image_search_4</backgroundColored>
+        <backgroundNonColored>image_search_4_blank</backgroundNonColored>
         <item>
             <xPosPercentage>33.4</xPosPercentage>
             <yPosPercentage>27.1</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>21.2</xPosPercentage>
             <yPosPercentage>38</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
         <item>
             <xPosPercentage>25.9</xPosPercentage>
             <yPosPercentage>57.1</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>64.9</xPosPercentage>
             <yPosPercentage>63.7</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>7</heightPercentage>
             <widthPercentage>12</widthPercentage>
         </item>
         <item>
             <xPosPercentage>33.7</xPosPercentage>
             <yPosPercentage>69.8</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
         <item>
             <xPosPercentage>58.2</xPosPercentage>
             <yPosPercentage>71.2</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>6</heightPercentage>
             <widthPercentage>12</widthPercentage>
         </item>
         <item>
             <xPosPercentage>72.8</xPosPercentage>
             <yPosPercentage>73.8</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>4</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
         <item>
             <xPosPercentage>67.4</xPosPercentage>
             <yPosPercentage>80</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>11</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
     </round>
 
 
-
     <round>
-        <background>image_search_5</background>
+        <backgroundColored>image_search_5</backgroundColored>
+        <backgroundNonColored>image_search_5_blank</backgroundNonColored>
         <item>
             <xPosPercentage>27.7</xPosPercentage>
             <yPosPercentage>17.8</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>49.2</xPosPercentage>
             <yPosPercentage>17.8</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>7</heightPercentage>
             <widthPercentage>12</widthPercentage>
         </item>
         <item>
             <xPosPercentage>85</xPosPercentage>
             <yPosPercentage>23.9</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>72.4</xPosPercentage>
             <yPosPercentage>39.9</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>
         <item>
             <xPosPercentage>26.2</xPosPercentage>
             <yPosPercentage>47.6</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>25.5</xPosPercentage>
             <yPosPercentage>65.4</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>10</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>42.7</xPosPercentage>
             <yPosPercentage>67.1</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>7</heightPercentage>
             <widthPercentage>15</widthPercentage>
         </item>
         <item>
             <xPosPercentage>68.6</xPosPercentage>
             <yPosPercentage>65.2</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>8</heightPercentage>
             <widthPercentage>25</widthPercentage>
         </item>
         <item>
             <xPosPercentage>36.6</xPosPercentage>
             <yPosPercentage>75.6</yPosPercentage>
-            <color>
-                <r>255</r>
-                <g>126</g>
-                <b>35</b>
-            </color>
             <heightPercentage>5</heightPercentage>
             <widthPercentage>10</widthPercentage>
         </item>

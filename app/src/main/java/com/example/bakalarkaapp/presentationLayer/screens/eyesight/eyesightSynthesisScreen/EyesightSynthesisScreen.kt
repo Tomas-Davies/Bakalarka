@@ -83,7 +83,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     @Composable
     private fun EyesightSynthesisScreenContent(viewModel: EyesightSynthesisViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.eyesight_synth_label)
         ) {
             Column(
@@ -135,7 +135,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         RoundsCompletedBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
-            onExit = { this.finish() }
+            onExit = { finish() }
         ) {
             val imageContent = uiState.image.asImageBitmap()
             Image(
@@ -205,7 +205,7 @@ class EyesightSynthesisScreen : AppCompatActivity() {
      * @param bottomBoxOffset The offset of the bottom box holding the pieces.
      * @param contentOffsetInRoot The offset of the content, inside the top image composable,
      * relative to the root composable.
-     * @param contentScale The scale factor applied to the content, inside the top image composable.
+     * @param contentScale The scale factor that was applied to the content inside Image composable container with ContentScale.Fit applied.
      * @param viewModel Manages the exercise state and validates
      * placements.
      * @param key A unique identifier for this piece, used to reset state when pieces are reordered.

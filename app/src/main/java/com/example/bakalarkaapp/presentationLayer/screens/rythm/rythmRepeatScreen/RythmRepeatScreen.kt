@@ -70,7 +70,7 @@ class RythmRepeatScreen: AppCompatActivity() {
         val currentlyPlaying by viewModel.currentlyPlayngIdx.collectAsStateWithLifecycle()
 
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.rythm_repeat_heading)
         ){ pdVal ->
 

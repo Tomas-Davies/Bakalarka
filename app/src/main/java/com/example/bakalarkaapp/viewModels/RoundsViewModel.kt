@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.update
  * It manages:
  * - Round progression.
  * - Score tracking.
- * - Game state (running, finished).
  * - Result messaging.
  * - Button enabling / disabling.
  *
@@ -69,14 +68,14 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         doContinue()
     }
 
+    protected open fun doContinue(){
+        if (nextRound()) { updateData() }
+    }
+
     protected fun showRoundSetDialog(){
         playSound(R.raw.celebration)
         vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
         _roundCompletedDialogShow.update { true }
-    }
-
-    protected open fun doContinue(){
-        if (nextRound()) { updateData() }
     }
 
     private fun updateHasNextRound(){

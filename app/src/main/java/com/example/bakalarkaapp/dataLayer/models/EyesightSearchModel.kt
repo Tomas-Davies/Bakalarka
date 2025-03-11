@@ -5,11 +5,6 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
-data class ItemColor(
-    val r: Int = 0,
-    val g: Int = 0,
-    val b: Int = 0
-)
 
 /**
  * Data for overlay component used on top of *Image*. The overlay filters *color* under it to white (hiding the colored object).
@@ -21,7 +16,6 @@ data class ItemColor(
  * @property yPerc The overlays center y-coordinate expressed as percentage (0-100) of *Image* height.
  * @property widthPerc The width of the overlay, expressed as percentage (0-100) of *Image* width.
  * @property heightPerc The height of the overlay, expressed as percentage (0-100) of *Image* height.
- * @property color The [ItemColor], which is going to be filtered to white.
  */
 data class SearchItemOverlay(
     @JacksonXmlProperty(localName = "xPosPercentage")
@@ -31,8 +25,7 @@ data class SearchItemOverlay(
     @JacksonXmlProperty(localName = "widthPercentage")
     val widthPerc: Float = 0f,
     @JacksonXmlProperty(localName = "heightPercentage")
-    val heightPerc: Float = 0f,
-    val color: ItemColor = ItemColor()
+    val heightPerc: Float = 0f
 )
 
 
@@ -40,11 +33,14 @@ data class SearchItemOverlay(
  * Represents a round of the Eyesight Search exercise.
  *
  * @property imageName The name of the drawable resource file containing image used for searching objects hidden by overlays.
+ * @property coloredImageName The name of the drawable resource file containing image used for searching objects hidden by overlays.
  * @property items A list of [SearchItemOverlay] items.
  */
 data class SearchRound(
-    @JacksonXmlProperty(localName = "background")
+    @JacksonXmlProperty(localName = "backgroundNonColored")
     override val imageName: String = "",
+    @JacksonXmlProperty(localName = "backgroundColored")
+    val coloredImageName: String = "",
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "item")
     val items: List<SearchItemOverlay> = emptyList()

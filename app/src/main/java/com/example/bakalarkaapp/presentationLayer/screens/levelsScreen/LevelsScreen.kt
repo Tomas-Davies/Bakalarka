@@ -32,8 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -125,7 +123,7 @@ class LevelsScreen : AppCompatActivity() {
     @Composable
     fun <T, S: ImageLevel> LevelsScreenContent(viewModel: LevelsViewModel<T, S>) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(viewModel.headingId)
         ) {
             LazyVerticalGrid(
@@ -168,11 +166,9 @@ class LevelsScreen : AppCompatActivity() {
             ) {
                 var alignment = Alignment.Center
                 var contentScale = ContentScale.Fit
-                var colorFilter: ColorFilter? = null
                 if (nextActivityClass == EyesightSearchScreen::class.java) {
                     alignment = Alignment.TopCenter
                     contentScale = ContentScale.Crop
-                    colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
                 }
 
                 Image(
@@ -181,7 +177,6 @@ class LevelsScreen : AppCompatActivity() {
                         .fillMaxWidth(),
                     painter = painterResource(id = imageId),
                     contentDescription = "Search level icon",
-                    colorFilter = colorFilter,
                     contentScale = contentScale,
                     alignment = alignment
                 )

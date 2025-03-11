@@ -72,13 +72,13 @@ class EyesightComparisonScreen : AppCompatActivity() {
     @Composable
     private fun EyesightComparisonRunning(viewModel: EyesightComparisonViewModel) {
         ScreenWrapper(
-            onExit = { this.finish() },
+            onExit = { finish() },
             title = stringResource(id = R.string.eyesight_menu_label_1)
         ) {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             RoundsCompletedBox(
                 viewModel = viewModel,
-                onExit = { this.finish() }
+                onExit = { finish() }
             ) {
                 Column(
                     modifier = Modifier
