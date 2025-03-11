@@ -29,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
@@ -39,8 +40,9 @@ class HearingSynthesisScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.hearingSynthesisRepository
         val viewModel: HearingSynthesisViewModel by viewModels {
-            HearingSynthesisViewModelFactory(app)
+            HearingSynthesisViewModelFactory(repo, app)
         }
         setContent {
             AppTheme(ThemeType.THEME_HEARING.id) {
@@ -60,12 +62,14 @@ class HearingSynthesisScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.hearing_menu_label_3)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
-            ) {
-                HearingSynthRunning(viewModel = viewModel)
+            AsyncDataWrapper(viewModel = viewModel) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                ) {
+                    HearingSynthRunning(viewModel = viewModel)
+                }
             }
         }
     }
@@ -90,9 +94,9 @@ class HearingSynthesisScreen : AppCompatActivity() {
                     textAlign = TextAlign.Center
                 )
                 Box(
-                    modifier =  Modifier
-                    .fillMaxWidth()
-                    .weight(4f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(4f),
                     contentAlignment = Alignment.Center
                 ){
                     LazyVerticalGrid(

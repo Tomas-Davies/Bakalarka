@@ -27,5 +27,5 @@ data class SpeechLetter(
 data class SpeechData(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "letter")
-    val letters: List<SpeechLetter> = emptyList()
-)
+    override val data: List<SpeechLetter> = emptyList()
+) : IModel<SpeechLetter>

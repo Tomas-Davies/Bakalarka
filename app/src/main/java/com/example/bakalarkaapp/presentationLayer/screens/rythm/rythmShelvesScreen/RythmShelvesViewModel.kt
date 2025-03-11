@@ -4,12 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.dataLayer.models.ShelvesRound
 import com.example.bakalarkaapp.dataLayer.models.WordContent
+import com.example.bakalarkaapp.dataLayer.repositories.RythmShelvesRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 
 data class RythmShelvesUiState(
     val objects: List<WordContent>,
@@ -18,20 +22,25 @@ data class RythmShelvesUiState(
     val thirdPart: List<WordContent>
 )
 
-class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
-    private val repo = app.rythmShelvesRepository
-    private val rounds = repo.data.shuffled()
-    private var currRound = rounds[roundIdx]
-    private var currRhymesSet = getRhymeSet()
-    private var allWords = getAllWords()
-    var parts = getThreeParts(allWords)
-    private val _uiState = MutableStateFlow(
-        RythmShelvesUiState(allWords, parts.first, parts.second, parts.third)
-    )
-    val uiState = _uiState.asStateFlow()
-    var rhymeCounter = 0
-    private val _rhymePairsEnabled = MutableStateFlow(MutableList(allWords.size) { true })
-    val rhymePairsEnabled = _rhymePairsEnabled.asStateFlow()
+class RythmShelvesViewModel(
+    private val repo: RythmShelvesRepo,
+    app: LogoApp
+) : RoundsViewModel(app) {
+
+    private lateinit var rounds: List<ShelvesRound>
+    private lateinit var currRound: ShelvesRound
+    private lateinit var currRhymesSet: List<Pair<WordContent, WordContent>>
+    private lateinit var allWords: List<WordContent>
+    lateinit var parts: Triple<List<WordContent>, List<WordContent>, List<WordContent>>
+    private lateinit var _uiState: MutableStateFlow<RythmShelvesUiState>
+    lateinit var uiState: StateFlow<RythmShelvesUiState>
+        private set
+
+    private var rhymeCounter = 0
+    private lateinit var _rhymePairsEnabled: MutableStateFlow<MutableList<Boolean>>
+    lateinit var rhymePairsEnabled: StateFlow<List<Boolean>>
+        private set
+
     private var _firstIdxClicked = MutableStateFlow(-1)
     val firstIdxClicked = _firstIdxClicked.asStateFlow()
     private var _secondIdxClicked = MutableStateFlow(-1)
@@ -40,8 +49,23 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
     override var roundSetSize = 1
 
     init {
-        disableButtons()
-        count = rounds.size
+        viewModelScope.launch {
+            repo.loadData()
+            rounds = repo.data.shuffled()
+            count = rounds.size
+            currRound = rounds[roundIdx]
+            currRhymesSet = getRhymeSet()
+            allWords = getAllWords()
+            parts = getThreeParts(allWords)
+            _uiState = MutableStateFlow(
+                RythmShelvesUiState(allWords, parts.first, parts.second, parts.third)
+            )
+            uiState = _uiState.asStateFlow()
+            _rhymePairsEnabled = MutableStateFlow(MutableList(allWords.size) { true })
+            rhymePairsEnabled = _rhymePairsEnabled.asStateFlow()
+            disableButtons()
+            dataLoaded()
+        }
     }
 
 
@@ -179,11 +203,15 @@ class RythmShelvesViewModel(app: LogoApp) : RoundsViewModel(app) {
 }
 
 
-class RythmShelvesViewModelFactory(private val app: LogoApp): ViewModelProvider.Factory {
+class RythmShelvesViewModelFactory(
+    private val repo: RythmShelvesRepo,
+    private val app: LogoApp
+): ViewModelProvider.Factory
+{
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmShelvesViewModel::class.java)){
-            return RythmShelvesViewModel(app) as T
+            return RythmShelvesViewModel(repo, app) as T
         }
         throw IllegalArgumentException("Unknown viewModel class: $modelClass")
     }

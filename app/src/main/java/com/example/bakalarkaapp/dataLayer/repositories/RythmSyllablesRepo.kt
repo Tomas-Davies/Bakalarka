@@ -11,6 +11,3 @@ class RythmSyllablesRepo(ctx: Context):
         R.raw.rythm_syllabels_data,
         RythmSyllabData::class.java
     )
-{
-    override val data = mappedClass?.rounds ?: emptyList()
-}

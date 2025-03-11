@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -85,9 +86,11 @@ fun RoundCompletedDialog(
                     else -> R.drawable.gold_medal
                 }
                 Image(
-                        modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = medalDrawable),
-                contentDescription = "medal"
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .sizeIn(maxHeight = 300.dp),
+                    painter = painterResource(id = medalDrawable),
+                    contentDescription = "medal"
                 )
             }
             HorizontalDivider(modifier = Modifier.padding(vertical = 18.dp))

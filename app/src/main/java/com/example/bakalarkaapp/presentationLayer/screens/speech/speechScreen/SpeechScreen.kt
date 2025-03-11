@@ -35,6 +35,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.SpeechLetter
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.CustomDialog
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen
@@ -46,8 +47,9 @@ class SpeechScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.speechRepository
         val viewModel: SpeechViewModel by viewModels {
-            SpeechViewModelFactory(app)
+            SpeechViewModelFactory(repo, app)
         }
         setContent {
             AppTheme(ThemeType.THEME_SPEECH.id) {
@@ -61,14 +63,17 @@ class SpeechScreen : AppCompatActivity() {
         }
     }
 
+
     @Composable
     private fun SpeechScreenContent(viewModel: SpeechViewModel) {
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.category_speech)
         ) { pdVal ->
-            val letters = viewModel.lettersAndPositions
-            SpeechScreenMenu(pdVal, letters)
+            AsyncDataWrapper(viewModel = viewModel) {
+                val letters = viewModel.lettersAndPositions
+                SpeechScreenMenu(pdVal, letters)
+            }
         }
     }
 

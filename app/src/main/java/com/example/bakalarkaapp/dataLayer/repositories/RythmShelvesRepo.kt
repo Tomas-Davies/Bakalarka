@@ -11,6 +11,3 @@ class RythmShelvesRepo(ctx: Context) :
         R.raw.rythm_shelves_data,
         ShelvesRounds::class.java
     )
-{
-    override val data = mappedClass?.rounds ?: emptyList()
-}

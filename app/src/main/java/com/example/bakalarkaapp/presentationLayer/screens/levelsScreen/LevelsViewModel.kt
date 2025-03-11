@@ -2,9 +2,14 @@ package com.example.bakalarkaapp.presentationLayer.screens.levelsScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.BaseViewModel
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.dataLayer.models.IModel
 import com.example.bakalarkaapp.dataLayer.repositories.ResourceMappedRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * Provides interface for rounds that will get navigated to from menu *level button* with image.
@@ -12,7 +17,7 @@ import com.example.bakalarkaapp.dataLayer.repositories.ResourceMappedRepository
  *
  * @property imageName The name of the drawable resource file.
  */
-interface ImageLevel {
+interface IImageLevel {
     val imageName: String
     companion object {
         const val TAG = "LEVEL_INDEX"
@@ -29,13 +34,24 @@ interface ImageLevel {
  * @param repository The repository which provides list of rounds.
  * @param headingId The String resource id of heading used in [LevelsScreen]
  */
-class LevelsViewModel<T, R: ImageLevel>(
+class LevelsViewModel<T : IModel<R>, R : IImageLevel>(
     app: LogoApp,
     repository: ResourceMappedRepository<T, R>,
     val headingId: Int
 ): BaseViewModel(app) {
-    private val data = repository.data
-    val levels = getLevelsList()
+
+    private var data: List<R> = emptyList()
+    private var _levels = MutableStateFlow<List<String>>(emptyList())
+    var levels = _levels.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            repository.loadData()
+            data = repository.data
+            _levels.value = getLevelsList()
+            dataLoaded()
+        }
+    }
 
     private fun getLevelsList(): List<String>{
         val l = mutableListOf<String>()
@@ -48,7 +64,7 @@ class LevelsViewModel<T, R: ImageLevel>(
 }
 
 
-class LevelsViewModelFactory<R, S : ImageLevel>(
+class LevelsViewModelFactory<R : IModel<S>, S : IImageLevel>(
     private val app: LogoApp,
     private val repository: ResourceMappedRepository<R, S>,
     private val headingId: Int

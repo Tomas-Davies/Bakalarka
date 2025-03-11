@@ -10,6 +10,4 @@ class BasicWordsRepo(ctx: Context, resourceFileId: Int):
         ctx,
         resourceFileId,
         BasicWordsRounds::class.java
-    ) {
-    override val data = mappedClass?.rounds ?: emptyList()
-}
+    )

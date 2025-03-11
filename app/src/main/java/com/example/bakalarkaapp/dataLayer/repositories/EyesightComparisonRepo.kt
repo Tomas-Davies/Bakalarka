@@ -10,6 +10,4 @@ class EyesightComparisonRepo(ctx: Context) :
         ctx,
         R.raw.eyesight_comparison_data,
         ComparisonData::class.java
-    ) {
-    override val data = mappedClass?.items ?: emptyList()
-}
+    )

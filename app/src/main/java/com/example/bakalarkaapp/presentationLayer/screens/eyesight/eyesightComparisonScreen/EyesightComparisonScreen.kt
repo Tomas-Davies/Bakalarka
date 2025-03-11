@@ -45,17 +45,18 @@ import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.components.LinearTimerIndicator
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightComparisonScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val levelIdx = intent.getIntExtra(ImageLevel.TAG, 0)
+        val levelIdx = intent.getIntExtra(IImageLevel.TAG, 0)
         val app = application as LogoApp
+        val repo = app.eyesightComparisonRepository
         val viewModel: EyesightComparisonViewModel by viewModels {
-            EyesightComparionViewModelFactory(app, levelIdx)
+            EyesightComparionViewModelFactory(repo, app, levelIdx)
         }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT.id) {

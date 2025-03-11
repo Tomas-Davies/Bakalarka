@@ -35,6 +35,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.WordContent
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
@@ -46,8 +47,9 @@ class RythmShelvesScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val app = application as LogoApp
+        val repo = app.rythmShelvesRepository
         val viewModel: RythmShelvesViewModel by viewModels {
-            RythmShelvesViewModelFactory(app)
+            RythmShelvesViewModelFactory(repo, app)
         }
         setContent {
             AppTheme(ThemeType.THEME_RYTHM.id) {
@@ -55,137 +57,136 @@ class RythmShelvesScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    RythmShelvesScreenContent(viewModel)
+                    RythmShelvesScreenRunning(viewModel)
                 }
             }
         }
     }
 
-    @Composable
-    private fun RythmShelvesScreenContent(viewModel: RythmShelvesViewModel) {
-        RythmShelvesScreenRunning(viewModel = viewModel)
-    }
 
     @Composable
     private fun RythmShelvesScreenRunning(viewModel: RythmShelvesViewModel) {
-        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-        val enabledStates by viewModel.rhymePairsEnabled.collectAsStateWithLifecycle()
-        val firstClickedIdx by viewModel.firstIdxClicked.collectAsStateWithLifecycle()
-        val secondClickedIdx by viewModel.secondIdxClicked.collectAsStateWithLifecycle()
-        val btnEnabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
+        AsyncDataWrapper(viewModel = viewModel) {
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val enabledStates by viewModel.rhymePairsEnabled.collectAsStateWithLifecycle()
+            val firstClickedIdx by viewModel.firstIdxClicked.collectAsStateWithLifecycle()
+            val secondClickedIdx by viewModel.secondIdxClicked.collectAsStateWithLifecycle()
+            val btnEnabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
-        ScreenWrapper(
-            onExit = { finish() },
-            title = stringResource(id = R.string.rythm_menu_label_1)
-        ) { pdVal ->
-            RoundsCompletedBox(
-                viewModel = viewModel,
-                onExit = { finish() }
-            ) {
-                Column(
-                    modifier = Modifier.padding(start = 18.dp, top = pdVal.calculateTopPadding(), end = 18.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            ScreenWrapper(
+                onExit = { finish() },
+                title = stringResource(id = R.string.rythm_menu_label_1)
+            ) { pdVal ->
+                RoundsCompletedBox(
+                    viewModel = viewModel,
+                    onExit = { finish() }
                 ) {
-                    Text(
-                        modifier = Modifier
-                            .weight(0.3f)
-                            .wrapContentHeight(),
-                        text = stringResource(id = R.string.rythm_shelves_label),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(2f)
+                        modifier = Modifier.padding(start = 18.dp, top = pdVal.calculateTopPadding(), end = 18.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        val rowModifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(top = 9.dp)
+                        Text(
+                            modifier = Modifier
+                                .weight(0.3f)
+                                .wrapContentHeight(),
+                            text = stringResource(id = R.string.rythm_shelves_label),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
 
-                        val imageCardModifier = Modifier
-                            .weight(1f)
-                            .padding(9.dp)
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(2f)
+                        ) {
+                            val rowModifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
+                                .padding(top = 9.dp)
 
-                        val dividerModifier = Modifier
-                            .height(10.dp)
-                            .background(colorResource(id = R.color.wood))
+                            val imageCardModifier = Modifier
+                                .weight(1f)
+                                .padding(9.dp)
 
-                        Row(
-                            modifier = rowModifier
-                        ) {
-                            uiState.firstPart.forEach { obj ->
-                                ShelveCard(
-                                    modifier = imageCardModifier,
-                                    obj = obj,
-                                    objects = uiState.objects,
-                                    viewModel = viewModel,
-                                    firstClickedIdx = firstClickedIdx,
-                                    secondClickedIdx = secondClickedIdx,
-                                    enabledStates = enabledStates
-                                )
+                            val dividerModifier = Modifier
+                                .height(10.dp)
+                                .background(colorResource(id = R.color.wood))
+
+                            Row(
+                                modifier = rowModifier
+                            ) {
+                                uiState.firstPart.forEach { obj ->
+                                    ShelveCard(
+                                        modifier = imageCardModifier,
+                                        obj = obj,
+                                        objects = uiState.objects,
+                                        viewModel = viewModel,
+                                        firstClickedIdx = firstClickedIdx,
+                                        secondClickedIdx = secondClickedIdx,
+                                        enabledStates = enabledStates
+                                    )
+                                }
                             }
-                        }
-                        HorizontalDivider(modifier = dividerModifier)
-                        Row(
-                            modifier = rowModifier
-                        ) {
-                            uiState.secondPart.forEach { obj ->
-                                ShelveCard(
-                                    modifier = imageCardModifier,
-                                    obj = obj,
-                                    objects = uiState.objects,
-                                    viewModel = viewModel,
-                                    firstClickedIdx = firstClickedIdx,
-                                    secondClickedIdx = secondClickedIdx,
-                                    enabledStates = enabledStates
-                                )
+                            HorizontalDivider(modifier = dividerModifier)
+                            Row(
+                                modifier = rowModifier
+                            ) {
+                                uiState.secondPart.forEach { obj ->
+                                    ShelveCard(
+                                        modifier = imageCardModifier,
+                                        obj = obj,
+                                        objects = uiState.objects,
+                                        viewModel = viewModel,
+                                        firstClickedIdx = firstClickedIdx,
+                                        secondClickedIdx = secondClickedIdx,
+                                        enabledStates = enabledStates
+                                    )
+                                }
                             }
-                        }
-                        HorizontalDivider(modifier = dividerModifier)
-                        Row(
-                            modifier = rowModifier
-                        ) {
-                            uiState.thirdPart.forEach { obj ->
-                                ShelveCard(
-                                    modifier = imageCardModifier,
-                                    obj = obj,
-                                    objects = uiState.objects,
-                                    viewModel = viewModel,
-                                    firstClickedIdx = firstClickedIdx,
-                                    secondClickedIdx = secondClickedIdx,
-                                    enabledStates = enabledStates
-                                )
+                            HorizontalDivider(modifier = dividerModifier)
+                            Row(
+                                modifier = rowModifier
+                            ) {
+                                uiState.thirdPart.forEach { obj ->
+                                    ShelveCard(
+                                        modifier = imageCardModifier,
+                                        obj = obj,
+                                        objects = uiState.objects,
+                                        viewModel = viewModel,
+                                        firstClickedIdx = firstClickedIdx,
+                                        secondClickedIdx = secondClickedIdx,
+                                        enabledStates = enabledStates
+                                    )
+                                }
                             }
+                            HorizontalDivider(modifier = dividerModifier)
                         }
-                        HorizontalDivider(modifier = dividerModifier)
-                    }
-                    Box(
-                        modifier = Modifier.weight(0.4f),
-                        contentAlignment = Alignment.BottomCenter
-                    ){
-                        HorizontalDivider()
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        contentAlignment = Alignment.Center
-                    ){
-                        Button(
-                            enabled = btnEnabled,
-                            onClick = { viewModel.onDoneBtnClick() }
-                        ) {
-                            Text(text = stringResource(id = R.string.done_btn_label))
+                        Box(
+                            modifier = Modifier.weight(0.4f),
+                            contentAlignment = Alignment.BottomCenter
+                        ){
+                            HorizontalDivider()
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                            contentAlignment = Alignment.Center
+                        ){
+                            Button(
+                                enabled = btnEnabled,
+                                onClick = { viewModel.onDoneBtnClick() }
+                            ) {
+                                Text(text = stringResource(id = R.string.done_btn_label))
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 
     @Composable
     private fun ShelveCard(

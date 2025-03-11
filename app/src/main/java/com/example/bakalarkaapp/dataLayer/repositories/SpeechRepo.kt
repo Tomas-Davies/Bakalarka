@@ -12,8 +12,6 @@ class SpeechRepo(ctx: Context) :
         R.raw.speech_data,
         SpeechData::class.java
     ) {
-    override val data = mappedClass?.letters ?: emptyList()
-
 
     /**
      * @param letterLabel A label of the letter, for example "L".

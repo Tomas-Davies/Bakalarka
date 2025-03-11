@@ -38,7 +38,7 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 
 class EyesightDifferScreen: AppCompatActivity() {
@@ -50,10 +50,11 @@ class EyesightDifferScreen: AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val levelIndex = intent.getIntExtra(ImageLevel.TAG, 0)
+                    val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
                     val app = application as LogoApp
+                    val repo = app.eyesightDifferRepository
                     val viewModel: EyesightDifferViewModel by viewModels {
-                        EyesightDifferViewModelFactory(app, levelIndex)
+                        EyesightDifferViewModelFactory(repo, app, levelIndex)
                     }
                     EyesightDifferScreenContent(viewModel)
                 }

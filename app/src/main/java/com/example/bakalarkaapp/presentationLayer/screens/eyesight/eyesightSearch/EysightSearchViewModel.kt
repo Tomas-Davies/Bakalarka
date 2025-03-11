@@ -10,9 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.SearchItemOverlay
+import com.example.bakalarkaapp.dataLayer.models.SearchRound
+import com.example.bakalarkaapp.dataLayer.repositories.EyesightSearchRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,22 +26,18 @@ data class EyesightSearchUiState(
     val items: List<SearchItemOverlay>
 )
 
-class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(app) {
-    init {
-        roundIdx = levelIndex
-    }
+class EyesightSearchViewModel(
+    repo: EyesightSearchRepo,
+    app: LogoApp,
+    levelIndex: Int
+): RoundsViewModel(app)
+{
+    lateinit var rounds: List<SearchRound>
+    private lateinit var currentRound: SearchRound
+    private lateinit var _uiState: MutableStateFlow<EyesightSearchUiState>
+    lateinit var uiState: StateFlow<EyesightSearchUiState>
+        private set
 
-    private val searchRepo = app.eyesightSearchRepository
-    private val rounds = searchRepo.data
-    private var currentRound = rounds[roundIdx]
-    private var _uiState = MutableStateFlow(
-        EyesightSearchUiState(
-            bgImageResource = currentRound.coloredImageName,
-            nonColorBgImageResource = currentRound.imageName,
-            items = currentRound.items
-        )
-    )
-    val uiState = _uiState.asStateFlow()
     private var _itemsFound = MutableStateFlow(0)
     var itemsFound = _itemsFound.asStateFlow()
     private var _missIndicatorOffset = MutableStateFlow(Offset(0f,0f))
@@ -46,10 +45,25 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(ap
     private var _showMissIndicator = MutableStateFlow(false)
     val showMissIndicator = _showMissIndicator.asStateFlow()
 
-
     init {
-        count = rounds.size
+        roundIdx = levelIndex
+        viewModelScope.launch {
+            repo.loadData()
+            rounds = repo.data
+            count = rounds.size
+            currentRound = rounds[roundIdx]
+            _uiState = MutableStateFlow(
+                EyesightSearchUiState(
+                    bgImageResource = currentRound.coloredImageName,
+                    nonColorBgImageResource = currentRound.imageName,
+                    items = currentRound.items
+                )
+            )
+            uiState = _uiState.asStateFlow()
+            dataLoaded()
+        }
     }
+
 
     fun onOverlayClick() {
         playResultSound(true)
@@ -157,12 +171,15 @@ class EyesightSearchViewModel(app: LogoApp, levelIndex: Int): RoundsViewModel(ap
     }
 }
 
-class EyesightSearchViewModelFactory(private val app: LogoApp, private val levelIndex: Int) :
-    ViewModelProvider.Factory {
+class EyesightSearchViewModelFactory(
+    private val repo: EyesightSearchRepo,
+    private val app: LogoApp,
+    private val levelIndex: Int
+) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSearchViewModel::class.java)) {
-            return EyesightSearchViewModel(app, levelIndex) as T
+            return EyesightSearchViewModel(repo, app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

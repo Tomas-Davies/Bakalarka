@@ -9,6 +9,7 @@ import android.os.VibratorManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.example.bakalarkaapp.LogoApp
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Abstract base ViewModel that provides common functionality for audio, vibration, and resource management.
@@ -24,6 +25,11 @@ import com.example.bakalarkaapp.LogoApp
  */
 abstract class BaseViewModel(app: LogoApp) : ViewModel() {
     private val appContext = app.applicationContext
+    val dataLoaded = MutableStateFlow(false)
+
+    fun dataLoaded(){
+        dataLoaded.value = true
+    }
 
     fun playSound(soundId: Int) {
         val mediaPlayer: MediaPlayer = MediaPlayer.create(appContext, soundId)

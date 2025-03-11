@@ -5,23 +5,23 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 
-class ShelvesRytmicWords {
+data class ShelvesRytmicWords (
     @JacksonXmlProperty(localName = "word")
     @JacksonXmlElementWrapper(useWrapping = false)
     val rytmicWords: List<WordContent> = emptyList()
-}
+)
 
 
-class ShelvesRound {
+data class ShelvesRound (
     @JacksonXmlProperty(localName = "rhymes")
     @JacksonXmlElementWrapper(useWrapping = false)
     val rhymeSets: List<ShelvesRytmicWords> = emptyList()
-}
+)
 
 
 @JacksonXmlRootElement(localName = "data")
-class ShelvesRounds {
+data class ShelvesRounds (
     @JacksonXmlProperty(localName = "round")
     @JacksonXmlElementWrapper(useWrapping = false)
-    val rounds: List<ShelvesRound> = emptyList()
-}
+    override val data: List<ShelvesRound> = emptyList()
+) : IModel<ShelvesRound>

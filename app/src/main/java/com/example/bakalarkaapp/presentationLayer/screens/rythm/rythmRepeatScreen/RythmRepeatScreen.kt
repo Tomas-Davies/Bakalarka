@@ -40,6 +40,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
 import com.linc.audiowaveform.AudioWaveform
@@ -48,8 +49,9 @@ class RythmRepeatScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.rythmRepeatRepository
         val viewModel: RythmRepeatViewModel by viewModels {
-            RythmRepeatViewModelFactory(app)
+            RythmRepeatViewModelFactory(repo, app)
         }
 
         setContent {
@@ -66,29 +68,30 @@ class RythmRepeatScreen: AppCompatActivity() {
 
     @Composable
     private fun RythmRepeatScreenContent(viewModel: RythmRepeatViewModel){
-        val rythmResources by viewModel.sounds.collectAsStateWithLifecycle()
-        val currentlyPlaying by viewModel.currentlyPlayngIdx.collectAsStateWithLifecycle()
-
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.rythm_repeat_heading)
         ){ pdVal ->
+            AsyncDataWrapper(viewModel = viewModel) {
+                val rythmResources by viewModel.sounds.collectAsStateWithLifecycle()
+                val currentlyPlaying by viewModel.currentlyPlayngIdx.collectAsStateWithLifecycle()
 
-            LazyVerticalGrid(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp),
-                columns = GridCells.Adaptive(300.dp),
-                horizontalArrangement = Arrangement.spacedBy(18.dp),
-                verticalArrangement = Arrangement.spacedBy(18.dp)
-            ) {
-                itemsIndexed(rythmResources){idx, rythmResource ->
-                    SoundCard(
-                        soundId = rythmResource.soundId,
-                        amplitudes = rythmResource.amplitudes,
-                        viewModel = viewModel,
-                        number = idx + 1,
-                        currentlyPlayingIdx = currentlyPlaying
-                    )
+                LazyVerticalGrid(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp),
+                    columns = GridCells.Adaptive(300.dp),
+                    horizontalArrangement = Arrangement.spacedBy(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(18.dp)
+                ) {
+                    itemsIndexed(rythmResources){idx, rythmResource ->
+                        SoundCard(
+                            soundId = rythmResource.soundId,
+                            amplitudes = rythmResource.amplitudes,
+                            viewModel = viewModel,
+                            number = idx + 1,
+                            currentlyPlayingIdx = currentlyPlaying
+                        )
+                    }
                 }
             }
         }

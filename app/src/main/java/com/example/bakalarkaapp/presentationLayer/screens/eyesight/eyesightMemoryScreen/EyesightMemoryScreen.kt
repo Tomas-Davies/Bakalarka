@@ -33,6 +33,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.components.LinearTimerIndicator
@@ -44,8 +45,9 @@ class EyesightMemoryScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.eyesightMemoryRepository
         val viewModel: EyesightMemoryViewModel by viewModels {
-            EyesightMemoryViewModelFactory(app)
+            EyesightMemoryViewModelFactory(repo, app)
         }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT.id) {
@@ -65,12 +67,14 @@ class EyesightMemoryScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.eyesight_menu_label_4)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
-            ) {
-                EyesightMemoryRunning(viewModel = viewModel)
+            AsyncDataWrapper(viewModel = viewModel) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                ) {
+                    EyesightMemoryRunning(viewModel = viewModel)
+                }
             }
         }
     }

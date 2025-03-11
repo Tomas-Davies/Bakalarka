@@ -53,14 +53,16 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.util.fastRoundToInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.utils.image.getContentOffsetInImage
 import com.example.bakalarkaapp.utils.image.getFitContentScaleInImage
@@ -82,10 +84,10 @@ class EyesightSearchScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val levelIdx = intent.getIntExtra(ImageLevel.TAG, 0)
+                    val levelIdx = intent.getIntExtra(IImageLevel.TAG, 0)
                     val app = application as LogoApp
                     val viewModel: EyesightSearchViewModel by viewModels {
-                        EyesightSearchViewModelFactory(app, levelIdx)
+                        EyesightSearchViewModelFactory(app.eyesightSearchRepository, app, levelIdx)
                     }
                     EyesightImageSearchScreenContent(viewModel)
                 }
@@ -99,12 +101,14 @@ class EyesightSearchScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.eyesight_search_label_1)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(top = it.calculateTopPadding())
-            ) {
-                EyesightImageSearchRunning(viewModel = viewModel)
+            AsyncDataWrapper(viewModel = viewModel) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(top = it.calculateTopPadding())
+                ) {
+                    EyesightImageSearchRunning(viewModel = viewModel)
+                }
             }
         }
     }
@@ -116,6 +120,7 @@ class EyesightSearchScreen : AppCompatActivity() {
         var imageContentSize by remember { mutableStateOf(Size.Zero) }
         var imageContentOffset by remember { mutableStateOf(Offset.Zero) }
         var imageContentScale by remember { mutableFloatStateOf(0f) }
+        var imageComposableSize by remember { mutableStateOf(Size.Zero) }
         val imageId = viewModel.getDrawableId(uiState.bgImageResource)
 
         RoundsCompletedBox(
@@ -132,7 +137,8 @@ class EyesightSearchScreen : AppCompatActivity() {
                 drawableId = imageId,
                 setContentSize = { size -> imageContentSize = size },
                 setContentOffset = { off -> imageContentOffset = off },
-                setContentScale = { scale -> imageContentScale = scale }
+                setContentScale = { scale -> imageContentScale = scale },
+                setImageContainerSize = { size -> imageComposableSize = size }
             )
             val nonColoredImageId = viewModel.getDrawableId(uiState.nonColorBgImageResource)
             val options = BitmapFactory.Options()
@@ -140,9 +146,13 @@ class EyesightSearchScreen : AppCompatActivity() {
             val bitmap = BitmapFactory.decodeResource(resources, nonColoredImageId, options)
             val nonColoredImage = bitmap.asImageBitmap()
 
-            if (imageContentScale != 0f) {
+            if (imageComposableSize != Size.Zero && imageContentScale != 0f) {
                 uiState.items.forEach { item ->
                     val oInfo = viewModel.getOverlayInfo(item, imageContentSize, imageContentOffset)
+                    val imageComposableInnerSpace = Size(
+                        width = imageComposableSize.width - imageContentSize.width,
+                        height = imageComposableSize.height - imageContentSize.height
+                    )
                     key(item) {
                         ItemOverlay(
                             viewModel = viewModel,
@@ -153,7 +163,8 @@ class EyesightSearchScreen : AppCompatActivity() {
                                 oInfo.yInImage
                             ),
                             nonColoredImage = nonColoredImage,
-                            contentScale = imageContentScale
+                            contentScale = imageContentScale,
+                            imageComposableInnerSpace = imageComposableInnerSpace
                         )
                     }
                 }
@@ -207,7 +218,8 @@ class EyesightSearchScreen : AppCompatActivity() {
         drawableId: Int,
         setContentSize: (size: Size) -> Unit,
         setContentOffset: (pos: Offset) -> Unit,
-        setContentScale: (scale: Float) -> Unit
+        setContentScale: (scale: Float) -> Unit,
+        setImageContainerSize: (size: Size) -> Unit
     ) {
         val ctx = LocalContext.current
         var contentScale by remember { mutableFloatStateOf(0f) }
@@ -227,11 +239,11 @@ class EyesightSearchScreen : AppCompatActivity() {
                     val imageHeight = cords.size.height.toFloat()
                     contentScale = getFitContentScaleInImage(imageWidth, imageHeight, imageContent)
                     val contentSize = getContentSizeInImage(imageContent, contentScale)
-                    val contentOffset =
-                        getContentOffsetInImage(contentSize, imageWidth, imageHeight)
+                    val contentOffset = getContentOffsetInImage(contentSize, imageWidth, imageHeight)
                     setContentScale(contentScale)
                     setContentOffset(contentOffset)
                     setContentSize(contentSize)
+                    setImageContainerSize(cords.size.toSize())
                 }
                 .pointerInput(Unit) {
                     detectTapGestures(
@@ -310,15 +322,17 @@ class EyesightSearchScreen : AppCompatActivity() {
         height: Float,
         offset: Offset,
         nonColoredImage: ImageBitmap,
-        contentScale: Float
+        contentScale: Float,
+        imageComposableInnerSpace: Size
     ) {
         var overlayShow by remember { mutableStateOf(true) }
         val x = offset.x - width / 2
         val y = offset.y - height / 2
-        val xDp = with(LocalDensity.current) { x.toDp() }
-        val yDp = with(LocalDensity.current) { y.toDp() }
-        val widthDp = with(LocalDensity.current) { width.toDp() }
-        val heightDp = with(LocalDensity.current) { height.toDp() }
+        val localDensity = LocalDensity.current
+        val xDp = with(localDensity) { x.toDp() }
+        val yDp = with(localDensity) { y.toDp() }
+        val widthDp = with(localDensity) { width.toDp() }
+        val heightDp = with(localDensity) { height.toDp() }
 
         val overlayModifier = Modifier
             .size(DpSize(widthDp, heightDp))
@@ -331,9 +345,10 @@ class EyesightSearchScreen : AppCompatActivity() {
 
         if (overlayShow) {
             Canvas(modifier = overlayModifier) {
-                val yOffsetAdjustment = 3
-                val srcX = (x / contentScale).fastRoundToInt()
-                val srcY = (y / contentScale).fastRoundToInt() - yOffsetAdjustment
+                val yOffsetAdjustment = (imageComposableInnerSpace.height / 2).fastRoundToInt()
+                val xOffsetAdjustment = (imageComposableInnerSpace.width / 2).fastRoundToInt()
+                val srcX = ((x - xOffsetAdjustment) / contentScale).fastRoundToInt()
+                val srcY = ((y - yOffsetAdjustment) / contentScale).fastRoundToInt()
                 val srcSize = IntSize(
                     width = (width / contentScale).fastRoundToInt(),
                     height = (height / contentScale).fastRoundToInt()

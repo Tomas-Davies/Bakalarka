@@ -23,7 +23,7 @@ import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightDiffe
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSearch.EyesightSearchScreen
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
 import com.example.bakalarkaapp.theme.AppTheme
 
@@ -115,23 +115,23 @@ class EyesightScreen : AppCompatActivity() {
         var intent = Intent(ctx, LevelsScreen::class.java)
         when (id) {
             0 -> {
-                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightComparisonScreen::class.java)
+                intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightComparisonScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_COMPARISON.id)
             }
 
             1 -> {
-                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightSearchScreen::class.java)
+                intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightSearchScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_SEARCH.id)
             }
 
             2 -> {
-                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightDifferScreen::class.java)
+                intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightDifferScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_DIFFER.id)
             }
 
             3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
             4 -> {
-                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, EyesightSynthesisScreen::class.java)
+                intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightSynthesisScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_SYNTHESIS.id)
             }
         }

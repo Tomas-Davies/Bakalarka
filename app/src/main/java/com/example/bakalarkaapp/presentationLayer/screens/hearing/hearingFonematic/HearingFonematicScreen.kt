@@ -27,6 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.ImageCard
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
@@ -37,8 +38,9 @@ class HearingFonematicScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.hearingFonematicRepository
         val viewModel: HearingFonematicViewModel by viewModels {
-            HearingFonematicFactory(app)
+            HearingFonematicFactory(repo, app)
         }
         setContent {
             AppTheme(ThemeType.THEME_HEARING.id) {
@@ -58,12 +60,14 @@ class HearingFonematicScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.hearing_menu_label_1)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
-            ) {
-                HearingFonematicRunning(viewModel = viewModel)
+            AsyncDataWrapper(viewModel = viewModel) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                ) {
+                    HearingFonematicRunning(viewModel = viewModel)
+                }
             }
         }
     }

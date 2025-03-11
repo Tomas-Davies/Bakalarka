@@ -1,6 +1,6 @@
 package com.example.bakalarkaapp.dataLayer.models
 
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
@@ -24,12 +24,12 @@ data class DifferItem(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "round")
     val rounds: List<Round> = emptyList()
-) : ImageLevel
+) : IImageLevel
 
 
 @JacksonXmlRootElement(localName = "data")
 data class DifferData(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "differItem")
-    val data: List<DifferItem> = emptyList()
-)
+    override val data: List<DifferItem> = emptyList()
+) : IModel<DifferItem>

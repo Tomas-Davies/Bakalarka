@@ -46,9 +46,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.utils.image.getContentOffsetInImage
 import com.example.bakalarkaapp.utils.image.getFitContentScaleInImage
@@ -62,10 +63,10 @@ class EyesightSynthesisScreen : AppCompatActivity() {
 
         setContent {
             val app = application as LogoApp
-            val levelIndex = intent.getIntExtra(ImageLevel.TAG, 0)
-
+            val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
+            val repo = app.eyesightSynthesisRepository
             val viewModel: EyesightSynthesisViewModel by viewModels {
-                EyesightSynthesisViewModelFactory(app, levelIndex, applicationContext)
+                EyesightSynthesisViewModelFactory(repo, app, levelIndex)
             }
 
             AppTheme(ThemeType.THEME_EYESIGHT.id) {
@@ -86,13 +87,15 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.eyesight_synth_label)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                EyesightSynthesisScreenRunning(viewModel = viewModel)
+            AsyncDataWrapper(viewModel = viewModel) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    EyesightSynthesisScreenRunning(viewModel = viewModel)
+                }
             }
         }
     }
@@ -146,9 +149,11 @@ class EyesightSynthesisScreen : AppCompatActivity() {
                     .onGloballyPositioned { cords ->
                         imageWidth = cords.size.width.toFloat()
                         imageHeight = cords.size.height.toFloat()
-                        imageContentScale = getFitContentScaleInImage(imageWidth, imageHeight, imageContent)
+                        imageContentScale =
+                            getFitContentScaleInImage(imageWidth, imageHeight, imageContent)
                         val contentSize = getContentSizeInImage(imageContent, imageContentScale)
-                        val contentOffset = getContentOffsetInImage(contentSize, imageWidth, imageHeight)
+                        val contentOffset =
+                            getContentOffsetInImage(contentSize, imageWidth, imageHeight)
                         imageContentOffsetInRoot = Offset(
                             cords.positionInRoot().x + contentOffset.x,
                             cords.positionInRoot().y + contentOffset.y

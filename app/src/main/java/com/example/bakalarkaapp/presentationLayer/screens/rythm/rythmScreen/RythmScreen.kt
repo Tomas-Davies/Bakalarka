@@ -18,7 +18,7 @@ import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.presentationLayer.components.CategoryButton
 import com.example.bakalarkaapp.presentationLayer.components.CategoryMenu
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmSyllablesScreen.RythmSyllabelsScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmShelvesScreen.RythmShelvesScreen
@@ -94,7 +94,7 @@ class RythmScreen : AppCompatActivity() {
         when (id) {
             1 -> {
                 intent = Intent(ctx, LevelsScreen::class.java)
-                intent.putExtra(ImageLevel.NEXT_CLASS_TAG, RythmSyllabelsScreen::class.java)
+                intent.putExtra(IImageLevel.NEXT_CLASS_TAG, RythmSyllabelsScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.RYTHM_SYLLABLES.id)
             }
             2 -> intent = Intent(ctx, RythmRepeatScreen::class.java)

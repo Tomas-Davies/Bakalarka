@@ -1,18 +1,21 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSynthesisScreen
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.VibrationEffect
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.EyesightSynthRound
+import com.example.bakalarkaapp.dataLayer.repositories.EyesightSynthesisRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -51,26 +54,36 @@ data class Rect(
 )
 
 class EyesightSynthesisViewModel(
-    app: LogoApp,
-    levelIndex: Int,
-    private val appContext: Context
-) : RoundsViewModel(app) {
-    init {
-        roundIdx = levelIndex
-    }
-
-    private val rounds = app.eyesightSynthesisRepository.data
-    private val bitmaps = imageNamesToBitmaps(rounds)
-    private var currImage = bitmaps[roundIdx]
-    private var pieceCount = rounds[roundIdx].pieceCount
+    private val repo: EyesightSynthesisRepo,
+    private val app: LogoApp,
+    levelIndex: Int
+) : RoundsViewModel(app)
+{
+    private lateinit var rounds: List<EyesightSynthRound>
+    private lateinit var bitmaps: List<Bitmap>
+    private lateinit var currImage: Bitmap
+    private var pieceCount = 0
     private val threshold = 200
     private var placedPieces = 0
-    private val _uiState =
-        MutableStateFlow(EyesightSynthesisUiState(currImage, cutImage(currImage, pieceCount)))
-    val uiState = _uiState.asStateFlow()
+    private lateinit var _uiState: MutableStateFlow<EyesightSynthesisUiState>
+    lateinit var uiState: StateFlow<EyesightSynthesisUiState>
+        private set
+
     override var roundSetSize = 1
+
     init {
-        count = rounds.size
+        roundIdx = levelIndex
+        viewModelScope.launch {
+            repo.loadData()
+            rounds = repo.data
+            count = rounds.size
+            bitmaps = imageNamesToBitmaps(rounds)
+            currImage = bitmaps[roundIdx]
+            pieceCount = rounds[roundIdx].pieceCount
+            _uiState = MutableStateFlow(EyesightSynthesisUiState(currImage, cutImage(currImage, pieceCount)))
+            uiState = _uiState.asStateFlow()
+            dataLoaded()
+        }
     }
 
     override fun updateData() {
@@ -289,6 +302,7 @@ class EyesightSynthesisViewModel(
             val drawableId = getDrawableId(round.imageName)
             val options = BitmapFactory.Options()
             options.inScaled = false
+            val appContext = app.applicationContext
             val bitmap = BitmapFactory.decodeResource(appContext.resources, drawableId, options)
             bitmaps.add(bitmap)
         }
@@ -298,14 +312,14 @@ class EyesightSynthesisViewModel(
 
 
 class EyesightSynthesisViewModelFactory(
+    private val repo: EyesightSynthesisRepo,
     private val app: LogoApp,
-    private val levelIndex: Int,
-    private val appContext: Context
+    private val levelIndex: Int
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSynthesisViewModel::class.java)) {
-            return EyesightSynthesisViewModel(app, levelIndex, appContext) as T
+            return EyesightSynthesisViewModel(repo, app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

@@ -10,6 +10,3 @@ class RythmRepeatRepo(ctx: Context) :
         R.raw.rythm_repeat_data,
         RythmRepeatData::class.java
     )
-{
-    override val data = mappedClass?.soundNames ?: emptyList()
-}

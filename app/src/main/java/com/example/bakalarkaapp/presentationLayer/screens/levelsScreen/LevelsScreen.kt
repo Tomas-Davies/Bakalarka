@@ -29,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.RepositoryType
@@ -51,8 +53,10 @@ import com.example.bakalarkaapp.dataLayer.models.SearchRound
 import com.example.bakalarkaapp.dataLayer.models.EyesightSynthData
 import com.example.bakalarkaapp.dataLayer.models.EyesightSynthRound
 import com.example.bakalarkaapp.dataLayer.models.ComparisonData
+import com.example.bakalarkaapp.dataLayer.models.IModel
 import com.example.bakalarkaapp.dataLayer.models.RythmSyllabData
 import com.example.bakalarkaapp.dataLayer.models.RythmSyllabRound
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightSearch.EyesightSearchScreen
 import com.example.bakalarkaapp.theme.AppTheme
@@ -121,21 +125,25 @@ class LevelsScreen : AppCompatActivity() {
 
 
     @Composable
-    fun <T, S: ImageLevel> LevelsScreenContent(viewModel: LevelsViewModel<T, S>) {
+    fun <T : IModel<S>, S : IImageLevel> LevelsScreenContent(viewModel: LevelsViewModel<T, S>) {
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(viewModel.headingId)
         ) {
-            LazyVerticalGrid(
-                modifier = Modifier.fillMaxWidth(),
-                columns = GridCells.Adaptive(150.dp),
-                horizontalArrangement = Arrangement.spacedBy(18.dp),
-                verticalArrangement = Arrangement.spacedBy(18.dp),
-                contentPadding = PaddingValues(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
-            ) {
-                itemsIndexed(viewModel.levels) { i, level ->
-                    val image = viewModel.getDrawableId("${level}_low")
-                    LevelIcon(imageId = image, i)
+            AsyncDataWrapper(viewModel) {
+                val levels by viewModel.levels.collectAsStateWithLifecycle()
+
+                LazyVerticalGrid(
+                    modifier = Modifier.fillMaxWidth(),
+                    columns = GridCells.Adaptive(150.dp),
+                    horizontalArrangement = Arrangement.spacedBy(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(18.dp),
+                    contentPadding = PaddingValues(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                ) {
+                    itemsIndexed(levels) { i, level ->
+                        val image = viewModel.getDrawableId("${level}_low")
+                        LevelIcon(imageId = image, i)
+                    }
                 }
             }
         }
@@ -145,12 +153,12 @@ class LevelsScreen : AppCompatActivity() {
     @Composable
     private fun LevelIcon(imageId: Int, i: Int){
         val ctx = LocalContext.current
-        val nextActivityClass = intent.getSdkBasedSerializableExtra(ImageLevel.NEXT_CLASS_TAG, Class::class.java)
+        val nextActivityClass = intent.getSdkBasedSerializableExtra(IImageLevel.NEXT_CLASS_TAG, Class::class.java)
 
         ElevatedCard(
             onClick = {
                 val intent = Intent(ctx, nextActivityClass)
-                intent.putExtra(ImageLevel.TAG, i)
+                intent.putExtra(IImageLevel.TAG, i)
                 startActivity(intent)
             },
             colors = CardColors(

@@ -20,5 +20,5 @@ data class HearingMemoryRound(
 data class HearingMemoryData(
     @JacksonXmlProperty(localName = "round")
     @JacksonXmlElementWrapper(useWrapping = false)
-    val rounds: List<HearingMemoryRound> = emptyList()
-)
+    override val data: List<HearingMemoryRound> = emptyList()
+) : IModel<HearingMemoryRound>

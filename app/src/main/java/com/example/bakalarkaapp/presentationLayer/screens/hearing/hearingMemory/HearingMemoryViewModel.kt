@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.dataLayer.models.HearingMemoryRound
 import com.example.bakalarkaapp.dataLayer.models.WordContent
+import com.example.bakalarkaapp.dataLayer.repositories.HearingMemoryRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,13 +20,16 @@ data class HearingMemoryUiState(
     val round: Int
 )
 
-class HearingMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
-    private val repo = app.hearingMemoryRepository
-    private val rounds = repo.data
-    private var currRound = rounds[roundIdx]
-    private var allObjects = currRound.objects
-    private var initallObjects = getInitallObjects()
-    private var initiallObjImgNames = getInitiallObJImages()
+class HearingMemoryViewModel(
+    private val repo: HearingMemoryRepo,
+    app: LogoApp
+) : RoundsViewModel(app)
+{
+    private lateinit var rounds: List<HearingMemoryRound>
+    private lateinit var currRound: HearingMemoryRound
+    private lateinit var allObjects: List<WordContent>
+    private lateinit var initallObjects: List<WordContent>
+    private lateinit var initiallObjImgNames: List<String>
     private val _uiState = MutableStateFlow(
         HearingMemoryUiState(
             showingObjects = emptyList(),
@@ -33,12 +38,21 @@ class HearingMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
     )
     val uiState = _uiState.asStateFlow()
     private var correctAnswerCount = 0
+    override var roundSetSize = 1
 
     init {
-        count = rounds.size
+        viewModelScope.launch {
+            repo.loadData()
+            rounds = repo.data
+            currRound = rounds[roundIdx]
+            allObjects = currRound.objects
+            initallObjects = getInitallObjects()
+            initiallObjImgNames = getInitiallObJImages()
+            count = rounds.size
+            dataLoaded()
+        }
     }
 
-    override var roundSetSize = 1
 
     fun playInitallObjects(onFinish: () -> Unit) {
         viewModelScope.launch {
@@ -52,6 +66,7 @@ class HearingMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
         }
     }
 
+
     suspend fun onCardClick(answer: String): Boolean {
         clickedCounterInc()
         if (answer in initiallObjImgNames) {
@@ -61,6 +76,7 @@ class HearingMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
         onWrongAnswer()
         return false
     }
+
 
     private fun onCorrectAnswer(){
         playResultSound(result = true)
@@ -81,6 +97,7 @@ class HearingMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
         playResultSound(result = false)
         showWrongMessage()
     }
+
 
     override fun updateData() {
         correctAnswerCount = 0
@@ -105,24 +122,28 @@ class HearingMemoryViewModel(app: LogoApp) : RoundsViewModel(app) {
         }
     }
 
+
     private fun getInitallObjects(): List<WordContent> {
         val mixed = allObjects.shuffled()
         return mixed.subList(0, currRound.toBePlayedCount)
     }
 
+
     private fun getInitiallObJImages(): List<String> {
         return initallObjects.map { obj -> obj.imageName ?: "" }
     }
-
-
-
 }
 
-class HearingMemoryViewModelFactory(private val app: LogoApp) : ViewModelProvider.Factory {
+
+class HearingMemoryViewModelFactory(
+    private val repo: HearingMemoryRepo,
+    private val app: LogoApp
+) : ViewModelProvider.Factory
+{
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HearingMemoryViewModel::class.java)) {
-            return HearingMemoryViewModel(app) as T
+            return HearingMemoryViewModel(repo, app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

@@ -1,16 +1,16 @@
 package com.example.bakalarkaapp.dataLayer.models
 
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 
 /**
- * Data for overlay component used on top of *Image*. The overlay filters *color* under it to white (hiding the colored object).
+ * Data for overlay component used on top of *Image*.
  *
  * The coordinates and size of the overlay are expressed as percentages relative to *Image* size,
- * making it more intuitive and making them adapt to any size as long as the *Image* aspect ratio is 1f
+ * making it more intuitive and making them adapt to any size and image resolution as long as the *Image* aspect ratio is 1f
  *
  * @property xPerc The overlays center x-coordinate expressed as percentage (0-100) of *Image* width.
  * @property yPerc The overlays center y-coordinate expressed as percentage (0-100) of *Image* height.
@@ -44,12 +44,12 @@ data class SearchRound(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "item")
     val items: List<SearchItemOverlay> = emptyList()
-) : ImageLevel
+) : IImageLevel
 
 
 @JacksonXmlRootElement(localName = "data")
 data class SearchData(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "round")
-    val rounds: List<SearchRound> = emptyList()
-)
+    override val data: List<SearchRound> = emptyList()
+) : IModel<SearchRound>

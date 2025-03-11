@@ -9,5 +9,5 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 data class RythmRepeatData(
     @JacksonXmlProperty(localName = "soundName")
     @JacksonXmlElementWrapper(useWrapping = false)
-    val soundNames: List<String> = emptyList()
-)
+    override val data: List<String> = emptyList()
+) : IModel<String>

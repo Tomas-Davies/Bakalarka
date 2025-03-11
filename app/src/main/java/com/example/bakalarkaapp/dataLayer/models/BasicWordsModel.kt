@@ -18,12 +18,12 @@ class BasicWordsRound(
 /**
  * Represents rounds used by basic exercises.
  *
- * @property rounds A list of [BasicWordsRound] items, holding data for each round.
+ * @property data A list of [BasicWordsRound] items, holding data for each round.
  */
 
 @JacksonXmlRootElement(localName = "data")
 data class BasicWordsRounds(
     @JacksonXmlProperty(localName = "round")
     @JacksonXmlElementWrapper(useWrapping = false)
-    val rounds: List<BasicWordsRound> = emptyList()
-)
+    override val data: List<BasicWordsRound> = emptyList()
+) : IModel<BasicWordsRound>

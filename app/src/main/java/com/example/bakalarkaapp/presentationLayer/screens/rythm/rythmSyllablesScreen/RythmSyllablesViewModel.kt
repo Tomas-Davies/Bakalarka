@@ -5,11 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.dataLayer.models.RythmSyllabRound
+import com.example.bakalarkaapp.dataLayer.repositories.RythmSyllablesRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 
 data class RythmSyllabUiState(
     val imageName: String,
@@ -17,29 +21,38 @@ data class RythmSyllabUiState(
     val syllabCount: Int
 )
 
-class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : RoundsViewModel(app) {
-    init {
-        roundIdx = levelIndex
-    }
+class RythmSyllablesViewModel(
+    private val repo: RythmSyllablesRepo,
+    app: LogoApp,
+    levelIndex: Int
+) : RoundsViewModel(app)
+{
+    lateinit var rounds: List<RythmSyllabRound>
+    private lateinit var currRound: RythmSyllabRound
 
-    private val repo = app.rythmSyllablesRepository
-    val rounds = repo.data
+    private lateinit var _uiState: MutableStateFlow<RythmSyllabUiState>
+    lateinit var uiState: StateFlow<RythmSyllabUiState>
+        private set
 
-    private var currRound = rounds[roundIdx]
-
-    private val _uiState = MutableStateFlow(
-        RythmSyllabUiState(currRound.imageName, currRound.soundName, currRound.syllabCount)
-    )
-    val uiState = _uiState.asStateFlow()
     private var userSyllabSum: Int = 0
-
     private val _buttonsStates = MutableStateFlow(List(4) { false })
     val buttonStates = _buttonsStates.asStateFlow()
     override var roundSetSize = 5
 
     init {
-        count = rounds.size
+        viewModelScope.launch {
+            repo.loadData()
+            rounds = repo.data
+            count = rounds.size
+            currRound = rounds[roundIdx]
+            _uiState = MutableStateFlow(RythmSyllabUiState(currRound.imageName, currRound.soundName, currRound.syllabCount))
+            uiState = _uiState.asStateFlow()
+
+            dataLoaded()
+        }
+        roundIdx = levelIndex
     }
+
 
     fun onBtnClick(){
         viewModelScope.launch {
@@ -113,12 +126,16 @@ class RythmSyllablesViewModel(app: LogoApp, levelIndex: Int) : RoundsViewModel(a
     }
 }
 
-class RythmSyllablesViewModelFactory(private val app: LogoApp, private val levelIndex: Int) :
-    ViewModelProvider.Factory {
+class RythmSyllablesViewModelFactory(
+    private val repo: RythmSyllablesRepo,
+    private val app: LogoApp,
+    private val levelIndex: Int
+) : ViewModelProvider.Factory
+{
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmSyllablesViewModel::class.java)) {
-            return RythmSyllablesViewModel(app, levelIndex) as T
+            return RythmSyllablesViewModel(repo, app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

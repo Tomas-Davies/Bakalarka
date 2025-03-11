@@ -4,8 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.dataLayer.models.DifferItem
+import com.example.bakalarkaapp.dataLayer.repositories.EyesightDifferRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -18,36 +21,48 @@ data class EyesightDifferUiState(
     val question: String
 )
 
-class EyesightDifferViewModel(
-    app: LogoApp, levelIndex: Int
-) : RoundsViewModel(app) {
-    init {
-        roundIdx = levelIndex
-    }
 
-    private val differRepo = app.eyesightDifferRepository
-    private val data = differRepo.data
+class EyesightDifferViewModel(
+    private val repo: EyesightDifferRepo,
+    app: LogoApp, levelIndex: Int
+) : RoundsViewModel(app)
+{
+    private lateinit var data: List<DifferItem>
     private var questionIdx = 0
-    private var currentItem = data[roundIdx]
+    private lateinit var currentItem: DifferItem
     private var _questionNumber = MutableStateFlow(1)
     val questionNumber = _questionNumber.asStateFlow()
-    private var _questionCountInRound = MutableStateFlow(currentItem.rounds.size)
-    val questionCountInRound = _questionCountInRound.asStateFlow()
+    private lateinit var _questionCountInRound: MutableStateFlow<Int>
+    lateinit var questionCountInRound: StateFlow<Int>
+    private lateinit var _uiState: MutableStateFlow<EyesightDifferUiState>
+    lateinit var uiState: StateFlow<EyesightDifferUiState>
+        private set
+
+    override var roundSetSize = 2
 
     init {
-        count = data.size
+        roundIdx = levelIndex
+        viewModelScope.launch {
+            repo.loadData()
+            data = repo.data
+            count = data.size
+            currentItem = data[roundIdx]
+            _questionCountInRound = MutableStateFlow(currentItem.rounds.size)
+            questionCountInRound = _questionCountInRound.asStateFlow()
+            _uiState = MutableStateFlow(
+                EyesightDifferUiState(
+                    imageName = currentItem.imageName,
+                    answers = getPossibleAnswers(),
+                    correctAnswers = getCorrectAnswers(),
+                    question = getQuestion()
+                )
+            )
+            uiState = _uiState.asStateFlow()
+            dataLoaded()
+        }
     }
 
-    private val _uiState = MutableStateFlow(
-        EyesightDifferUiState(
-            imageName = currentItem.imageName,
-            answers = getPossibleAnswers(),
-            correctAnswers = getCorrectAnswers(),
-            question = getQuestion()
-        )
-    )
-    val uiState = _uiState.asStateFlow()
-    override var roundSetSize = 2
+
     fun onBtnClick(answer: String){
         viewModelScope.launch {
             clickedCounterInc()
@@ -58,6 +73,7 @@ class EyesightDifferViewModel(
             }
         }
     }
+
 
     private suspend fun onCorrectAnswer(){
         disableButtons()
@@ -77,10 +93,12 @@ class EyesightDifferViewModel(
         }
     }
 
+
     private suspend fun onWrongAnswer(){
         playOnWrongSound()
         showWrongMessage()
     }
+
 
     override fun doContinue() {
         super.doContinue()
@@ -92,6 +110,7 @@ class EyesightDifferViewModel(
         val questions = currentItem.rounds
         return questionIdx < questions.size - 1
     }
+
 
     private fun updateQuestion() {
         _questionNumber.update { _questionNumber.value + 1 }
@@ -120,6 +139,7 @@ class EyesightDifferViewModel(
         }
     }
 
+
     private fun getPossibleAnswers(): MutableList<String> {
         var answerOptions: MutableList<String> = mutableListOf()
         currentItem.rounds.forEach { pair ->
@@ -129,9 +149,11 @@ class EyesightDifferViewModel(
         return answerOptions
     }
 
+
     private fun getCorrectAnswers(): List<String> {
         return currentItem.rounds[questionIdx].answers
     }
+
 
     private fun getQuestion(): String {
         return currentItem.rounds[questionIdx].question
@@ -142,12 +164,17 @@ class EyesightDifferViewModel(
     }
 }
 
-class EyesightDifferViewModelFactory(private val app: LogoApp, private val levelIndex: Int) :
-    ViewModelProvider.Factory {
+
+class EyesightDifferViewModelFactory(
+    private val repo: EyesightDifferRepo,
+    private val app: LogoApp,
+    private val levelIndex: Int
+) : ViewModelProvider.Factory
+{
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightDifferViewModel::class.java)) {
-            return EyesightDifferViewModel(app, levelIndex) as T
+            return EyesightDifferViewModel(repo, app, levelIndex) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightDifferViewModel")
     }

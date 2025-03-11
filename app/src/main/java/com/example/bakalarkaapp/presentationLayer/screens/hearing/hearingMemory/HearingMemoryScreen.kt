@@ -46,6 +46,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
@@ -56,8 +57,9 @@ class HearingMemoryScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.hearingMemoryRepository
         val viewModel: HearingMemoryViewModel by viewModels {
-            HearingMemoryViewModelFactory(app)
+            HearingMemoryViewModelFactory(repo, app)
         }
         setContent {
             AppTheme(ThemeType.THEME_HEARING.id) {
@@ -77,12 +79,14 @@ class HearingMemoryScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.hearing_menu_label_2)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
-            ) {
-                HearingMemoryRunning(viewModel = viewModel)
+            AsyncDataWrapper(viewModel = viewModel) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                ) {
+                    HearingMemoryRunning(viewModel = viewModel)
+                }
             }
         }
     }

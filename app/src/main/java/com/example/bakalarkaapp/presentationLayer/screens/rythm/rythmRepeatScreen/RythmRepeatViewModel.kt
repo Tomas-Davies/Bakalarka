@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.dataLayer.repositories.RythmRepeatRepo
 import com.example.bakalarkaapp.viewModels.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +16,7 @@ import com.linc.amplituda.callback.AmplitudaErrorListener
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
@@ -23,17 +25,25 @@ data class RythmResource(
     val amplitudes: List<Int>
 )
 
-class RythmRepeatViewModel(private val app: LogoApp) : BaseViewModel(app) {
-    private val repo = app.rythmRepeatRepository
-    private val _sounds = MutableStateFlow(listOf(RythmResource(0, emptyList())))
-    val sounds = _sounds.asStateFlow()
+class RythmRepeatViewModel(
+    private val repo: RythmRepeatRepo,
+    private val app: LogoApp
+) : BaseViewModel(app) {
+
+    private lateinit var _sounds: MutableStateFlow<List<RythmResource>>
+    lateinit var sounds: StateFlow<List<RythmResource>>
+        private set
+
     private val _currentlyPlayingIdx = MutableStateFlow(-1)
     val currentlyPlayngIdx = _currentlyPlayingIdx.asStateFlow()
-    private var mediaPlayer: MediaPlayer? = MediaPlayer.create(app.applicationContext, getSoundId(""))
+    private var mediaPlayer: MediaPlayer? = null//MediaPlayer.create(app.applicationContext, getSoundId(""))
 
     init {
         viewModelScope.launch {
-            _sounds.update { getRythmResource(repo.data) }
+            repo.loadData()
+            _sounds = MutableStateFlow(getRythmResource(repo.data))
+            sounds = _sounds.asStateFlow()
+            dataLoaded()
         }
     }
 
@@ -81,11 +91,15 @@ class RythmRepeatViewModel(private val app: LogoApp) : BaseViewModel(app) {
 }
 
 
-class RythmRepeatViewModelFactory(private val app: LogoApp) : ViewModelProvider.Factory {
+class RythmRepeatViewModelFactory(
+    private val repo: RythmRepeatRepo,
+    private val app: LogoApp
+) : ViewModelProvider.Factory
+{
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmRepeatViewModel::class.java)) {
-            return RythmRepeatViewModel(app) as T
+            return RythmRepeatViewModel(repo, app) as T
         }
         throw IllegalArgumentException("Unknown viewModel class: $modelClass")
     }

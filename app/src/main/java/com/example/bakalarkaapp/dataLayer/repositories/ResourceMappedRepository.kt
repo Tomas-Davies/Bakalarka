@@ -2,9 +2,13 @@ package com.example.bakalarkaapp.dataLayer.repositories
 
 import android.content.Context
 import android.util.Log
+import com.example.bakalarkaapp.dataLayer.models.IModel
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.withContext
 
 /**
  * Abstract base repository for resource data loading and deserialization.
@@ -15,13 +19,31 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
  * @param resourceId The resource ID of the raw XML file to be loaded.
  * @param dataClass The Class object representing type T, used for deserialization.
  */
-abstract class ResourceMappedRepository<T, R>(
-    ctx: Context,
-    resourceId: Int,
-    dataClass: Class<T>
+abstract class ResourceMappedRepository<T : IModel<R>, R>(
+    private val ctx: Context,
+    private val resourceId: Int,
+    private val dataClass: Class<T>
 )  {
-    protected val mappedClass: T? = mapXml(ctx, resourceId, dataClass)
-    abstract val data: List<R>
+    private val _mappedClass = MutableStateFlow<T?>(null)
+    private val mappedClass: T?
+        get() = _mappedClass.value
+
+    private val _data = MutableStateFlow<List<R>>(emptyList())
+    val data: List<R>
+        get() = _data.value
+
+    suspend fun loadData(){
+        mapData()
+        _data.value = mappedClass?.data ?: emptyList()
+    }
+
+    private suspend fun mapData(){
+        if (_mappedClass.value == null){
+            withContext(Dispatchers.IO){
+                _mappedClass.value = mapXml(ctx, resourceId, dataClass)
+            }
+        }
+    }
 
 
     /**

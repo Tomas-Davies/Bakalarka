@@ -35,10 +35,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.PlaySoundButton
 import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
-import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.ImageLevel
+import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 
 
@@ -46,9 +47,10 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
-        val levelIndex = intent.getIntExtra(ImageLevel.TAG, 0)
+        val repo = app.rythmSyllablesRepository
+        val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
         val viewModel: RythmSyllablesViewModel by viewModels {
-            RythmSyllablesViewModelFactory(app, levelIndex)
+            RythmSyllablesViewModelFactory(repo, app, levelIndex)
         }
         setContent {
             AppTheme(ThemeType.THEME_RYTHM.id) {
@@ -62,61 +64,64 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         }
     }
 
+
     @Composable
     private fun RythmSyllableScreenContent(viewModel: RythmSyllablesViewModel) {
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.rythm_menu_label_2)
         ) {
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            RoundsCompletedBox(
-                viewModel = viewModel,
-                onExit = { finish() }
-            ) {
-                Column(
-                    modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            AsyncDataWrapper(viewModel = viewModel) {
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                RoundsCompletedBox(
+                    viewModel = viewModel,
+                    onExit = { finish() }
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.rythm_syllables_label),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-                    val imageId = viewModel.getDrawableId(uiState.imageName)
-                    Image(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(3f),
-                        painter = painterResource(id = imageId),
-                        contentDescription = ""
-                    )
-                    HorizontalDivider()
-                    val soundId = viewModel.getSoundId(uiState.soundName)
-                    Box(
-                        modifier = Modifier.weight(1f),
-                        contentAlignment = Alignment.Center
+                    Column(
+                        modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        PlaySoundButton {
-                            viewModel.playSound(soundId)
-                        }
-                    }
-
-                    SyllablesRow(
-                        modifier = Modifier.weight(1f),
-                        viewModel = viewModel
-                    )
-
-                    val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
-                    Box(
-                        modifier = Modifier.weight(1f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Button(
-                            onClick = { viewModel.onBtnClick() },
-                            enabled = enabled
+                        Text(
+                            text = stringResource(id = R.string.rythm_syllables_label),
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                        val imageId = viewModel.getDrawableId(uiState.imageName)
+                        Image(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(3f),
+                            painter = painterResource(id = imageId),
+                            contentDescription = ""
+                        )
+                        HorizontalDivider()
+                        val soundId = viewModel.getSoundId(uiState.soundName)
+                        Box(
+                            modifier = Modifier.weight(1f),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Text(text = stringResource(id = R.string.done_btn_label))
+                            PlaySoundButton {
+                                viewModel.playSound(soundId)
+                            }
+                        }
+
+                        SyllablesRow(
+                            modifier = Modifier.weight(1f),
+                            viewModel = viewModel
+                        )
+
+                        val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
+                        Box(
+                            modifier = Modifier.weight(1f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Button(
+                                onClick = { viewModel.onBtnClick() },
+                                enabled = enabled
+                            ) {
+                                Text(text = stringResource(id = R.string.done_btn_label))
+                            }
                         }
                     }
                 }
@@ -124,10 +129,10 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         }
     }
 
+
     @Composable
     private fun SyllablesRow(modifier: Modifier, viewModel: RythmSyllablesViewModel) {
         val buttonsStates by viewModel.buttonStates.collectAsStateWithLifecycle()
-
         Row(
             modifier = modifier
                 .fillMaxWidth(),

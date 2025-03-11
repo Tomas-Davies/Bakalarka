@@ -10,6 +10,4 @@ class EyesightDifferRepo(ctx: Context) :
         ctx,
         R.raw.eyesight_differ_data,
         DifferData::class.java
-    ) {
-    override val data = mappedClass?.data ?: emptyList()
-}
+    )
