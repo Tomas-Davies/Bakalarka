@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 
 /**
- * Composable displaying a numerical countdown..
+ * Composable displaying a numerical countdown.
  *
  * @param from Value from which the countdown starts.
- * @param onCountdownFinish Gets called when *count* reaches zero.
+ * @param onCountdownFinish Called when *count* reaches zero.
  */
 @Composable
 fun Countdown(

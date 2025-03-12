@@ -26,6 +26,16 @@ import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.theme.typography
 
+/**
+ * Composable representing a custom dialog made to display any Composable content.
+ *
+ * @param modifier Modifier to be applied to the layout.
+ * @param heading Heading of the dialog.
+ * @param onExit Called when *exit* button is clicked.
+ * @param showHeading Boolean value controlling *heading* [Text] visibility.
+ * @param showExitButton Boolean value controlling *exit* [Button] visibility.
+ * @param content A Composable displayed in the dialog body.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomDialog(

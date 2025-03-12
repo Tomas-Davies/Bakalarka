@@ -7,11 +7,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 
 /**
- * Abstract base repository for resource data loading and deserialization.
+ * Abstract base repository for asynchronous resource data loading and deserialization.
  *
  * @param T The type of the class that is going to be mapped.
  * @param R The type of the individual data items that will be exposed by the repository.
@@ -24,25 +23,18 @@ abstract class ResourceMappedRepository<T : IModel<R>, R>(
     private val resourceId: Int,
     private val dataClass: Class<T>
 )  {
-    private val _mappedClass = MutableStateFlow<T?>(null)
-    private val mappedClass: T?
-        get() = _mappedClass.value
+    private var mappedClass: T? = null
+    var data: List<R> = emptyList()
+        private set
 
-    private val _data = MutableStateFlow<List<R>>(emptyList())
-    val data: List<R>
-        get() = _data.value
 
     suspend fun loadData(){
-        mapData()
-        _data.value = mappedClass?.data ?: emptyList()
-    }
-
-    private suspend fun mapData(){
-        if (_mappedClass.value == null){
+        if (mappedClass == null){
             withContext(Dispatchers.IO){
-                _mappedClass.value = mapXml(ctx, resourceId, dataClass)
+                mappedClass = mapXml(ctx, resourceId, dataClass)
             }
         }
+        data = mappedClass?.data ?: emptyList()
     }
 
 

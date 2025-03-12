@@ -10,6 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.viewModels.BaseViewModel
 
+/**
+ * A wrapper Composable that shows a [CircularProgressIndicator] or [content] based
+ * on a state of asynchronous data loading.
+ *
+ * @param viewModel Provides a state which indicates that data are loaded.
+ * @param content A Composable displayed in the wrapper body.
+ */
 @Composable
 fun AsyncDataWrapper(
     viewModel: BaseViewModel,

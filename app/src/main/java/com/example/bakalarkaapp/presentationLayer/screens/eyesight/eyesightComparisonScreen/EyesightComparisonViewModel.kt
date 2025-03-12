@@ -14,11 +14,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
 data class EyesightComparisonUiState(
     val imageName: String,
     val answer: Boolean,
     val restartTrigger: Int = 0
 )
+
 
 class EyesightComparisonViewModel(
     private val repo: EyesightComparisonRepo,
@@ -92,12 +94,19 @@ class EyesightComparisonViewModel(
     }
 
     fun onTimerFinish(){
-        if (!roundSetCompletedCheck()){
-            viewModelScope.launch {
+        if (!roundCompletedDialogShow.value){
+            roundsCompletedInc()
+            if (!roundSetCompletedCheck()){
+                viewModelScope.launch {
+                    playOnWrongSound()
+                    delay(1500)
+                    doContinue()
+                    clickCounter++
+                }
+            } else {
+                disableButtons()
                 playOnWrongSound()
-                delay(1500)
-                doContinue()
-                clickCounter++
+                showRoundSetDialog()
             }
         }
     }

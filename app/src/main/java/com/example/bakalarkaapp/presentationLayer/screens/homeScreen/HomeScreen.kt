@@ -37,7 +37,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
@@ -162,11 +161,13 @@ class HomeScreen: AppCompatActivity() {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    modifier = Modifier.weight(4f),
-                    text = stringResource(id = R.string.home_screen_decor_label),
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
+                Image(
+                    modifier = Modifier
+                        .weight(4f)
+                        .align(Alignment.Bottom),
+                    painter = painterResource(id = R.drawable.home_decor_bubble),
+                    contentDescription = "decoration",
+                    contentScale = ContentScale.FillWidth
                 )
                 Image(
                     modifier = Modifier
@@ -177,7 +178,6 @@ class HomeScreen: AppCompatActivity() {
                     contentScale = ContentScale.FillWidth
                 )
             }
-
         }
     }
 

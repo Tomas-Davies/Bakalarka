@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
  * A wrapper composable that provides Top App Bar functionality.
  *
  * @param title Title of [TopAppBar].
- * @param content The content of the screen.
+ * @param content A Composable displayed in the wrapper body.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

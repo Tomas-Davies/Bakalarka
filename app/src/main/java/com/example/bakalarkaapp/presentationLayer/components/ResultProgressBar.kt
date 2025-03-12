@@ -18,11 +18,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 
+/**
+ * A [LinearProgressIndicator] with animation from 0 to [targetProgress].
+ *
+ * @param modifier Modifier to be applied to the [LinearProgressIndicator].
+ * @param onBarValueChange Called on every progress value in the animation.
+ * @param targetProgress The target value of the animation.
+ */
 @Composable
 fun ResultProgressBar(
     modifier: Modifier = Modifier,
     onBarValueChange: (progressValue: Float) -> Unit = { },
-    indicatorProgress: Float
+    targetProgress: Float
 ){
     var progress by remember { mutableFloatStateOf(0F) }
     val animDuration = 1_700
@@ -38,7 +45,7 @@ fun ResultProgressBar(
             .height(12.dp)
     )
     LaunchedEffect(Unit) {
-        progress = indicatorProgress / 100
+        progress = targetProgress / 100
     }
     onBarValueChange(progressAnimation)
 }

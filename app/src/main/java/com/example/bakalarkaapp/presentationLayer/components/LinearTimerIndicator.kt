@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
  * Composable displaying Linear Timer Indicator.
  *
  * @param msDuration Duration of the *timer* in milliseconds.
- * @param onFinish Gets called when *timer* finishes.
+ * @param onFinish Called when *timer* finishes.
  * @param restartTrigger Updating this value triggers *timer* to restart.
  */
 @Composable

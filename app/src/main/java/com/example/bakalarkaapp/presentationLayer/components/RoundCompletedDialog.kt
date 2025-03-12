@@ -33,7 +33,14 @@ import nl.dionsegijn.konfetti.core.emitter.Emitter
 import nl.dionsegijn.konfetti.core.models.Size
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * Composable showing statistics of how well did user do in a set of rounds.
+ *
+ * @param scorePercentage Percentage of correct answers.
+ * @param onContinue Called when *continue* button is clicked.
+ * @param onExit Called when *exit* button is clicked.
+ * @param continueBtnEnabled Boolean value controlling if *continue* button is enabled.
+ */
 @Composable
 fun RoundCompletedDialog(
     scorePercentage: Int,
@@ -74,12 +81,10 @@ fun RoundCompletedDialog(
                     party,
                     party.copy(angle = 180)
                 )
-                // TODO implementovat tento dialog kde to bude mozne (treba u comparison kazdych 10 rounds atd..)
                 KonfettiView(
                     modifier = Modifier.matchParentSize(),
                     parties = parties
                 )
-
                 val medalDrawable = when {
                     medalLimit < 33 -> R.drawable.bronze_medal
                     medalLimit < 66 -> R.drawable.silver_medal
@@ -111,7 +116,7 @@ fun RoundCompletedDialog(
                         else -> 0
                     }
                 },
-                indicatorProgress = scorePercentage.toFloat()
+                targetProgress = scorePercentage.toFloat()
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 18.dp))
             Spacer(modifier = Modifier.height(9.dp))

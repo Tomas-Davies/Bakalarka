@@ -12,6 +12,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.bakalarkaapp.R
 
+/**
+ * Composable representing a dialog showing text information.
+ *
+ * @param onExit Called when *exit* button is clicked.
+ * @param popUpHeading Heading of the dialog.
+ * @param popUpBody Body of the dialog.
+ */
 @Composable
 fun CategoryDetailDialog(
     onExit: () -> Unit,

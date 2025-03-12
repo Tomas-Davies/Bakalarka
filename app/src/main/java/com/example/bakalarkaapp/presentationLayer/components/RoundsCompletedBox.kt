@@ -25,6 +25,18 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.presentationLayer.states.ResultMessageState
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
 
+
+/**
+ * Composable providing functionality of showing a [AnswerResultCard] or
+ * [RoundCompletedDialog] on top of [content].
+ *
+ * @param modifier Modifier to be applied to the layout.
+ * @param viewModel Provides states which control visibility of the [AnswerResultCard] and
+ * [RoundCompletedDialog].
+ * @param contentAlignment Alignment to be applied to the content of [Box].
+ * @param onExit Called when *exit* button is clicked.
+ * @param content A Composable displayed inside the [Box].
+ */
 @Composable
 fun RoundsCompletedBox(
     modifier: Modifier = Modifier,
@@ -57,6 +69,7 @@ fun RoundsCompletedBox(
         }
     }
 }
+
 
 /**
  * A Card displaying the Result
