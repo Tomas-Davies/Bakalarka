@@ -75,10 +75,11 @@ class HomeScreen: AppCompatActivity() {
                     }
                 )
             }
-        ) {pdVal ->  
+        ) { pdVal ->
             MainContent(pdVal)
         }
     }
+
 
     @Composable
     private fun MainContent(pdVal: PaddingValues){
@@ -95,6 +96,7 @@ class HomeScreen: AppCompatActivity() {
             }
         }
     }
+
 
     @Composable
     private fun MainMenu(
@@ -180,6 +182,7 @@ class HomeScreen: AppCompatActivity() {
             }
         }
     }
+
 
     @Composable
     private fun MenuCard(

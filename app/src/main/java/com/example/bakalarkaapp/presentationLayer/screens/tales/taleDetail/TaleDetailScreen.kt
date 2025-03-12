@@ -41,6 +41,7 @@ import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.Tale
 import com.example.bakalarkaapp.dataLayer.models.TaleContent
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.CustomDialog
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.theme.AppTheme
@@ -52,8 +53,9 @@ class TaleDetailScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.talesRepository
         val viewModel by viewModels<TalesViewModel> {
-            TalesViewModelFactory(app)
+            TalesViewModelFactory(repo, app)
         }
         val taleIdx = intent.getIntExtra("TALE_INDEX", 0)
         val tale = viewModel.getTaleByIdx(taleIdx)
@@ -86,32 +88,34 @@ class TaleDetailScreen : AppCompatActivity() {
         ScreenWrapper(
             onExit = { finish() },
             title = tale.name
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) { pdVal ->
+            AsyncDataWrapper(viewModel = viewModel) {
+                Column(
+                    modifier = Modifier
+                        .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp)
+                        .verticalScroll(rememberScrollState())
                 ) {
-                    tale.content.forEach { content ->
-                        when (content) {
-                            is TaleContent.Image -> {
-                                TaleImage(
-                                    viewModel = viewModel,
-                                    content = content
-                                )
-                            }
+                    FlowRow(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(5.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        tale.content.forEach { content ->
+                            when (content) {
+                                is TaleContent.Image -> {
+                                    TaleImage(
+                                        viewModel = viewModel,
+                                        content = content
+                                    )
+                                }
 
-                            is TaleContent.Word -> {
-                                Text(
-                                    modifier = Modifier.align(Alignment.CenterVertically),
-                                    text = content.value,
-                                    fontSize = 18.sp
-                                )
+                                is TaleContent.Word -> {
+                                    Text(
+                                        modifier = Modifier.align(Alignment.CenterVertically),
+                                        text = content.value,
+                                        fontSize = 18.sp
+                                    )
+                                }
                             }
                         }
                     }
@@ -119,6 +123,7 @@ class TaleDetailScreen : AppCompatActivity() {
             }
         }
     }
+
 
     @Composable
     private fun ImagesDescription(

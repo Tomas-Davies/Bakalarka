@@ -33,6 +33,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.Tale
+import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesViewModel
 import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesViewModelFactory
@@ -43,8 +44,9 @@ class TalesScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as LogoApp
+        val repo = app.talesRepository
         val viewModel by viewModels<TalesViewModel> {
-            TalesViewModelFactory(app)
+            TalesViewModelFactory(repo, app)
         }
         setContent {
             AppTheme(ThemeType.THEME_TALES.id) {
@@ -58,25 +60,28 @@ class TalesScreen : AppCompatActivity() {
         }
     }
 
+
     @Composable
     private fun TalesScreenContent(viewModel: TalesViewModel) {
         val ctx = LocalContext.current
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.category_tales)
-        ) {
-            LazyVerticalGrid(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
-                columns = GridCells.Adaptive(minSize = 150.dp)
-            ) {
-                itemsIndexed(viewModel.tales){ idx, tale ->
-                    TaleCard(
-                        tale = tale,
-                        viewModel = viewModel,
-                        onClick = { openTale(ctx, idx) }
-                    )
+        ) { pdVal ->
+            AsyncDataWrapper(viewModel = viewModel) {
+                LazyVerticalGrid(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp),
+                    columns = GridCells.Adaptive(minSize = 150.dp)
+                ) {
+                    itemsIndexed(viewModel.tales){ idx, tale ->
+                        TaleCard(
+                            tale = tale,
+                            viewModel = viewModel,
+                            onClick = { openTale(ctx, idx) }
+                        )
+                    }
                 }
             }
         }
