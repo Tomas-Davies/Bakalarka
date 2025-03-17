@@ -3,8 +3,10 @@ package com.example.bakalarkaapp.presentationLayer.components
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -22,23 +24,29 @@ import androidx.compose.runtime.Composable
 fun ScreenWrapper(
     title: String,
     onExit: () -> Unit,
+    fab: @Composable () -> Unit = {},
     content: @Composable (pdVal: PaddingValues) -> Unit
 ){
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(text = title) },
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = title,
+                    )
+               },
                 navigationIcon = {
-                    androidx.compose.material3.IconButton(onClick = { onExit() }) {
+                    IconButton(onClick = { onExit() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back button"
                         )
                     }
-                },
+                }
             )
-        }
-    ) {
-        content(it)
+        },
+        floatingActionButton = { fab() }
+    ) { pdVal ->
+        content(pdVal)
     }
 }

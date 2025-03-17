@@ -10,6 +10,12 @@
 
     <string name="speech_menu_item_label">Umístění</string>
     <string name="speech_options_label">Možnosti</string>
+    <string name="speech_options_words">Slova</string>
+    <string name="speech_options_sentences">Věty</string>
+    <string name="speech_options_button_words">Přejít na slova</string>
+    <string name="speech_options_button_sentences">Přejít na věty</string>
+    <string name="speech_sentences_category_1">Výchozí</string>
+    <string name="speech_sentences_category_2">Vlastní</string>
     <string name="play_sound_label">Přehrát</string>
 
     <string name="eyesight_menu_label_1">Porovnání</string>
@@ -126,6 +132,7 @@
     <string name="leave_label">Odejít</string>
     <string name="correct_label">Správně</string>
     <string name="wrong_label">Špatně</string>
+    <string name="open_label">Otevřít</string>
     <string name="accuracy_label">Úspěšnost</string>
     <string name="continue_label">Pokračovat</string>
     <string name="eyesight_comparison_result_1">Opakování je matka moudrosti.</string>

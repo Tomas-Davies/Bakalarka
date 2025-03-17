@@ -9,17 +9,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -34,13 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.ThemeType
 import com.example.bakalarkaapp.dataLayer.models.Tale
-import com.example.bakalarkaapp.dataLayer.models.TaleContent
+import com.example.bakalarkaapp.dataLayer.models.TaleImage
 import com.example.bakalarkaapp.presentationLayer.components.AsyncDataWrapper
 import com.example.bakalarkaapp.presentationLayer.components.CustomDialog
 import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
@@ -58,24 +58,25 @@ class TaleDetailScreen : AppCompatActivity() {
             TalesViewModelFactory(repo, app)
         }
         val taleIdx = intent.getIntExtra("TALE_INDEX", 0)
-        val tale = viewModel.getTaleByIdx(taleIdx)
+        val taleAndAnnotatedString = viewModel.getTaleAndAnnotatedString(taleIdx)
         setContent {
             AppTheme(ThemeType.THEME_TALES.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TaleDetailScreenContent(viewModel, tale)
+                    TaleDetailScreenContent(viewModel, taleAndAnnotatedString)
                 }
             }
         }
     }
 
-    @OptIn(ExperimentalLayoutApi::class)
-    @Composable
-    private fun TaleDetailScreenContent(viewModel: TalesViewModel, tale: Tale) {
 
+    @Composable
+    private fun TaleDetailScreenContent(viewModel: TalesViewModel, taleAndAnnotatedString: Pair<Tale, AnnotatedString>) {
         var showImagesDescription by remember { mutableStateOf(true) }
+        val tale = taleAndAnnotatedString.first
+        val annotatedString = taleAndAnnotatedString.second
 
         if (showImagesDescription) {
             ImagesDescription(
@@ -84,7 +85,23 @@ class TaleDetailScreen : AppCompatActivity() {
                 onExit = { showImagesDescription = false }
             )
         }
+        val inlineContent = mutableMapOf<String, InlineTextContent>()
 
+        tale.images.forEachIndexed { idx, image ->
+            val key = "${Tale.ANNOTATION_KEY}$idx"
+            inlineContent[key] = InlineTextContent(
+                Placeholder(
+                    width = 80.sp,
+                    height = 80.sp,
+                    placeholderVerticalAlign = PlaceholderVerticalAlign.Center
+                ),
+            ) {
+                TaleImage(
+                    viewModel = viewModel,
+                    image = image
+                )
+            }
+        }
         ScreenWrapper(
             onExit = { finish() },
             title = tale.name
@@ -95,30 +112,12 @@ class TaleDetailScreen : AppCompatActivity() {
                         .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(5.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        tale.content.forEach { content ->
-                            when (content) {
-                                is TaleContent.Image -> {
-                                    TaleImage(
-                                        viewModel = viewModel,
-                                        content = content
-                                    )
-                                }
-
-                                is TaleContent.Word -> {
-                                    Text(
-                                        modifier = Modifier.align(Alignment.CenterVertically),
-                                        text = content.value,
-                                        fontSize = 18.sp
-                                    )
-                                }
-                            }
-                        }
-                    }
+                    Text(
+                        text = annotatedString,
+                        inlineContent = inlineContent,
+                        fontSize = 18.sp,
+                        lineHeight = 75.sp
+                    )
                 }
             }
         }
@@ -148,9 +147,7 @@ class TaleDetailScreen : AppCompatActivity() {
                 horizontalArrangement = Arrangement.spacedBy(18.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp)
             ) {
-                val filteredContent = tale.content
-                    .filterIsInstance<TaleContent.Image>()
-                    .distinctBy { item -> item.imageName }
+                val filteredContent = tale.images.distinctBy { item -> item.imageName }
 
                 items(filteredContent) { content ->
                     val soundId = viewModel.getSoundId(content.nounFormSoundName)
@@ -173,12 +170,13 @@ class TaleDetailScreen : AppCompatActivity() {
     }
 
     @Composable
-    private fun TaleImage(viewModel: TalesViewModel, content: TaleContent.Image) {
-        val drawableId = viewModel.getDrawableId(content.imageName)
-        val soundId = viewModel.getSoundId(content.soundName)
+    private fun TaleImage(viewModel: TalesViewModel, image: TaleImage) {
+        val drawableId = viewModel.getDrawableId(image.imageName)
+        val soundId = viewModel.getSoundId(image.soundName)
         Image(
             modifier = Modifier
-                .size(56.dp)
+                .fillMaxSize()
+                .padding(horizontal = 9.dp)
                 .clickable { viewModel.playSound(soundId) },
             painter = painterResource(id = drawableId),
             contentDescription = ""

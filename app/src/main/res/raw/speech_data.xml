@@ -2,661 +2,934 @@
 <letters>
     <letter>
         <label>A</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="mama" soundName="mama">Máma</word>
-            <word imageName="tata" soundName="tata">Táta</word>
-            <word imageName="baba" soundName="baba">Bába</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="mama" soundName="mama">Máma</word>
+                <word imageName="tata" soundName="tata">Táta</word>
+                <word imageName="baba" soundName="baba">Bába</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Máma a táta.</sentence>
+            <sentence>Máma má mák</sentence>
+            <sentence>Bába mává</sentence>
+            <sentence>Ála papá a dadá.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>O</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="ota" soundName="ota">Ota</word>
-            <word imageName="bonbon" soundName="bonbon">Bonbon</word>
-            <word imageName="okno" soundName="okno">Okno</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="ota" soundName="ota">Ota</word>
+                <word imageName="bonbon" soundName="bonbon">Bonbon</word>
+                <word imageName="okno" soundName="okno">Okno</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Ota má bonbon.</sentence>
+            <sentence>Olo, podívej opice!</sentence>
+            <sentence>Mámo, táto, pojďte okolo potoka.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>U</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="bububu" soundName="bububu">Bububu</word>
-            <word imageName="bota" soundName="bota">Bota</word>
-            <word imageName="buchta" soundName="buchta">Buchta</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="bububu" soundName="bububu">Bububu</word>
+                <word imageName="bota" soundName="bota">Bota</word>
+                <word imageName="buchta" soundName="buchta">Buchta</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Bába dělá bububu.</sentence>
+            <sentence>Půjdu domů</sentence>
+            <sentence>Pepíku, ukaž kde je umyvadlo.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>E</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="ema" soundName="ema">Ema</word>
-            <word imageName="med" soundName="med">Med</word>
-            <word imageName="elektrika" soundName="elektrika">Elektrika</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="ema" soundName="ema">Ema</word>
+                <word imageName="med" soundName="med">Med</word>
+                <word imageName="elektrika" soundName="elektrika">Elektrika</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Emil, šel ven.</sentence>
+            <sentence>Ema vymete smetí ven.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>I</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="ivan" soundName="ivan">Ivan</word>
-            <word imageName="spinka" soundName="spinka">Spinká</word>
-            <word imageName="sviti" soundName="sviti">Svítí</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="ivan" soundName="ivan">Ivan</word>
+                <word imageName="spinka" soundName="spinka">Spinká</word>
+                <word imageName="sviti" soundName="sviti">Svítí</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Kočka Líza leží na židli.</sentence>
+            <sentence>Máma si myje nohy mýdlem.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Ě</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="kveta" soundName="kveta">Květa</word>
-            <word imageName="beta" soundName="beta">Běta</word>
-            <word imageName="venecek" soundName="venecek">Věneček</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="kveta" soundName="kveta">Květa</word>
+                <word imageName="beta" soundName="beta">Běta</word>
+                <word imageName="venecek" soundName="venecek">Věneček</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Běta má květy.</sentence>
+            <sentence>Květy pěkně voní.</sentence>
+            <sentence>Jeník má věneček.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>OU</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="mouka" soundName="mouka">Mouka</word>
-            <word imageName="moucha" soundName="moucha">Moucha</word>
-            <word imageName="bouda" soundName="bouda">Bouda</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="mouka" soundName="mouka">Mouka</word>
+                <word imageName="moucha" soundName="moucha">Moucha</word>
+                <word imageName="bouda" soundName="bouda">Bouda</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Koupili jsme s mámou mouku.</sentence>
+            <sentence>Pes kouká z boudy.</sentence>
+            <sentence>Táta s mámou jdou na louku..</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>P</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="papa" soundName="papa">Papá</word>
-            <word imageName="pepa" soundName="pepa">Pepa</word>
-            <word imageName="pytel" soundName="pytel">Pytel</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="papa" soundName="papa">Papá</word>
+                <word imageName="pepa" soundName="pepa">Pepa</word>
+                <word imageName="pytel" soundName="pytel">Pytel</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Pepa papá.</sentence>
+            <sentence>Kuřátka volají: pí, pí, pí.</sentence>
+            <sentence>Pila je tupá.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>B</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="buben" soundName="buben">Buben</word>
-            <word imageName="buchta" soundName="buchta">Buchta</word>
-            <word imageName="buvol" soundName="buvol">Buvol</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="buben" soundName="buben">Buben</word>
+                <word imageName="buchta" soundName="buchta">Buchta</word>
+                <word imageName="buvol" soundName="buvol">Buvol</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Ovce bečí: bé bé bé.</sentence>
+            <sentence>Bubák dělá: bu bu bu.</sentence>
+            <sentence>Pepík nese balík.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>M</label>
-        <position>
-            <label>M_</label>
-            <word imageName="mama" soundName="mama">Máma</word>
-            <word imageName="mak" soundName="mak">Mák</word>
-            <word imageName="motyl" soundName="motyl">Motýl</word>
-        </position>
-        <position>
-            <label>_M_</label>
-            <word imageName="doma" soundName="doma">Doma</word>
-            <word imageName="kameni" soundName="kameni">Kamení</word>
-            <word imageName="komin" soundName="komin">Komín</word>
-        </position>
-        <position>
-            <label>_M</label>
-            <word imageName="dum" soundName="dum">Dům</word>
-            <word imageName="osm" soundName="osm">Osm</word>
-            <word imageName="salam" soundName="salam">Salám</word>
-        </position>
+        <positions>
+            <position>
+                <label>M_</label>
+                <word imageName="mama" soundName="mama">Máma</word>
+                <word imageName="mak" soundName="mak">Mák</word>
+                <word imageName="motyl" soundName="motyl">Motýl</word>
+            </position>
+            <position>
+                <label>_M_</label>
+                <word imageName="doma" soundName="doma">Doma</word>
+                <word imageName="kameni" soundName="kameni">Kamení</word>
+                <word imageName="komin" soundName="komin">Komín</word>
+            </position>
+            <position>
+                <label>_M</label>
+                <word imageName="dum" soundName="dum">Dům</word>
+                <word imageName="osm" soundName="osm">Osm</word>
+                <word imageName="salam" soundName="salam">Salám</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>My máme med.</sentence>
+            <sentence>Máma má mouku.</sentence>
+            <sentence>Koza mečí: mé mé mé.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>F</label>
-        <position>
-            <label>F_</label>
-            <word imageName="fanda" soundName="fanda">Fanda</word>
-            <word imageName="fouka" soundName="fouka">Fouká</word>
-            <word imageName="fenka" soundName="fenka">Fenka</word>
-        </position>
-        <position>
-            <label>_F_</label>
-            <word imageName="telefon" soundName="telefon">Telefon</word>
-            <word imageName="knoflik" soundName="knoflik">Knoflík</word>
-            <word imageName="vyfuk" soundName="vyfuk">Výfuk</word>
-        </position>
-        <position>
-            <label>_F</label>
-            <word imageName="konev" soundName="konev">Konev</word>
-            <word imageName="obuv" soundName="obuv">Obuv</word>
-            <word imageName="pav" soundName="pav">Páv</word>
-        </position>
+        <positions>
+            <position>
+                <label>F_</label>
+                <word imageName="fanda" soundName="fanda">Fanda</word>
+                <word imageName="fouka" soundName="fouka">Fouká</word>
+                <word imageName="fenka" soundName="fenka">Fenka</word>
+            </position>
+            <position>
+                <label>_F_</label>
+                <word imageName="telefon" soundName="telefon">Telefon</word>
+                <word imageName="knoflik" soundName="knoflik">Knoflík</word>
+                <word imageName="vyfuk" soundName="vyfuk">Výfuk</word>
+            </position>
+            <position>
+                <label>_F</label>
+                <word imageName="konev" soundName="konev">Konev</word>
+                <word imageName="obuv" soundName="obuv">Obuv</word>
+                <word imageName="pav" soundName="pav">Páv</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Fanda fouká.</sentence>
+            <sentence>To je lev.</sentence>
+            <sentence>Filípek koupil mamince pantofle.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>V</label>
-        <position>
-            <label>V_</label>
-            <word imageName="vata" soundName="vata">Vata</word>
-            <word imageName="vaha" soundName="vaha">Váha</word>
-            <word imageName="vozik" soundName="vozik">Vozík</word>
-        </position>
-        <position>
-            <label>_V_</label>
-            <word imageName="ovecka" soundName="ovecka">Ovečka</word>
-            <word imageName="veverka" soundName="veverka">Veverka</word>
-            <word imageName="ovoce" soundName="ovoce">Ovoce</word>
-        </position>
+        <positions>
+            <position>
+                <label>V_</label>
+                <word imageName="vata" soundName="vata">Vata</word>
+                <word imageName="vaha" soundName="vaha">Váha</word>
+                <word imageName="vozik" soundName="vozik">Vozík</word>
+            </position>
+            <position>
+                <label>_V_</label>
+                <word imageName="ovecka" soundName="ovecka">Ovečka</word>
+                <word imageName="veverka" soundName="veverka">Veverka</word>
+                <word imageName="ovoce" soundName="ovoce">Ovoce</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Ve vaně je voda.</sentence>
+            <sentence>Voda je z vodovodu.</sentence>
+            <sentence>Vidíme páva.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>J</label>
-        <position>
-            <label>J_</label>
-            <word imageName="jama" soundName="jama">Jáma</word>
-            <word imageName="jahoda" soundName="jahoda">Jahoda</word>
-            <word imageName="jazyk" soundName="jazyk">Jazyk</word>
-        </position>
-        <position>
-            <label>_J_</label>
-            <word imageName="vojak" soundName="vojak">Voják</word>
-            <word imageName="zajic" soundName="zajic">Zajíc</word>
-            <word imageName="vajicko" soundName="vajicko">Vajíčko</word>
-        </position>
-        <position>
-            <label>_J</label>
-            <word imageName="boj" soundName="boj">Boj</word>
-            <word imageName="pokoj" soundName="pokoj">Pokoj</word>
-            <word imageName="hokej" soundName="hokej">Hokej</word>
-        </position>
+        <positions>
+            <position>
+                <label>J_</label>
+                <word imageName="jama" soundName="jama">Jáma</word>
+                <word imageName="jahoda" soundName="jahoda">Jahoda</word>
+                <word imageName="jazyk" soundName="jazyk">Jazyk</word>
+            </position>
+            <position>
+                <label>_J_</label>
+                <word imageName="vojak" soundName="vojak">Voják</word>
+                <word imageName="zajic" soundName="zajic">Zajíc</word>
+                <word imageName="vajicko" soundName="vajicko">Vajíčko</word>
+            </position>
+            <position>
+                <label>_J</label>
+                <word imageName="boj" soundName="boj">Boj</word>
+                <word imageName="pokoj" soundName="pokoj">Pokoj</word>
+                <word imageName="hokej" soundName="hokej">Hokej</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Jana jí jahody.</sentence>
+            <sentence>Jenda jede domů.</sentence>
+            <sentence>U jetele stojí tele.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>T</label>
-        <position>
-            <label>T_</label>
-            <word imageName="tanec" soundName="tanec">Tanec</word>
-            <word imageName="tata" soundName="tata">Táta</word>
-            <word imageName="televize" soundName="televize">Televize</word>
-        </position>
-        <position>
-            <label>_T_</label>
-            <word imageName="postel" soundName="postel">Postel</word>
-            <word imageName="bota" soundName="bota">Bota</word>
-            <word imageName="letadlo" soundName="letadlo">Letadlo</word>
-        </position>
-        <position>
-            <label>_T</label>
-            <word imageName="ocet" soundName="ocet">Ocet</word>
-            <word imageName="snist" soundName="snist">Sníst</word>
-            <word imageName="jist" soundName="jist">Jíst</word>
-        </position>
+        <positions>
+            <position>
+                <label>T_</label>
+                <word imageName="tanec" soundName="tanec">Tanec</word>
+                <word imageName="tata" soundName="tata">Táta</word>
+                <word imageName="televize" soundName="televize">Televize</word>
+            </position>
+            <position>
+                <label>_T_</label>
+                <word imageName="postel" soundName="postel">Postel</word>
+                <word imageName="bota" soundName="bota">Bota</word>
+                <word imageName="letadlo" soundName="letadlo">Letadlo</word>
+            </position>
+            <position>
+                <label>_T</label>
+                <word imageName="ocet" soundName="ocet">Ocet</word>
+                <word imageName="snist" soundName="snist">Sníst</word>
+                <word imageName="jist" soundName="jist">Jíst</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Otu bolí pata.</sentence>
+            <sentence>Táta volá tetu.</sentence>
+            <sentence>Toník má telefon.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>D</label>
-        <position>
-            <label>D_</label>
-            <word imageName="datel" soundName="datel">Datel</word>
-            <word imageName="denik" soundName="denik">Deník</word>
-            <word imageName="duha" soundName="duha">Duha</word>
-        </position>
-        <position>
-            <label>_D_</label>
-            <word imageName="bouda" soundName="bouda">Bouda</word>
-            <word imageName="voda" soundName="voda">Voda</word>
-        </position>
-        <position>
-            <label>D_D_</label>
-            <word imageName="dudak" soundName="dudak">Dudák</word>
-            <word imageName="dodavka" soundName="dodavka">Dodávka</word>
-            <word imageName="dudy" soundName="dudy">Dudy</word>
-        </position>
+        <positions>
+            <position>
+                <label>D_</label>
+                <word imageName="datel" soundName="datel">Datel</word>
+                <word imageName="denik" soundName="denik">Deník</word>
+                <word imageName="duha" soundName="duha">Duha</word>
+            </position>
+            <position>
+                <label>_D_</label>
+                <word imageName="bouda" soundName="bouda">Bouda</word>
+                <word imageName="voda" soundName="voda">Voda</word>
+            </position>
+            <position>
+                <label>D_D_</label>
+                <word imageName="dudak" soundName="dudak">Dudák</word>
+                <word imageName="dodavka" soundName="dodavka">Dodávka</word>
+                <word imageName="dudy" soundName="dudy">Dudy</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Tonda je doma.</sentence>
+            <sentence>Máme vodu z vodovodu.</sentence>
+            <sentence>V důlku je dvacet kuliček.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>N</label>
-        <position>
-            <label>N_</label>
-            <word imageName="nadoba" soundName="nadoba">Nádoba</word>
-            <word imageName="nervy" soundName="nervy">Nervy</word>
-            <word imageName="noha" soundName="noha">Noha</word>
-            <word imageName="nos" soundName="nos">Nos</word>
-        </position>
-        <position>
-            <label>_N_</label>
-            <word imageName="okno" soundName="okno">Okno</word>
-            <word imageName="slunce" soundName="slunce">Slunce</word>
-            <word imageName="knoflik" soundName="knoflik">Knoflík</word>
-        </position>
-        <position>
-            <label>_N_N_</label>
-            <word imageName="leknin" soundName="leknin">Leknín</word>
-            <word imageName="neandrtalec" soundName="neandrtalec">Neandrtálec</word>
-        </position>
-        <position>
-            <label>_N</label>
-            <word imageName="pan" soundName="pan">Pán</word>
-            <word imageName="stan" soundName="stan">Stan</word>
-            <word imageName="mlyn" soundName="mlyn">Mlýn</word>
-        </position>
+        <positions>
+            <position>
+                <label>N_</label>
+                <word imageName="nadoba" soundName="nadoba">Nádoba</word>
+                <word imageName="nervy" soundName="nervy">Nervy</word>
+                <word imageName="noha" soundName="noha">Noha</word>
+                <word imageName="nos" soundName="nos">Nos</word>
+            </position>
+            <position>
+                <label>_N_</label>
+                <word imageName="okno" soundName="okno">Okno</word>
+                <word imageName="slunce" soundName="slunce">Slunce</word>
+                <word imageName="knoflik" soundName="knoflik">Knoflík</word>
+            </position>
+            <position>
+                <label>_N_N_</label>
+                <word imageName="leknin" soundName="leknin">Leknín</word>
+                <word imageName="neandrtalec" soundName="neandrtalec">Neandrtálec</word>
+            </position>
+            <position>
+                <label>_N</label>
+                <word imageName="pan" soundName="pan">Pán</word>
+                <word imageName="stan" soundName="stan">Stan</word>
+                <word imageName="mlyn" soundName="mlyn">Mlýn</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Nemocná Jana chodila po chodbě.</sentence>
+            <sentence>Vtom uviděla neznámou maminku, jak nese v náručí dítě.</sentence>
+            <sentence>To je bedna bez dna.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Ť</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="tilko" soundName="tilko">Tilko</word>
-            <word imageName="telo" soundName="telo">Tělo</word>
-            <word imageName="stika" soundName="stika">Štika</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="tilko" soundName="tilko">Tilko</word>
+                <word imageName="telo" soundName="telo">Tělo</word>
+                <word imageName="stika" soundName="stika">Štika</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Kdo chytí to koťe.</sentence>
+            <sentence>Hodiny tikají tik, tik, tik.</sentence>
+            <sentence>Tatínek nese těžké kladivo.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Ď</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="divak" soundName="divak">Divák</word>
-            <word imageName="dilo" soundName="dilo">Dílo</word>
-            <word imageName="sedi" soundName="sedi">Sedí</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="divak" soundName="divak">Divák</word>
+                <word imageName="dilo" soundName="dilo">Dílo</word>
+                <word imageName="sedi" soundName="sedi">Sedí</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Děda dělá lodě.</sentence>
+            <sentence>Děti chodí k vodě.</sentence>
+            <sentence>Dědeček chodí s Vlaďou do divadla.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Ň</label>
-        <position>
-            <label>NONE</label>
-            <word imageName="nit" soundName="nit">Nit</word>
-            <word imageName="penize" soundName="penize">Peníze</word>
-            <word imageName="bochnik" soundName="bochnik">Bochník</word>
-        </position>
+        <positions>
+            <position>
+                <label>NONE</label>
+                <word imageName="nit" soundName="nit">Nit</word>
+                <word imageName="penize" soundName="penize">Peníze</word>
+                <word imageName="bochnik" soundName="bochnik">Bochník</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Toník honí koně.</sentence>
+            <sentence>Nikdo není doma.</sentence>
+            <sentence>Jeník se pilně učí.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>L</label>
-        <position>
-            <label>L_</label>
-            <word imageName="lak" soundName="lak">Lak</word>
-            <word imageName="lampa" soundName="lampa">Lampa</word>
-            <word imageName="lano" soundName="lano">Lano</word>
-        </position>
-        <position>
-            <label>_L_</label>
-            <word imageName="mala" soundName="mala">Malá</word>
-            <word imageName="vila" soundName="vila">Víla</word>
-        </position>
-        <position>
-            <label>_L_L_</label>
-            <word imageName="plakal" soundName="plakal">Plakal</word>
-            <word imageName="lechtal" soundName="lechtal">Lechtal</word>
-            <word imageName="lehl" soundName="lehl">Lehl</word>
-        </position>
-        <position>
-            <label>_L</label>
-            <word imageName="pyl" soundName="pyl">Pyl</word>
-            <word imageName="sul" soundName="sul">Sůl</word>
-            <word imageName="kanal" soundName="kanal">Kanál</word>
-        </position>
+        <positions>
+            <position>
+                <label>L_</label>
+                <word imageName="lak" soundName="lak">Lak</word>
+                <word imageName="lampa" soundName="lampa">Lampa</word>
+                <word imageName="lano" soundName="lano">Lano</word>
+            </position>
+            <position>
+                <label>_L_</label>
+                <word imageName="mala" soundName="mala">Malá</word>
+                <word imageName="vila" soundName="vila">Víla</word>
+            </position>
+            <position>
+                <label>_L_L_</label>
+                <word imageName="plakal" soundName="plakal">Plakal</word>
+                <word imageName="lechtal" soundName="lechtal">Lechtal</word>
+                <word imageName="lehl" soundName="lehl">Lehl</word>
+            </position>
+            <position>
+                <label>_L</label>
+                <word imageName="pyl" soundName="pyl">Pyl</word>
+                <word imageName="sul" soundName="sul">Sůl</word>
+                <word imageName="kanal" soundName="kanal">Kanál</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Sluníčko pálilo.</sentence>
+            <sentence>Jablíčko se koulelo.</sentence>
+            <sentence>Na lavici je lopata.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>K</label>
-        <position>
-            <label>K_</label>
-            <word imageName="koza" soundName="koza">Koza</word>
-            <word imageName="kabelka" soundName="kabelka">Kabelka</word>
-            <word imageName="kun" soundName="kun">Kůň</word>
-        </position>
-        <position>
-            <label>_K_</label>
-            <word imageName="lzicka" soundName="lzicka">Lžička</word>
-            <word imageName="vlajka" soundName="vlajka">Vlajka</word>
-        </position>
-        <position>
-            <label>K_K</label>
-            <word imageName="kukacka" soundName="kukacka">Kukačka</word>
-            <word imageName="kaktus" soundName="kaktus">Kaktus</word>
-            <word imageName="kabelka" soundName="kabelka">Kabelka</word>
-        </position>
-        <position>
-            <label>_K</label>
-            <word imageName="snek" soundName="snek">Šnek</word>
-            <word imageName="mak" soundName="mak">Mák</word>
-            <word imageName="vojak" soundName="vojak">Voják</word>
-        </position>
+        <positions>
+            <position>
+                <label>K_</label>
+                <word imageName="koza" soundName="koza">Koza</word>
+                <word imageName="kabelka" soundName="kabelka">Kabelka</word>
+                <word imageName="kun" soundName="kun">Kůň</word>
+            </position>
+            <position>
+                <label>_K_</label>
+                <word imageName="lzicka" soundName="lzicka">Lžička</word>
+                <word imageName="vlajka" soundName="vlajka">Vlajka</word>
+            </position>
+            <position>
+                <label>K_K</label>
+                <word imageName="kukacka" soundName="kukacka">Kukačka</word>
+                <word imageName="kaktus" soundName="kaktus">Kaktus</word>
+                <word imageName="kabelka" soundName="kabelka">Kabelka</word>
+            </position>
+            <position>
+                <label>_K</label>
+                <word imageName="snek" soundName="snek">Šnek</word>
+                <word imageName="mak" soundName="mak">Mák</word>
+                <word imageName="vojak" soundName="vojak">Voják</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Tady je kůň.</sentence>
+            <sentence>Kája kouká na koníka.</sentence>
+            <sentence>Na kamnech je káva.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>G</label>
-        <position>
-            <label>G_</label>
-            <word imageName="guma" soundName="guma">Guma</word>
-            <word imageName="gulas" soundName="gulas">Guláš</word>
-            <word imageName="gorila" soundName="gorila">Gorila</word>
-        </position>
-        <position>
-            <label>_G_</label>
-            <word imageName="vagon" soundName="vagon">Vagón</word>
-            <word imageName="kilogram" soundName="kilogram">Kilogram</word>
-            <word imageName="fotografka" soundName="fotografka">Fotografka</word>
-        </position>
+        <positions>
+            <position>
+                <label>G_</label>
+                <word imageName="guma" soundName="guma">Guma</word>
+                <word imageName="gulas" soundName="gulas">Guláš</word>
+                <word imageName="gorila" soundName="gorila">Gorila</word>
+            </position>
+            <position>
+                <label>_G_</label>
+                <word imageName="vagon" soundName="vagon">Vagón</word>
+                <word imageName="kilogram" soundName="kilogram">Kilogram</word>
+                <word imageName="fotografka" soundName="fotografka">Fotografka</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Gustav má gumový balón.</sentence>
+            <sentence>Gábina poslala babičce telegram.</sentence>
+            <sentence>Vlak má mnoho vagónů.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>CH</label>
-        <position>
-            <label>CH_</label>
-            <word imageName="chata" soundName="chata">Chata</word>
-            <word imageName="chyba" soundName="chyba">Chyba</word>
-            <word imageName="chleba" soundName="chleba">Chleba</word>
-        </position>
-        <position>
-            <label>_CH_</label>
-            <word imageName="ucho" soundName="ucho">Ucho</word>
-            <word imageName="buchta" soundName="buchta">Buchta</word>
-            <word imageName="kachna" soundName="kachna">Kachna</word>
-        </position>
-        <position>
-            <label>_CH</label>
-            <word imageName="mech" soundName="mech">Mech</word>
-            <word imageName="duch" soundName="duch">Duch</word>
-            <word imageName="hroch" soundName="hroch">Hroch</word>
-        </position>
+        <positions>
+            <position>
+                <label>CH_</label>
+                <word imageName="chata" soundName="chata">Chata</word>
+                <word imageName="chyba" soundName="chyba">Chyba</word>
+                <word imageName="chleba" soundName="chleba">Chleba</word>
+            </position>
+            <position>
+                <label>_CH_</label>
+                <word imageName="ucho" soundName="ucho">Ucho</word>
+                <word imageName="buchta" soundName="buchta">Buchta</word>
+                <word imageName="kachna" soundName="kachna">Kachna</word>
+            </position>
+            <position>
+                <label>_CH</label>
+                <word imageName="mech" soundName="mech">Mech</word>
+                <word imageName="duch" soundName="duch">Duch</word>
+                <word imageName="hroch" soundName="hroch">Hroch</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Michal chytá mouchy.</sentence>
+            <sentence>Chata má dva východy.</sentence>
+            <sentence>Michal se chechtá.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>H</label>
-        <position>
-            <label>H_</label>
-            <word imageName="hamburgr" soundName="hamburgr">Hamburgr</word>
-            <word imageName="houba" soundName="houba">Houba</word>
-            <word imageName="had" soundName="had">Had</word>
-        </position>
-        <position>
-            <label>_H_</label>
-            <word imageName="noha" soundName="noha">Noha</word>
-            <word imageName="taha" soundName="taha">Tahá</word>
-            <word imageName="jahoda" soundName="jahoda">Jahoda</word>
-        </position>
+        <positions>
+            <position>
+                <label>H_</label>
+                <word imageName="hamburgr" soundName="hamburgr">Hamburgr</word>
+                <word imageName="houba" soundName="houba">Houba</word>
+                <word imageName="had" soundName="had">Had</word>
+            </position>
+            <position>
+                <label>_H_</label>
+                <word imageName="noha" soundName="noha">Noha</word>
+                <word imageName="taha" soundName="taha">Tahá</word>
+                <word imageName="jahoda" soundName="jahoda">Jahoda</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Hana hajá.</sentence>
+            <sentence>Hana se houpá.</sentence>
+            <sentence>Honza hledá jahody.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>C</label>
-        <position>
-            <label>C_</label>
-            <word imageName="cvik" soundName="cvik">Cvik</word>
-            <word imageName="cibule" soundName="cibule">Cibule</word>
-            <word imageName="cesta" soundName="cesta">Cesta</word>
-        </position>
-        <position>
-            <label>_C_</label>
-            <word imageName="opice" soundName="opice">Opice</word>
-            <word imageName="ovce" soundName="ovce">Ovce</word>
-            <word imageName="pecka" soundName="pecka">Pecka</word>
-        </position>
-        <position>
-            <label>_C</label>
-            <word imageName="hrnec" soundName="hrnec">Hrnec</word>
-            <word imageName="klec" soundName="klec">Klec</word>
-            <word imageName="noc" soundName="noc">Noc</word>
-        </position>
+        <positions>
+            <position>
+                <label>C_</label>
+                <word imageName="cvik" soundName="cvik">Cvik</word>
+                <word imageName="cibule" soundName="cibule">Cibule</word>
+                <word imageName="cesta" soundName="cesta">Cesta</word>
+            </position>
+            <position>
+                <label>_C_</label>
+                <word imageName="opice" soundName="opice">Opice</word>
+                <word imageName="ovce" soundName="ovce">Ovce</word>
+                <word imageName="pecka" soundName="pecka">Pecka</word>
+            </position>
+            <position>
+                <label>_C</label>
+                <word imageName="hrnec" soundName="hrnec">Hrnec</word>
+                <word imageName="klec" soundName="klec">Klec</word>
+                <word imageName="noc" soundName="noc">Noc</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Cilka má cop.</sentence>
+            <sentence>Malá klec je klícka.</sentence>
+            <sentence>Celý dům je cihlový.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>S</label>
-        <position>
-            <label>S_</label>
-            <word imageName="schody" soundName="schody">Schody</word>
-            <word imageName="skala" soundName="skala">Skála</word>
-            <word imageName="sova" soundName="sova">Sova</word>
-        </position>
-        <position>
-            <label>_S_</label>
-            <word imageName="maslo" soundName="maslo">Máslo</word>
-            <word imageName="veslo" soundName="veslo">Veslo</word>
-            <word imageName="laska" soundName="laska">Láska</word>
-        </position>
-        <position>
-            <label>S_S</label>
-            <word imageName="sysel" soundName="sysel">Sysel</word>
-            <word imageName="snist" soundName="snist">Sníst</word>
-            <word imageName="sladkost" soundName="sladkost">Sladkost</word>
-        </position>
-        <position>
-            <label>_S</label>
-            <word imageName="dopis" soundName="dopis">Dopis</word>
-            <word imageName="les" soundName="les">Les</word>
-            <word imageName="kompas" soundName="kompas">Kompas</word>
-        </position>
+        <positions>
+            <position>
+                <label>S_</label>
+                <word imageName="schody" soundName="schody">Schody</word>
+                <word imageName="skala" soundName="skala">Skála</word>
+                <word imageName="sova" soundName="sova">Sova</word>
+            </position>
+            <position>
+                <label>_S_</label>
+                <word imageName="maslo" soundName="maslo">Máslo</word>
+                <word imageName="veslo" soundName="veslo">Veslo</word>
+                <word imageName="laska" soundName="laska">Láska</word>
+            </position>
+            <position>
+                <label>S_S</label>
+                <word imageName="sysel" soundName="sysel">Sysel</word>
+                <word imageName="snist" soundName="snist">Sníst</word>
+                <word imageName="sladkost" soundName="sladkost">Sladkost</word>
+            </position>
+            <position>
+                <label>_S</label>
+                <word imageName="dopis" soundName="dopis">Dopis</word>
+                <word imageName="les" soundName="les">Les</word>
+                <word imageName="kompas" soundName="kompas">Kompas</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Slunce svítí.</sentence>
+            <sentence>Po silnici jede autobus.</sentence>
+            <sentence>U silnice stojí vysoké sloupy.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Z</label>
-        <position>
-            <label>Z_</label>
-            <word imageName="zlato" soundName="zlato">Zlato</word>
-            <word imageName="zlodej" soundName="zlodej">Zloděj</word>
-            <word imageName="zoubek" soundName="zoubek">Zoubek</word>
-        </position>
-        <position>
-            <label>_Z_</label>
-            <word imageName="jazyk" soundName="jazyk">Jazyk</word>
-            <word imageName="hnizdo" soundName="hnizdo">Hnízdo</word>
-            <word imageName="kozy" soundName="kozy">Kozy</word>
-        </position>
-        <position>
-            <label>Z_Z</label>
-            <word imageName="zazvonit" soundName="zazvonit">Zazvonit</word>
-            <word imageName="zuzana" soundName="zuzana">Zuzana</word>
-        </position>
+        <positions>
+            <position>
+                <label>Z_</label>
+                <word imageName="zlato" soundName="zlato">Zlato</word>
+                <word imageName="zlodej" soundName="zlodej">Zloděj</word>
+                <word imageName="zoubek" soundName="zoubek">Zoubek</word>
+            </position>
+            <position>
+                <label>_Z_</label>
+                <word imageName="jazyk" soundName="jazyk">Jazyk</word>
+                <word imageName="hnizdo" soundName="hnizdo">Hnízdo</word>
+                <word imageName="kozy" soundName="kozy">Kozy</word>
+            </position>
+            <position>
+                <label>Z_Z</label>
+                <word imageName="zazvonit" soundName="zazvonit">Zazvonit</word>
+                <word imageName="zuzana" soundName="zuzana">Zuzana</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Mladý kohoutek zobal na dvorku zrní.</sentence>
+            <sentence>Zdálky ho pozoroval starý kohout.</sentence>
+            <sentence>Zápasníci zápasili ze všech sil.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>CSZ</label>
-        <position>
-            <label>C_S_Z</label>
-            <word imageName="zastupce" soundName="zastupce">Zástupce</word>
-            <word imageName="sazenice" soundName="sazenice">Sazenice</word>
-            <word imageName="zamestnanec" soundName="zamestnanec">Zaměstnanec</word>
-        </position>
-        <position>
-            <label>C_S</label>
-            <word imageName="cesta" soundName="cesta">Cesta</word>
-            <word imageName="cestovatel" soundName="cestovatel">Cestovatel</word>
-            <word imageName="cestopis" soundName="cestopis">Cestopis</word>
-        </position>
-        <position>
-            <label>S_C</label>
-            <word imageName="slepice" soundName="slepice">Slepice</word>
-            <word imageName="myslivec" soundName="myslivec">Myslivec</word>
-            <word imageName="mesic" soundName="mesic">Měsíc</word>
-        </position>
-        <position>
-            <label>C_Z</label>
-            <word imageName="cizina" soundName="cizina">Cizina</word>
-            <word imageName="cizinec" soundName="cizinec">Cizinec</word>
-        </position>
-        <position>
-            <label>Z_C</label>
-            <word imageName="zaclona" soundName="zaclona">Záclona</word>
-            <word imageName="zajatec" soundName="zajatec">Zajatec</word>
-            <word imageName="zacpa" soundName="zacpa">Zácpa</word>
-        </position>
-        <position>
-            <label>S_Z</label>
-            <word imageName="slzy" soundName="slzy">Slzy</word>
-            <word imageName="svezl" soundName="svezl">Svezl</word>
-            <word imageName="slezl" soundName="slezl">Slezl</word>
-        </position>
-        <position>
-            <label>Z_S</label>
-            <word imageName="zasoba" soundName="zasoba">Zásoba</word>
-            <word imageName="zastup" soundName="zastup">Zástup</word>
-            <word imageName="zapas" soundName="zapas">Zápas</word>
-        </position>
+        <positions>
+            <position>
+                <label>C_S_Z</label>
+                <word imageName="zastupce" soundName="zastupce">Zástupce</word>
+                <word imageName="sazenice" soundName="sazenice">Sazenice</word>
+                <word imageName="zamestnanec" soundName="zamestnanec">Zaměstnanec</word>
+            </position>
+            <position>
+                <label>C_S</label>
+                <word imageName="cesta" soundName="cesta">Cesta</word>
+                <word imageName="cestovatel" soundName="cestovatel">Cestovatel</word>
+                <word imageName="cestopis" soundName="cestopis">Cestopis</word>
+            </position>
+            <position>
+                <label>S_C</label>
+                <word imageName="slepice" soundName="slepice">Slepice</word>
+                <word imageName="myslivec" soundName="myslivec">Myslivec</word>
+                <word imageName="mesic" soundName="mesic">Měsíc</word>
+            </position>
+            <position>
+                <label>C_Z</label>
+                <word imageName="cizina" soundName="cizina">Cizina</word>
+                <word imageName="cizinec" soundName="cizinec">Cizinec</word>
+            </position>
+            <position>
+                <label>Z_C</label>
+                <word imageName="zaclona" soundName="zaclona">Záclona</word>
+                <word imageName="zajatec" soundName="zajatec">Zajatec</word>
+                <word imageName="zacpa" soundName="zacpa">Zácpa</word>
+            </position>
+            <position>
+                <label>S_Z</label>
+                <word imageName="slzy" soundName="slzy">Slzy</word>
+                <word imageName="svezl" soundName="svezl">Svezl</word>
+                <word imageName="slezl" soundName="slezl">Slezl</word>
+            </position>
+            <position>
+                <label>Z_S</label>
+                <word imageName="zasoba" soundName="zasoba">Zásoba</word>
+                <word imageName="zastup" soundName="zastup">Zástup</word>
+                <word imageName="zapas" soundName="zapas">Zápas</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>U silnice zastavil autobus.</sentence>
+            <sentence>Cesta vede do vesnice.</sentence>
+            <sentence>Pes veze vozík.</sentence>
+            <sentence>Jezevec v zimě zaleze a celou zimu spí.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Č</label>
-        <position>
-            <label>Č_</label>
-            <word imageName="clun" soundName="clun">Člun</word>
-            <word imageName="cmelak" soundName="cmelak">Čmelák</word>
-            <word imageName="cepel" soundName="cepel">Čepel</word>
-        </position>
-        <position>
-            <label>Č_Č_</label>
-            <word imageName="cmelacek" soundName="cmelacek">Čmeláček</word>
-            <word imageName="kocicka" soundName="kocicka">Kočička</word>
-            <word imageName="cepicka" soundName="cepicka">Čepička</word>
-        </position>
-        <position>
-            <label>_Č_</label>
-            <word imageName="kocka" soundName="kocka">Kočka</word>
-            <word imageName="tecka" soundName="tecka">Tečka</word>
-            <word imageName="vidlicka" soundName="vidlicka">Vidlička</word>
-        </position>
-        <position>
-            <label>_Č</label>
-            <word imageName="mec" soundName="mec">Meč</word>
-            <word imageName="klic" soundName="klic">Klíč</word>
-            <word imageName="bohac" soundName="bohac">Boháč</word>
-        </position>
+        <positions>
+            <position>
+                <label>Č_</label>
+                <word imageName="clun" soundName="clun">Člun</word>
+                <word imageName="cmelak" soundName="cmelak">Čmelák</word>
+                <word imageName="cepel" soundName="cepel">Čepel</word>
+            </position>
+            <position>
+                <label>Č_Č_</label>
+                <word imageName="cmelacek" soundName="cmelacek">Čmeláček</word>
+                <word imageName="kocicka" soundName="kocicka">Kočička</word>
+                <word imageName="cepicka" soundName="cepicka">Čepička</word>
+            </position>
+            <position>
+                <label>_Č_</label>
+                <word imageName="kocka" soundName="kocka">Kočka</word>
+                <word imageName="tecka" soundName="tecka">Tečka</word>
+                <word imageName="vidlicka" soundName="vidlicka">Vidlička</word>
+            </position>
+            <position>
+                <label>_Č</label>
+                <word imageName="mec" soundName="mec">Meč</word>
+                <word imageName="klic" soundName="klic">Klíč</word>
+                <word imageName="bohac" soundName="bohac">Boháč</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Kolotoč se točí.</sentence>
+            <sentence>Topič topí uhlím.</sentence>
+            <sentence>Evička je malá holčička.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Š</label>
-        <position>
-            <label>Š_</label>
-            <word imageName="skola" soundName="skola">Škola</word>
-            <word imageName="snek" soundName="snek">Šnek</word>
-            <word imageName="spenat" soundName="spenat">Špenát</word>
-        </position>
-        <position>
-            <label>Š_Š_</label>
-            <word imageName="sasek" soundName="sasek">Šašek</word>
-            <word imageName="siska" soundName="siska">Šiška</word>
-        </position>
-        <position>
-            <label>_Š_</label>
-            <word imageName="liska" soundName="liska">Liška</word>
-            <word imageName="myska" soundName="myska">Myška</word>
-            <word imageName="masle" soundName="masle">Mašle</word>
-        </position>
-        <position>
-            <label>_Š</label>
-            <word imageName="odpadkovy_kos" soundName="odpadkovy_kos">Koš</word>
-            <word imageName="mys" soundName="mys">Myš</word>
-            <word imageName="ples_na_hlave" soundName="ples_na_hlave">Pleš</word>
-        </position>
-    </letter>
-    <letter>
-        <label>Ž</label>
-        <position>
-            <label>Ž_</label>
-            <word imageName="zupan" soundName="zupan">Župan</word>
-            <word imageName="zaba" soundName="zaba">Žába</word>
-            <word imageName="zena" soundName="zena">Žena</word>
-        </position>
-        <position>
-            <label>_Ž_</label>
-            <word imageName="kuzel" soundName="kuzel">Kužel</word>
-            <word imageName="noze" soundName="noze">Nože</word>
-            <word imageName="lyze" soundName="lyze">Lyže</word>
-        </position>
+        <positions>
+            <position>
+                <label>Š_</label>
+                <word imageName="skola" soundName="skola">Škola</word>
+                <word imageName="snek" soundName="snek">Šnek</word>
+                <word imageName="spenat" soundName="spenat">Špenát</word>
+            </position>
+            <position>
+                <label>Š_Š_</label>
+                <word imageName="sasek" soundName="sasek">Šašek</word>
+                <word imageName="siska" soundName="siska">Šiška</word>
+            </position>
+            <position>
+                <label>_Š_</label>
+                <word imageName="liska" soundName="liska">Liška</word>
+                <word imageName="myska" soundName="myska">Myška</word>
+                <word imageName="masle" soundName="masle">Mašle</word>
+            </position>
+            <position>
+                <label>_Š</label>
+                <word imageName="odpadkovy_kos" soundName="odpadkovy_kos">Koš</word>
+                <word imageName="mys" soundName="mys">Myš</word>
+                <word imageName="ples_na_hlave" soundName="ples_na_hlave">Pleš</word>
+            </position>
+            </positions>
+        <sentences>
+            <sentence>Hoši již chodí do školy.</sentence>
+            <sentence>Dáša míchá kaši.</sentence>
+            <sentence>Vašík má malé štěně.</sentence>
+        </sentences>
+        </letter>
+        <letter>
+            <label>Ž</label>
+            <positions>
+            <position>
+                <label>Ž_</label>
+                <word imageName="zupan" soundName="zupan">Župan</word>
+                <word imageName="zaba" soundName="zaba">Žába</word>
+                <word imageName="zena" soundName="zena">Žena</word>
+            </position>
+            <position>
+                <label>_Ž_</label>
+                <word imageName="kuzel" soundName="kuzel">Kužel</word>
+                <word imageName="noze" soundName="noze">Nože</word>
+                <word imageName="lyze" soundName="lyze">Lyže</word>
+            </position>
+        </positions>
+            <sentences>
+                <sentence>Žába klouže v blátě.</sentence>
+                <sentence>Malá židle je židlička.</sentence>
+                <sentence>Žvýkám žvýkačku.</sentence>
+            </sentences>
     </letter>
     <letter>
         <label>ČŠŽ</label>
-        <position>
-            <label>Č_Š_Ž</label>
-            <word imageName="stastny_zivot" soundName="stastny_zivot">Šťastný život</word>
-            <word imageName="kozisnictvi" soundName="kozisnictvi">Kožišnictví</word>
-            <word imageName="zazloutly_casopis" soundName="zazloutly_casopis">Zažloutlý časopis</word>
-        </position>
-        <position>
-            <label>Č_Š</label>
-            <word imageName="cestina" soundName="cestina">Čeština</word>
-            <word imageName="cisnik" soundName="cisnik">Číšník</word>
-            <word imageName="cise" soundName="cise">Číše</word>
-        </position>
-        <position>
-            <label>Š_Č</label>
-            <word imageName="kosicek" soundName="kosicek">Košíček</word>
-            <word imageName="skolacek" soundName="skolacek">Školáček</word>
-            <word imageName="spacek" soundName="spacek">Špaček</word>
-        </position>
-        <position>
-            <label>Č_Ž</label>
-            <word imageName="cizek" soundName="cizek">Čížek</word>
-            <word imageName="cizmy" soundName="cizmy">Čižmy</word>
-        </position>
-        <position>
-            <label>Ž_Č</label>
-            <word imageName="lzicka" soundName="lzicka">Lžička</word>
-            <word imageName="zehlicka" soundName="zehlicka">Žehlička</word>
-            <word imageName="zabicka" soundName="zabicka">Žabička</word>
-        </position>
-        <position>
-            <label>S_Š</label>
-            <word imageName="sesit" soundName="sesit">Sešit</word>
-            <word imageName="susenka" soundName="susenka">Sušenka</word>
-            <word imageName="sasa" soundName="sasa">Saša</word>
-        </position>
-        <position>
-            <label>Š_S</label>
-            <word imageName="sest" soundName="sest">Šest</word>
-            <word imageName="svestka" soundName="svestka">Švestka</word>
-            <word imageName="sikovny" soundName="sikovny">Šikovný</word>
-        </position>
-        <position>
-            <label>S_Ž</label>
-            <word imageName="snezi" soundName="snezi">Sněží</word>
-            <word imageName="stiznost" soundName="stiznost">Stížnost</word>
-            <word imageName="smazi" soundName="smazi">Smaží</word>
-        </position>
-        <position>
-            <label>Ž_S</label>
-            <word imageName="zivotopis" soundName="zivotopis">Životopis</word>
-            <word imageName="zadost" soundName="zadost">Žádost</word>
-            <word imageName="zalost" soundName="zalost">Žalost</word>
-        </position>
-        <position>
-            <label>S_Č</label>
-            <word imageName="soucet" soundName="soucet">Součet</word>
-            <word imageName="sekacka" soundName="sekacka">Sekačka</word>
-            <word imageName="svacina" soundName="svacina">Svačina</word>
-        </position>
-        <position>
-            <label>Č_S</label>
-            <word imageName="casopis" soundName="casopis">Časopis</word>
-            <word imageName="cas" soundName="cas">Čas</word>
-            <word imageName="cesnek" soundName="cesnek">Česnek</word>
-        </position>
-        <position>
-            <label>Z_Š</label>
-            <word imageName="zasel" soundName="zasel">Zašel</word>
-            <word imageName="zasil" soundName="zasil">Zašil</word>
-            <word imageName="zaseptal" soundName="zaseptal">Zašeptal</word>
-        </position>
+        <positions>
+            <position>
+                <label>Č_Š_Ž</label>
+                <word imageName="stastny_zivot" soundName="stastny_zivot">Šťastný život</word>
+                <word imageName="kozisnictvi" soundName="kozisnictvi">Kožišnictví</word>
+                <word imageName="zazloutly_casopis" soundName="zazloutly_casopis">Zažloutlý časopis</word>
+            </position>
+            <position>
+                <label>Č_Š</label>
+                <word imageName="cestina" soundName="cestina">Čeština</word>
+                <word imageName="cisnik" soundName="cisnik">Číšník</word>
+                <word imageName="cise" soundName="cise">Číše</word>
+            </position>
+            <position>
+                <label>Š_Č</label>
+                <word imageName="kosicek" soundName="kosicek">Košíček</word>
+                <word imageName="skolacek" soundName="skolacek">Školáček</word>
+                <word imageName="spacek" soundName="spacek">Špaček</word>
+            </position>
+            <position>
+                <label>Č_Ž</label>
+                <word imageName="cizek" soundName="cizek">Čížek</word>
+                <word imageName="cizmy" soundName="cizmy">Čižmy</word>
+            </position>
+            <position>
+                <label>Ž_Č</label>
+                <word imageName="lzicka" soundName="lzicka">Lžička</word>
+                <word imageName="zehlicka" soundName="zehlicka">Žehlička</word>
+                <word imageName="zabicka" soundName="zabicka">Žabička</word>
+            </position>
+            <position>
+                <label>S_Š</label>
+                <word imageName="sesit" soundName="sesit">Sešit</word>
+                <word imageName="susenka" soundName="susenka">Sušenka</word>
+                <word imageName="sasa" soundName="sasa">Saša</word>
+            </position>
+            <position>
+                <label>Š_S</label>
+                <word imageName="sest" soundName="sest">Šest</word>
+                <word imageName="svestka" soundName="svestka">Švestka</word>
+                <word imageName="sikovny" soundName="sikovny">Šikovný</word>
+            </position>
+            <position>
+                <label>S_Ž</label>
+                <word imageName="snezi" soundName="snezi">Sněží</word>
+                <word imageName="stiznost" soundName="stiznost">Stížnost</word>
+                <word imageName="smazi" soundName="smazi">Smaží</word>
+            </position>
+            <position>
+                <label>Ž_S</label>
+                <word imageName="zivotopis" soundName="zivotopis">Životopis</word>
+                <word imageName="zadost" soundName="zadost">Žádost</word>
+                <word imageName="zalost" soundName="zalost">Žalost</word>
+            </position>
+            <position>
+                <label>S_Č</label>
+                <word imageName="soucet" soundName="soucet">Součet</word>
+                <word imageName="sekacka" soundName="sekacka">Sekačka</word>
+                <word imageName="svacina" soundName="svacina">Svačina</word>
+            </position>
+            <position>
+                <label>Č_S</label>
+                <word imageName="casopis" soundName="casopis">Časopis</word>
+                <word imageName="cas" soundName="cas">Čas</word>
+                <word imageName="cesnek" soundName="cesnek">Česnek</word>
+            </position>
+            <position>
+                <label>Z_Š</label>
+                <word imageName="zasel" soundName="zasel">Zašel</word>
+                <word imageName="zasil" soundName="zasil">Zašil</word>
+                <word imageName="zaseptal" soundName="zaseptal">Zašeptal</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Malá Vlastička se skoro celý rok těšila na vánoční stromeček.</sentence>
+            <sentence>Na stolku pod smrčkem ležely žluté šatečky, šedozelená zástěrka se dvěma kapsičkami, červené botičky a především vytoužená obrázková knížka.</sentence>
+            <sentence>Na vánočním stromečku hořelo dvacet pět svíček.</sentence>
+            <sentence>Žofka odložila tatínkovu vyžehlenou košili a podala nám sáček čokolády.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>R</label>
-        <position>
-            <label>R_</label>
-            <word imageName="ruze" soundName="ruze">Růže</word>
-            <word imageName="rostlina" soundName="rostlina">Rostlina</word>
-            <word imageName="rohlik" soundName="rohlik">Rohlík</word>
-        </position>
-        <position>
-            <label>_R_</label>
-            <word imageName="beruska" soundName="beruska">Beruška</word>
-            <word imageName="darek" soundName="darek">Dárek</word>
-            <word imageName="hora" soundName="hora">Hora</word>
-            <word imageName="obrazek" soundName="obrazek">Obrázek</word>
-        </position>
-        <position>
-            <label>_R_R_</label>
-            <word imageName="traktor" soundName="traktor">Traktor</word>
-            <word imageName="brambor" soundName="brambor">Brambor</word>
-        </position>
+        <positions>
+            <position>
+                <label>R_</label>
+                <word imageName="ruze" soundName="ruze">Růže</word>
+                <word imageName="rostlina" soundName="rostlina">Rostlina</word>
+                <word imageName="rohlik" soundName="rohlik">Rohlík</word>
+            </position>
+            <position>
+                <label>_R_</label>
+                <word imageName="beruska" soundName="beruska">Beruška</word>
+                <word imageName="darek" soundName="darek">Dárek</word>
+                <word imageName="hora" soundName="hora">Hora</word>
+                <word imageName="obrazek" soundName="obrazek">Obrázek</word>
+            </position>
+            <position>
+                <label>_R_R_</label>
+                <word imageName="traktor" soundName="traktor">Traktor</word>
+                <word imageName="brambor" soundName="brambor">Brambor</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Trn píchá.</sentence>
+            <sentence>Kup litr mléka.</sentence>
+            <sentence>Na vratech kráká vrána.</sentence>
+            <sentence>Petr ve frontě trpělivě čeká na Radima.</sentence>
+            <sentence>Franta jede do Francie.</sentence>
+            <sentence>Obrať papírový ubrousek.</sentence>
+            <sentence>Na zahradě je hrouda.</sentence>
+            <sentence>V autě nám hrkají hrnce kvůli hrbolaté cestě.</sentence>
+            <sentence>Nasbírali jsme čtyři kilogramy jablek.</sentence>
+            <sentence>Grónsko je ostrov.</sentence>
+            <sentence>V džungli loví tigr.</sentence>
+            <sentence>Vichr čechrá vlasy.</sentence>
+            <sentence>Tady běhá chrt.</sentence>
+            <sentence>Davídek si po obědě schrupnul.</sentence>
+            <sentence>Krkavec létá a kohout kokrhá.</sentence>
+            <sentence>Kreslíme výkresy jak krmíme králíky.</sentence>
+            <sentence>Praha je krásné město.</sentence>
+            <sentence>Venku poprchává.</sentence>
+            <sentence>Podej mi prstýnek.</sentence>
+            <sentence>Mrak je modrý.</sentence>
+            <sentence>Máma drhne nádobí.</sentence>
+            <sentence>Z drátů jsme vyrobili draka.</sentence>
+            <sentence>Venku mrholí a Pepa ani nemrkl.</sentence>
+            <sentence>V mraveništi lezou mravenci.</sentence>
+            <sentence>Medvěd mručí.</sentence>
+            <sentence>Děti cvrnkali kuličky.</sentence>
+            <sentence>Voda crčí z okapu.</sentence>
+            <sentence>Srnka si lízala srst.</sentence>
+            <sentence>Mám zrnko máku.</sentence>
+            <sentence>Petr chytal ryby již brzy zrána.</sentence>
+            <sentence>Ve škole používám náčrtník.</sentence>
+            <sentence>Petr si črtá v náčrtníku.</sentence>
+            <sentence>Na bílé čtvrtce papíru má krásné náčrty.</sentence>
+            <sentence>Šrouby správně drží.</sentence>
+            <sentence>Podej mi šroubovák.</sentence>
+            <sentence>Prase žere šrot.</sentence>
+            <sentence>Dobře zašroubuj ten šroub.</sentence>
+        </sentences>
     </letter>
     <letter>
         <label>Ř</label>
-        <position>
-            <label>Ř_</label>
-            <word imageName="reka" soundName="reka">Řeka</word>
-            <word imageName="retez" soundName="retez">Řetěz</word>
-            <word imageName="rizek" soundName="rizek">Řízek</word>
-        </position>
-        <position>
-            <label>_Ř_</label>
-            <word imageName="orech" soundName="orech">Ořech</word>
-            <word imageName="more" soundName="more">Moře</word>
-            <word imageName="kure" soundName="kure">Kuře</word>
-        </position>
-        <position>
-            <label>_Ř_Ř_</label>
-            <word imageName="korenarka" soundName="korenarka">Kořenářka</word>
-            <word imageName="rehor" soundName="rehor">Řehoř</word>
-            <word imageName="drevar" soundName="drevar">Dřevař</word>
-        </position>
-        <position>
-            <label>_Ř</label>
-            <word imageName="ker" soundName="ker">Keř</word>
-            <word imageName="pekar" soundName="pekar">Pekař</word>
-            <word imageName="kovar" soundName="kovar">Kovář</word>
-        </position>
+        <positions>
+            <position>
+                <label>Ř_</label>
+                <word imageName="reka" soundName="reka">Řeka</word>
+                <word imageName="retez" soundName="retez">Řetěz</word>
+                <word imageName="rizek" soundName="rizek">Řízek</word>
+            </position>
+            <position>
+                <label>_Ř_</label>
+                <word imageName="orech" soundName="orech">Ořech</word>
+                <word imageName="more" soundName="more">Moře</word>
+                <word imageName="kure" soundName="kure">Kuře</word>
+            </position>
+            <position>
+                <label>_Ř_Ř_</label>
+                <word imageName="korenarka" soundName="korenarka">Kořenářka</word>
+                <word imageName="rehor" soundName="rehor">Řehoř</word>
+                <word imageName="drevar" soundName="drevar">Dřevař</word>
+            </position>
+            <position>
+                <label>_Ř</label>
+                <word imageName="ker" soundName="ker">Keř</word>
+                <word imageName="pekar" soundName="pekar">Pekař</word>
+                <word imageName="kovar" soundName="kovar">Kovář</word>
+            </position>
+        </positions>
+        <sentences>
+            <sentence>Říká to Mařenka správně?</sentence>
+            <sentence>Odskořápkuj mi to vajíčko.</sentence>
+            <sentence>Prkno pořádně přihřebíčkuj.</sentence>
+        </sentences>
     </letter>
 </letters>

@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmScreen
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -43,7 +42,6 @@ class RythmScreen : AppCompatActivity() {
 
     @Composable
     private fun RythmScreenContent() {
-        val ctx = LocalContext.current
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.category_rythm)
@@ -51,7 +49,7 @@ class RythmScreen : AppCompatActivity() {
             val buttons = listOf<@Composable ()->Unit>(
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 0) },
+                        onClick = { onCardClicked(0) },
                         label = stringResource(id = R.string.rythm_menu_label_1),
                         labelLong = stringResource(id = R.string.rythm_menu_label_long_1),
                         popUpHeading = stringResource(id = R.string.rythm_menu_label_long_1),
@@ -61,7 +59,7 @@ class RythmScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 1) },
+                        onClick = { onCardClicked(1) },
                         label = stringResource(id = R.string.rythm_menu_label_2),
                         labelLong = stringResource(id = R.string.rythm_menu_label_long_2),
                         popUpHeading = stringResource(id = R.string.rythm_menu_label_long_2),
@@ -71,7 +69,7 @@ class RythmScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 2) },
+                        onClick = { onCardClicked(2) },
                         label = stringResource(id = R.string.rythm_menu_label_3),
                         labelLong = stringResource(id = R.string.rythm_menu_label_long_3),
                         popUpHeading = stringResource(id = R.string.rythm_menu_label_long_3),
@@ -88,18 +86,18 @@ class RythmScreen : AppCompatActivity() {
     }
 
 
-    private fun onCardClicked(ctx: Context, id: Int) {
-        var intent = Intent(ctx, RythmShelvesScreen::class.java)
+    private fun onCardClicked(id: Int) {
+        var intent = Intent(this, RythmShelvesScreen::class.java)
 
         when (id) {
             1 -> {
-                intent = Intent(ctx, LevelsScreen::class.java)
+                intent = Intent(this, LevelsScreen::class.java)
                 intent.putExtra(IImageLevel.NEXT_CLASS_TAG, RythmSyllabelsScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.RYTHM_SYLLABLES.id)
             }
-            2 -> intent = Intent(ctx, RythmRepeatScreen::class.java)
+            2 -> intent = Intent(this, RythmRepeatScreen::class.java)
         }
         intent.putExtra(ThemeType.TAG, ThemeType.THEME_RYTHM)
-        ctx.startActivity(intent)
+        startActivity(intent)
     }
 }

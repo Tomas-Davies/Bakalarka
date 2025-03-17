@@ -111,11 +111,8 @@ class RythmRepeatScreen: AppCompatActivity() {
         Box(
             modifier = Modifier.fillMaxWidth()
         ){
-            val cardColors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = CardDefaults.cardColors().contentColor,
-                disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
-                disabledContentColor = CardDefaults.cardColors().disabledContentColor,
+            val cardColors = CardDefaults.cardColors().copy(
+                containerColor = MaterialTheme.colorScheme.primary
             )
             Card(
                 modifier = Modifier

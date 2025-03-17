@@ -1,8 +1,9 @@
 package com.example.bakalarkaapp.utils.xml
 
 import android.content.Context
+import android.util.Log
 import com.example.bakalarkaapp.dataLayer.models.Tale
-import com.example.bakalarkaapp.dataLayer.models.TaleContent
+import com.example.bakalarkaapp.dataLayer.models.TaleImage
 import org.xmlpull.v1.XmlPullParser
 
 /**
@@ -15,7 +16,9 @@ object TalesXmlParser {
         val tales = mutableListOf<Tale>()
         var taleName = ""
         var frontImageName = ""
-        var content = mutableListOf<TaleContent>()
+        val stringWithPlaceholders = StringBuilder()
+        var content = mutableListOf<TaleImage>()
+        var i = 0
 
         while (parser.eventType != XmlPullParser.END_DOCUMENT) {
             when (parser.eventType) {
@@ -34,24 +37,27 @@ object TalesXmlParser {
                             val imageName = parser.getAttributeValue(null, "imageName") ?: ""
                             val nounFormSoundName = parser.getAttributeValue(null, "nounFormSoundName") ?: ""
                             val soundName = parser.getAttributeValue(null, "soundName") ?: ""
-                            val image = TaleContent.Image(imageName, nounFormSoundName, soundName)
+                            val image = TaleImage(imageName, nounFormSoundName, soundName)
                             content.add(image)
+                            stringWithPlaceholders.append("[${Tale.ANNOTATION_KEY}$i]")
+                            i++
                         }
                         else -> {}
                     }
                 }
                 XmlPullParser.TEXT -> {
-                    val words = parser.text.split(Regex("\\s+"))
-                    words.forEach { word ->
-                        val w = word.replace("\n", "")
-                        val contentWord = TaleContent.Word(w)
-                        content.add(contentWord)
-                    }
+                    val txt = parser.text
+                        .trim()
+                        .replace(Regex("\n| +"), " ")
+
+                    stringWithPlaceholders.append(txt)
                 }
                 XmlPullParser.END_TAG -> {
                     if (parser.name == "tale"){
-                        val tale = Tale(taleName, frontImageName, content)
+                        val tale = Tale(taleName, frontImageName, content, stringWithPlaceholders.toString())
+                        stringWithPlaceholders.clear()
                         tales.add(tale)
+                        i = 0; Log.e("TALE TEXT", tale.textWithPlaceholders)
                     }
                 }
             }

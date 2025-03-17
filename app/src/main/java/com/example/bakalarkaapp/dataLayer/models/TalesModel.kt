@@ -1,20 +1,19 @@
 package com.example.bakalarkaapp.dataLayer.models
 
-
-sealed interface TaleContent {
-
-    data class Word(val value: String): TaleContent
-
-    data class Image(
-        val imageName: String,
-        val nounFormSoundName: String,
-        val soundName: String,
-    ): TaleContent
-}
+data class TaleImage(
+    val imageName: String,
+    val nounFormSoundName: String,
+    val soundName: String,
+)
 
 
-data class Tale(
+class Tale(
     val name: String = "",
     val taleImageName: String = "",
-    val content: List<TaleContent> = emptyList()
-)
+    val images: List<TaleImage> = emptyList(),
+    val textWithPlaceholders: String
+) {
+    companion object {
+        const val ANNOTATION_KEY = "key"
+    }
+}

@@ -190,7 +190,7 @@ class HearingMemoryScreen : AppCompatActivity() {
     private fun HearingMemoryCard(drawableName: String, viewModel: HearingMemoryViewModel){
         val drawableId = viewModel.getDrawableId(drawableName)
         var isMarkedAsCorrect by remember(drawableName) { mutableStateOf(false) }
-        val cardColors = if (isMarkedAsCorrect) cardColors(
+        val cardColors = if (isMarkedAsCorrect) cardColors().copy(
             disabledContainerColor = Color.Green.copy(alpha = 0.5f),
         ) else cardColors()
         val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()

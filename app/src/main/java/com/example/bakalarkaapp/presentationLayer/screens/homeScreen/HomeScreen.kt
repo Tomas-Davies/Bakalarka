@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.homeScreen
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -32,7 +31,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -192,7 +190,6 @@ class HomeScreen: AppCompatActivity() {
         imageId: Int = R.drawable.dummy_image_500,
         colorId: Int
     ){
-        val ctx = LocalContext.current
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -200,7 +197,7 @@ class HomeScreen: AppCompatActivity() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(ratio),
-                onClick = { onCardClicked(ctx, id) },
+                onClick = { onCardClicked(id) },
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
                 Column(
@@ -226,14 +223,14 @@ class HomeScreen: AppCompatActivity() {
     }
 
 
-    private fun onCardClicked(ctx: Context, id: Int){
-        var intent = Intent(ctx, SpeechScreen::class.java)
+    private fun onCardClicked(id: Int){
+        var intent = Intent(this, SpeechScreen::class.java)
         when(id) {
-            1 -> {intent = Intent(ctx, EyesightScreen::class.java)}
-            2 -> {intent = Intent(ctx, HearingScreen::class.java)}
-            3 -> {intent = Intent(ctx, RythmScreen::class.java)}
-            4 -> {intent = Intent(ctx, TalesScreen::class.java)}
+            1 -> {intent = Intent(this, EyesightScreen::class.java)}
+            2 -> {intent = Intent(this, HearingScreen::class.java)}
+            3 -> {intent = Intent(this, RythmScreen::class.java)}
+            4 -> {intent = Intent(this, TalesScreen::class.java)}
         }
-        ctx.startActivity(intent)
+        startActivity(intent)
     }
 }

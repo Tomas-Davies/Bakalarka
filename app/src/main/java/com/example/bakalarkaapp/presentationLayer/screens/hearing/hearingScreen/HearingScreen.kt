@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingScreen
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -10,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.theme.AppTheme
 import com.example.bakalarkaapp.R
@@ -21,6 +19,7 @@ import com.example.bakalarkaapp.presentationLayer.components.ScreenWrapper
 import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingFonematic.HearingFonematicScreen
 import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingMemory.HearingMemoryScreen
 import com.example.bakalarkaapp.presentationLayer.screens.hearing.hearingSynthesis.HearingSynthesisScreen
+
 
 class HearingScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +37,9 @@ class HearingScreen : AppCompatActivity() {
         }
     }
 
+
     @Composable
     private fun HearingScreenContent() {
-        val ctx = LocalContext.current
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.category_hearing)
@@ -48,7 +47,7 @@ class HearingScreen : AppCompatActivity() {
             val buttons = listOf<@Composable () -> Unit>(
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 0) },
+                        onClick = { onCardClicked(0) },
                         label = stringResource(id = R.string.hearing_menu_label_1),
                         labelLong = stringResource(id = R.string.hearing_menu_label_long_1),
                         popUpHeading = stringResource(id = R.string.hearing_menu_label_long_1),
@@ -58,7 +57,7 @@ class HearingScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 1) },
+                        onClick = { onCardClicked(1) },
                         label = stringResource(id = R.string.hearing_menu_label_2),
                         labelLong = stringResource(id = R.string.hearing_menu_label_long_2),
                         popUpHeading = stringResource(id = R.string.hearing_menu_label_long_2),
@@ -68,7 +67,7 @@ class HearingScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 2) },
+                        onClick = { onCardClicked(2) },
                         label = stringResource(id = R.string.hearing_menu_label_3),
                         labelLong = stringResource(id = R.string.hearing_menu_label_long_3),
                         popUpHeading = stringResource(id = R.string.hearing_menu_label_long_3),
@@ -85,12 +84,13 @@ class HearingScreen : AppCompatActivity() {
         }
     }
 
-    private fun onCardClicked(ctx: Context, id: Int) {
-        var intent = Intent(ctx, HearingFonematicScreen::class.java)
+
+    private fun onCardClicked(id: Int) {
+        var intent = Intent(this, HearingFonematicScreen::class.java)
         when (id) {
-            1 -> intent = Intent(ctx, HearingMemoryScreen::class.java)
-            2 -> intent = Intent(ctx, HearingSynthesisScreen::class.java)
+            1 -> intent = Intent(this, HearingMemoryScreen::class.java)
+            2 -> intent = Intent(this, HearingSynthesisScreen::class.java)
         }
-        ctx.startActivity(intent)
+        startActivity(intent)
     }
 }

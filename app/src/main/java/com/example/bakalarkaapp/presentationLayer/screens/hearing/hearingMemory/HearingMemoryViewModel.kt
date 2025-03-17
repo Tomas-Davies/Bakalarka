@@ -44,6 +44,9 @@ class HearingMemoryViewModel(
         viewModelScope.launch {
             repo.loadData()
             rounds = repo.data
+                .shuffled()
+                .sortedBy { round -> round.toBePlayedCount }
+
             currRound = rounds[roundIdx]
             allObjects = currRound.objects
             initallObjects = getInitallObjects()

@@ -15,9 +15,8 @@ data class LetterPosition(
 
 data class SpeechLetter(
     val label: String = "",
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "position")
-    val positions: List<LetterPosition> = emptyList()
+    val positions: List<LetterPosition> = emptyList(),
+    val sentences: List<String> = emptyList()
 ){
     val isPrimitive = positions.isNotEmpty() && positions[0].label == "NONE"
 }

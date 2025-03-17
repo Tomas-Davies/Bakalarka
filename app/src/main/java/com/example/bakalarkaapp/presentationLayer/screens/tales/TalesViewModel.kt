@@ -1,5 +1,8 @@
 package com.example.bakalarkaapp.presentationLayer.screens.tales
 
+import androidx.compose.foundation.text.appendInlineContent
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -26,8 +29,21 @@ class TalesViewModel(
     }
 
 
-    fun getTaleByIdx(idx: Int): Tale {
-        return tales[idx]
+    fun getTaleAndAnnotatedString(taleIdx: Int): Pair<Tale, AnnotatedString> {
+        val tale = tales[taleIdx]
+        val splitPattern = Regex("\\[|]")
+        val taleText = tale.textWithPlaceholders.split(splitPattern)
+        val keyPattern = Regex("${Tale.ANNOTATION_KEY}\\d+")
+        val annotatedString = buildAnnotatedString {
+            taleText.forEach { s ->
+                if (keyPattern.matches(s)) {
+                    appendInlineContent(s, "[IMAGE]")
+                } else {
+                    append(s)
+                }
+            }
+        }
+        return Pair(tale, annotatedString)
     }
 }
 

@@ -1,62 +1,157 @@
 package com.example.bakalarkaapp.presentationLayer.screens.speech.speechDetailScreen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.viewModels.BaseViewModel
 import com.example.bakalarkaapp.LogoApp
+import com.example.bakalarkaapp.dataLayer.UserSentence
 import com.example.bakalarkaapp.dataLayer.models.WordContent
+import com.example.bakalarkaapp.dataLayer.repositories.SpeechRepo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-data class SpeechDetailUiState(
+data class SpeechDetailWordsUiState(
     val currentWord: WordContent,
     val index: Int,
-    val isOnFirstWord:Boolean,
-    val isOnLastWord:Boolean
+    val isOnFirstWord: Boolean,
+    val isOnLastWord: Boolean
 )
 
-class SpeechDetailViewModel(app: LogoApp, letterLabel: String, posLabel: String): BaseViewModel(app) {
-    private val repo = app.speechRepository
-    private val words = repo.getWords(letterLabel, posLabel) ?: listOf(WordContent())
+class SpeechDetailViewModel(
+    private val repo: SpeechRepo,
+    private val letterLabel: String,
+    posLabel: String,
+    app: LogoApp
+) : BaseViewModel(app) {
+    private lateinit var words: List<WordContent>
     private var index = 0
-    val count = words.size
-    private val word = words[index]
-    private val _uiState = MutableStateFlow(SpeechDetailUiState(word, index, index == 0, index == words.size-1))
-    val uiState = _uiState.asStateFlow()
+    var count = 0
+        private set
 
-    fun next(){
-        if (indexInc()){
-            updateState()
+    private lateinit var word: WordContent
+    private lateinit var _uiState: MutableStateFlow<SpeechDetailWordsUiState>
+    lateinit var uiState: StateFlow<SpeechDetailWordsUiState>
+        private set
+    lateinit var defaultSentences: List<String>
+        private set
+
+    val userSentences = repo.getUserSentences(letterLabel)
+        .flowOn(Dispatchers.IO)
+        .catch { e ->
+            e.printStackTrace()
+            Log.e(
+                "Error getting sentences",
+                "Message: ${e.message}\nCause: ${e.cause}\nStack trace: ${e.stackTraceToString()}"
+            )
+            emit(emptyList())
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+
+    init {
+        viewModelScope.launch {
+            words = repo.getWords(letterLabel, posLabel) ?: listOf(WordContent())
+            count = words.size
+            word = words[index]
+            _uiState = MutableStateFlow(
+                SpeechDetailWordsUiState(
+                    word,
+                    index,
+                    index == 0,
+                    index == words.size - 1
+                )
+            )
+            uiState = _uiState.asStateFlow()
+            defaultSentences = repo.getDefaultSentences(letterLabel) ?: emptyList()
+            dataLoaded()
         }
     }
-    fun previous(){
-        if (indexDec()){
-            updateState()
+
+
+    fun addUserSentence(text: String) {
+        val userSentence = UserSentence(0, letterLabel, text)
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.addUserSentence(userSentence)
         }
     }
 
-    private fun updateState(){
+
+    fun deleteUserSentence(userSentence: UserSentence) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.deleteUserSentence(userSentence)
+        }
+    }
+
+
+    private fun updateUserSentence(userSentence: UserSentence) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.updateUserSentence(userSentence)
+        }
+    }
+
+
+    fun onSaveButtonClick(newText: String, userSentence: UserSentence){
+        if (newText != userSentence.sentence || newText.isBlank()) {
+            if (newText.isNotBlank()) {
+                val newUserSentence = userSentence.copy(
+                    sentence = newText
+                )
+                updateUserSentence(newUserSentence)
+            } else {
+                deleteUserSentence(userSentence)
+            }
+        }
+    }
+
+
+    fun next() {
+        if (indexInc()) updateState()
+    }
+
+
+    fun previous() {
+        if (indexDec()) updateState()
+    }
+
+
+    private fun updateState() {
         _uiState.update { currentState ->
             val word = words[index]
             currentState.copy(
                 currentWord = word,
                 index = index,
                 isOnFirstWord = index == 0,
-                isOnLastWord = index == words.size-1
+                isOnLastWord = index == words.size - 1
             )
         }
     }
 
+
     private fun indexInc(): Boolean {
-        if (index+1 < words.size){
+        if (index + 1 < words.size) {
             index++
             return true
         }
         return false
     }
+
+
     private fun indexDec(): Boolean {
-        if (index > 0){
+        if (index > 0) {
             index--
             return true
         }
@@ -66,14 +161,15 @@ class SpeechDetailViewModel(app: LogoApp, letterLabel: String, posLabel: String)
 
 
 class SpeechDetailViewModelFactory(
-    private val app: LogoApp,
+    private val repo: SpeechRepo,
     private val letterLabel: String,
-    private val posLabel: String
-): ViewModelProvider.Factory {
+    private val posLabel: String,
+    private val app: LogoApp
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(SpeechDetailViewModel::class.java)){
+        if (modelClass.isAssignableFrom(SpeechDetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SpeechDetailViewModel(app, letterLabel, posLabel) as T
+            return SpeechDetailViewModel(repo, letterLabel, posLabel, app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

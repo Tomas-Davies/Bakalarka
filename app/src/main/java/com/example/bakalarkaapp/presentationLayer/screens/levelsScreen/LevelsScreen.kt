@@ -21,7 +21,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -34,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -152,20 +150,15 @@ class LevelsScreen : AppCompatActivity() {
 
     @Composable
     private fun LevelIcon(imageId: Int, i: Int){
-        val ctx = LocalContext.current
         val nextActivityClass = intent.getSdkBasedSerializableExtra(IImageLevel.NEXT_CLASS_TAG, Class::class.java)
-
         ElevatedCard(
             onClick = {
-                val intent = Intent(ctx, nextActivityClass)
+                val intent = Intent(this, nextActivityClass)
                 intent.putExtra(IImageLevel.TAG, i)
                 startActivity(intent)
             },
-            colors = CardColors(
-                contentColor = CardDefaults.cardColors().contentColor,
-                containerColor = Color.White,
-                disabledContentColor = CardDefaults.cardColors().disabledContentColor,
-                disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
+            colors = CardDefaults.cardColors().copy(
+                containerColor = Color.White
             )
         ) {
             Column(

@@ -1,6 +1,7 @@
 package com.example.bakalarkaapp
 
 import android.app.Application
+import com.example.bakalarkaapp.dataLayer.AppDb
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightComparisonRepo
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightDifferRepo
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightSearchRepo
@@ -14,6 +15,7 @@ import com.example.bakalarkaapp.dataLayer.repositories.SpeechRepo
 import com.example.bakalarkaapp.dataLayer.repositories.TalesRepo
 
 class LogoApp: Application() {
+    val database by lazy { AppDb.getDatabase(this) }
     val speechRepository by lazy { SpeechRepo(this) }
     val eyesightDifferRepository by lazy { EyesightDifferRepo(this) }
     val eyesightComparisonRepository by lazy { EyesightComparisonRepo(this) }

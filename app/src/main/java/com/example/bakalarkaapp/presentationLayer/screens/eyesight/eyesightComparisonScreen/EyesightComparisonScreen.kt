@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
@@ -176,11 +175,8 @@ class EyesightComparisonScreen : AppCompatActivity() {
         enabled: Boolean,
         onClick: () -> Unit
     ) {
-        val cardColors = CardColors(
-            contentColor = CardDefaults.cardColors().contentColor,
-            containerColor = bgColor,
-            disabledContentColor = CardDefaults.cardColors().disabledContentColor,
-            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
+        val cardColors = CardDefaults.cardColors().copy(
+            containerColor = bgColor
         )
         ElevatedCard(
             modifier = modifier,

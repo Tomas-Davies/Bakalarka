@@ -49,7 +49,6 @@ fun RoundCompletedDialog(
     continueBtnEnabled: Boolean
 ) {
     CustomDialog(
-        showHeading = false,
         showExitButton = false,
         onExit = { }
     ) {

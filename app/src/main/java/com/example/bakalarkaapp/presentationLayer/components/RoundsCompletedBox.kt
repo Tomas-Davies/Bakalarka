@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
@@ -49,7 +48,9 @@ fun RoundsCompletedBox(
     val answerResultState by viewModel.resultMessageState.collectAsStateWithLifecycle()
 
     Box(
-        modifier = Modifier.fillMaxSize().then(modifier),
+        modifier = Modifier
+            .fillMaxSize()
+            .then(modifier),
         contentAlignment = contentAlignment
     ){
         content()
@@ -98,11 +99,9 @@ private fun AnswerResultCard(
 
         ElevatedCard(
             modifier = Modifier.padding(15.dp),
-            colors = CardColors(
+            colors = CardDefaults.cardColors().copy(
                 contentColor = Color.Black,
-                containerColor = chosenColor,
-                disabledContentColor = CardDefaults.cardColors().disabledContentColor,
-                disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
+                containerColor = chosenColor
             )
         ) {
             Text(

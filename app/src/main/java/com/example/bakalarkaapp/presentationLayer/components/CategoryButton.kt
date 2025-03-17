@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -66,11 +65,8 @@ fun CategoryButton(
             .fillMaxWidth()
             .border(3.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(25.dp)),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardColors(
-            contentColor = CardDefaults.cardColors().contentColor,
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            disabledContentColor = CardDefaults.cardColors().disabledContentColor,
-            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor
+        colors = CardDefaults.cardColors().copy(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
         )
     ) {
         CardContent(

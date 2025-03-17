@@ -160,13 +160,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
 
         val color =
             if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
-        val buttonColors = ButtonDefaults.buttonColors(
-            containerColor = color,
-            contentColor = ButtonDefaults.buttonColors().contentColor,
-            disabledContainerColor = ButtonDefaults.buttonColors().disabledContainerColor,
-            disabledContentColor = ButtonDefaults.buttonColors().disabledContentColor
-        )
-
+        val buttonColors = ButtonDefaults.buttonColors(containerColor = color)
         val border = if (selected)
             BorderStroke(3.dp, MaterialTheme.colorScheme.surfaceDim)
         else BorderStroke(0.dp, MaterialTheme.colorScheme.surfaceDim)

@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.eyesight.eyesightScreen
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -27,6 +26,7 @@ import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLev
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.LevelsScreen
 import com.example.bakalarkaapp.theme.AppTheme
 
+
 class EyesightScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,18 +42,17 @@ class EyesightScreen : AppCompatActivity() {
         }
     }
 
+
     @Composable
     private fun EyesightScreenContent() {
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.category_eyesight)
         ) {
-            val ctx = LocalContext.current
-
             val buttons = listOf<@Composable () -> Unit>(
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 0) },
+                        onClick = { onCardClicked(0) },
                         label = stringResource(id = R.string.eyesight_menu_label_1),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_1),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_1),
@@ -63,7 +62,7 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 1) },
+                        onClick = { onCardClicked(1) },
                         label = stringResource(id = R.string.eyesight_menu_label_2),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_2),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_2),
@@ -73,7 +72,7 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 2) },
+                        onClick = { onCardClicked(2) },
                         label = stringResource(id = R.string.eyesight_menu_label_3),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_3),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_3),
@@ -83,7 +82,7 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 3) },
+                        onClick = { onCardClicked(3) },
                         label = stringResource(id = R.string.eyesight_menu_label_4),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_4),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_4),
@@ -93,7 +92,7 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(ctx, 4) },
+                        onClick = { onCardClicked(4) },
                         label = stringResource(id = R.string.eyesight_menu_label_5),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_5),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_5),
@@ -111,8 +110,8 @@ class EyesightScreen : AppCompatActivity() {
     }
 
 
-    private fun onCardClicked(ctx: Context, id: Int) {
-        var intent = Intent(ctx, LevelsScreen::class.java)
+    private fun onCardClicked(id: Int) {
+        var intent = Intent(this, LevelsScreen::class.java)
         when (id) {
             0 -> {
                 intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightComparisonScreen::class.java)
@@ -129,13 +128,13 @@ class EyesightScreen : AppCompatActivity() {
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_DIFFER.id)
             }
 
-            3 -> intent = Intent(ctx, EyesightMemoryScreen::class.java)
+            3 -> intent = Intent(this, EyesightMemoryScreen::class.java)
             4 -> {
                 intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightSynthesisScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_SYNTHESIS.id)
             }
         }
         intent.putExtra(ThemeType.TAG, ThemeType.THEME_EYESIGHT.id)
-        ctx.startActivity(intent)
+        startActivity(intent)
     }
 }

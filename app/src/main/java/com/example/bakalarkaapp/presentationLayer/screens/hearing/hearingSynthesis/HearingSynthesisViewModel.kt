@@ -37,7 +37,7 @@ class HearingSynthesisViewModel(
     init {
         viewModelScope.launch {
             repo.loadData()
-            rounds = repo.data
+            rounds = repo.data.shuffled()
             count = rounds.size
             currentRound = rounds[roundIdx]
             currentObject = currentRound.objects

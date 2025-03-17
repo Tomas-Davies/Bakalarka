@@ -1,6 +1,5 @@
 package com.example.bakalarkaapp.presentationLayer.screens.tales.talesMenu
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +36,7 @@ import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesViewModel
 import com.example.bakalarkaapp.presentationLayer.screens.tales.TalesViewModelFactory
 import com.example.bakalarkaapp.presentationLayer.screens.tales.taleDetail.TaleDetailScreen
 import com.example.bakalarkaapp.theme.AppTheme
+
 
 class TalesScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +61,6 @@ class TalesScreen : AppCompatActivity() {
 
     @Composable
     private fun TalesScreenContent(viewModel: TalesViewModel) {
-        val ctx = LocalContext.current
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(id = R.string.category_tales)
@@ -79,7 +76,7 @@ class TalesScreen : AppCompatActivity() {
                         TaleCard(
                             tale = tale,
                             viewModel = viewModel,
-                            onClick = { openTale(ctx, idx) }
+                            onClick = { openTale(idx) }
                         )
                     }
                 }
@@ -87,13 +84,11 @@ class TalesScreen : AppCompatActivity() {
         }
     }
 
+
     @Composable
     private fun TaleCard(tale: Tale, viewModel: TalesViewModel, onClick: () -> Unit){
-        val cardColors = CardColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = CardDefaults.cardColors().contentColor,
-            disabledContainerColor = CardDefaults.cardColors().disabledContainerColor,
-            disabledContentColor = CardDefaults.cardColors().disabledContentColor
+        val cardColors = CardDefaults.cardColors().copy(
+            containerColor = MaterialTheme.colorScheme.primary
         )
         Card(
             modifier = Modifier.padding(9.dp),
@@ -117,9 +112,10 @@ class TalesScreen : AppCompatActivity() {
         }
     }
 
-    private fun openTale(ctx: Context, idx: Int){
-        val intent = Intent(ctx, TaleDetailScreen::class.java)
+
+    private fun openTale(idx: Int){
+        val intent = Intent(this, TaleDetailScreen::class.java)
         intent.putExtra("TALE_INDEX", idx)
-        ctx.startActivity(intent)
+        startActivity(intent)
     }
 }
