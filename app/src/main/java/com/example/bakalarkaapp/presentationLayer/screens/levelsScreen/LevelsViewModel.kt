@@ -7,6 +7,7 @@ import com.example.bakalarkaapp.viewModels.BaseViewModel
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.IModel
 import com.example.bakalarkaapp.dataLayer.repositories.ResourceMappedRepository
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ interface IImageLevel {
     companion object {
         const val TAG = "LEVEL_INDEX"
         const val NEXT_CLASS_TAG = "NEXT_ACTIVITY_CLASS"
+        const val LEVEL_ITEM_LABEL_ID_TAG = "LEVEL_ITEM_LABEL"
     }
 }
 
@@ -49,7 +51,7 @@ class LevelsViewModel<T : IModel<R>, R : IImageLevel>(
             repository.loadData()
             data = repository.data
             _levels.value = getLevelsList()
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 

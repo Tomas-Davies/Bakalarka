@@ -8,6 +8,7 @@ import com.example.bakalarkaapp.dataLayer.models.ShelvesRound
 import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.dataLayer.repositories.RythmShelvesRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -60,11 +61,11 @@ class RythmShelvesViewModel(
             _uiState = MutableStateFlow(
                 RythmShelvesUiState(allWords, parts.first, parts.second, parts.third)
             )
-            uiState = _uiState.asStateFlow()
+            uiState = _uiState
             _rhymePairsEnabled = MutableStateFlow(MutableList(allWords.size) { true })
-            rhymePairsEnabled = _rhymePairsEnabled.asStateFlow()
+            rhymePairsEnabled = _rhymePairsEnabled
             disableButtons()
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 

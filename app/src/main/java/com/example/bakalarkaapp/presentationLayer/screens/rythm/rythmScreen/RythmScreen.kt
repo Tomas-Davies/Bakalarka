@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.RepositoryType
@@ -23,6 +22,7 @@ import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmSyllablesSc
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmShelvesScreen.RythmShelvesScreen
 import com.example.bakalarkaapp.presentationLayer.screens.rythm.rythmRepeatScreen.RythmRepeatScreen
 import com.example.bakalarkaapp.theme.AppTheme
+
 
 class RythmScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,7 +97,7 @@ class RythmScreen : AppCompatActivity() {
             }
             2 -> intent = Intent(this, RythmRepeatScreen::class.java)
         }
-        intent.putExtra(ThemeType.TAG, ThemeType.THEME_RYTHM)
+        intent.putExtra(ThemeType.TAG, ThemeType.THEME_RYTHM.id)
         startActivity(intent)
     }
 }

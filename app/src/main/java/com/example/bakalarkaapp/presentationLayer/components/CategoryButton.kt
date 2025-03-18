@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.bakalarkaapp.R
 
+
 /**
  * Composable representing button used in Category Menu.
  *

@@ -47,6 +47,7 @@ import com.example.bakalarkaapp.presentationLayer.components.RoundsCompletedBox
 import com.example.bakalarkaapp.presentationLayer.screens.levelsScreen.IImageLevel
 import com.example.bakalarkaapp.theme.AppTheme
 
+
 class EyesightComparisonScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,7 +172,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
         modifier: Modifier,
         imageId: Int,
         label: String,
-        bgColor: Color = colorResource(id = R.color.eyesight_300),
+        bgColor: Color,
         enabled: Boolean,
         onClick: () -> Unit
     ) {

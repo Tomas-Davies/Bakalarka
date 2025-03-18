@@ -13,6 +13,7 @@ import com.example.bakalarkaapp.dataLayer.models.SearchItemOverlay
 import com.example.bakalarkaapp.dataLayer.models.SearchRound
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightSearchRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -59,8 +60,8 @@ class EyesightSearchViewModel(
                     items = currentRound.items
                 )
             )
-            uiState = _uiState.asStateFlow()
-            dataLoaded()
+            uiState = _uiState
+            _screenState.value = ScreenState.Success
         }
     }
 

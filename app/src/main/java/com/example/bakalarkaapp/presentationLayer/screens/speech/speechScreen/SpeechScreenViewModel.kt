@@ -7,6 +7,7 @@ import com.example.bakalarkaapp.viewModels.BaseViewModel
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.SpeechLetter
 import com.example.bakalarkaapp.dataLayer.repositories.SpeechRepo
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.launch
 
 class SpeechViewModel(repo: SpeechRepo, app: LogoApp): BaseViewModel(app) {
@@ -17,7 +18,7 @@ class SpeechViewModel(repo: SpeechRepo, app: LogoApp): BaseViewModel(app) {
         viewModelScope.launch {
             repo.loadData()
             lettersAndPositions = repo.data
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 }

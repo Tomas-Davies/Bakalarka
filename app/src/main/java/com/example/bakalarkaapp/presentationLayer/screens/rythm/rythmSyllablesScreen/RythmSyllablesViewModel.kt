@@ -8,6 +8,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.RythmSyllabRound
 import com.example.bakalarkaapp.dataLayer.repositories.RythmSyllablesRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -46,9 +47,9 @@ class RythmSyllablesViewModel(
             count = rounds.size
             currRound = rounds[roundIdx]
             _uiState = MutableStateFlow(RythmSyllabUiState(currRound.imageName, currRound.soundName, currRound.syllabCount))
-            uiState = _uiState.asStateFlow()
+            uiState = _uiState
 
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
         roundIdx = levelIndex
     }

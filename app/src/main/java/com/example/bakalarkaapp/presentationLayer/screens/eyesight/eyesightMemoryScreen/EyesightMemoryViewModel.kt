@@ -7,12 +7,13 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.BasicWordsRound
 import com.example.bakalarkaapp.dataLayer.repositories.BasicWordsRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.random.Random
+
 
 data class EyesightMemoryUiState(
     var objectDrawableIds: List<String>,
@@ -44,23 +45,23 @@ class EyesightMemoryViewModel(
                 .map { obj -> obj.text ?: "" }
                 .toMutableList()
             _uiState = MutableStateFlow(EyesightMemoryUiState(currentObjects, roundIdx + 1))
-            uiState = _uiState.asStateFlow()
+            uiState = _uiState
             count = data.size
             chooseExtraObject()
             disableButtons()
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 
 
     suspend fun onCardClick(name: String): Boolean {
         clickedCounterInc()
-        if (name == currentExtraObject){
+        return if (name == currentExtraObject){
             onCorrectAnswer()
-            return true
+            true
         } else {
             onWrongAnswer()
-            return false
+            false
         }
     }
 

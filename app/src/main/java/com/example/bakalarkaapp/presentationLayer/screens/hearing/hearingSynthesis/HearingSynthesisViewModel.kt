@@ -8,11 +8,12 @@ import com.example.bakalarkaapp.dataLayer.models.BasicWordsRound
 import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.dataLayer.repositories.BasicWordsRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 
 data class HearingSynthesisUiState(
     val roundObjects: List<WordContent>,
@@ -37,15 +38,15 @@ class HearingSynthesisViewModel(
     init {
         viewModelScope.launch {
             repo.loadData()
-            rounds = repo.data.shuffled()
+            rounds = repo.data.shuffled().sortedBy { item -> item.objects.size }
             count = rounds.size
             currentRound = rounds[roundIdx]
             currentObject = currentRound.objects
             spellingObject = currentObject.random()
             _uiState = MutableStateFlow(HearingSynthesisUiState(currentObject, spellingObject))
-            uiState = _uiState.asStateFlow()
+            uiState = _uiState
             _buttonsEnabled.update { false }
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 

@@ -9,11 +9,11 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.UserSentence
 import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.dataLayer.repositories.SpeechRepo
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
@@ -57,7 +57,7 @@ class SpeechDetailViewModel(
         }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5_000),
             initialValue = emptyList()
         )
 
@@ -75,9 +75,9 @@ class SpeechDetailViewModel(
                     index == words.size - 1
                 )
             )
-            uiState = _uiState.asStateFlow()
+            uiState = _uiState
+            _screenState.value = ScreenState.Success
             defaultSentences = repo.getDefaultSentences(letterLabel) ?: emptyList()
-            dataLoaded()
         }
     }
 

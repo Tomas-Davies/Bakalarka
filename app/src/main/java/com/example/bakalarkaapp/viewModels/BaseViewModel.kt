@@ -10,6 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.example.bakalarkaapp.LogoApp
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+
+sealed class ScreenState {
+    data object Loading: ScreenState()
+    data object Success: ScreenState()
+}
+
 
 /**
  * Abstract base ViewModel that provides common functionality for audio, vibration, and resource management.
@@ -25,11 +33,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
  */
 abstract class BaseViewModel(app: LogoApp) : ViewModel() {
     private val appContext = app.applicationContext
-    val dataLoaded = MutableStateFlow(false)
-
-    fun dataLoaded(){
-        dataLoaded.value = true
-    }
+    protected val _screenState = MutableStateFlow<ScreenState>(ScreenState.Loading)
+    val screenState = _screenState.asStateFlow()
 
     fun playSound(soundId: Int) {
         val mediaPlayer: MediaPlayer = MediaPlayer.create(appContext, soundId)

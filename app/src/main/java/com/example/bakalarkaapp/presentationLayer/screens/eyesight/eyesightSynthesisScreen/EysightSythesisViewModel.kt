@@ -11,9 +11,9 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.EyesightSynthRound
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightSynthesisRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -81,10 +81,11 @@ class EyesightSynthesisViewModel(
             currImage = bitmaps[roundIdx]
             pieceCount = rounds[roundIdx].pieceCount
             _uiState = MutableStateFlow(EyesightSynthesisUiState(currImage, cutImage(currImage, pieceCount)))
-            uiState = _uiState.asStateFlow()
-            dataLoaded()
+            uiState = _uiState
+            _screenState.value = ScreenState.Success
         }
     }
+
 
     override fun updateData() {
         currImage = bitmaps[roundIdx]
@@ -92,6 +93,7 @@ class EyesightSynthesisViewModel(
         placedPieces = 0
         updateState()
     }
+
 
     private fun updateState() {
         _uiState.update { currentState ->
@@ -138,6 +140,7 @@ class EyesightSynthesisViewModel(
         return pieces
     }
 
+
     /**
      * This function generates list of [rectangles][Rect] representing image pieces by repeatedly splitting
      * the largest rectangle using the [splitRectangle] method.
@@ -177,20 +180,20 @@ class EyesightSynthesisViewModel(
      * @return A [pair][Pair] of two [rectangles][Rect] representing the split parts of the original rectangle.
      */
     private fun splitRectangle(rect: Rect): Pair<Rect, Rect> {
-        val splitVerticaly: Boolean
-        if (rect.width == rect.height) splitVerticaly = Random.nextBoolean()
-        else splitVerticaly = rect.width > rect.height
+        val splitVerticaly = if (rect.width == rect.height) Random.nextBoolean()
+                        else rect.width > rect.height
+
         val splitRatio = Random.nextDouble(0.3, 0.7)
 
-        if (splitVerticaly) {
+        return if (splitVerticaly) {
             val splitAt = (rect.width * splitRatio).toInt()
-            return Pair(
+            Pair(
                 Rect(rect.x, rect.y, splitAt, rect.height),
                 Rect(rect.x + splitAt, rect.y, rect.width - splitAt, rect.height)
             )
         } else {
             val splitAt = (rect.height * splitRatio).toInt()
-            return Pair(
+            Pair(
                 Rect(rect.x, rect.y, rect.width, splitAt),
                 Rect(rect.x, rect.y + splitAt, rect.width, rect.height - splitAt)
             )
@@ -221,17 +224,18 @@ class EyesightSynthesisViewModel(
         val scaledTargetY = piece.imageY * contentScale
         val dist = distance(scaledTargetX, scaledTargetY, inContentX, inContentY)
 
-        if (dist <= threshold) {
+        return if (dist <= threshold) {
             val offset = Offset(
                 x = contentOffset.x + scaledTargetX,
                 y = contentOffset.y + scaledTargetY
             )
-            return offset - bottomBoxOffset
+            offset - bottomBoxOffset
         } else {
             playResultSound(result = false)
-            return piece.initialOffset
+            piece.initialOffset
         }
     }
+
 
     private fun distance(x1: Float, y1: Float, x2: Float, y2: Float): Float {
         val xDist = abs(x1 - x2)
@@ -239,6 +243,7 @@ class EyesightSynthesisViewModel(
         val dist = sqrt(xDist.pow(2) + yDist.pow(2))
         return dist
     }
+
 
     fun onCorrectlyPlaced() {
         placedPieces++
@@ -288,6 +293,7 @@ class EyesightSynthesisViewModel(
         return offsets
     }
 
+
     private fun findSquare(num: Int): Int {
         var sq = 1
         while (sq * sq < num) {
@@ -295,6 +301,7 @@ class EyesightSynthesisViewModel(
         }
         return sq
     }
+
 
     private fun imageNamesToBitmaps(rounds: List<EyesightSynthRound>): List<Bitmap> {
         val bitmaps = mutableListOf<Bitmap>()

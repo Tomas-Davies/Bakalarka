@@ -8,6 +8,7 @@ import com.example.bakalarkaapp.dataLayer.models.HearingMemoryRound
 import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.dataLayer.repositories.HearingMemoryRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -52,7 +53,7 @@ class HearingMemoryViewModel(
             initallObjects = getInitallObjects()
             initiallObjImgNames = getInitiallObJImages()
             count = rounds.size
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 

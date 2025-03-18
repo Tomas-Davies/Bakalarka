@@ -7,6 +7,7 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.DifferItem
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightDifferRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -48,7 +49,7 @@ class EyesightDifferViewModel(
             count = data.size
             currentItem = data[roundIdx]
             _questionCountInRound = MutableStateFlow(currentItem.rounds.size)
-            questionCountInRound = _questionCountInRound.asStateFlow()
+            questionCountInRound = _questionCountInRound
             _uiState = MutableStateFlow(
                 EyesightDifferUiState(
                     imageName = currentItem.imageName,
@@ -57,8 +58,8 @@ class EyesightDifferViewModel(
                     question = getQuestion()
                 )
             )
-            uiState = _uiState.asStateFlow()
-            dataLoaded()
+            uiState = _uiState
+            _screenState.value = ScreenState.Success
         }
     }
 

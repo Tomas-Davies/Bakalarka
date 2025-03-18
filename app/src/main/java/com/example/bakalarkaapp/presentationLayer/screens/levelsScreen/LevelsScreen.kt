@@ -140,7 +140,7 @@ class LevelsScreen : AppCompatActivity() {
                 ) {
                     itemsIndexed(levels) { i, level ->
                         val image = viewModel.getDrawableId("${level}_low")
-                        LevelIcon(imageId = image, i)
+                        LevelImageIcon(imageId = image, i)
                     }
                 }
             }
@@ -149,8 +149,10 @@ class LevelsScreen : AppCompatActivity() {
 
 
     @Composable
-    private fun LevelIcon(imageId: Int, i: Int){
+    private fun LevelImageIcon(imageId: Int, i: Int){
         val nextActivityClass = intent.getSdkBasedSerializableExtra(IImageLevel.NEXT_CLASS_TAG, Class::class.java)
+        val labelId = intent.getIntExtra(IImageLevel.LEVEL_ITEM_LABEL_ID_TAG, R.string.round)
+
         ElevatedCard(
             onClick = {
                 val intent = Intent(this, nextActivityClass)
@@ -171,7 +173,6 @@ class LevelsScreen : AppCompatActivity() {
                     alignment = Alignment.TopCenter
                     contentScale = ContentScale.Crop
                 }
-
                 Image(
                     modifier = Modifier
                         .height(125.dp)
@@ -181,7 +182,6 @@ class LevelsScreen : AppCompatActivity() {
                     contentScale = contentScale,
                     alignment = alignment
                 )
-
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
@@ -192,7 +192,7 @@ class LevelsScreen : AppCompatActivity() {
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
                         modifier = Modifier.weight(3f),
-                        text = stringResource(id = R.string.eyesight_search_level_info_label) + ": " + "${i + 1}",
+                        text = stringResource(id = labelId) + ": " + "${i + 1}",
                         fontWeight = FontWeight.SemiBold,
                         textAlign = TextAlign.Center
                     )

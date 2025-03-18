@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.bakalarkaapp.viewModels.BaseViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 
 /**
  * A wrapper Composable that shows a [CircularProgressIndicator] or [content] based
@@ -22,16 +23,16 @@ fun AsyncDataWrapper(
     viewModel: BaseViewModel,
     content: @Composable () -> Unit
 ){
-    val dataLoaded by viewModel.dataLoaded.collectAsStateWithLifecycle()
+    val screenState by viewModel.screenState.collectAsStateWithLifecycle()
 
-    if (dataLoaded){
-        content()
-    } else {
+    if (screenState is ScreenState.Loading){
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ){
             CircularProgressIndicator()
         }
+    } else {
+        content()
     }
 }

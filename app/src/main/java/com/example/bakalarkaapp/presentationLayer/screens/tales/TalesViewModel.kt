@@ -10,7 +10,9 @@ import com.example.bakalarkaapp.viewModels.BaseViewModel
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.Tale
 import com.example.bakalarkaapp.dataLayer.repositories.TalesRepo
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.launch
+
 
 class TalesViewModel(
     private val repo: TalesRepo,
@@ -24,7 +26,7 @@ class TalesViewModel(
         viewModelScope.launch {
             repo.loadData()
             tales = repo.tales
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 

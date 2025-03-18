@@ -8,9 +8,9 @@ import com.example.bakalarkaapp.dataLayer.models.BasicWordsRound
 import com.example.bakalarkaapp.dataLayer.models.WordContent
 import com.example.bakalarkaapp.dataLayer.repositories.BasicWordsRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -42,9 +42,9 @@ class HearingFonematicViewModel(
             currentRound = rounds[roundIdx]
             currentObject = currentRound.objects
             _uiState = MutableStateFlow(HearingFonematicUiState(currentObject, currentObject.random()))
-            uiState = _uiState.asStateFlow()
+            uiState = _uiState
             _buttonsEnabled.update { false }
-            dataLoaded()
+            _screenState.value = ScreenState.Success
         }
     }
 

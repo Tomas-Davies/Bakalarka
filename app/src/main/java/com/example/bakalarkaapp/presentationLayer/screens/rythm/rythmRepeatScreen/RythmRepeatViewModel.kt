@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.repositories.RythmRepeatRepo
 import com.example.bakalarkaapp.viewModels.BaseViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -42,8 +43,8 @@ class RythmRepeatViewModel(
         viewModelScope.launch {
             repo.loadData()
             _sounds = MutableStateFlow(getRythmResource(repo.data))
-            sounds = _sounds.asStateFlow()
-            dataLoaded()
+            sounds = _sounds
+            _screenState.value = ScreenState.Success
         }
     }
 

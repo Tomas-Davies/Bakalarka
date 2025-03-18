@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.bakalarkaapp.R
 import com.example.bakalarkaapp.RepositoryType
@@ -116,6 +115,7 @@ class EyesightScreen : AppCompatActivity() {
             0 -> {
                 intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightComparisonScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_COMPARISON.id)
+                intent.putExtra(IImageLevel.LEVEL_ITEM_LABEL_ID_TAG, R.string.eyesight_comparison_levels_label)
             }
 
             1 -> {
@@ -126,6 +126,7 @@ class EyesightScreen : AppCompatActivity() {
             2 -> {
                 intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightDifferScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_DIFFER.id)
+                intent.putExtra(IImageLevel.LEVEL_ITEM_LABEL_ID_TAG, R.string.eyesight_differ_levels_label)
             }
 
             3 -> intent = Intent(this, EyesightMemoryScreen::class.java)

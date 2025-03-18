@@ -7,10 +7,10 @@ import com.example.bakalarkaapp.LogoApp
 import com.example.bakalarkaapp.dataLayer.models.ComparisonItem
 import com.example.bakalarkaapp.dataLayer.repositories.EyesightComparisonRepo
 import com.example.bakalarkaapp.viewModels.RoundsViewModel
+import com.example.bakalarkaapp.viewModels.ScreenState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -49,8 +49,8 @@ class EyesightComparisonViewModel(
                     currentItem.isSameShape
                 )
             )
-            uiState = _uiState.asStateFlow()
-            dataLoaded()
+            uiState = _uiState
+            _screenState.value = ScreenState.Success
         }
     }
 
