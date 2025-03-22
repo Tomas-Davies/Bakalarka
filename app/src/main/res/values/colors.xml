@@ -23,13 +23,15 @@
     <color name="hearing_300">#D1AE1B</color>
     <color name="rythm_300">#348A10</color>
 
-    <color name="speech_500">#FFF15226</color>
-    <color name="eyesight_500">#FF8C52FF</color>
-    <color name="hearing_500">#6E5900</color>
-    <color name="rythm_500">#FF00BF63</color>
-    <color name="tales_500">#FF81249B</color>
+    <color name="speech_500">#F15226</color>
+    <color name="eyesight_500">#8B53FE</color>
+    <color name="hearing_500">#D2AA00</color>
+    <color name="rythm_500">#01C063</color>
+    <color name="tales_500">#81249B</color>
 
     <color name="correct">#A6CB12</color>
+    <color name="correct_outline">#61770B</color>
     <color name="incorrect">#E00543</color>
+    <color name="incorrect_outline">#97052E</color>
     <color name="wood">#FDC18A</color>
 </resources>

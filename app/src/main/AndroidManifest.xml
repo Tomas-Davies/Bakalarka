@@ -25,174 +25,79 @@
         <activity
             android:name=".presentationLayer.screens.speech.speechScreen.SpeechScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingScreen.HearingScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmScreen.RythmScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.tales.talesMenu.TalesScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.speech.speechDetailScreen.SpeechDetailScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.eyesight.eyesightSearch.EyesightSearchScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.levelsScreen.LevelsScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingFonematic.HearingFonematicScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingMemory.HearingMemoryScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.hearing.hearingSynthesis.HearingSynthesisScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmShelvesScreen.RythmShelvesScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmSyllablesScreen.RythmSyllabelsScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.rythm.rythmRepeatScreen.RythmRepeatScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".presentationLayer.screens.tales.taleDetail.TaleDetailScreen"
             android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
     </application>
 
 </manifest>

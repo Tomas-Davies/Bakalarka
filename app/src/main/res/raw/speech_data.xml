@@ -617,7 +617,7 @@
         <label>CSZ</label>
         <positions>
             <position>
-                <label>C_S_Z</label>
+                <label>C/S/Z</label>
                 <word imageName="zastupce" soundName="zastupce">Zástupce</word>
                 <word imageName="sazenice" soundName="sazenice">Sazenice</word>
                 <word imageName="zamestnanec" soundName="zamestnanec">Zaměstnanec</word>
@@ -758,7 +758,7 @@
         <label>ČŠŽ</label>
         <positions>
             <position>
-                <label>Č_Š_Ž</label>
+                <label>Č/Š/Ž</label>
                 <word imageName="stastny_zivot" soundName="stastny_zivot">Šťastný život</word>
                 <word imageName="kozisnictvi" soundName="kozisnictvi">Kožišnictví</word>
                 <word imageName="zazloutly_casopis" soundName="zazloutly_casopis">Zažloutlý časopis</word>

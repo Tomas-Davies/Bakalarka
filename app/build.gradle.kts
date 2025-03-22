@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bakalarkaapp"
+    namespace = "com.example.logopadix"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.bakalarkaapp"
+        applicationId = "com.example.logopadix"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
@@ -49,25 +49,28 @@ dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2024.02.02")
     implementation(composeBom)
     androidTestImplementation(composeBom)
-    implementation("androidx.activity:activity-compose:1.8.2")
+    implementation(libs.androidx.activity.compose)
     // ViewModel & Flow lifecycles
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     // Material Design 3
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.compose.material3)
+    // Room database
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     // XML to class mapping
-    val jacksonVersion = "2.18.0"
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
-    implementation("javax.xml.stream:stax-api:1.0-2")
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.jackson.dataformat.xml)
+    implementation(libs.stax.api)
     // Confetti
-    implementation("nl.dionsegijn:konfetti-compose:2.0.4")
+    implementation(libs.konfetti)
     // Animated Drawables
-    implementation("com.google.accompanist:accompanist-drawablepainter:0.35.0-alpha")
+    implementation(libs.accompanist.drawablepainter)
     // Amplituda
-    implementation("com.github.lincollincol:Amplituda:2.3.0")
+    implementation(libs.amplituda)
     // AudioWave
-    implementation("com.github.lincollincol:compose-audiowaveform:1.1.1")
+    implementation(libs.compose.audiowaveform)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
