@@ -73,19 +73,19 @@ class RythmShelvesViewModel(
     fun onCardClick(idx: Int, soundId: Int) {
         var didReset = false
         if (_firstIdxClicked.value == idx) {
-            _firstIdxClicked.update { -1 }
+            _firstIdxClicked.value = -1
             didReset = true
         }
         if (_secondIdxClicked.value == idx) {
-            _secondIdxClicked.update { -1 }
+            _secondIdxClicked.value = -1
             didReset = true
         }
         if (didReset) disableButtons()
 
         if (!didReset){
             playSound(soundId)
-            if (_firstIdxClicked.value == -1) _firstIdxClicked.update { idx }
-            else _secondIdxClicked.update { idx }
+            if (_firstIdxClicked.value == -1) _firstIdxClicked.value = idx
+            else _secondIdxClicked.value = idx
 
             if (_firstIdxClicked.value != -1 && _secondIdxClicked.value != -1){
                 enableButtons()
@@ -104,9 +104,9 @@ class RythmShelvesViewModel(
         } else {
             playOnWrongSound()
         }
-        _firstIdxClicked.update { -1 }
-        _secondIdxClicked.update { -1 }
-        _buttonsEnabled.update { false }
+        _firstIdxClicked.value = -1
+        _secondIdxClicked.value = -1
+        _buttonsEnabled.value = false
     }
 
 

@@ -3,7 +3,7 @@ package com.example.logopadix.dataLayer.repositories
 import android.content.Context
 import com.example.logopadix.R
 import com.example.logopadix.dataLayer.IModel
-import com.example.logopadix.presentationLayer.screens.levelsScreen.IImageLevel
+import com.example.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement

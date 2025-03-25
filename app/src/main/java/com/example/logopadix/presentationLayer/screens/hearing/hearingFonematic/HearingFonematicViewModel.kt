@@ -27,7 +27,7 @@ class HearingFonematicViewModel(
 {
     private lateinit var rounds: List<BasicWordsRound>
     private lateinit var currentRound: BasicWordsRound
-    private lateinit var currentObject: List<WordContent>
+    private lateinit var currentObjects: List<WordContent>
     private lateinit var _uiState: MutableStateFlow<HearingFonematicUiState>
     lateinit var uiState: StateFlow<HearingFonematicUiState>
         private set
@@ -40,10 +40,10 @@ class HearingFonematicViewModel(
             rounds = repo.data.shuffled().sortedBy { round -> round.objects.size }
             count = rounds.count()
             currentRound = rounds[roundIdx]
-            currentObject = currentRound.objects
-            _uiState = MutableStateFlow(HearingFonematicUiState(currentObject, currentObject.random()))
+            currentObjects = currentRound.objects
+            _uiState = MutableStateFlow(HearingFonematicUiState(currentObjects.shuffled(), currentObjects.random()))
             uiState = _uiState
-            _buttonsEnabled.update { false }
+            _buttonsEnabled.value = false
             _screenState.value = ScreenState.Success
         }
     }
@@ -87,12 +87,12 @@ class HearingFonematicViewModel(
 
     override fun updateData() {
         currentRound = rounds[roundIdx]
-        currentObject = currentRound.objects
+        currentObjects = currentRound.objects
 
         _uiState.update { state ->
             state.copy(
-                objects = currentObject,
-                playedObject = currentObject.random()
+                objects = currentObjects.shuffled(),
+                playedObject = currentObjects.random()
             )
         }
     }

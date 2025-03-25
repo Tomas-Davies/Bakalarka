@@ -1,4 +1,4 @@
-package com.example.logopadix.presentationLayer.screens.levelsScreen
+package com.example.logopadix.presentationLayer.screens.levels
 
 import android.content.Intent
 import android.os.Bundle

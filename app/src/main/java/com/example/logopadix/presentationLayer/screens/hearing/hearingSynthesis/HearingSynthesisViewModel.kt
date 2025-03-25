@@ -45,7 +45,7 @@ class HearingSynthesisViewModel(
             spellingObject = currentObject.random()
             _uiState = MutableStateFlow(HearingSynthesisUiState(currentObject, spellingObject))
             uiState = _uiState
-            _buttonsEnabled.update { false }
+            _buttonsEnabled.value = false
             _screenState.value = ScreenState.Success
         }
     }

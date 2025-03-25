@@ -102,16 +102,16 @@ class EyesightSearchViewModel(
                 items = currentRound.items
             )
         }
-        _itemsFound.update { 0 }
+        _itemsFound.value = 0
     }
 
 
     fun moveMissIndicator(offset: Offset){
         viewModelScope.launch {
-            _missIndicatorOffset.update { offset }
-            _showMissIndicator.update { true }
+            _missIndicatorOffset.value =  offset
+            _showMissIndicator.value = true
             delay(500)
-            _showMissIndicator.update { false }
+            _showMissIndicator.value = false
         }
     }
 

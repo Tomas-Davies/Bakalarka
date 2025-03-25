@@ -1,4 +1,4 @@
-package com.example.logopadix.presentationLayer.screens.homeScreen
+package com.example.logopadix.presentationLayer.screens.home
 
 import android.content.Intent
 import android.os.Bundle

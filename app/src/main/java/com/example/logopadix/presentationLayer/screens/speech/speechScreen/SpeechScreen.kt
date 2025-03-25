@@ -203,7 +203,7 @@ class SpeechScreen : AppCompatActivity() {
         Spacer(modifier = Modifier.height(18.dp))
         LazyVerticalGrid(
             modifier = gridModifier.widthIn(max = 400.dp),
-            columns = GridCells.Adaptive(100.dp),
+            columns = GridCells.Adaptive(110.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             items(positions) { pos ->

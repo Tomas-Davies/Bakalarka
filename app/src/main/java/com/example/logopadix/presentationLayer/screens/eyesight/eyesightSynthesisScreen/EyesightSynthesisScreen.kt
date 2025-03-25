@@ -49,7 +49,7 @@ import com.example.logopadix.theme.ThemeType
 import com.example.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.example.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.example.logopadix.presentationLayer.components.ScreenWrapper
-import com.example.logopadix.presentationLayer.screens.levelsScreen.IImageLevel
+import com.example.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.example.logopadix.theme.AppTheme
 import com.example.logopadix.utils.image.getContentOffsetInImage
 import com.example.logopadix.utils.image.getFitContentScaleInImage

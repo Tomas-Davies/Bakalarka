@@ -14,7 +14,7 @@
         android:theme="@style/Theme.BakalarkaApp"
         tools:targetApi="31" >
         <activity
-            android:name=".presentationLayer.screens.homeScreen.HomeScreen"
+            android:name=".presentationLayer.screens.home.HomeScreen"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
@@ -67,7 +67,7 @@
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
-            android:name=".presentationLayer.screens.levelsScreen.LevelsScreen"
+            android:name=".presentationLayer.screens.levels.LevelsScreen"
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity

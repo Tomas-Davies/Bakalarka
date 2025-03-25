@@ -1,4 +1,4 @@
-package com.example.logopadix.presentationLayer.screens.levelsScreen
+package com.example.logopadix.presentationLayer.screens.levels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

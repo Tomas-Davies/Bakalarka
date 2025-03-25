@@ -11,7 +11,6 @@ import com.example.logopadix.presentationLayer.states.ScreenState
 import com.example.logopadix.viewModels.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import com.linc.amplituda.Amplituda
 import com.linc.amplituda.callback.AmplitudaErrorListener
 import kotlinx.coroutines.async
@@ -53,17 +52,17 @@ class RythmRepeatViewModel(
             mediaPlayer?.stop()
         }
         if (_currentlyPlayingIdx.value == cardIdx) {
-            _currentlyPlayingIdx.update { -1 }
+            _currentlyPlayingIdx.value = -1
             mediaPlayer?.release()
             mediaPlayer = null
         } else {
             mediaPlayer = MediaPlayer.create(app.applicationContext, soundId)
             mediaPlayer?.start()
-            _currentlyPlayingIdx.update { cardIdx }
+            _currentlyPlayingIdx.value = cardIdx
             mediaPlayer?.setOnCompletionListener { mp ->
                 mp.release()
                 mediaPlayer = null
-                if (_currentlyPlayingIdx.value == cardIdx) _currentlyPlayingIdx.update { -1 }
+                if (_currentlyPlayingIdx.value == cardIdx) _currentlyPlayingIdx.value = -1
             }
         }
     }

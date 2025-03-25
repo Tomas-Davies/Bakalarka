@@ -16,8 +16,8 @@ import com.example.logopadix.theme.ThemeType
 import com.example.logopadix.presentationLayer.components.CategoryButton
 import com.example.logopadix.presentationLayer.components.CategoryMenu
 import com.example.logopadix.presentationLayer.components.ScreenWrapper
-import com.example.logopadix.presentationLayer.screens.levelsScreen.IImageLevel
-import com.example.logopadix.presentationLayer.screens.levelsScreen.LevelsScreen
+import com.example.logopadix.presentationLayer.screens.levels.IImageLevel
+import com.example.logopadix.presentationLayer.screens.levels.LevelsScreen
 import com.example.logopadix.presentationLayer.screens.rythm.rythmSyllablesScreen.RythmSyllabelsScreen
 import com.example.logopadix.presentationLayer.screens.rythm.rythmShelvesScreen.RythmShelvesScreen
 import com.example.logopadix.presentationLayer.screens.rythm.rythmRepeatScreen.RythmRepeatScreen

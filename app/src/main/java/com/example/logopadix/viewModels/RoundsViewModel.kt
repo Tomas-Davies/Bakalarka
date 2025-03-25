@@ -3,7 +3,6 @@ package com.example.logopadix.viewModels
 import android.os.VibrationEffect
 import com.example.logopadix.LogoApp
 import com.example.logopadix.R
-import com.example.logopadix.presentationLayer.states.ResultMessageState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,7 +38,7 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
     val resultMessageState = _resultMessageState.asStateFlow()
     protected var _buttonsEnabled = MutableStateFlow(true)
     val buttonsEnabled = _buttonsEnabled.asStateFlow()
-    protected var _roundCompletedDialogShow = MutableStateFlow(false)
+    private var _roundCompletedDialogShow = MutableStateFlow(false)
     val roundCompletedDialogShow = _roundCompletedDialogShow.asStateFlow()
     var hasNextRound = roundIdx + 1 < count
         private set
@@ -64,7 +63,7 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         roundsCompletedCount = 0
         clickCounter = 0
         score = 0
-        _roundCompletedDialogShow.update { false }
+        _roundCompletedDialogShow.value = false
         doContinue()
     }
 
@@ -75,7 +74,7 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
     protected fun showRoundSetDialog(){
         playSound(R.raw.celebration)
         vibrate(VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK))
-        _roundCompletedDialogShow.update { true }
+        _roundCompletedDialogShow.value = true
     }
 
     private fun updateHasNextRound(){
@@ -96,7 +95,7 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
         }
     }
 
-    protected suspend fun showMessage(
+    private suspend fun showMessage(
         result: Boolean = resultMessageState.value.correctAnswer,
         message: String = ""
     ) {
@@ -130,11 +129,11 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 
     fun enableButtons() {
-        _buttonsEnabled.update { true }
+        _buttonsEnabled.value = true
     }
 
     protected open fun disableButtons(){
-        _buttonsEnabled.update { false }
+        _buttonsEnabled.value = false
     }
 
     protected open fun scoreInc() {
@@ -154,3 +153,9 @@ abstract class RoundsViewModel(app: LogoApp) : BaseViewModel(app) {
     }
 
 }
+
+data class ResultMessageState (
+    val showMessage: Boolean = false,
+    var correctAnswer: Boolean = false,
+    var message: String = ""
+)

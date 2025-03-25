@@ -33,22 +33,12 @@ fun CustomCard(
     content: @Composable ColumnScope.() -> Unit
 ){
     var pressed by remember { mutableStateOf(false) }
-    val color = if (pressed) outlineSelectedColor
-            else outlineColor
+    val currentOutlineColor = if (pressed) outlineSelectedColor else outlineColor
 
-    val disabledColors = colors.copy(
-        containerColor = color.copy(alpha = 0.38f),
-        contentColor = color.copy(alpha = 0.38f)
-    )
-    val outlineColors = CardDefaults.cardColors().copy(
-        containerColor = color
-    )
-    val disabledOutlineColors = outlineColors.copy(containerColor = color.copy(alpha = 0.38f))
     Surface(
         modifier = modifier,
         shape = shape,
-        color = if (enabled) outlineColors.containerColor else disabledOutlineColors.disabledContentColor,
-        contentColor = if (enabled) outlineColors.containerColor else disabledOutlineColors.disabledContentColor
+        color = if (enabled) currentOutlineColor else currentOutlineColor.copy(alpha = 0.38f)
     ) {
         Surface(
             modifier = Modifier
@@ -71,8 +61,8 @@ fun CustomCard(
                     )
                 },
             shape = shape,
-            color = if (enabled) colors.containerColor else disabledColors.disabledContentColor,
-            contentColor = if (enabled) colors.contentColor else disabledColors.disabledContentColor
+            color = if (enabled) colors.containerColor else colors.disabledContainerColor,
+            contentColor = if (enabled) colors.contentColor else colors.disabledContentColor
         ) {
             Column(content = content)
         }
@@ -86,7 +76,6 @@ fun CustomCard(
     colors: CardColors = CardDefaults.cardColors(),
     shape: Shape = CardDefaults.shape,
     outlineColor: Color = MaterialTheme.colorScheme.outline,
-    outlineSelectedColor: Color = MaterialTheme.colorScheme.outlineVariant,
     content: @Composable ColumnScope.() -> Unit
 ){
     Surface(

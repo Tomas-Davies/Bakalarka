@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.logopadix.R
-import com.example.logopadix.presentationLayer.states.ResultMessageState
+import com.example.logopadix.viewModels.ResultMessageState
 import com.example.logopadix.viewModels.RoundsViewModel
 
 

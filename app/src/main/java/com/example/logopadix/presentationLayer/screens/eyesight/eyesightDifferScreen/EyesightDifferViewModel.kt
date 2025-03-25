@@ -128,8 +128,8 @@ class EyesightDifferViewModel(
     override fun updateData() {
         currentItem = data[roundIdx]
         questionIdx = 0
-        _questionNumber.update { 1 }
-        _questionCountInRound.update { currentItem.rounds.size }
+        _questionNumber.value = 1
+        _questionCountInRound.value = currentItem.rounds.size
         _uiState.update { currentState ->
             currentState.copy(
                 imageName = currentItem.imageName,

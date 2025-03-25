@@ -1,6 +1,6 @@
 package com.example.logopadix.dataLayer
 
-import com.example.logopadix.presentationLayer.screens.levelsScreen.LevelsScreen
+import com.example.logopadix.presentationLayer.screens.levels.LevelsScreen
 
 /**
  * Defines the different types of repositories used for [LevelsScreen] navigation.

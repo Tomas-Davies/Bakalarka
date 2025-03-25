@@ -21,8 +21,8 @@ import com.example.logopadix.presentationLayer.screens.eyesight.eyesightDifferSc
 import com.example.logopadix.presentationLayer.screens.eyesight.eyesightMemoryScreen.EyesightMemoryScreen
 import com.example.logopadix.presentationLayer.screens.eyesight.eyesightSynthesisScreen.EyesightSynthesisScreen
 import com.example.logopadix.presentationLayer.screens.eyesight.eyesightSearch.EyesightSearchScreen
-import com.example.logopadix.presentationLayer.screens.levelsScreen.IImageLevel
-import com.example.logopadix.presentationLayer.screens.levelsScreen.LevelsScreen
+import com.example.logopadix.presentationLayer.screens.levels.IImageLevel
+import com.example.logopadix.presentationLayer.screens.levels.LevelsScreen
 import com.example.logopadix.theme.AppTheme
 
 
