@@ -41,6 +41,7 @@ class RythmSyllablesViewModel(
     override var roundSetSize = 5
 
     init {
+        roundIdx = levelIndex
         viewModelScope.launch {
             repo.loadData()
             rounds = repo.data
@@ -51,7 +52,6 @@ class RythmSyllablesViewModel(
 
             _screenState.value = ScreenState.Success
         }
-        roundIdx = levelIndex
     }
 
 
