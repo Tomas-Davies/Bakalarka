@@ -17,6 +17,9 @@
     <string name="speech_sentences_category_1">Výchozí</string>
     <string name="speech_sentences_category_2">Vlastní</string>
     <string name="play_sound_label">Přehrát</string>
+    <string name="confirmButtonLabel">Ano</string>
+    <string name="dismissButtonLabel">Ne</string>
+    <string name="speechDeletePopUpText">Přejete si smazat tuto větu?</string>
 
     <string name="eyesight_menu_label_1">Porovnání</string>
     <string name="eyesight_menu_label_2">Hledání</string>

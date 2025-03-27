@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -27,6 +29,9 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -69,6 +74,7 @@ import com.example.logopadix.theme.ThemeType
 import com.example.logopadix.dataLayer.UserSentence
 import com.example.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.example.logopadix.presentationLayer.components.CustomCard
+import com.example.logopadix.presentationLayer.components.CustomDialog
 import com.example.logopadix.presentationLayer.components.OptionsMenu
 import com.example.logopadix.presentationLayer.components.PlaySoundButton
 import com.example.logopadix.presentationLayer.components.ScreenWrapper
@@ -112,7 +118,7 @@ class SpeechDetailScreen : ComponentActivity() {
         wordsChosen: Boolean,
         letterLabel: String,
         posLabel: String
-    ){
+    ) {
         val category = if (posLabel.isNotEmpty() && posLabel != "NONE") posLabel else letterLabel
         val label = if (wordsChosen) stringResource(id = R.string.speech_options_words) else stringResource(id = R.string.speech_options_sentences)
         var clickedButtonIdx by remember { mutableIntStateOf(0) }
@@ -194,6 +200,19 @@ class SpeechDetailScreen : ComponentActivity() {
         viewModel: SpeechDetailViewModel,
         clickedButtonIdx: Int
     ) {
+        var showDeletePopUp by remember { mutableStateOf(false) }
+        var sentenceToDelete by remember { mutableStateOf<UserSentence?>(null) }
+
+        if (showDeletePopUp) {
+            DeleteSentencePopUp(
+                onDismiss = { showDeletePopUp = false },
+                onConfirm = {
+                    sentenceToDelete?.let { viewModel.deleteUserSentence(it) }
+                    sentenceToDelete = null
+                    showDeletePopUp = false
+                }
+            )
+        }
         LazyVerticalGrid(
             modifier = Modifier.padding(18.dp),
             columns = GridCells.Adaptive(minSize = 300.dp),
@@ -203,23 +222,27 @@ class SpeechDetailScreen : ComponentActivity() {
             itemsIndexed(
                 items = items,
                 key = { _, sentence -> sentence.toString() }) { idx, sentence ->
-                    if (clickedButtonIdx == 0) {
-                        if (sentence is String) {
-                            DefaultSentenceCard(
-                                number = idx + 1,
-                                sentence = sentence
-                            )
-                        }
-                    } else {
-                        if (sentence is UserSentence) {
-                            UserSentenceCard(
-                                number = idx + 1,
-                                userSentence = sentence,
-                                viewModel = viewModel,
-                                onEditClick = {}
-                            )
-                        }
+                if (clickedButtonIdx == 0) {
+                    if (sentence is String) {
+                        DefaultSentenceCard(
+                            number = idx + 1,
+                            sentence = sentence
+                        )
                     }
+                } else {
+                    if (sentence is UserSentence) {
+                        UserSentenceCard(
+                            number = idx + 1,
+                            userSentence = sentence,
+                            viewModel = viewModel,
+                            onDeleteClick = {
+                                sentenceToDelete = sentence
+                                showDeletePopUp = true
+                            },
+                            onEditClick = {}
+                        )
+                    }
+                }
             }
         }
     }
@@ -288,6 +311,7 @@ class SpeechDetailScreen : ComponentActivity() {
         number: Int,
         userSentence: UserSentence,
         viewModel: SpeechDetailViewModel,
+        onDeleteClick: () -> Unit,
         onEditClick: () -> Unit
     ) {
         var textFieldValue by remember {
@@ -336,7 +360,7 @@ class SpeechDetailScreen : ComponentActivity() {
                         )
                     }
                     DeleteButton(
-                        onClick = { viewModel.deleteUserSentence(userSentence) }
+                        onClick = { onDeleteClick() }
                     )
                 }
             }
@@ -423,6 +447,57 @@ class SpeechDetailScreen : ComponentActivity() {
                 imageVector = icon,
                 contentDescription = "delete button"
             )
+        }
+    }
+
+
+    @Composable
+    private fun DeleteSentencePopUp(
+        onDismiss: () -> Unit,
+        onConfirm: () -> Unit
+    ){
+        CustomDialog(
+            onExit = { onDismiss() },
+            showExitButton = false
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(18.dp)
+            ) {
+                Icon(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    imageVector = Icons.Filled.Warning,
+                    contentDescription = "Delete warning"
+                )
+                Spacer(modifier = Modifier.height(18.dp))
+                Text(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(id = R.string.speechDeletePopUpText),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(18.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .align(Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(
+                        colors = ButtonDefaults.buttonColors().copy(
+                            containerColor = MaterialTheme.colorScheme.errorContainer
+                        ),
+                        onClick = { onConfirm() }
+                    ) {
+                        Text(text = stringResource(id = R.string.confirmButtonLabel))
+                    }
+                    Button(
+                        onClick = { onDismiss() }
+                    ) {
+                        Text(text = stringResource(id = R.string.dismissButtonLabel))
+                    }
+                }
+            }
         }
     }
 
