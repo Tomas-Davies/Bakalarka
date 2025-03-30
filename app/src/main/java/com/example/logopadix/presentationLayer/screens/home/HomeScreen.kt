@@ -21,8 +21,12 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -44,6 +48,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.logopadix.R
 import com.example.logopadix.presentationLayer.components.CustomCard
+import com.example.logopadix.presentationLayer.screens.InfoScreen
 import com.example.logopadix.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.example.logopadix.presentationLayer.screens.hearing.hearingScreen.HearingScreen
 import com.example.logopadix.presentationLayer.screens.rythm.rythmScreen.RythmScreen
@@ -76,6 +81,11 @@ class HomeScreen : AppCompatActivity() {
                 TopAppBar(
                     title = {
                         Text(text = stringResource(id = R.string.app_name))
+                    },
+                    actions = {
+                        IconButton(onClick = { onCardClicked(5) }) {
+                            Icon(imageVector = Icons.Filled.Info, contentDescription = "info")
+                        }
                     }
                 )
             }
@@ -343,9 +353,6 @@ class HomeScreen : AppCompatActivity() {
                     }
                 }
             }
-
-
-            //todo bottom row
         }
     }
 
@@ -367,6 +374,10 @@ class HomeScreen : AppCompatActivity() {
 
             4 -> {
                 intent = Intent(this, TalesScreen::class.java)
+            }
+
+            5 -> {
+                intent = Intent(this, InfoScreen::class.java)
             }
         }
         startActivity(intent)

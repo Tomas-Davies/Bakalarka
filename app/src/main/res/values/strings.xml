@@ -5,8 +5,18 @@
     <string name="category_hearing">Sluch</string>
     <string name="category_rythm">Rytmus</string>
     <string name="category_tales">Pohádky</string>
-    <string name="profile_heading">Profil</string>
+    <string name="info_heading">Informace</string>
+    <string name="info_content_heading">Materiály</string>
     <string name="home_screen_decor_label">I procvičování může být zábava.</string>
+
+    <string name="info_content_1_heading">Obrázky</string>
+    <string name="info_content_1_text">Online nástroj Canva</string>
+    <string name="info_content_2_heading">Zvuky</string>
+    <string name="info_content_2_text">web: upbeat.io</string>
+    <string name="info_content_3_heading">Pohádka o Tonckovi</string>
+    <string name="info_content_3_text">Magdaléna Navrátilová - Mluvené logopedické pohádky</string>
+    <string name="info_content_4_heading">Věty</string>
+    <string name="info_content_4_text">Josef Štěpán - Listy pro nácvik výslovnosti</string>
 
     <string name="speech_menu_item_label">Umístění</string>
     <string name="speech_options_label">Možnosti</string>
