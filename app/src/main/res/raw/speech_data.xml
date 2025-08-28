@@ -23,7 +23,7 @@
             <position>
                 <label>NONE</label>
                 <word imageName="ota" soundName="ota">Ota</word>
-                <word imageName="bonbon" soundName="bonbon">Bonbon</word>
+                <word imageName="bonbon" soundName="bonbon">Bonbón</word>
                 <word imageName="okno" soundName="okno">Okno</word>
             </position>
         </positions>
@@ -86,13 +86,13 @@
                 <label>NONE</label>
                 <word imageName="kveta" soundName="kveta">Květa</word>
                 <word imageName="beta" soundName="beta">Běta</word>
-                <word imageName="venecek" soundName="venecek">Věneček</word>
+                <word imageName="dite" soundName="dite">Dítě</word> <!-- TODO obrazek a zvuk -->
             </position>
         </positions>
         <sentences>
             <sentence>Běta má květy.</sentence>
             <sentence>Květy pěkně voní.</sentence>
-            <sentence>Jeník má věneček.</sentence>
+            <sentence>Jeník je dítě.</sentence>
         </sentences>
     </letter>
     <letter>
@@ -118,12 +118,12 @@
                 <label>NONE</label>
                 <word imageName="papa" soundName="papa">Papá</word>
                 <word imageName="pepa" soundName="pepa">Pepa</word>
-                <word imageName="pytel" soundName="pytel">Pytel</word>
+                <word imageName="pavouk" soundName="pavouk">Pavouk</word> <!--TODO zvuk -->
             </position>
         </positions>
         <sentences>
             <sentence>Pepa papá.</sentence>
-            <sentence>Kuřátka volají: pí, pí, pí.</sentence>
+            <sentence>Pípátko pípá: pí, pí, pí.</sentence>
             <sentence>Pila je tupá.</sentence>
         </sentences>
     </letter>
@@ -134,13 +134,13 @@
                 <label>NONE</label>
                 <word imageName="buben" soundName="buben">Buben</word>
                 <word imageName="buchta" soundName="buchta">Buchta</word>
-                <word imageName="buvol" soundName="buvol">Buvol</word>
+                <word imageName="banan" soundName="banan">Banan</word>      <!-- TODO obrazek a zvuk -->
             </position>
         </positions>
         <sentences>
             <sentence>Ovce bečí: bé bé bé.</sentence>
-            <sentence>Bubák dělá: bu bu bu.</sentence>
-            <sentence>Pepík nese balík.</sentence>
+            <sentence>Bubák bubá: bu bu bu.</sentence>
+            <sentence>Pepík nese boby.</sentence>
         </sentences>
     </letter>
     <letter>
@@ -150,7 +150,7 @@
                 <label>M_</label>
                 <word imageName="mama" soundName="mama">Máma</word>
                 <word imageName="mak" soundName="mak">Mák</word>
-                <word imageName="motyl" soundName="motyl">Motýl</word>
+                <word imageName="maja" soundName="maja">Mája</word>  <!-- TODO Mája -->
             </position>
             <position>
                 <label>_M_</label>
@@ -161,14 +161,14 @@
             <position>
                 <label>_M</label>
                 <word imageName="dum" soundName="dum">Dům</word>
-                <word imageName="osm" soundName="osm">Osm</word>
-                <word imageName="salam" soundName="salam">Salám</word>
+                <word imageName="tom" soundName="tom">Tom</word>    <!-- TODO tom -->
+                <word imageName="dym" soundName="dym">Salám</word>      <!-- TODO dym -->
             </position>
         </positions>
         <sentences>
             <sentence>My máme med.</sentence>
             <sentence>Máma má mouku.</sentence>
-            <sentence>Koza mečí: mé mé mé.</sentence>
+            <sentence>Mečí: mé mé mé.</sentence>
         </sentences>
     </letter>
     <letter>
@@ -182,8 +182,8 @@
             </position>
             <position>
                 <label>_F_</label>
-                <word imageName="telefon" soundName="telefon">Telefon</word>
-                <word imageName="knoflik" soundName="knoflik">Knoflík</word>
+                <word imageName="ofina" soundName="ofina">Ofina</word> <!-- TODO ofina -->
+                <word imageName="bufet" soundName="bufet">Bufet</word> <!-- TODO bufet -->
                 <word imageName="vyfuk" soundName="vyfuk">Výfuk</word>
             </position>
             <position>
@@ -206,12 +206,12 @@
                 <label>V_</label>
                 <word imageName="vata" soundName="vata">Vata</word>
                 <word imageName="vaha" soundName="vaha">Váha</word>
-                <word imageName="vozik" soundName="vozik">Vozík</word>
+                <word imageName="vana" soundName="vana">Vana</word> <!-- TODO vana -->
             </position>
             <position>
                 <label>_V_</label>
-                <word imageName="ovecka" soundName="ovecka">Ovečka</word>
-                <word imageName="veverka" soundName="veverka">Veverka</word>
+                <word imageName="dva" soundName="dva">Dva</word> <!-- TODO dva -->
+                <word imageName="kava" soundName="kava">Káva</word> <!-- TODO káva -->
                 <word imageName="ovoce" soundName="ovoce">Ovoce</word>
             </position>
         </positions>
@@ -228,13 +228,13 @@
                 <label>J_</label>
                 <word imageName="jama" soundName="jama">Jáma</word>
                 <word imageName="jahoda" soundName="jahoda">Jahoda</word>
-                <word imageName="jazyk" soundName="jazyk">Jazyk</word>
+                <word imageName="jachta" soundName="jachta">Jazyk</word> <!-- TODO jachta -->
             </position>
             <position>
                 <label>_J_</label>
                 <word imageName="vojak" soundName="vojak">Voják</word>
-                <word imageName="zajic" soundName="zajic">Zajíc</word>
-                <word imageName="vajicko" soundName="vajicko">Vajíčko</word>
+                <word imageName="maja" soundName="maja">Mája</word>
+                <word imageName="objem" soundName="objem">Objem</word> <!-- TODO  objem -->
             </position>
             <position>
                 <label>_J</label>
@@ -254,20 +254,20 @@
         <positions>
             <position>
                 <label>T_</label>
-                <word imageName="tanec" soundName="tanec">Tanec</word>
+                <word imageName="topeni" soundName="topeni">Topení</word> <!-- TODO topení -->
                 <word imageName="tata" soundName="tata">Táta</word>
-                <word imageName="televize" soundName="televize">Televize</word>
+                <word imageName="tom" soundName="tom">Tomas</word> <!-- TODO Tomáš -->
             </position>
             <position>
                 <label>_T_</label>
-                <word imageName="postel" soundName="postel">Postel</word>
+                <word imageName="ptak" soundName="ptak">Pták</word> <!-- TODO pták -->
                 <word imageName="bota" soundName="bota">Bota</word>
                 <word imageName="letadlo" soundName="letadlo">Letadlo</word>
             </position>
             <position>
                 <label>_T</label>
-                <word imageName="ocet" soundName="ocet">Ocet</word>
-                <word imageName="snist" soundName="snist">Sníst</word>
+                <word imageName="kabat" soundName="kabat">Kabát</word> <!-- TODO kabát -->
+                <word imageName="chobot" soundName="chobot">Chobot</word> <!-- TODO chobot -->
                 <word imageName="jist" soundName="jist">Jíst</word>
             </position>
         </positions>
@@ -310,26 +310,26 @@
             <position>
                 <label>N_</label>
                 <word imageName="nadoba" soundName="nadoba">Nádoba</word>
-                <word imageName="nervy" soundName="nervy">Nervy</word>
+                <word imageName="napoj" soundName="napoj">Nápoj</word> <!-- TODO Nápoj -->
                 <word imageName="noha" soundName="noha">Noha</word>
-                <word imageName="nos" soundName="nos">Nos</word>
+                <word imageName="nebe" soundName="nebe">Nebe</word> <!-- TODO Nebe -->
             </position>
             <position>
                 <label>_N_</label>
                 <word imageName="okno" soundName="okno">Okno</word>
-                <word imageName="slunce" soundName="slunce">Slunce</word>
-                <word imageName="knoflik" soundName="knoflik">Knoflík</word>
+                <word imageName="mama" soundName="mama">Maminka</word> <!-- TODO done -->
+                <word imageName="vnuk" soundName="vnuk">Vnuk</word> <!-- TODO vnuk -->
             </position>
             <position>
                 <label>_N_N_</label>
-                <word imageName="leknin" soundName="leknin">Leknín</word>
-                <word imageName="neandrtalec" soundName="neandrtalec">Neandrtálec</word>
+                <word imageName="banan" soundName="banan">Banán</word> <!-- TODO done -->
+                <word imageName="bonbon" soundName="bonbon">Bonbóny</word> <!-- TODO done -->
             </position>
             <position>
                 <label>_N</label>
                 <word imageName="pan" soundName="pan">Pán</word>
-                <word imageName="stan" soundName="stan">Stan</word>
-                <word imageName="mlyn" soundName="mlyn">Mlýn</word>
+                <word imageName="kapitan" soundName="kapitan">Kapitán</word> <!-- TODO kapitán -->
+                <word imageName="duben" soundName="duben">duben</word> <!-- TODO duben -->
             </position>
         </positions>
         <sentences>
@@ -345,7 +345,7 @@
                 <label>NONE</label>
                 <word imageName="tilko" soundName="tilko">Tilko</word>
                 <word imageName="telo" soundName="telo">Tělo</word>
-                <word imageName="stika" soundName="stika">Štika</word>
+                <word imageName="tapka" soundName="tapka">Ťapka</word> <!-- TODO tapka -->
             </position>
         </positions>
         <sentences>
@@ -361,7 +361,7 @@
                 <label>NONE</label>
                 <word imageName="divak" soundName="divak">Divák</word>
                 <word imageName="dilo" soundName="dilo">Dílo</word>
-                <word imageName="sedi" soundName="sedi">Sedí</word>
+                <word imageName="deda" soundName="deda">Děda</word> <!-- TODO deda -->
             </position>
         </positions>
         <sentences>
@@ -376,7 +376,7 @@
             <position>
                 <label>NONE</label>
                 <word imageName="nit" soundName="nit">Nit</word>
-                <word imageName="penize" soundName="penize">Peníze</word>
+                <word imageName="knihovna" soundName="knihovna">Knihovna</word> <!-- TODO knihovna -->
                 <word imageName="bochnik" soundName="bochnik">Bochník</word>
             </position>
         </positions>
@@ -409,7 +409,7 @@
             <position>
                 <label>_L</label>
                 <word imageName="pyl" soundName="pyl">Pyl</word>
-                <word imageName="sul" soundName="sul">Sůl</word>
+                <word imageName="obal" soundName="obal">Obal</word> <!-- TODO obal -->
                 <word imageName="kanal" soundName="kanal">Kanál</word>
             </position>
         </positions>
@@ -424,18 +424,18 @@
         <positions>
             <position>
                 <label>K_</label>
-                <word imageName="koza" soundName="koza">Koza</word>
+                <word imageName="kabat" soundName="kabat">Kabát</word>
                 <word imageName="kabelka" soundName="kabelka">Kabelka</word>
                 <word imageName="kun" soundName="kun">Kůň</word>
             </position>
             <position>
                 <label>_K_</label>
-                <word imageName="lzicka" soundName="lzicka">Lžička</word>
+                <word imageName="okno" soundName="okno">Lžička</word>
                 <word imageName="vlajka" soundName="vlajka">Vlajka</word>
             </position>
             <position>
                 <label>K_K</label>
-                <word imageName="kukacka" soundName="kukacka">Kukačka</word>
+                <word imageName="kapka" soundName="kapka">Kapka</word> <!-- TODO kapka -->
                 <word imageName="kaktus" soundName="kaktus">Kaktus</word>
                 <word imageName="kabelka" soundName="kabelka">Kabelka</word>
             </position>
@@ -459,13 +459,13 @@
                 <label>G_</label>
                 <word imageName="guma" soundName="guma">Guma</word>
                 <word imageName="gulas" soundName="gulas">Guláš</word>
-                <word imageName="gorila" soundName="gorila">Gorila</word>
+                <word imageName="gol" soundName="gol">Gól</word> <!-- TODO gol -->
             </position>
             <position>
                 <label>_G_</label>
                 <word imageName="vagon" soundName="vagon">Vagón</word>
-                <word imageName="kilogram" soundName="kilogram">Kilogram</word>
-                <word imageName="fotografka" soundName="fotografka">Fotografka</word>
+                <word imageName="magie" soundName="magie">Magie</word> <!-- TODO magie -->
+                <word imageName="bageta" soundName="bageta">Bageta</word> <!-- TODO bageta -->
             </position>
         </positions>
         <sentences>
@@ -493,7 +493,7 @@
                 <label>_CH</label>
                 <word imageName="mech" soundName="mech">Mech</word>
                 <word imageName="duch" soundName="duch">Duch</word>
-                <word imageName="hroch" soundName="hroch">Hroch</word>
+                <word imageName="mnich" soundName="mnich">Mnich</word> <!-- TODO mnich -->
             </position>
         </positions>
         <sentences>
@@ -507,7 +507,7 @@
         <positions>
             <position>
                 <label>H_</label>
-                <word imageName="hamburgr" soundName="hamburgr">Hamburgr</word>
+                <word imageName="hudba" soundName="hudba">Hudba</word> <!-- TODO hudba -->
                 <word imageName="houba" soundName="houba">Houba</word>
                 <word imageName="had" soundName="had">Had</word>
             </position>
@@ -531,7 +531,7 @@
                 <label>C_</label>
                 <word imageName="cvik" soundName="cvik">Cvik</word>
                 <word imageName="cibule" soundName="cibule">Cibule</word>
-                <word imageName="cesta" soundName="cesta">Cesta</word>
+                <word imageName="cement" soundName="cement">Cement</word> <!-- TODO cement -->
             </position>
             <position>
                 <label>_C_</label>

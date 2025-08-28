@@ -1,7 +1,6 @@
 package com.example.logopadix.utils.xml
 
 import android.content.Context
-import android.util.Log
 import com.example.logopadix.dataLayer.repositories.Tale
 import com.example.logopadix.dataLayer.repositories.TaleImage
 import org.xmlpull.v1.XmlPullParser
@@ -57,7 +56,7 @@ object TalesXmlParser {
                         val tale = Tale(taleName, frontImageName, content, stringWithPlaceholders.toString())
                         stringWithPlaceholders.clear()
                         tales.add(tale)
-                        i = 0; Log.e("TALE TEXT", tale.textWithPlaceholders)
+                        i = 0
                     }
                 }
             }

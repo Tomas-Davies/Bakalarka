@@ -19,33 +19,4 @@
         </content>
     </tale>
 
-    <tale>
-        <name>O nemocném Tonckovi</name>
-        <frontImageName>tale_ill_toncek</frontImageName>
-        <content>
-            V Oticích byl cihlový dům a v něm bydlel <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" />.
-            Měl dvacet let a byl moc nemocný. Bolely ho <image imageName="tale_plice" nounFormSoundName="plice_j_4" soundName="plice_j_4" /> a celé dny jen kuckal.
-            V <image imageName="tale_nemocnice" nounFormSoundName="nemocnice_j_2" soundName="nemocnice_j_6" /> mu pověděli, ať jí moc <image imageName="tale_cibule" nounFormSoundName="cibule_j_1" soundName="cibule_j_1" /> a
-            vitamínu C. Ale vůbec nic nepomáhalo. Kuckal mnohem více, a tak jel opět do <image imageName="tale_nemocnice" nounFormSoundName="nemocnice_j_2" soundName="nemocnice_j_2" />.
-            V <image imageName="tale_nemocnice" nounFormSoundName="nemocnice_j_2" soundName="nemocnice_j_6" /> byla nuda. <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" /> civěl na polici a
-            uviděl encyklopedii. Bylo v ní: Kdo bolavé má <image imageName="tale_plice" nounFormSoundName="plice_j_4" soundName="plice_j_4" />, uleví mu <image imageName="tale_pijavice" nounFormSoundName="pijavice_j_1" soundName="pijavice_j_1" />.
-            <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" /> vyběhl ven, koupil udici a utíkal k vodě. Hodil udici do vody, ale
-            kdepak <image imageName="tale_pijavice" nounFormSoundName="pijavice_j_1" soundName="pijavice_j_1" />, jediné, co vylovil, byl macatý <image imageName="tale_candat" nounFormSoundName="candat_j_1" soundName="candat_j_1" />.
-            "No nic, budu dál nemocný," kuckl <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" />, dal macatého <image imageName="tale_candat" nounFormSoundName="candat_j_1" soundName="candat_j_4" />
-            do kyblíku a chtěl jít domů. Vtom něco ucítil. V okně uviděl copatou <image imageName="tale_cilka" nounFormSoundName="cilka_j_1" soundName="cilka_j_4" />, jak míchá cibulovou polévku.
-            "Pojď ochutnat," nabídla mu. Polévka byla poctivá, plavalo v ní moc <image imageName="tale_cibule" nounFormSoundName="cibule_j_1" soundName="cibule_j_1" />.
-            <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" /> hltal polévku a najednou ucítil, jak mu <image imageName="tale_cibule" nounFormSoundName="cibule_j_1" soundName="cibule_j_1" />
-            padá do nemocných <image imageName="tale_plice" nounFormSoundName="plice_j_4" soundName="plice_j_2" />. "Pomoc, to je můj konec," volal <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" /> a
-            <image imageName="tale_cilka" nounFormSoundName="" soundName="cilka_j_1" /> mu utíkala pomoci. Poplácala ho a <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" /> hned vykuckal
-            <image imageName="tale_cibule" nounFormSoundName="cibule_j_1" soundName="cibule_j_4" /> ven. Ale co to? Vedle <image imageName="tale_cibule" nounFormSoundName="cibule_j_1" soundName="cibule_j_1" />
-            byla také <image imageName="tale_pecka" nounFormSoundName="pecka_j_1" soundName="pecka_j_1" />. Náhle ucítil úlevu. <image imageName="tale_plice" nounFormSoundName="plice_j_4" soundName="plice_j_4" />
-            ho vůbec nebolely! "Odkud ta <image imageName="tale_pecka" nounFormSoundName="pecka_j_1" soundName="pecka_j_1" /> je?" povídal <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" /> a
-            pak ho něco napadlo. Minulé léto koupil celou bednu ovoce. Mělo velice vitamínu C, ale také hodně pecek. To mu vůbec nevadilo a hltal ho, tak
-            jako cibulovou polévku. Nakonec to dopadlo celkem podobně. Ovocnou <image imageName="tale_pecka" nounFormSoundName="pecka_j_1" soundName="pecka_j_4" /> vdechl do
-            <image imageName="tale_plice" nounFormSoundName="plice_j_4" soundName="plice_j_2" /> a kuckal na celé kolo. Nebyl nikdo, kdo by ho jako <image imageName="tale_cilka" nounFormSoundName="cilka_j_1" soundName="cilka_j_1" />
-            poplácal, aby ovocnou <image imageName="tale_pecka" nounFormSoundName="pecka_j_1" soundName="pecka_j_4" /> vykuckal ven. A od té chvíle byl nemocný. Bylo to kvůli ovocné
-            <image imageName="tale_pecka" nounFormSoundName="pecka_j_1" soundName="pecka_j_6" /> v <image imageName="tale_plice" nounFormSoundName="plice_j_4" soundName="plice_j_6" />! Ale to vůbec nikoho nenapadlo.
-            Teď jí <image imageName="tale_toncek" nounFormSoundName="toncek_j_1" soundName="toncek_j_1" /> pomalu a nemoci a kuckání je konec.
-        </content>
-    </tale>
 </tales>

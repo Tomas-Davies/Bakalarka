@@ -159,10 +159,8 @@ class EyesightSearchViewModel(
             &&
             offsetInImg.y in 0f..height
         ) {
-            val xPercentage =
-                (100 * offsetInImg.x) / width
-            val yPercentage =
-                (100 * offsetInImg.y) / height
+            val xPercentage = (100 * offsetInImg.x) / width
+            val yPercentage = (100 * offsetInImg.y) / height
 
             Log.w(
                 "SEARCH_IMAGE_PERC_CORDS",

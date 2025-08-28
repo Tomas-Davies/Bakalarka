@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 
 /**
- * Provides access to the SQLite database and its tables.
+ * Provides access to the local database and its tables.
  */
 @Database(entities = [UserSentence::class], version = 1)
 abstract class AppDb: RoomDatabase(){

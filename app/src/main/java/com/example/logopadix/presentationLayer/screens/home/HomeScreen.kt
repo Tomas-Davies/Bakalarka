@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.logopadix.R
 import com.example.logopadix.presentationLayer.components.CustomCard
-import com.example.logopadix.presentationLayer.screens.InfoScreen
+import com.example.logopadix.presentationLayer.screens.info.InfoScreen
 import com.example.logopadix.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.example.logopadix.presentationLayer.screens.hearing.hearingScreen.HearingScreen
 import com.example.logopadix.presentationLayer.screens.rythm.rythmScreen.RythmScreen
