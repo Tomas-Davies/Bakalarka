@@ -6,10 +6,21 @@
         <roundContent imageName="buchta" soundName="buchta_spelling"/>
     </round>
     <round>
+        <roundContent imageName="dite" soundName="dite_spelling"/>
+        <roundContent imageName="cvik" soundName="cvik_spelling"/>
+        <roundContent imageName="cop" soundName="cop_spelling"/>
+    </round>
+    <round>
         <roundContent imageName="cibule" soundName="cibule_spelling"/>
         <roundContent imageName="cihla" soundName="cihla_spelling"/>
         <roundContent imageName="datel" soundName="datel_spelling"/>
         <roundContent imageName="duch" soundName="duch_spelling"/>
+    </round>
+    <round>
+        <roundContent imageName="fouka" soundName="fouka_spelling"/>
+        <roundContent imageName="gol" soundName="gol_spelling"/>
+        <roundContent imageName="fenka" soundName="fenka_spelling"/>
+        <roundContent imageName="husa" soundName="husa_spelling"/>
     </round>
     <round>
         <roundContent imageName="bouda" soundName="bouda_spelling"/>
@@ -18,5 +29,13 @@
         <roundContent imageName="brambory" soundName="brambory_spelling"/>
         <roundContent imageName="beruska" soundName="beruska_spelling"/>
         <roundContent imageName="bochnik" soundName="bochnik_spelling"/>
+    </round>
+    <round>
+        <roundContent imageName="kabelka" soundName="kabelka_spelling"/>
+        <roundContent imageName="kachna" soundName="kachna_spelling"/>
+        <roundContent imageName="kaktus" soundName="kaktus_spelling"/>
+        <roundContent imageName="klic" soundName="klic_spelling"/>
+        <roundContent imageName="leknin" soundName="leknin_spelling"/>
+        <roundContent imageName="liska" soundName="liska_spelling"/>
     </round>
 </data>

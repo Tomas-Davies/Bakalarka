@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\42077\.android\avd\10.1_WXGA_Tablet_API_UpsideDownCake.avd" />
+                  <value value="C:\Users\42077\.android\avd\Nexus_7_API_UpsideDownCake.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2025-04-28T21:21:16.872436200Z" />
+          <timeTargetWasSelectedWithDropDown value="2025-09-09T13:02:03.150959100Z" />
           <targetsSelectedWithDialog>
             <Target>
               <type value="QUICK_BOOT_TARGET" />

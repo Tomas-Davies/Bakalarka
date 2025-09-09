@@ -86,7 +86,7 @@
                 <label>NONE</label>
                 <word imageName="kveta" soundName="kveta">Květa</word>
                 <word imageName="beta" soundName="beta">Běta</word>
-                <word imageName="dite" soundName="dite">Dítě</word> <!-- TODO obrazek a zvuk -->
+                <word imageName="dite" soundName="dite">Dítě</word> <!-- TODO zvuk -->
             </position>
         </positions>
         <sentences>
@@ -134,7 +134,7 @@
                 <label>NONE</label>
                 <word imageName="buben" soundName="buben">Buben</word>
                 <word imageName="buchta" soundName="buchta">Buchta</word>
-                <word imageName="banan" soundName="banan">Banan</word>      <!-- TODO obrazek a zvuk -->
+                <word imageName="banan" soundName="banan">Banan</word>      <!-- TODO zvuk -->
             </position>
         </positions>
         <sentences>

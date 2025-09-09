@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<data>
-    <round imageName="snek" soundName="snek" syllabCount="1" />
-    <round imageName="rizek" soundName="rizek" syllabCount="2" />
-    <round imageName="susenka" soundName="susenka" syllabCount="3" />
-    <round imageName="zivotopis" soundName="zivotopis" syllabCount="4" />
-</data>

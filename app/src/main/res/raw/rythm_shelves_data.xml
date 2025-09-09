@@ -36,4 +36,23 @@
             <word imageName="kos" soundName="kos" />
         </rhymes>
     </round>
+
+    <round>
+        <rhymes>
+            <word imageName="puk" soundName="puk" />
+            <word imageName="luk" soundName="luk" />
+        </rhymes>
+        <rhymes>
+            <word imageName="vrana" soundName="vrana" />
+            <word imageName="brana" soundName="brana" />
+        </rhymes>
+        <rhymes>
+            <word imageName="mic" soundName="mic" />
+            <word imageName="ryc" soundName="ryc" />
+        </rhymes>
+        <rhymes>
+            <word imageName="kure" soundName="kure" />
+            <word imageName="more" soundName="more" />
+        </rhymes>
+    </round>
 </data>

@@ -20,4 +20,94 @@
         <roundContent imageName="pusa" soundName="pusa"/>
         <roundContent imageName="husa" soundName="husa"/>
     </round>
+    <round>
+        <roundContent imageName="mrak" soundName="mrak"/>
+        <roundContent imageName="drak" soundName="drak"/>
+    </round>
+    <round>
+        <roundContent imageName="kost" soundName="kost"/>
+        <roundContent imageName="most" soundName="most"/>
+    </round>
+    <round>
+        <roundContent imageName="jama" soundName="jama"/>
+        <roundContent imageName="mama" soundName="mama"/>
+    </round>
+    <round>
+        <roundContent imageName="baba" soundName="baba"/>
+        <roundContent imageName="zaba" soundName="zaba"/>
+    </round>
+    <round>
+        <roundContent imageName="chata" soundName="chata"/>
+        <roundContent imageName="vata" soundName="vata"/>
+    </round>
+    <round>
+        <roundContent imageName="liska" soundName="liska"/>
+        <roundContent imageName="myska" soundName="myska"/>
+    </round>
+    <round>
+        <roundContent imageName="vana" soundName="vana"/>
+        <roundContent imageName="vata" soundName="vata"/>
+    </round>
+    <round>
+        <roundContent imageName="nite" soundName="nite"/>
+        <roundContent imageName="dite" soundName="dite"/>
+    </round>
+    <round>
+        <roundContent imageName="mic" soundName="mic"/>
+        <roundContent imageName="ryc" soundName="ryc"/>
+    </round>
+    <round>
+        <roundContent imageName="kape" soundName="kape"/>
+        <roundContent imageName="kope" soundName="kope"/>
+    </round>
+    <round>
+        <roundContent imageName="pije" soundName="pije"/>
+        <roundContent imageName="bije" soundName="bije"/>
+    </round>
+    <round>
+        <roundContent imageName="moucha" soundName="muska"/>
+        <roundContent imageName="myska" soundName="myska"/>
+    </round>
+    <round>
+        <roundContent imageName="puk" soundName="puk"/>
+        <roundContent imageName="luk" soundName="luk"/>
+    </round>
+    <round>
+        <roundContent imageName="luk" soundName="luk"/>
+        <roundContent imageName="lak" soundName="lak"/>
+    </round>
+    <round>
+        <roundContent imageName="tata" soundName="tata"/>
+        <roundContent imageName="teta" soundName="teta"/>
+    </round>
+    <round>
+        <roundContent imageName="cop" soundName="cop"/>
+        <roundContent imageName="cep" soundName="cep"/>
+    </round>
+    <round>
+        <roundContent imageName="pas" soundName="pas"/>
+        <roundContent imageName="fenka" soundName="pes"/>
+    </round>
+    <round>
+        <roundContent imageName="vrana" soundName="vrana"/>
+        <roundContent imageName="brana" soundName="brana"/>
+    </round>
+    <round>
+        <roundContent imageName="kos" soundName="kos"/>
+        <roundContent imageName="kus" soundName="kus"/>
+    </round>
+    <!-- TODO
+          <niteZVUK,
+          <míčZVUK rýčZVUK>,
+          <kapeZVUK kopeZVUK>,
+          <pijeZVUK bijeZVUK>,
+          <muškaZVUK(obrazek moucha) myškaZVUK>
+          lukVUK>,
+          <lukZVUK
+           tetaZVUK>
+          <copZVUK cepZVUK>
+          <pasZVUK pesZVUK>
+          <vránaZVUK bránaZVUK>
+           kusZVUK>
+      -->
 </data>

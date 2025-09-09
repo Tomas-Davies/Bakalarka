@@ -9,6 +9,22 @@
         <toBePlayedCount>3</toBePlayedCount>
     </round>
     <round>
+        <roundContent imageName="darek" soundName="darek"/>
+        <roundContent imageName="datel" soundName="datel"/>
+        <roundContent imageName="deda" soundName="deda"/>
+        <roundContent imageName="chobot" soundName="chobot"/>
+        <roundContent imageName="casopis" soundName="casopis"/>
+        <toBePlayedCount>3</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imageName="baba" soundName="baba"/>
+        <roundContent imageName="bageta" soundName="bageta"/>
+        <roundContent imageName="banan" soundName="banan"/>
+        <roundContent imageName="had" soundName="had"/>
+        <roundContent imageName="hamburgr" soundName="hamburgr"/>
+        <toBePlayedCount>3</toBePlayedCount>
+    </round>
+    <round>
         <roundContent imageName="ovecka" soundName="ovecka"/>
         <roundContent imageName="cmelak" soundName="cmelak"/>
         <roundContent imageName="sekacka" soundName="sekacka"/>
@@ -25,6 +41,60 @@
         <roundContent imageName="beruska" soundName="beruska"/>
         <roundContent imageName="bochnik" soundName="bochnik"/>
         <roundContent imageName="baba" soundName="baba"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imageName="cement" soundName="cement"/>
+        <roundContent imageName="cepel" soundName="cepel"/>
+        <roundContent imageName="clun" soundName="clun"/>
+        <roundContent imageName="kava" soundName="kava"/>
+        <roundContent imageName="med" soundName="med"/>
+        <roundContent imageName="mech" soundName="mech"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imageName="most" soundName="most"/>
+        <roundContent imageName="mouka" soundName="mouka"/>
+        <roundContent imageName="ovecka" soundName="ovecka"/>
+        <roundContent imageName="pas" soundName="pas"/>
+        <roundContent imageName="vana" soundName="vana"/>
+        <roundContent imageName="zaba" soundName="zaba"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imageName="zavazi" soundName="zavazi"/>
+        <roundContent imageName="zub" soundName="zub"/>
+        <roundContent imageName="zena" soundName="zena"/>
+        <roundContent imageName="zupan" soundName="zupan"/>
+        <roundContent imageName="svetr" soundName="svetr"/>
+        <roundContent imageName="slepice" soundName="slepice"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imageName="slzy" soundName="slzy"/>
+        <roundContent imageName="pav" soundName="pav"/>
+        <roundContent imageName="okno" soundName="okno"/>
+        <roundContent imageName="napoj" soundName="napoj"/>
+        <roundContent imageName="liska" soundName="liska"/>
+        <roundContent imageName="most" soundName="most"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imageName="lak" soundName="lak"/>
+        <roundContent imageName="konev" soundName="konev"/>
+        <roundContent imageName="kaktus" soundName="kaktus"/>
+        <roundContent imageName="jahoda" soundName="jahoda"/>
+        <roundContent imageName="kapka" soundName="kapka"/>
+        <roundContent imageName="knihovna" soundName="knihovna"/>
+        <toBePlayedCount>4</toBePlayedCount>
+    </round>
+    <round>
+        <roundContent imageName="hokej" soundName="hokej"/>
+        <roundContent imageName="houba" soundName="houba"/>
+        <roundContent imageName="fotografka" soundName="fotografka"/>
+        <roundContent imageName="duha" soundName="duha"/>
+        <roundContent imageName="cop" soundName="cop"/>
+        <roundContent imageName="drak" soundName="drak"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
 </data>

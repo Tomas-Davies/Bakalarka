@@ -10,10 +10,26 @@
     </round>
     <round>
         <imageName>ant_bg</imageName>
-        <pieceCount>6</pieceCount>
+        <pieceCount>5</pieceCount>
     </round>
     <round>
         <imageName>kitchen</imageName>
+        <pieceCount>6</pieceCount>
+    </round>
+    <round>
+        <imageName>synth_kocky</imageName>
+        <pieceCount>6</pieceCount>
+    </round>
+    <round>
+        <imageName>synth_skolka</imageName>
+        <pieceCount>7</pieceCount>
+    </round>
+    <round>
+        <imageName>synth_basket</imageName>
+        <pieceCount>7</pieceCount>
+    </round>
+    <round>
+        <imageName>synth_koupaliste</imageName>
         <pieceCount>7</pieceCount>
     </round>
 </data>
