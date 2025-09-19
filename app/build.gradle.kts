@@ -16,7 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    // Zakomentováno pro možnost spuštění logopadix.apk na emulátoru - pouze pro testovací účely.
+
 //        ndk {
 //            //noinspection ChromeOsAbiSupport
 //            abiFilters += listOf("armeabi-v7a", "arm64-v8a")

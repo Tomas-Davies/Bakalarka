@@ -72,8 +72,6 @@ class InfoScreen: AppCompatActivity() {
                 textDecoration = TextDecoration.Underline
             )
             Spacer(modifier = Modifier.height(9.dp))
-            Text(text = stringResource(id = R.string.info_content_4_heading) + " - " + stringResource(R.string.info_content_4_text))
-            Spacer(modifier = Modifier.height(9.dp))
             Text(
                 text = stringResource(id = R.string.info_content_5_heading) + " - " + stringResource(R.string.info_content_5_text),
                 modifier = Modifier.clickable {

@@ -96,18 +96,4 @@
         <roundContent imageName="kos" soundName="kos"/>
         <roundContent imageName="kus" soundName="kus"/>
     </round>
-    <!-- TODO
-          <niteZVUK,
-          <míčZVUK rýčZVUK>,
-          <kapeZVUK kopeZVUK>,
-          <pijeZVUK bijeZVUK>,
-          <muškaZVUK(obrazek moucha) myškaZVUK>
-          lukVUK>,
-          <lukZVUK
-           tetaZVUK>
-          <copZVUK cepZVUK>
-          <pasZVUK pesZVUK>
-          <vránaZVUK bránaZVUK>
-           kusZVUK>
-      -->
 </data>
