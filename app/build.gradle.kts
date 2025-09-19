@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.logopadix"
+    namespace = "com.tomdev.logopadix"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.logopadix"
+        applicationId = "com.tomdev.logopadix"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
