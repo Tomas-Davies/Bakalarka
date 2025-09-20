@@ -104,7 +104,7 @@ class EyesightSearchScreen : AppCompatActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .padding(top = it.calculateTopPadding())
+                        .padding(top = it.calculateTopPadding(), bottom = it.calculateBottomPadding())
                 ) {
                     EyesightImageSearchRunning(viewModel = viewModel)
                 }

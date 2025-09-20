@@ -6,21 +6,21 @@ plugins {
 
 android {
     namespace = "com.tomdev.logopadix"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.tomdev.logopadix"
         minSdk = 29
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 35
+        versionCode = 7
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-//        ndk {
-//            //noinspection ChromeOsAbiSupport
-//            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
-//        }
+        ndk {
+            //noinspection ChromeOsAbiSupport
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
     }
 
     buildTypes {

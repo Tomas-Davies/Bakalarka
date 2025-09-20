@@ -88,7 +88,7 @@ class SpeechScreen : AppCompatActivity() {
         var letterOptionsData by remember { mutableStateOf(SpeechLetter()) }
 
         LazyVerticalGrid(
-            contentPadding = PaddingValues(top = pdVal.calculateTopPadding(), bottom = 18.dp),
+            contentPadding = PaddingValues(top = pdVal.calculateTopPadding(), bottom = pdVal.calculateBottomPadding()+18.dp),
             columns = GridCells.Adaptive(100.dp)
         ) {
             items(letters) { letter ->

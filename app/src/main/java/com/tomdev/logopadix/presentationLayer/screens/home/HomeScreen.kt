@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -77,6 +79,7 @@ class HomeScreen : AppCompatActivity() {
     @Composable
     fun HomeScreenContent() {
         Scaffold(
+            contentWindowInsets = WindowInsets.safeContent,
             topBar = {
                 TopAppBar(
                     title = {
@@ -122,7 +125,7 @@ class HomeScreen : AppCompatActivity() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(sidePadding, padding.calculateTopPadding(), sidePadding, 0.dp),
+                .padding(sidePadding, padding.calculateTopPadding(), sidePadding, padding.calculateBottomPadding()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {

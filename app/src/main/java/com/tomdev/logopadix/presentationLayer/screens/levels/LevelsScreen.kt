@@ -137,7 +137,7 @@ class LevelsScreen : AppCompatActivity() {
                     columns = GridCells.Adaptive(150.dp),
                     horizontalArrangement = Arrangement.spacedBy(18.dp),
                     verticalArrangement = Arrangement.spacedBy(18.dp),
-                    contentPadding = PaddingValues(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                    contentPadding = PaddingValues(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp)
                 ) {
                     itemsIndexed(levels) { i, level ->
                         val image = viewModel.getDrawableId("${level}_low")

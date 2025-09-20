@@ -77,7 +77,7 @@ class RythmSyllabelsScreen : AppCompatActivity() {
                     onExit = { finish() }
                 ) {
                     Column(
-                        modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
+                        modifier = Modifier.padding(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(

@@ -68,7 +68,7 @@ class TalesScreen : AppCompatActivity() {
                 LazyVerticalGrid(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp),
+                        .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, pdVal.calculateBottomPadding()+18.dp),
                     columns = GridCells.Adaptive(minSize = 150.dp)
                 ) {
                     itemsIndexed(viewModel.tales){ idx, tale ->

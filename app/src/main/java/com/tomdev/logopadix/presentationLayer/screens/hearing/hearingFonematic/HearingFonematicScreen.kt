@@ -63,7 +63,7 @@ class HearingFonematicScreen : AppCompatActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp)
                 ) {
                     HearingFonematicRunning(viewModel = viewModel)
                 }

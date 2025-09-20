@@ -76,7 +76,7 @@ class RythmRepeatScreen: AppCompatActivity() {
 
                 LazyVerticalGrid(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp),
+                    contentPadding = PaddingValues(18.dp, pdVal.calculateTopPadding(), 18.dp, pdVal.calculateBottomPadding()+18.dp),
                     columns = GridCells.Adaptive(300.dp),
                     horizontalArrangement = Arrangement.spacedBy(18.dp),
                     verticalArrangement = Arrangement.spacedBy(18.dp)

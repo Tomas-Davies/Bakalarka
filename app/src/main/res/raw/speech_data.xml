@@ -255,7 +255,7 @@
                 <label>T_</label>
                 <word imageName="topeni" soundName="topeni">Topení</word>
                 <word imageName="tata" soundName="tata">Táta</word>
-                <word imageName="tomas" soundName="tomas">Tomas</word>
+                <word imageName="tom" soundName="tomas">Tomas</word>
             </position>
             <position>
                 <label>_T_</label>

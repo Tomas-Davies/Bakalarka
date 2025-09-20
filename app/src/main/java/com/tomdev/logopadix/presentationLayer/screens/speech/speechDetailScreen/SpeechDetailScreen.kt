@@ -1,9 +1,9 @@
 package com.tomdev.logopadix.presentationLayer.screens.speech.speechDetailScreen
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -80,7 +80,7 @@ import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.theme.AppTheme
 
 
-class SpeechDetailScreen : ComponentActivity() {
+class SpeechDetailScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -171,7 +171,7 @@ class SpeechDetailScreen : ComponentActivity() {
         else userSentences.reversed()
 
         Column(
-            modifier = Modifier.padding(top = pdVal.calculateTopPadding())
+            modifier = Modifier.padding(top = pdVal.calculateTopPadding(), bottom = pdVal.calculateBottomPadding())
         ) {
             OptionsMenu(
                 onOptionClick = { idx -> onCategoryClicked(idx) },

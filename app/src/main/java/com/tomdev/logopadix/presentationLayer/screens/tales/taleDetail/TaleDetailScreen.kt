@@ -108,7 +108,7 @@ class TaleDetailScreen : AppCompatActivity() {
             AsyncDataWrapper(viewModel = viewModel) {
                 Column(
                     modifier = Modifier
-                        .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp)
+                        .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, pdVal.calculateBottomPadding()+18.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
                     Text(

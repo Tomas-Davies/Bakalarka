@@ -1,6 +1,8 @@
 package com.tomdev.logopadix.presentationLayer.components
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -28,6 +30,7 @@ fun ScreenWrapper(
     content: @Composable (pdVal: PaddingValues) -> Unit
 ){
     Scaffold(
+        contentWindowInsets = WindowInsets.safeContent,
         topBar = {
             CenterAlignedTopAppBar(
                 title = {

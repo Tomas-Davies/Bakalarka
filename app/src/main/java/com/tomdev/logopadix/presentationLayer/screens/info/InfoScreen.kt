@@ -55,7 +55,7 @@ class InfoScreen: AppCompatActivity() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, 18.dp)
+                .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, pdVal.calculateBottomPadding()+18.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.info_content_heading),

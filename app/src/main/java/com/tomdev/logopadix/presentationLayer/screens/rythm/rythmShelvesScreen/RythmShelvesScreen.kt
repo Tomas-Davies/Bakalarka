@@ -81,7 +81,7 @@ class RythmShelvesScreen : AppCompatActivity() {
                     onExit = { finish() }
                 ) {
                     Column(
-                        modifier = Modifier.padding(start = 18.dp, top = pdVal.calculateTopPadding(), end = 18.dp),
+                        modifier = Modifier.padding(start = 18.dp, top = pdVal.calculateTopPadding(), bottom = pdVal.calculateBottomPadding(), end = 18.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(

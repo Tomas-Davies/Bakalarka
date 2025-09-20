@@ -82,7 +82,7 @@ class HearingMemoryScreen : AppCompatActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp)
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp)
                 ) {
                     HearingMemoryRunning(viewModel = viewModel)
                 }

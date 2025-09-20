@@ -83,7 +83,7 @@ class EyesightComparisonScreen : AppCompatActivity() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(18.dp, it.calculateTopPadding(), 18.dp, 18.dp),
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp,it.calculateBottomPadding() + 18.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
