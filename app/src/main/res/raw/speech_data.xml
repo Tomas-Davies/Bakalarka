@@ -133,7 +133,7 @@
                 <label>NONE</label>
                 <word imageName="buben" soundName="buben">Buben</word>
                 <word imageName="buchta" soundName="buchta">Buchta</word>
-                <word imageName="banan" soundName="banan">Banan</word>
+                <word imageName="banan" soundName="banan">Banán</word>
             </position>
         </positions>
         <sentences>
@@ -161,7 +161,7 @@
                 <label>_M</label>
                 <word imageName="dum" soundName="dum">Dům</word>
                 <word imageName="tom" soundName="tom">Tom</word>
-                <word imageName="dym" soundName="dym">Salám</word>
+                <word imageName="dym" soundName="dym">Dým</word>
             </position>
         </positions>
         <sentences>
@@ -227,7 +227,7 @@
                 <label>J_</label>
                 <word imageName="jama" soundName="jama">Jáma</word>
                 <word imageName="jahoda" soundName="jahoda">Jahoda</word>
-                <word imageName="jachta" soundName="jachta">Jazyk</word>
+                <word imageName="jachta" soundName="jachta">Jachta</word>
             </position>
             <position>
                 <label>_J_</label>
@@ -255,7 +255,7 @@
                 <label>T_</label>
                 <word imageName="topeni" soundName="topeni">Topení</word>
                 <word imageName="tata" soundName="tata">Táta</word>
-                <word imageName="tom" soundName="tomas">Tomas</word>
+                <word imageName="tom" soundName="tomas">Tomáš</word>
             </position>
             <position>
                 <label>_T_</label>
@@ -316,7 +316,7 @@
             <position>
                 <label>_N_</label>
                 <word imageName="okno" soundName="okno">Okno</word>
-                <word imageName="mama" soundName="mama">Maminka</word>
+                <word imageName="mama" soundName="maminka">Maminka</word>
                 <word imageName="vnuk" soundName="vnuk">Vnuk</word>
             </position>
             <position>
@@ -342,7 +342,7 @@
         <positions>
             <position>
                 <label>NONE</label>
-                <word imageName="tilko" soundName="tilko">Tilko</word>
+                <word imageName="tilko" soundName="tilko">Tílko</word>
                 <word imageName="telo" soundName="telo">Tělo</word>
                 <word imageName="tapka" soundName="tapka">Ťapka</word>
             </position>

@@ -6,7 +6,7 @@
     <round imageName="zivotopis" soundName="zivotopis" syllabCount="4" />
 <!-- TODO imageName_low quality-->
     <round imageName="salam" soundName="salam" syllabCount="2" />
-    <round imageName="nemocnice" soundName="nemocnice" syllabCount="4" />
+    <round imageName="nemocnice" soundName="nemocnice_j_2" syllabCount="4" />
     <round imageName="mlyn" soundName="mlyn" syllabCount="1" />
     <round imageName="zabicka" soundName="zabicka" syllabCount="3" />
     <round imageName="zub" soundName="zub" syllabCount="1" />
