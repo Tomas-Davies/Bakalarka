@@ -19,6 +19,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -57,14 +59,13 @@ class TaleDetailScreen : AppCompatActivity() {
             TalesViewModelFactory(repo, app)
         }
         val taleIdx = intent.getIntExtra("TALE_INDEX", 0)
-        val taleAndAnnotatedString = viewModel.getTaleAndAnnotatedString(taleIdx)
         setContent {
             AppTheme(ThemeType.THEME_TALES.id) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TaleDetailScreenContent(viewModel, taleAndAnnotatedString)
+                    TaleDetailScreenContent(viewModel, taleIdx)
                 }
             }
         }
@@ -72,43 +73,50 @@ class TaleDetailScreen : AppCompatActivity() {
 
 
     @Composable
-    private fun TaleDetailScreenContent(viewModel: TalesViewModel, taleAndAnnotatedString: Pair<Tale, AnnotatedString>) {
+    private fun TaleDetailScreenContent(viewModel: TalesViewModel, taleIdx: Int) {
         var showImagesDescription by remember { mutableStateOf(true) }
-        val tale = taleAndAnnotatedString.first
-        val annotatedString = taleAndAnnotatedString.second
 
-        if (showImagesDescription) {
-            ImagesDescription(
-                tale = tale,
-                viewModel = viewModel,
-                onExit = { showImagesDescription = false }
-            )
-        }
-        val inlineContent = mutableMapOf<String, InlineTextContent>()
+        AsyncDataWrapper(viewModel) {
+            val taleAndAnnotatedString = viewModel.getTaleAndAnnotatedString(taleIdx)
+            val tale = taleAndAnnotatedString.first
+            val annotatedString = taleAndAnnotatedString.second
 
-        tale.images.forEachIndexed { idx, image ->
-            val key = "${Tale.ANNOTATION_KEY}$idx"
-            inlineContent[key] = InlineTextContent(
-                Placeholder(
-                    width = 80.sp,
-                    height = 80.sp,
-                    placeholderVerticalAlign = PlaceholderVerticalAlign.Center
-                ),
-            ) {
-                TaleImage(
+            if (showImagesDescription) {
+                ImagesDescription(
+                    tale = tale,
                     viewModel = viewModel,
-                    image = image
+                    onExit = { showImagesDescription = false }
                 )
             }
-        }
-        ScreenWrapper(
-            onExit = { finish() },
-            title = tale.name
-        ) { pdVal ->
-            AsyncDataWrapper(viewModel = viewModel) {
+            val inlineContent = mutableMapOf<String, InlineTextContent>()
+
+            tale.images.forEachIndexed { idx, image ->
+                val key = "${Tale.ANNOTATION_KEY}$idx"
+                inlineContent[key] = InlineTextContent(
+                    Placeholder(
+                        width = 80.sp,
+                        height = 80.sp,
+                        placeholderVerticalAlign = PlaceholderVerticalAlign.Center
+                    ),
+                ) {
+                    TaleImage(
+                        viewModel = viewModel,
+                        image = image
+                    )
+                }
+            }
+            ScreenWrapper(
+                onExit = { finish() },
+                title = tale.name
+            ) { pdVal ->
                 Column(
                     modifier = Modifier
-                        .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, pdVal.calculateBottomPadding()+18.dp)
+                        .padding(
+                            18.dp,
+                            pdVal.calculateTopPadding(),
+                            18.dp,
+                            pdVal.calculateBottomPadding() + 18.dp
+                        )
                         .verticalScroll(rememberScrollState())
                 ) {
                     Text(
@@ -153,7 +161,8 @@ class TaleDetailScreen : AppCompatActivity() {
                     val drawableId = viewModel.getDrawableId(content.imageName)
                     Card(
                         modifier = Modifier.aspectRatio(1f),
-                        onClick = { viewModel.playSound(soundId) }
+                        onClick = { viewModel.playSound(soundId) },
+                        colors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                     ) {
                         Image(
                             modifier = Modifier

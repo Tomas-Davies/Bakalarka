@@ -191,7 +191,7 @@ class HearingMemoryScreen : AppCompatActivity() {
         var isMarkedAsCorrect by remember(drawableName) { mutableStateOf(false) }
         val cardColors = if (isMarkedAsCorrect) cardColors().copy(
             disabledContainerColor = colorResource(id = R.color.correct),
-        ) else cardColors()
+        ) else cardColors().copy(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
 
         CustomCard(

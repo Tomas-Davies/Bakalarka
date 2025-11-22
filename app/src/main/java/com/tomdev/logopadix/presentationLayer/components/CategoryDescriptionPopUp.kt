@@ -39,6 +39,7 @@ fun CategoryDetailDialog(
                     fontWeight = FontWeight.Bold
                 )
             }
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     )
 }

@@ -12,15 +12,10 @@ android {
         applicationId = "com.tomdev.logopadix"
         minSdk = 29
         targetSdk = 35
-        versionCode = 13
-        versionName = "1.0.6"
+        versionCode = 15
+        versionName = "1.0.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        ndk {
-            //noinspection ChromeOsAbiSupport
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
-        }
     }
 
     buildTypes {
@@ -48,12 +43,20 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
 }
 
 dependencies {
-    val composeBom = platform("androidx.compose:compose-bom:2024.02.02")
+    val composeBom = platform("androidx.compose:compose-bom:2025.10.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
+    // Material Icons (Filled, Outlined, Rounded, etc.)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.activity.compose)
     // ViewModel & Flow lifecycles
     implementation(libs.androidx.lifecycle.viewmodel.compose)

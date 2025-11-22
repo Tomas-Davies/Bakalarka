@@ -1,8 +1,8 @@
 [versions]
 accompanistDrawablepainter = "0.35.0-alpha"
 activityCompose = "1.8.2"
-agp = "8.3.2"
-amplitudaVersion = "2.3.0"
+agp = "8.13.0"
+amplitudaVersion = "v2.3.1"
 composeAudiowaveform = "1.1.1"
 jacksonVersion = "2.18.0"
 konfettiCompose = "2.0.4"
@@ -22,6 +22,8 @@ staxApi = "1.0-2"
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistDrawablepainter" }
 amplituda = { module = "com.github.lincollincol:Amplituda", version.ref = "amplitudaVersion" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }

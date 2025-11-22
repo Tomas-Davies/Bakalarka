@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
@@ -75,91 +76,98 @@ class EyesightComparisonScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.eyesight_menu_label_1)
         ) {
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-            RoundsCompletedBox(
-                viewModel = viewModel,
-                onExit = { finish() }
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(18.dp, it.calculateTopPadding(), 18.dp,it.calculateBottomPadding() + 18.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            AsyncDataWrapper(viewModel) {
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                RoundsCompletedBox(
+                    viewModel = viewModel,
+                    onExit = { finish() }
                 ) {
-                    val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
-
-                    LinearTimerIndicator(
-                        msDuration = 15_000,
-                        onFinish = {
-                            if(enabled){
-                                viewModel.onTimerFinish()
-                            }
-                        },
-                        restartTrigger = uiState.restartTrigger
-                    )
-                    Spacer(modifier = Modifier.height(50.dp))
-                    val imageResId = viewModel.getDrawableId(uiState.imageName)
-                    AnimatedContent(
-                        modifier = Modifier
-                            .weight(1.5f)
-                            .fillMaxWidth(),
-                        targetState = imageResId,
-                        label = "",
-                        transitionSpec = { slideInHorizontally {fullWidth -> fullWidth } togetherWith  slideOutHorizontally{fullWidth -> -fullWidth } }
-                    ) { targetImage ->
-                        Image(
-                            modifier = Modifier
-                                .background(Color.White),
-                            painter = painterResource(id = targetImage),
-                            contentDescription = "comparison image"
-                        )
-                    }
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
+                            .fillMaxSize()
+                            .padding(
+                                18.dp,
+                                it.calculateTopPadding(),
+                                18.dp,
+                                it.calculateBottomPadding() + 18.dp
+                            ),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Box(
+                        val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
+
+                        LinearTimerIndicator(
+                            msDuration = 15_000,
+                            onFinish = {
+                                if (enabled) {
+                                    viewModel.onTimerFinish()
+                                }
+                            },
+                            restartTrigger = uiState.restartTrigger
+                        )
+                        Spacer(modifier = Modifier.height(50.dp))
+                        val imageResId = viewModel.getDrawableId(uiState.imageName)
+                        AnimatedContent(
                             modifier = Modifier
-                                .weight(1f)
+                                .weight(1.5f)
                                 .fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ){
-                            Text(
-                                text = stringResource(id = R.string.eyesight_comparison_label),
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
+                            targetState = imageResId,
+                            label = "",
+                            transitionSpec = { slideInHorizontally { fullWidth -> fullWidth } togetherWith slideOutHorizontally { fullWidth -> -fullWidth } }
+                        ) { targetImage ->
+                            Image(
+                                modifier = Modifier
+                                    .background(Color.White),
+                                painter = painterResource(id = targetImage),
+                                contentDescription = "comparison image"
                             )
                         }
-                        Row(
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .weight(1f)
+                                .weight(1f),
                         ) {
-                            CompareButton(
-                                modifier = Modifier.weight(1f),
-                                imageId = R.drawable.equals,
-                                label = stringResource(id = R.string.identical),
-                                bgColor = colorResource(id = R.color.correct),
-                                outlineColor = colorResource(id = R.color.correct_outline),
-                                enabled = enabled,
-                                onClick = {
-                                    viewModel.onBtnClick(true)
-                                }
-                            )
-                            Spacer(modifier = Modifier.weight(0.3f))
-                            CompareButton(
-                                modifier = Modifier.weight(1f),
-                                imageId = R.drawable.non_equal,
-                                label = stringResource(id = R.string.different),
-                                bgColor = colorResource(id = R.color.incorrect),
-                                outlineColor = colorResource(id = R.color.incorrect_outline),
-                                enabled = enabled,
-                                onClick = {
-                                    viewModel.onBtnClick(false)
-                                }
-                            )
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxWidth(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.eyesight_comparison_label),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f)
+                            ) {
+                                CompareButton(
+                                    modifier = Modifier.weight(1f),
+                                    imageId = R.drawable.equals,
+                                    label = stringResource(id = R.string.identical),
+                                    bgColor = colorResource(id = R.color.correct),
+                                    outlineColor = colorResource(id = R.color.correct_outline),
+                                    enabled = enabled,
+                                    onClick = {
+                                        viewModel.onBtnClick(true)
+                                    }
+                                )
+                                Spacer(modifier = Modifier.weight(0.3f))
+                                CompareButton(
+                                    modifier = Modifier.weight(1f),
+                                    imageId = R.drawable.non_equal,
+                                    label = stringResource(id = R.string.different),
+                                    bgColor = colorResource(id = R.color.incorrect),
+                                    outlineColor = colorResource(id = R.color.incorrect_outline),
+                                    enabled = enabled,
+                                    onClick = {
+                                        viewModel.onBtnClick(false)
+                                    }
+                                )
+                            }
                         }
                     }
                 }

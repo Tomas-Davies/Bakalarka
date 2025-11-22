@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 fun CustomCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    colors: CardColors = CardDefaults.cardColors(),
+    colors: CardColors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     enabled: Boolean = true,
     shape: Shape = CardDefaults.shape,
     outlineColor: Color = MaterialTheme.colorScheme.outline,

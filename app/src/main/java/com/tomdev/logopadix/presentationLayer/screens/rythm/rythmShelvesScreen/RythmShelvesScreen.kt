@@ -177,7 +177,7 @@ class RythmShelvesScreen : AppCompatActivity() {
                                 enabled = btnEnabled,
                                 onClick = { viewModel.onDoneBtnClick() }
                             ) {
-                                Text(text = stringResource(id = R.string.done_btn_label))
+                                Text(text = stringResource(id = R.string.rythm_shelves_btn_label))
                             }
                         }
                     }
