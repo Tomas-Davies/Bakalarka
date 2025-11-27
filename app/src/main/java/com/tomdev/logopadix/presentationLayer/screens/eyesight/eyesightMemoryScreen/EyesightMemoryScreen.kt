@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -62,8 +63,12 @@ class EyesightMemoryScreen : AppCompatActivity() {
 
     @Composable
     private fun EyesightMemoryScreenContent(viewModel: EyesightMemoryViewModel) {
+        var soundAssignmentId by remember { mutableStateOf(R.raw.remember_these_images) }
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = soundAssignmentId,
+            viewModel = viewModel,
             title = stringResource(id = R.string.eyesight_menu_label_4)
         ) {
             AsyncDataWrapper(viewModel = viewModel) {
@@ -72,14 +77,20 @@ class EyesightMemoryScreen : AppCompatActivity() {
                         .fillMaxSize()
                         .padding(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp)
                 ) {
-                    EyesightMemoryRunning(viewModel = viewModel)
+                    EyesightMemoryRunning(
+                        viewModel = viewModel,
+                        setSoundAssignmentId = { assignment ->  soundAssignmentId = assignment }
+                    )
                 }
             }
         }
     }
 
     @Composable
-    private fun EyesightMemoryRunning(viewModel: EyesightMemoryViewModel) {
+    private fun EyesightMemoryRunning(
+        viewModel: EyesightMemoryViewModel,
+        setSoundAssignmentId: (assignment: Int) -> Unit
+    ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
         RoundsCompletedBox(
@@ -97,6 +108,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
                     onFinish = {
                         viewModel.showExtraItem()
                         messageId = R.string.eyesight_memory_label_2
+                        setSoundAssignmentId(R.raw.choose_extra_image)
                     },
                     restartTrigger = uiState.round
                 )
@@ -130,6 +142,7 @@ class EyesightMemoryScreen : AppCompatActivity() {
                                         viewModel.viewModelScope.launch {
                                             if (viewModel.onCardClick(name)) {
                                                 messageId = R.string.eyesight_memory_label_1
+                                                setSoundAssignmentId(R.raw.remember_these_images)
                                             }
                                         }
                                     },

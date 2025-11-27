@@ -74,6 +74,9 @@ class EyesightComparisonScreen : AppCompatActivity() {
     private fun EyesightComparisonRunning(viewModel: EyesightComparisonViewModel) {
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = R.raw.are_pictures_same_or_not,
+            viewModel = viewModel,
             title = stringResource(id = R.string.eyesight_menu_label_1)
         ) {
             AsyncDataWrapper(viewModel) {

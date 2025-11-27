@@ -74,8 +74,12 @@ class HearingMemoryScreen : AppCompatActivity() {
 
     @Composable
     private fun HearingMemoryScreenContent(viewModel: HearingMemoryViewModel){
+        var soundAssignmentId by remember { mutableStateOf(R.raw.remember_most_words) }
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = soundAssignmentId,
+            viewModel = viewModel,
             title = stringResource(id = R.string.hearing_menu_label_2)
         ) {
             AsyncDataWrapper(viewModel = viewModel) {
@@ -84,14 +88,20 @@ class HearingMemoryScreen : AppCompatActivity() {
                         .fillMaxSize()
                         .padding(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp)
                 ) {
-                    HearingMemoryRunning(viewModel = viewModel)
+                    HearingMemoryRunning(
+                        viewModel = viewModel,
+                        setSoundAssignmentId = { assignment ->  soundAssignmentId = assignment }
+                    )
                 }
             }
         }
     }
 
     @Composable
-    private fun HearingMemoryRunning(viewModel: HearingMemoryViewModel){
+    private fun HearingMemoryRunning(
+        viewModel: HearingMemoryViewModel,
+        setSoundAssignmentId: (assignment: Int) -> Unit
+    ){
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         RoundsCompletedBox(
             modifier = Modifier.fillMaxSize(),
@@ -122,6 +132,8 @@ class HearingMemoryScreen : AppCompatActivity() {
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
+                        setSoundAssignmentId(R.raw.remember_most_words)
+
                         Spacer(modifier = Modifier.weight(1f))
                         
                         var showButton by remember(uiState.showingObjects) { mutableStateOf(false) }
@@ -161,6 +173,7 @@ class HearingMemoryScreen : AppCompatActivity() {
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
+                        setSoundAssignmentId(R.raw.choose_words_you_remember)
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center

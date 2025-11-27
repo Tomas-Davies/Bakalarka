@@ -74,6 +74,9 @@ class RythmShelvesScreen : AppCompatActivity() {
 
             ScreenWrapper(
                 onExit = { finish() },
+                showPlaySoundIcon = true,
+                soundAssignmentId = R.raw.find_rhyme_pairs,
+                viewModel = viewModel,
                 title = stringResource(id = R.string.rythm_menu_label_1)
             ) { pdVal ->
                 RoundsCompletedBox(

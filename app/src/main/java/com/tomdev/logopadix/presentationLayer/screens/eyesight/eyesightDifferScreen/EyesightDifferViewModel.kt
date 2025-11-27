@@ -19,7 +19,8 @@ data class EyesightDifferUiState(
     val imageName: String,
     val answers: List<ObjectAndImage>,
     val correctAnswers: List<String>,
-    val question: String
+    val question: String,
+    val questionSoundName: String
 )
 
 
@@ -55,7 +56,8 @@ class EyesightDifferViewModel(
                     imageName = currentItem.imageName,
                     answers = currentItem.objects,
                     correctAnswers = getCorrectAnswers(),
-                    question = getQuestion()
+                    question = getQuestion(),
+                    questionSoundName = getQuestionSoundName()
                 )
             )
             uiState = _uiState
@@ -119,7 +121,8 @@ class EyesightDifferViewModel(
         _uiState.update { currentState ->
             currentState.copy(
                 correctAnswers = getCorrectAnswers(),
-                question = getQuestion()
+                question = getQuestion(),
+                questionSoundName = getQuestionSoundName()
             )
         }
     }
@@ -135,7 +138,8 @@ class EyesightDifferViewModel(
                 imageName = currentItem.imageName,
                 answers = currentItem.objects,
                 correctAnswers = getCorrectAnswers(),
-                question = getQuestion()
+                question = getQuestion(),
+                questionSoundName = getQuestionSoundName()
             )
         }
     }
@@ -148,6 +152,10 @@ class EyesightDifferViewModel(
 
     private fun getQuestion(): String {
         return currentItem.rounds[questionIdx].question
+    }
+
+    private fun getQuestionSoundName(): String {
+        return currentItem.rounds[questionIdx].questionSoundName
     }
 
     override fun scorePercentage(): Int {

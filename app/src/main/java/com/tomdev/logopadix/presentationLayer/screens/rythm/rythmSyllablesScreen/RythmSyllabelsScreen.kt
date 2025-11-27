@@ -68,6 +68,9 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     private fun RythmSyllableScreenContent(viewModel: RythmSyllablesViewModel) {
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = R.raw.click_on_circles_to_match_syllab_count,
+            viewModel = viewModel,
             title = stringResource(id = R.string.rythm_menu_label_2)
         ) {
             AsyncDataWrapper(viewModel = viewModel) {

@@ -28,6 +28,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -38,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
@@ -67,23 +71,35 @@ class EyesightDifferScreen: AppCompatActivity() {
 
     @Composable
     private fun EyesightDifferScreenContent(viewModel: EyesightDifferViewModel){
+        var questionSoundName by remember { mutableStateOf("") }
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = if (questionSoundName.isEmpty()) -1 else viewModel.getSoundId(questionSoundName),
+            viewModel = viewModel,
             title = stringResource(id = R.string.eyesight_menu_label_3)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp)
-            ) {
-                EyesightDifferRunning(viewModel = viewModel)
+            AsyncDataWrapper(viewModel) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(18.dp, it.calculateTopPadding(), 18.dp, it.calculateBottomPadding()+18.dp)
+                ) {
+                    EyesightDifferRunning(
+                        viewModel = viewModel,
+                        setQuestionSoundName = { name -> questionSoundName = name }
+                    )
+                }
             }
         }
     }
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    private fun EyesightDifferRunning(viewModel: EyesightDifferViewModel){
+    private fun EyesightDifferRunning(
+        viewModel: EyesightDifferViewModel,
+        setQuestionSoundName: (name: String) -> Unit
+    ){
         RoundsCompletedBox(
             viewModel = viewModel,
             onExit = { finish() }
@@ -95,6 +111,8 @@ class EyesightDifferScreen: AppCompatActivity() {
                 val questionNumber by viewModel.questionNumber.collectAsStateWithLifecycle()
                 val questionCount by viewModel.questionCountInRound.collectAsStateWithLifecycle()
                 val imageId = viewModel.getDrawableId(uiState.imageName)
+                setQuestionSoundName(uiState.questionSoundName)
+
                 Column(
                     modifier = Modifier.weight(3f),
                     horizontalAlignment = Alignment.CenterHorizontally

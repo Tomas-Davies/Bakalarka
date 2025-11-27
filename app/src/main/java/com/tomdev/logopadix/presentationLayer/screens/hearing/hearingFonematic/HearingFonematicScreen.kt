@@ -57,6 +57,9 @@ class HearingFonematicScreen : AppCompatActivity() {
     private fun HearingFonematicScreenContent(viewModel: HearingFonematicViewModel) {
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = R.raw.play_recording_and_choose_picture,
+            viewModel = viewModel,
             title = stringResource(id = R.string.hearing_menu_label_1)
         ) {
             AsyncDataWrapper(viewModel = viewModel) {

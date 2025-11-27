@@ -24,6 +24,7 @@ data class Round(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "correctAnswer")
     val answers: List<String> = emptyList(),
+    val questionSoundName: String = ""
 )
 
 class ObjectAndImage {

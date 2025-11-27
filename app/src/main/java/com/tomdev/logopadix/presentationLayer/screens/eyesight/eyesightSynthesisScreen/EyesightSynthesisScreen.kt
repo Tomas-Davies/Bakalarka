@@ -84,6 +84,9 @@ class EyesightSynthesisScreen : AppCompatActivity() {
     private fun EyesightSynthesisScreenContent(viewModel: EyesightSynthesisViewModel) {
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = R.raw.put_the_pieces_into_image,
+            viewModel = viewModel,
             title = stringResource(id = R.string.eyesight_synth_label)
         ) {
             AsyncDataWrapper(viewModel = viewModel) {

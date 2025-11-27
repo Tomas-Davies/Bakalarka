@@ -59,6 +59,9 @@ class HearingSynthesisScreen : AppCompatActivity() {
     private fun HearingSynthScreenContent(viewModel: HearingSynthesisViewModel) {
         ScreenWrapper(
             onExit = { finish() },
+            showPlaySoundIcon = true,
+            soundAssignmentId = R.raw.play_recording_and_choose_picture,
+            viewModel = viewModel,
             title = stringResource(id = R.string.hearing_menu_label_3)
         ) {
             AsyncDataWrapper(viewModel = viewModel) {
