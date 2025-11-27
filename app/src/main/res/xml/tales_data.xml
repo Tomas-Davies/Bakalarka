@@ -5,14 +5,14 @@
         <frontImageName>tale_leo_a_lilinka</frontImageName>
         <content>
             Jedno letní ráno se Leo probudil s pocitem, že dnes bude lesklý, lákavý den.
-            Otevřel <image imageName="tale_okno" nounFormSoundName="okno_j_1" soundName="okno_j_4" /> a ucítil vůni lípy, která rostla u jejich <image imageName="tale_dum" nounFormSoundName="dum_j_1" soundName="dum_j_2" />. „Lilinko," zavolal na svou sestřičku, „pojďme dnes do laskavého <image imageName="tale_les" nounFormSoundName="les_j_1" soundName="les_j_2" />!"
+            Otevřel <image imageName="tale_okno" nounFormSoundName="okno" soundName="okno_j_4" /> a ucítil vůni lípy, která rostla u jejich <image imageName="tale_dum" nounFormSoundName="dum" soundName="dum_j_2" />. „Lilinko," zavolal na svou sestřičku, „pojďme dnes do laskavého <image imageName="tale_les" nounFormSoundName="les_j_1" soundName="les_j_2" />!"
             Lilinka si rychle oblékla lehkou <image imageName="tale_bunda" nounFormSoundName="bunda_j_1" soundName="bunda_j_4" />, vzala si <image imageName="tale_lupa" nounFormSoundName="lupa_j_1" soundName="lupa_j_4" />, látkový pytlík a oblíbeného plyšového <image imageName="tale_lev" nounFormSoundName="lev_j_1" soundName="lev_j_4" />.
-            Leo sbalil lámací nožík, lahvičku s vodou a malý notýsek, kam si rád kreslil všechno, co v lese našel.
-            Když vešli mezi vysoké listnaté stromy, všude kolem nich lehala ranní mlha. Na listech ležely malé <image imageName="tale_kapky" nounFormSoundName="kapky_j_1" soundName="kapky_mn_1" /> rosy, které se leskly jako nejmenší diamanty.
-            Najednou kolem nich proběhla lasička a nesla v tlamičce dlouhé lístky. Lilinka zvedla lupu a řekla: „Leo, podívej, ona si staví lesní hnízdečko!"
-            O kus dál objevili malou lesní louku. Uprostřed ní ležel ležící <image imageName="tale_kmen" nounFormSoundName="kmen_j_1" soundName="kmen_j_1" />, na kterém rostly lišejníky a drobné lesní houby.
-            Lilinka se posadila a začala si prohlížet jeden lesklý kamínek, zatímco Leo kreslil do notýsku listy, louku i lasičku.
-            Jak postupovali hlouběji, uslyšeli lehké lupání větviček. „To je určitě los," zašeptal Leo. A opravdu – za chvíli se objevil vysoký los, který líně koukal a žvýkal dlouhou listovou větev.
+            Leo sbalil lámací nožík, <image imageName="tale_lahvicka" nounFormSoundName="lahvicka" soundName="lahvicka_j_4" /> s vodou a malý notýsek, kam si rád kreslil všechno, co v <image imageName="tale_les" nounFormSoundName="les_j_1" soundName="les_j_3" /> našel.
+            Když vešli mezi vysoké listnaté <image imageName="tale_stromy" nounFormSoundName="strom_mn_4" soundName="strom_mn_4" />, všude kolem nich lehala ranní mlha. Na listech ležely malé <image imageName="tale_kapky" nounFormSoundName="kapky_j_1" soundName="kapky_mn_1" /> rosy, které se leskly jako nejmenší diamanty.
+            Najednou kolem nich proběhla lasička a nesla v tlamičce dlouhé <image imageName="tale_listky" nounFormSoundName="listky_mn_4" soundName="listky_mn_4" />. Lilinka zvedla lupu a řekla: „Leo, podívej, ona si staví lesní hnízdečko!"
+            O kus dál objevili malou lesní louku. Uprostřed ní ležel ležící <image imageName="tale_kmen" nounFormSoundName="kmen_j_1" soundName="kmen_j_1" />, na kterém rostly lišejníky a drobné lesní <image imageName="tale_houby" nounFormSoundName="houby_mn_1" soundName="houby_mn_1" />.
+            Lilinka se posadila a začala si prohlížet jeden lesklý <image imageName="tale_kaminek" nounFormSoundName="kaminek_j_1" soundName="kaminek_j_1" />, zatímco Leo kreslil do notýsku listy, louku i lasičku.
+            Jak postupovali hlouběji, uslyšeli lehké lupání větviček. „To je určitě <image imageName="tale_los" nounFormSoundName="los_j_1" soundName="los_j_1" />" zašeptal Leo. A opravdu – za chvíli se objevil vysoký <image imageName="tale_los" nounFormSoundName="los_j_1" soundName="los_j_1" />, který líně koukal a žvýkal dlouhou listovou větev.
             Lilinka mu zamávala: „Laskavý losíku, přeji ti krásný lesní den!"
             Když slunce začalo klesat, Leo s Lilinkou se vydali zpět. „Tenhle <image imageName="tale_les" nounFormSoundName="les_j_1" soundName="les_j_1" /> je plný lásky," řekl Leo.
             „A hlavně plný L" smála se Lilinka.
@@ -23,16 +23,16 @@
         <name>Ríša a tajemství staré Rozhledny</name>
         <frontImageName>tale_risa_a_rozhledna</frontImageName>
         <content>
-            Ríša byl kluk, který miloval různé příběhy o dobrodružstvích. Když se doslechl, že na <image imageName="tale_kopec" nounFormSoundName="kopec_j_1" soundName="kopec_j_6" /> za městem stojí starodávná rozhledna, kde se večer prý objevují rarachové, rozhodl se to prozkoumat.
-            Ráno si sbalil rudý <image imageName="tale_batoh" nounFormSoundName="batoh_j_1" soundName="batoh_j_4" />, <image imageName="tale_rohlik" nounFormSoundName="rohlik_j_1" soundName="rohlik_j_4" />, malou ruční <image imageName="tale_baterka" nounFormSoundName="baterka_j_1" soundName="baterka_j_4" /> a vyrazil. Cestou minul rybník, ve kterém rejdily rybky, a taky pole, kde rýč zapomenutý farmář lehce rezavěl.
-            Když dorazil pod rozhlednu, uviděl rampu, která byla lehce rozštípaná. Ríša se opřel o rukojeť a stoupal výš.
-            Krok za krokem, příčka za příčkou. <image imageName="tale_srdce" nounFormSoundName="srdce_j_1" soundName="srdce_j_1" /> mu rychle bušilo. „Rychleji, Ríšo," šeptal si.
-            Nahoře byl nádherný rozsáhlý výhled. Viděl <image imageName="tale_reka" nounFormSoundName="reka_j_1" soundName="reka_j_4" />, rostliny, roviny i rozcestí mezi poli.
+            Ríša byl kluk, který miloval různé příběhy o dobrodružstvích. Když se doslechl, že na <image imageName="tale_kopec" nounFormSoundName="kopec_j_1" soundName="kopec_j_6" /> za městem stojí starodávná <image imageName="tale_rozhledna" nounFormSoundName="rozhledna_j_1" soundName="rozhledna_j_1" />, kde se večer prý objevují rarachové, rozhodl se to prozkoumat.
+            Ráno si sbalil rudý <image imageName="tale_batoh" nounFormSoundName="batoh_j_1" soundName="batoh_j_4" />, <image imageName="tale_rohlik" nounFormSoundName="rohlik" soundName="rohlik" />, malou ruční <image imageName="tale_baterka" nounFormSoundName="baterka_j_1" soundName="baterka_j_4" /> a vyrazil. Cestou minul <image imageName="tale_rybnik" nounFormSoundName="rybnik_j_1" soundName="rybnik_j_1" />, ve kterém rejdily rybky, a taky pole, kde rýč, zapomenutý farmářem, lehce rezavěl.
+            Když dorazil pod <image imageName="tale_rozhledna" nounFormSoundName="rozhledna_j_1" soundName="rozhledna_j_4" />, uviděl rampu, která byla lehce rozštípaná. Ríša se opřel o rukojeť a stoupal výš.
+            Krok za krokem, příčka za příčkou. <image imageName="tale_srdce" nounFormSoundName="srdce" soundName="srdce" /> mu rychle bušilo. „Rychleji, Ríšo," šeptal si.
+            Nahoře byl nádherný rozsáhlý výhled. Viděl <image imageName="tale_reka" nounFormSoundName="reka" soundName="reka_j_4" />, rostliny, roviny i rozcestí mezi poli.
             Když se rozhlížel, uslyšel tiché rámusení. Za ním se objevil malý rarášek s růžovým <image imageName="tale_kabatek" nounFormSoundName="kabatek_j_1" soundName="kabatek_j_7" />.
-            „Ríšo, neboj se," řekl skřítek. „Rozhledna má své tajemství – kdo se vypraví nahoru s odvahou, tomu ukáže kus ráje."
+            „Ríšo, neboj se," řekl skřítek. „<image imageName="tale_rozhledna" nounFormSoundName="rozhledna_j_1" soundName="rozhledna_j_1" /> má své tajemství – kdo se vypraví nahoru s odvahou, tomu ukáže kus ráje."
             Rarášek Ríšu provedl po horní plošině, ukázal mu různé rohy světa a řekl:
-            „Zapamatuj si: kdo má radost v srdci, vidí krásu všude. A rozhledna mu vždycky ráda pomůže."
-            Ríša se rozloučil, slezl dolů a opakoval si: „R jako radost, R jako rozhledna, R jako Ríša."
+            „Zapamatuj si: kdo má radost v <image imageName="tale_srdce" nounFormSoundName="srdce_j_1" soundName="srdce_j_6" />, vidí krásu všude. A <image imageName="tale_rozhledna" nounFormSoundName="rozhledna_j_1" soundName="rozhledna_j_1" /> mu vždycky ráda pomůže."
+            Ríša se rozloučil, slezl dolů a opakoval si: „R jako radost, R jako <image imageName="tale_rozhledna" nounFormSoundName="rozhledna_j_1" soundName="rozhledna_j_1" />, R jako Ríša."
         </content>
     </tale>
 
@@ -40,16 +40,16 @@
         <name>Mimi a Mistrovská Mapa Mořeplavců</name>
         <frontImageName>tale_mimi_a_mapa</frontImageName>
         <content>
-            Malá Mimi milovala <image imageName="tale_more" nounFormSoundName="more_j_1" soundName="more_j_4" />. Každý den seděla na mole, mávala <image imageName="tale_nohy" nounFormSoundName="nohy_j_1" soundName="nohy_mn_7" /> a sledovala, jak se modré <image imageName="tale_vlny" nounFormSoundName="vlny_j_1" soundName="vlny_mn_1" /> mírně pohybují.
+            Malá Mimi milovala <image imageName="tale_more" nounFormSoundName="more" soundName="more" />. Každý den seděla na mole, mávala <image imageName="tale_nohy" nounFormSoundName="nohy" soundName="nohy_mn_7" /> a sledovala, jak se modré <image imageName="tale_vlny" nounFormSoundName="vlny_j_1" soundName="vlny_mn_1" /> mírně pohybují.
             Jedno ráno si vzala svého malého <image imageName="tale_medvidek" nounFormSoundName="medvidek_j_1" soundName="medvidek_j_4" />, misku malin a vyšla k malému majáku.
             Z mlhy se najednou ozvalo slabé mumlání. Mimi se lekla, ale pak uviděla starého mořeplavce, který měl u pasu měděnou <image imageName="tale_mapa" nounFormSoundName="mapa_j_1" soundName="mapa_j_4" />.
             „Mimi," povídá, „máš odvahu? Mám tu mistrovskou mapu, kterou kdysi kreslil mocný kapitán Melichar. Ukazuje cestu k mechové <image imageName="tale_jeskyne" nounFormSoundName="jeskyne_j_1" soundName="jeskyne_j_3" /> plné pokladů."
             Mimi si mapu pečlivě měřila, medvídka pevně mačkala a vyrazila po úzké mořské pěšině.
             Cestou sbírala malé <image imageName="tale_muslicky" nounFormSoundName="muslicky_j_1" soundName="muslicky_mn_4" />, které jemně zvonily mezi <image imageName="tale_prsty" nounFormSoundName="prsty_j_1" soundName="prsty_mn_7" />. V dálce zahlédla modravý mlžný oblouk – právě tam byla jeskyně.
-            Uvnitř jeskyně se rozlévalo měkké měsíční světlo. Na zemi ležely malé měšce, staré mince a několik malovaných modelů lodí.
-            Mimi vybrala jen malý kamínek, protože věděla, že opravdový poklad je moudrost a moc příběhů.
-            Když se vrátila k mořeplavci, ten se usmál: „Máš moc dobré srdce, Mimi."
-            A Mimi si doma zapisovala: „M jako moře, M jako mapa, M jako můj malý medvídek."
+            Uvnitř jeskyně se rozlévalo měkké měsíční světlo. Na zemi ležely malé měšce, staré <image imageName="tale_mince" nounFormSoundName="mince_j_1" soundName="mince_j_1" /> a několik malovaných modelů <image imageName="tale_model_lod" nounFormSoundName="model_lod_j_1" soundName="model_lod_mn_4" />.
+            Mimi vybrala jen malý <image imageName="tale_kaminek" nounFormSoundName="kaminek_j_1" soundName="kaminek_j_1" />, protože věděla, že opravdový poklad je moudrost a moc příběhů.
+            Když se vrátila k mořeplavci, ten se usmál: „Máš moc dobré <image imageName="tale_srdce" nounFormSoundName="srdce_j_1" soundName="srdce_j_1" />, Mimi."
+            A Mimi si <image imageName="tale_dum" nounFormSoundName="doma" soundName="doma" /> zapisovala: „M jako <image imageName="tale_more" nounFormSoundName="more" soundName="more" />, M jako <image imageName="tale_mapa" nounFormSoundName="mapa_j_1" soundName="mapa_j_1" />, M jako můj malý <image imageName="tale_medvidek" nounFormSoundName="medvidek_j_1" soundName="medvidek_j_1" />."
         </content>
     </tale>
 
@@ -57,13 +57,13 @@
         <name>Nela a Nesmělý Noční Nocínek</name>
         <frontImageName>tale_nela_a_nocinek</frontImageName>
         <content>
-            Holčička Nela měla ráda noc. Milovala, když nadešel klid a nebe bylo plné neposedných <image imageName="tale_hvezdicky" nounFormSoundName="hvezdicky_j_1" soundName="hvezdicky_mn_2" />.
+            Holčička Nela měla ráda noc. Milovala, když nadešel klid a nebe bylo plné neposedných <image imageName="tale_hvezdicky" nounFormSoundName="hvezda_j_1" soundName="hvezda_mn_2" />.
             Jednoho večera si na návsi rozložila náruč dek, lehla si a čekala, až začne noční narážení světel.
-            Najednou se u jejího ucha ozvalo tiché „Niiiiii". Nela vyskočila – a tam stál malý Nocínek, skřítek s noční <image imageName="tale_nocni_cepicka" nounFormSoundName="cepicka_j_1" soundName="cepicka_j_7" /> a stříbrnou <image imageName="tale_nausnice" nounFormSoundName="nausnice_j_1" soundName="nausnice_j_7" />.
+            Najednou se u jejího <image imageName="tale_ucho" nounFormSoundName="ucho" soundName="ucho" /> ozvalo tiché „Niiiiii". Nela vyskočila – a tam stál malý Nocínek, skřítek s noční <image imageName="tale_nocni_cepicka" nounFormSoundName="cepicka_j_1" soundName="cepicka_j_7" /> a stříbrnou <image imageName="tale_nausnice" nounFormSoundName="nausnice_j_1" soundName="nausnice_j_7" />.
             „Nelo," zašeptal, „není mnoho lidí, co naslouchá noci. Proto ti dnes ukážu nejtajnější kouty nebe."
-            Nocínek luskl prsty a Nela se vznesla nad náves. Viděla náruč hvězd tvořících různé nebeské obrazce – nosy, nůše, nekonečné šroubovice.
+            Nocínek luskl <image imageName="tale_prsty" nounFormSoundName="prsty_j_1" soundName="prsty_mn_7" /> a Nela se vznesla nad náves. Viděla náruč <image imageName="tale_hvezdicky" nounFormSoundName="hvezda_j_1" soundName="hvezda_mn_2" /> tvořících různé nebeské obrazce – nosy, nůše, nekonečné šroubovice.
             „Tohle," ukázal nocínek, „je Naděje. A támhle je hvězda Něžnosti. Každá má své jméno."
-            Letěli přes nekončící tmu, kolem nočních <image imageName="tale_mraky" nounFormSoundName="mraky_j_1" soundName="mraky_mn_2" /> a neviditelných světýlek. Noc byla měkká jako nadýchaná <image imageName="tale_postel" nounFormSoundName="postel_j_1" soundName="postel_j_1" />.
+            Letěli přes nekončící tmu, kolem nočních <image imageName="tale_mraky" nounFormSoundName="mraky_j_1" soundName="mraky_mn_2" /> a neviditelných světýlek. Noc byla měkká jako nadýchaná <image imageName="tale_postel" nounFormSoundName="postel" soundName="postel" />.
             Když se snesli zpět na zem, nocínek řekl: „Nelo, nezapomeň – noc není nepřítel. Je to náruč, která nás objímá."
             A Nela si doma zapisovala: „N jako noc, N jako nocínek, N jako nádhera nebe."
         </content>
