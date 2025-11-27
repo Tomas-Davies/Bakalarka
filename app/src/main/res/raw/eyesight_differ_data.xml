@@ -2,74 +2,95 @@
 <data>
     <differItem>
         <imageId>eyesight_differ_image_1</imageId>
-            <round>
-                <correctAnswer>list</correctAnswer>
-                <question>Co se nachází před jablkem?</question>
-            </round>
-            <round>
-                <correctAnswer>jablko</correctAnswer>
-                <question>Co se nachází za listem?</question>
-            </round>
+        <objects>
+            <object imageName="differ_list">list</object>
+            <object imageName="differ_jablko">jablko</object>
+        </objects>
+        <round>
+            <correctAnswer>list</correctAnswer>
+            <question>Co se nachází před jablkem?</question>
+        </round>
+        <round>
+            <correctAnswer>jablko</correctAnswer>
+            <question>Co se nachází za listem?</question>
+        </round>
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_2</imageId>
-            <round>
-                <correctAnswer>motýl</correctAnswer>
-                <question>Co se nachází před mufinem?</question>
-            </round>
-            <round>
-                <correctAnswer>mufin</correctAnswer>
-                <question>Co se nachází za motýlem?</question>
-            </round>
+        <objects>
+            <object imageName="differ_motyl">motýl</object>
+            <object imageName="differ_muffin">mufin</object>
+        </objects>
+        <round>
+            <correctAnswer>motýl</correctAnswer>
+            <question>Co se nachází před mufinem?</question>
+        </round>
+        <round>
+            <correctAnswer>mufin</correctAnswer>
+            <question>Co se nachází za motýlem?</question>
+        </round>
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_3</imageId>
-            <round>
-                <correctAnswer>třešně</correctAnswer>
-                <question>Co se nachází před hrníčkem?</question>
-            </round>
-            <round>
-                <correctAnswer>hrníček</correctAnswer>
-                <correctAnswer>čepice</correctAnswer>
-                <question>Co se nachází za třešněmi?</question>
-            </round>
-            <round>
-                <correctAnswer>čepice</correctAnswer>
-                <question>Co se nachází za hrníčkem?</question>
-            </round>
-            <round>
-                <correctAnswer>hrníček</correctAnswer>
-                <correctAnswer>třešně</correctAnswer>
-                <question>Co se nachází před čepicí?</question>
-            </round>
+        <objects>
+            <object imageName="differ_tresne">třešně</object>
+            <object imageName="differ_hrnicek">hrníček</object>
+            <object imageName="differ_cepice">čepice</object>
+        </objects>
+        <round>
+            <correctAnswer>třešně</correctAnswer>
+            <question>Co se nachází před hrníčkem?</question>
+        </round>
+        <round>
+            <correctAnswer>hrníček</correctAnswer>
+            <correctAnswer>čepice</correctAnswer>
+            <question>Co se nachází za třešněmi?</question>
+        </round>
+        <round>
+            <correctAnswer>čepice</correctAnswer>
+            <question>Co se nachází za hrníčkem?</question>
+        </round>
+        <round>
+            <correctAnswer>hrníček</correctAnswer>
+            <correctAnswer>třešně</correctAnswer>
+            <question>Co se nachází před čepicí?</question>
+        </round>
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_4</imageId>
-            <round>
-                <correctAnswer>rostlina</correctAnswer>
-                <question>Co se nachází před sluníčkem?</question>
-            </round>
-            <round>
-                <correctAnswer>sluníčko</correctAnswer>
-                <correctAnswer>rifle</correctAnswer>
-                <question>Co se nachází za rostlinou?</question>
-            </round>
-            <round>
-                <correctAnswer>rifle</correctAnswer>
-                <question>Co se nachází za sluníčkem?</question>
-            </round>
-            <round>
-                <correctAnswer>sluníčko</correctAnswer>
-                <correctAnswer>rostlina</correctAnswer>
-                <question>Co se nachází před riflemi?</question>
-            </round>
+        <objects>
+            <object imageName="differ_rostlina">rostlina</object>
+            <object imageName="differ_slunicko">sluníčko</object>
+            <object imageName="differ_rifle">rifle</object>
+        </objects>
+        <round>
+            <correctAnswer>rostlina</correctAnswer>
+            <question>Co se nachází před sluníčkem?</question>
+        </round>
+        <round>
+            <correctAnswer>sluníčko</correctAnswer>
+            <correctAnswer>rifle</correctAnswer>
+            <question>Co se nachází za rostlinou?</question>
+        </round>
+        <round>
+            <correctAnswer>rifle</correctAnswer>
+            <question>Co se nachází za sluníčkem?</question>
+        </round>
+        <round>
+            <correctAnswer>sluníčko</correctAnswer>
+            <correctAnswer>rostlina</correctAnswer>
+            <question>Co se nachází před riflemi?</question>
+        </round>
     </differItem>
-
-
 
 
     <differItem>
         <imageId>eyesight_differ_image_5</imageId>
+        <objects>
+            <object imageName="differ_mys">myš</object>
+            <object imageName="differ_kocka">kočka</object>
+            <object imageName="differ_miska">miska</object>
+        </objects>
         <round>
             <correctAnswer>myš</correctAnswer>
             <question>Co se nachází před miskou?</question>
@@ -91,6 +112,11 @@
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_6</imageId>
+        <objects>
+            <object imageName="differ_obraz">obraz</object>
+            <object imageName="differ_malirka">malířka</object>
+            <object imageName="differ_kobylka">kobylka</object>
+        </objects>
         <round>
             <correctAnswer>obraz</correctAnswer>
             <question>Co se nachází za malířkou?</question>
@@ -112,6 +138,11 @@
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_7</imageId>
+        <objects>
+            <object imageName="differ_strom">strom</object>
+            <object imageName="differ_jablko">jablko</object>
+            <object imageName="differ_cervik">červík</object>
+        </objects>
         <round>
             <correctAnswer>strom</correctAnswer>
             <question>Co se nachází za jablkem?</question>
@@ -133,13 +164,18 @@
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_8</imageId>
+        <objects>
+            <object imageName="differ_batoh">batoh</object>
+            <object imageName="differ_hodinky">hodinky</object>
+            <object imageName="differ_knizky">knížky</object>
+        </objects>
         <round>
             <correctAnswer>batoh</correctAnswer>
             <question>Co se nachází za knížkami?</question>
         </round>
         <round>
             <correctAnswer>hodinky</correctAnswer>
-            <question>Co se nachází před knížkami</question>
+            <question>Co se nachází před knížkami?</question>
         </round>
         <round>
             <correctAnswer>hodinky</correctAnswer>
@@ -154,6 +190,11 @@
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_9</imageId>
+        <objects>
+            <object imageName="differ_notebook">notebook</object>
+            <object imageName="differ_mobil">mobil</object>
+            <object imageName="differ_tuzka">tužka</object>
+        </objects>
         <round>
             <correctAnswer>notebook</correctAnswer>
             <question>Co se nachází za mobilem?</question>
@@ -175,6 +216,11 @@
     </differItem>
     <differItem>
         <imageId>eyesight_differ_image_10</imageId>
+        <objects>
+            <object imageName="differ_boruvky">borůvky</object>
+            <object imageName="differ_jablko">jablko</object>
+            <object imageName="differ_banan">banán</object>
+        </objects>
         <round>
             <correctAnswer>borůvky</correctAnswer>
             <question>Co se nachází před banánem?</question>

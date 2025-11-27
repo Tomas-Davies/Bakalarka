@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.DifferItem
 import com.tomdev.logopadix.dataLayer.repositories.EyesightDifferRepo
+import com.tomdev.logopadix.dataLayer.repositories.ObjectAndImage
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
 import com.tomdev.logopadix.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 data class EyesightDifferUiState(
     val imageName: String,
-    val answers: List<String>,
+    val answers: List<ObjectAndImage>,
     val correctAnswers: List<String>,
     val question: String
 )
@@ -52,7 +53,7 @@ class EyesightDifferViewModel(
             _uiState = MutableStateFlow(
                 EyesightDifferUiState(
                     imageName = currentItem.imageName,
-                    answers = getPossibleAnswers(),
+                    answers = currentItem.objects,
                     correctAnswers = getCorrectAnswers(),
                     question = getQuestion()
                 )
@@ -132,21 +133,11 @@ class EyesightDifferViewModel(
         _uiState.update { currentState ->
             currentState.copy(
                 imageName = currentItem.imageName,
-                answers = getPossibleAnswers(),
+                answers = currentItem.objects,
                 correctAnswers = getCorrectAnswers(),
                 question = getQuestion()
             )
         }
-    }
-
-
-    private fun getPossibleAnswers(): MutableList<String> {
-        var answerOptions: MutableList<String> = mutableListOf()
-        currentItem.rounds.forEach { pair ->
-            answerOptions.addAll(pair.answers)
-        }
-        if (answerOptions.size > 1) answerOptions = answerOptions.distinct().toMutableList()
-        return answerOptions
     }
 
 

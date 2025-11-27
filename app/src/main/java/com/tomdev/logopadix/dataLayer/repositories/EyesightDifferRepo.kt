@@ -7,6 +7,7 @@ import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText
 
 class EyesightDifferRepo(ctx: Context) :
     ResourceMappedRepository<DifferData, DifferItem>(
@@ -22,13 +23,21 @@ data class Round(
     val question: String = "",
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "correctAnswer")
-    val answers: List<String> = emptyList()
+    val answers: List<String> = emptyList(),
 )
+
+class ObjectAndImage {
+    @JacksonXmlProperty(isAttribute = true)
+    val imageName: String = ""
+    @JacksonXmlText
+    val objectName: String = ""
+}
 
 @JacksonXmlRootElement(localName = "differItem")
 data class DifferItem(
     @JacksonXmlProperty(localName = "imageId")
     override val imageName: String = "",
+    val objects: List<ObjectAndImage> = emptyList(),
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "round")
     val rounds: List<Round> = emptyList()
