@@ -12,8 +12,8 @@ android {
         applicationId = "com.tomdev.logopadix"
         minSdk = 29
         targetSdk = 35
-        versionCode = 15
-        versionName = "1.0.8"
+        versionCode = 16
+        versionName = "1.0.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
