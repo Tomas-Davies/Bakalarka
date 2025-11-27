@@ -73,7 +73,7 @@ fun CustomCard(
 @Composable
 fun CustomCard(
     modifier: Modifier = Modifier,
-    colors: CardColors = CardDefaults.cardColors(),
+    colors: CardColors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     shape: Shape = CardDefaults.shape,
     outlineColor: Color = MaterialTheme.colorScheme.outline,
     content: @Composable ColumnScope.() -> Unit
