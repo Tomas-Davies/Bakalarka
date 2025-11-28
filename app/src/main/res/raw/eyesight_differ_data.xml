@@ -9,10 +9,12 @@
         <round>
             <correctAnswer>list</correctAnswer>
             <question>Co se nachází před jablkem?</question>
+            <questionSoundName>pred_jablkem</questionSoundName>
         </round>
         <round>
             <correctAnswer>jablko</correctAnswer>
             <question>Co se nachází za listem?</question>
+            <questionSoundName>za_listem</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -24,10 +26,12 @@
         <round>
             <correctAnswer>motýl</correctAnswer>
             <question>Co se nachází před mufinem?</question>
+            <questionSoundName>pred_muffinem</questionSoundName>
         </round>
         <round>
             <correctAnswer>mufin</correctAnswer>
             <question>Co se nachází za motýlem?</question>
+            <questionSoundName>za_motylem</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -40,20 +44,24 @@
         <round>
             <correctAnswer>třešně</correctAnswer>
             <question>Co se nachází před hrníčkem?</question>
+            <questionSoundName>pred_hrnickem</questionSoundName>
         </round>
         <round>
             <correctAnswer>hrníček</correctAnswer>
             <correctAnswer>čepice</correctAnswer>
             <question>Co se nachází za třešněmi?</question>
+            <questionSoundName>za_tresnemi</questionSoundName>
         </round>
         <round>
             <correctAnswer>čepice</correctAnswer>
             <question>Co se nachází za hrníčkem?</question>
+            <questionSoundName>za_hrnickem</questionSoundName>
         </round>
         <round>
             <correctAnswer>hrníček</correctAnswer>
             <correctAnswer>třešně</correctAnswer>
             <question>Co se nachází před čepicí?</question>
+            <questionSoundName>pred_cepici</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -66,20 +74,24 @@
         <round>
             <correctAnswer>rostlina</correctAnswer>
             <question>Co se nachází před sluníčkem?</question>
+            <questionSoundName>pred_slunickem</questionSoundName>
         </round>
         <round>
             <correctAnswer>sluníčko</correctAnswer>
             <correctAnswer>rifle</correctAnswer>
             <question>Co se nachází za rostlinou?</question>
+            <questionSoundName>za_rostlinou</questionSoundName>
         </round>
         <round>
             <correctAnswer>rifle</correctAnswer>
             <question>Co se nachází za sluníčkem?</question>
+            <questionSoundName>za_slunickem</questionSoundName>
         </round>
         <round>
             <correctAnswer>sluníčko</correctAnswer>
             <correctAnswer>rostlina</correctAnswer>
             <question>Co se nachází před riflemi?</question>
+            <questionSoundName>pred_riflemi</questionSoundName>
         </round>
     </differItem>
 
@@ -94,20 +106,24 @@
         <round>
             <correctAnswer>myš</correctAnswer>
             <question>Co se nachází před miskou?</question>
+            <questionSoundName>pred_miskou</questionSoundName>
         </round>
         <round>
             <correctAnswer>kočka</correctAnswer>
             <question>Co se nachází za miskou?</question>
+            <questionSoundName>za_miskou</questionSoundName>
         </round>
         <round>
             <correctAnswer>kočka</correctAnswer>
             <correctAnswer>miska</correctAnswer>
             <question>Co se nachází za myší?</question>
+            <questionSoundName>za_mysi</questionSoundName>
         </round>
         <round>
             <correctAnswer>myš</correctAnswer>
             <correctAnswer>miska</correctAnswer>
             <question>Co se nachází před kočkou?</question>
+            <questionSoundName>pred_kockou</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -120,20 +136,24 @@
         <round>
             <correctAnswer>obraz</correctAnswer>
             <question>Co se nachází za malířkou?</question>
+            <questionSoundName>za_malirkou</questionSoundName>
         </round>
         <round>
             <correctAnswer>malířka</correctAnswer>
             <correctAnswer>kobylka</correctAnswer>
             <question>Co se nachází před obrazem?</question>
+            <questionSoundName>pred_obrazem</questionSoundName>
         </round>
         <round>
             <correctAnswer>kobylka</correctAnswer>
             <question>Co se nachází před malířkou?</question>
+            <questionSoundName>pred_malirkou</questionSoundName>
         </round>
         <round>
             <correctAnswer>malířka</correctAnswer>
             <correctAnswer>obraz</correctAnswer>
             <question>Co se nachází za kobylkou?</question>
+            <questionSoundName>za_kobylkou</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -146,20 +166,24 @@
         <round>
             <correctAnswer>strom</correctAnswer>
             <question>Co se nachází za jablkem?</question>
+            <questionSoundName>za_jablkem</questionSoundName>
         </round>
         <round>
             <correctAnswer>jablko</correctAnswer>
             <correctAnswer>strom</correctAnswer>
             <question>Co se nachází za červíkem?</question>
+            <questionSoundName>za_cervikem</questionSoundName>
         </round>
         <round>
             <correctAnswer>červík</correctAnswer>
             <question>Co se nachází před jablkem?</question>
+            <questionSoundName>pred_jablkem</questionSoundName>
         </round>
         <round>
             <correctAnswer>červík</correctAnswer>
             <correctAnswer>jablko</correctAnswer>
             <question>Co se nachází před stromem?</question>
+            <questionSoundName>pred_stromem</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -172,20 +196,24 @@
         <round>
             <correctAnswer>batoh</correctAnswer>
             <question>Co se nachází za knížkami?</question>
+            <questionSoundName>za_knizkami</questionSoundName>
         </round>
         <round>
             <correctAnswer>hodinky</correctAnswer>
             <question>Co se nachází před knížkami?</question>
+            <questionSoundName>pred_knizkami</questionSoundName>
         </round>
         <round>
             <correctAnswer>hodinky</correctAnswer>
             <correctAnswer>knížky</correctAnswer>
             <question>Co se nachází před batohem?</question>
+            <questionSoundName>pred_batohem</questionSoundName>
         </round>
         <round>
             <correctAnswer>batoh</correctAnswer>
             <correctAnswer>knížky</correctAnswer>
             <question>Co se nachází za hodinkami?</question>
+            <questionSoundName>za_hodinkami</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -198,20 +226,24 @@
         <round>
             <correctAnswer>notebook</correctAnswer>
             <question>Co se nachází za mobilem?</question>
+            <questionSoundName>za_mobilem</questionSoundName>
         </round>
         <round>
             <correctAnswer>mobil</correctAnswer>
             <correctAnswer>notebook</correctAnswer>
             <question>Co se nachází za tužkou?</question>
+            <questionSoundName>za_tuzkou</questionSoundName>
         </round>
         <round>
             <correctAnswer>tužka</correctAnswer>
             <question>Co se nachází před mobilem?</question>
+            <questionSoundName>pred_jablkem</questionSoundName>
         </round>
         <round>
             <correctAnswer>mobil</correctAnswer>
             <correctAnswer>tužka</correctAnswer>
             <question>Co se nachází před notebookem?</question>
+            <questionSoundName>pred_notebookem</questionSoundName>
         </round>
     </differItem>
     <differItem>
@@ -224,20 +256,24 @@
         <round>
             <correctAnswer>borůvky</correctAnswer>
             <question>Co se nachází před banánem?</question>
+            <questionSoundName>pred_bananem</questionSoundName>
         </round>
         <round>
             <correctAnswer>jablko</correctAnswer>
             <question>Co se nachází za banánem?</question>
+            <questionSoundName>za_bananem</questionSoundName>
         </round>
         <round>
             <correctAnswer>borůvky</correctAnswer>
             <correctAnswer>banán</correctAnswer>
             <question>Co se nachází před jablkem?</question>
+            <questionSoundName>pred_jablkem</questionSoundName>
         </round>
         <round>
             <correctAnswer>jablko</correctAnswer>
             <correctAnswer>banán</correctAnswer>
             <question>Co se nachází za borůvkami?</question>
+            <questionSoundName>za_boruvkami</questionSoundName>
         </round>
     </differItem>
 </data>
