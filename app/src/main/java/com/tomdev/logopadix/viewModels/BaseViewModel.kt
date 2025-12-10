@@ -29,12 +29,24 @@ abstract class BaseViewModel(app: com.tomdev.logopadix.LogoApp) : ViewModel() {
     private val appContext = app.applicationContext
     protected val _screenState = MutableStateFlow<ScreenState>(ScreenState.Loading)
     val screenState = _screenState.asStateFlow()
+    var activePlayers = mutableListOf<MediaPlayer>()
 
     fun playSound(soundId: Int) {
-        val mediaPlayer: MediaPlayer = MediaPlayer.create(appContext, soundId)
-        mediaPlayer.start()
-        mediaPlayer.setOnCompletionListener { mp ->
+        val mediaPlayer = MediaPlayer.create(appContext, soundId)
+        mediaPlayer?.start()
+        activePlayers.add(mediaPlayer)
+        mediaPlayer?.setOnCompletionListener { mp ->
             mp.release()
+            activePlayers.remove(mp)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        activePlayers.forEach {
+            try {
+                it.release()
+            } catch (_: Exception){}
         }
     }
 

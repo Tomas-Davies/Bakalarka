@@ -40,6 +40,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -55,6 +56,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.Placeholder
@@ -87,6 +89,7 @@ class SpeechDetailScreen : AppCompatActivity() {
         val wordsChosen = intent.getBooleanExtra("SHOW_WORDS", true)
         val letterLabel = intent.getStringExtra("LETTER_LABEL") ?: ""
         val posLabel = intent.getStringExtra("POS_LABEL") ?: ""
+        val showSubSound = intent.getBooleanExtra("SHOW_SUB_SOUND", false)
 
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.speechRepository
@@ -103,7 +106,8 @@ class SpeechDetailScreen : AppCompatActivity() {
                         viewModel = viewModel,
                         wordsChosen = wordsChosen,
                         letterLabel = letterLabel,
-                        posLabel = posLabel
+                        posLabel = posLabel,
+                        showExtraSound = showSubSound
                     )
                 }
             }
@@ -116,10 +120,14 @@ class SpeechDetailScreen : AppCompatActivity() {
         viewModel: SpeechDetailViewModel,
         wordsChosen: Boolean,
         letterLabel: String,
-        posLabel: String
+        posLabel: String,
+        showExtraSound: Boolean
     ) {
         val category = if (posLabel.isNotEmpty() && posLabel != "NONE") posLabel else letterLabel
-        val label = if (wordsChosen) stringResource(id = R.string.speech_options_words) else stringResource(id = R.string.speech_options_sentences)
+        val label =
+            if (wordsChosen) stringResource(id = R.string.speech_options_words) else stringResource(
+                id = R.string.speech_options_sentences
+            )
         var clickedButtonIdx by remember { mutableIntStateOf(0) }
 
         ScreenWrapper(
@@ -144,7 +152,8 @@ class SpeechDetailScreen : AppCompatActivity() {
                 if (wordsChosen) {
                     SpeechWordsContent(
                         pdVal = pdVal,
-                        viewModel = viewModel
+                        viewModel = viewModel,
+                        showSubSound = showExtraSound
                     )
                 } else {
                     SpeechSentencesContent(
@@ -171,7 +180,10 @@ class SpeechDetailScreen : AppCompatActivity() {
         else userSentences.reversed()
 
         Column(
-            modifier = Modifier.padding(top = pdVal.calculateTopPadding(), bottom = pdVal.calculateBottomPadding())
+            modifier = Modifier.padding(
+                top = pdVal.calculateTopPadding(),
+                bottom = pdVal.calculateBottomPadding()
+            )
         ) {
             OptionsMenu(
                 onOptionClick = { idx -> onCategoryClicked(idx) },
@@ -454,7 +466,7 @@ class SpeechDetailScreen : AppCompatActivity() {
     private fun DeleteSentencePopUp(
         onDismiss: () -> Unit,
         onConfirm: () -> Unit
-    ){
+    ) {
         CustomDialog(
             onExit = { onDismiss() },
             showExitButton = false
@@ -504,9 +516,34 @@ class SpeechDetailScreen : AppCompatActivity() {
     @Composable
     private fun SpeechWordsContent(
         pdVal: PaddingValues,
-        viewModel: SpeechDetailViewModel
+        viewModel: SpeechDetailViewModel,
+        showSubSound: Boolean
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+        if (showSubSound) {
+            SubContent(
+                viewModel = viewModel,
+                uiState = uiState,
+                pdVal = pdVal
+            )
+        } else {
+            DefaultContent(
+                viewModel = viewModel,
+                uiState = uiState,
+                pdVal = pdVal
+            )
+        }
+
+    }
+
+
+    @Composable
+    private fun DefaultContent(
+        viewModel: SpeechDetailViewModel,
+        uiState: SpeechDetailWordsUiState,
+        pdVal: PaddingValues
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -546,39 +583,175 @@ class SpeechDetailScreen : AppCompatActivity() {
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
+            DefaultNavBar(
+                modifier = Modifier.weight(1f),
+                viewModel = viewModel,
+                uiState = uiState
+            )
+        }
+    }
+
+
+    @Composable
+    private fun SubContent(
+        viewModel: SpeechDetailViewModel,
+        uiState: SpeechDetailWordsUiState,
+        pdVal: PaddingValues
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(18.dp, pdVal.calculateTopPadding(), 18.dp, 0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val drawableName = uiState.currentWord.imageName ?: ""
+            val drawableId = viewModel.getDrawableId(drawableName)
+
+            Image(
+                modifier = Modifier
+                    .weight(3f)
+                    .fillMaxWidth(),
+                painter = painterResource(id = drawableId),
+                contentDescription = "image"
+            )
+            val soundName = uiState.currentWord.soundName ?: ""
+            val soundId = viewModel.getSoundId(soundName)
+            val subSoundName = uiState.currentWord.subSoundName ?: ""
+            val subSoundId = viewModel.getSoundId(subSoundName)
+
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
+                    .weight(1f)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
-                IconButton(
-                    modifier = Modifier.scale(1.5f),
-                    onClick = { viewModel.previous() },
-                    enabled = !uiState.isOnFirstWord
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                        contentDescription = "button previous"
+                    Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentHeight(),
+                        text = uiState.currentWord.subText ?: "",
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    PlaySoundButton(
+                        onClick = { viewModel.playSound(subSoundId) },
+                        containerColor = colorResource(R.color.speech_substitution)
                     )
                 }
-                val soundName = uiState.currentWord.soundName ?: ""
-                val soundId = viewModel.getSoundId(soundName)
+                VerticalDivider()
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentHeight(),
+                        text = uiState.currentWord.text ?: "",
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    PlaySoundButton(
+                        onClick = { viewModel.playSound(soundId) }
+                    )
+                }
+            }
+            SubNavBar(
+                modifier = Modifier.weight(1f),
+                viewModel = viewModel,
+                uiState = uiState
+            )
+        }
+    }
 
-                PlaySoundButton(
-                    onClick = { viewModel.playSound(soundId) }
+
+    @Composable
+    private fun DefaultNavBar(
+        modifier: Modifier = Modifier,
+        viewModel: SpeechDetailViewModel,
+        uiState: SpeechDetailWordsUiState
+    ) {
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                modifier = Modifier.scale(1.5f),
+                onClick = { viewModel.previous() },
+                enabled = !uiState.isOnFirstWord
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = "button previous"
                 )
-                IconButton(
-                    modifier = Modifier.scale(1.5f),
-                    onClick = { viewModel.next() },
-                    enabled = !uiState.isOnLastWord
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = "button next"
-                    )
-                }
+            }
+            val soundName = uiState.currentWord.soundName ?: ""
+            val soundId = viewModel.getSoundId(soundName)
+
+            PlaySoundButton(
+                onClick = { viewModel.playSound(soundId) }
+            )
+
+            IconButton(
+                modifier = Modifier.scale(1.5f),
+                onClick = { viewModel.next() },
+                enabled = !uiState.isOnLastWord
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "button next"
+                )
+            }
+        }
+    }
+
+
+    @Composable
+    private fun SubNavBar(
+        modifier: Modifier = Modifier,
+        viewModel: SpeechDetailViewModel,
+        uiState: SpeechDetailWordsUiState
+    ) {
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(
+                modifier = Modifier.scale(1.5f),
+                onClick = { viewModel.previous() },
+                enabled = !uiState.isOnFirstWord
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = "button previous"
+                )
+            }
+            Text(
+                modifier = Modifier.wrapContentHeight(),
+                text = "${uiState.index + 1} / ${viewModel.count}",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
+            IconButton(
+                modifier = Modifier.scale(1.5f),
+                onClick = { viewModel.next() },
+                enabled = !uiState.isOnLastWord
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "button next"
+                )
             }
         }
     }

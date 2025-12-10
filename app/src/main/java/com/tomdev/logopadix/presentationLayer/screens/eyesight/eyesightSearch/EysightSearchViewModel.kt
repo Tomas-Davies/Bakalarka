@@ -85,10 +85,6 @@ class EyesightSearchViewModel(
         clickCounter++
     }
 
-    override fun scorePercentage(): Int {
-        return (score * 100) / clickCounter
-    }
-
     override var roundSetSize = 1
 
     override fun updateData() {

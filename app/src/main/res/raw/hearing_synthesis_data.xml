@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
     <round>
-        <roundContent imageName="bota" soundName="bota_spelling"/>
-        <roundContent imageName="buvol" soundName="buvol_spelling"/>
-        <roundContent imageName="buchta" soundName="buchta_spelling"/>
+        <roundContent imageName="pes" soundName="dog_sound"/>
+        <roundContent imageName="kocka" soundName="cat_sound"/>
+        <roundContent imageName="koza" soundName="goat_sound"/>
     </round>
     <round>
         <roundContent imageName="dite" soundName="dite_spelling"/>

@@ -157,10 +157,6 @@ class EyesightDifferViewModel(
     private fun getQuestionSoundName(): String {
         return currentItem.rounds[questionIdx].questionSoundName
     }
-
-    override fun scorePercentage(): Int {
-        return (score * 100) / clickCounter
-    }
 }
 
 

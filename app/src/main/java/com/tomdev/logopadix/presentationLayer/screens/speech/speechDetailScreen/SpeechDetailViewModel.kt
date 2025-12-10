@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.viewModels.BaseViewModel
 import com.tomdev.logopadix.dataLayer.UserSentence
-import com.tomdev.logopadix.dataLayer.WordContent
 import com.tomdev.logopadix.dataLayer.repositories.SpeechRepo
+import com.tomdev.logopadix.dataLayer.repositories.SpeechWordContent
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class SpeechDetailWordsUiState(
-    val currentWord: WordContent,
+    val currentWord: SpeechWordContent,
     val index: Int,
     val isOnFirstWord: Boolean,
     val isOnLastWord: Boolean
@@ -32,12 +32,12 @@ class SpeechDetailViewModel(
     posLabel: String,
     app: com.tomdev.logopadix.LogoApp
 ) : BaseViewModel(app) {
-    private lateinit var words: List<WordContent>
+    private lateinit var words: List<SpeechWordContent>
     private var index = 0
     var count = 0
         private set
 
-    private lateinit var word: WordContent
+    private lateinit var word: SpeechWordContent
     private lateinit var _uiState: MutableStateFlow<SpeechDetailWordsUiState>
     lateinit var uiState: StateFlow<SpeechDetailWordsUiState>
         private set
@@ -63,7 +63,7 @@ class SpeechDetailViewModel(
 
     init {
         viewModelScope.launch {
-            words = repo.getWords(letterLabel, posLabel) ?: listOf(WordContent())
+            words = repo.getWords(letterLabel, posLabel) ?: listOf(SpeechWordContent())
             count = words.size
             word = words[index]
             _uiState = MutableStateFlow(

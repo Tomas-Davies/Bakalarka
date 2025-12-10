@@ -148,7 +148,7 @@ abstract class RoundsViewModel(app: com.tomdev.logopadix.LogoApp) : BaseViewMode
     }
 
     open fun scorePercentage(): Int {
-        return (score * 100) / clickCounter
+        return if (clickCounter != 0) (score * 100) / clickCounter else 100
     }
 
 }

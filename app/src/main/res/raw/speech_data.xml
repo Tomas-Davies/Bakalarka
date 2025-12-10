@@ -838,6 +838,30 @@
     <letter>
         <label>R</label>
         <positions>
+            <position doesntKnowLetter="true">
+                <label>TR</label>
+                <word imageName="svestka" soundName="trnka" subText="Tdnka" subSoundName="svestka_sub">Trnka</word><!-- TODO -->
+                <word imageName="trha" soundName="trha" subText="Tdha" subSoundName="trha_sub">Trhá</word><!-- TODO -->
+                <word imageName="trci" soundName="trci" subText="Tdci" subSoundName="trci_sub">Trčí</word><!-- TODO -->
+            </position>
+            <position doesntKnowLetter="true">
+                <label>DR</label>
+                <word imageName="drhne" soundName="drhne" subText="Ddhne" subSoundName="drhne_sub">Drhne</word><!-- TODO -->
+                <word imageName="kudrny" soundName="kudrny" subText="Kuddny" subSoundName="kudrny_sub">Kudrny</word><!-- TODO -->
+                <word imageName="drak" soundName="drak" subText="Ddak" subSoundName="drak_sub">Drak</word><!-- TODO -->
+            </position>
+            <position doesntKnowLetter="true">
+                <label>MR</label>
+                <word imageName="mrak" soundName="mrak" subText="Mdak" subSoundName="mrak_sub">Mrak</word><!-- TODO -->
+                <word imageName="mrkev" soundName="mrkev" subText="Mdkev" subSoundName="mrkev_sub">Mrkev</word><!-- TODO -->
+                <word imageName="mroz" soundName="mroz" subText="Mdož" subSoundName="mroz_sub">Mrož</word><!-- TODO -->
+            </position>
+            <position doesntKnowLetter="true">
+                <label>PR</label>
+                <word imageName="pracka" soundName="pracka" subText="Pdacka" subSoundName="pracka_sub">Pračka</word><!-- TODO -->
+                <word imageName="prase" soundName="prase" subText="Pdase" subSoundName="prase_sub">Prase</word><!-- TODO -->
+                <word imageName="prach" soundName="prach" subText="Pdach" subSoundName="prach_sub">Prach</word><!-- TODO -->
+            </position>
             <position>
                 <label>R_</label>
                 <word imageName="ruze" soundName="ruze">Růže</word>

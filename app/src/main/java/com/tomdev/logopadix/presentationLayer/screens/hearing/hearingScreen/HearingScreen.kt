@@ -16,6 +16,7 @@ import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.CategoryButton
 import com.tomdev.logopadix.presentationLayer.components.CategoryMenu
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
+import com.tomdev.logopadix.presentationLayer.screens.hearing.hearingAssigning.HearingAssigningScreen
 import com.tomdev.logopadix.presentationLayer.screens.hearing.hearingFonematic.HearingFonematicScreen
 import com.tomdev.logopadix.presentationLayer.screens.hearing.hearingMemory.HearingMemoryScreen
 import com.tomdev.logopadix.presentationLayer.screens.hearing.hearingSynthesis.HearingSynthesisScreen
@@ -74,6 +75,16 @@ class HearingScreen : AppCompatActivity() {
                         popUpContent = stringResource(id = R.string.hearing_pop_up_body_3),
                         imageId = R.drawable.hearing_btn_3_logo
                     )
+                },
+                {
+                    CategoryButton(
+                        onClick = { onCardClicked(3) },
+                        label = stringResource(id = R.string.hearing_menu_label_4),
+                        labelLong = stringResource(id = R.string.hearing_menu_label_long_4),
+                        popUpHeading = stringResource(id = R.string.hearing_menu_label_long_4),
+                        popUpContent = stringResource(id = R.string.hearing_pop_up_body_4),
+                        imageId = R.drawable.hearing_btn_4_logo
+                    )
                 }
             )
 
@@ -90,6 +101,7 @@ class HearingScreen : AppCompatActivity() {
         when (id) {
             1 -> intent = Intent(this, HearingMemoryScreen::class.java)
             2 -> intent = Intent(this, HearingSynthesisScreen::class.java)
+            3 -> intent = Intent(this, HearingAssigningScreen::class.java)
         }
         startActivity(intent)
     }

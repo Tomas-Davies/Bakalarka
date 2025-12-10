@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <round>
+        <roundContent imageName="fenka" soundName="dog_bark"/>
+        <roundContent imageName="kocicka" soundName="cat_meow"/>
+        <roundContent imageName="koza" soundName="goat_mee"/>
+    </round>
+    <round>
+        <roundContent imageName="vrana" soundName="crow_sound"/>
+        <roundContent imageName="vosa" soundName="wasp_buzz"/>
+        <roundContent imageName="sova" soundName="owl_sound"/>
+    </round>
+    <round>
+        <roundContent imageName="kun" soundName="horse_sound"/>
+        <roundContent imageName="opice" soundName="monkey_sound"/>
+        <roundContent imageName="prase" soundName="pig_sound"/>
+        <roundContent imageName="slepice" soundName="chicken_sound"/>
+    </round>
+    <round>
+        <roundContent imageName="buben" soundName="drum_sound"/>
+        <roundContent imageName="klavir" soundName="piano_sound"/>
+        <roundContent imageName="fletna" soundName="flute_sound"/>
+        <roundContent imageName="housle" soundName="violin_sound"/>
+    </round>
+</data>

@@ -78,10 +78,12 @@
     <string name="hearing_menu_label_1">Hlásky</string>
     <string name="hearing_menu_label_2">Paměť</string>
     <string name="hearing_menu_label_3">Syntéza</string>
+    <string name="hearing_menu_label_4">Přiřazení</string>
 
     <string name="hearing_menu_label_long_1">Fonematický sluch</string>
     <string name="hearing_menu_label_long_2">Sluchová paměť</string>
     <string name="hearing_menu_label_long_3">Sluchová syntéza</string>
+    <string name="hearing_menu_label_long_4">Rozpoznání zvuku</string>
 
     <string name="hearing_pop_up_body_1">
         Fonematický sluch je schopnost vnímat a rozlišovat jednotlivé hlásky ve slovech.
@@ -101,6 +103,13 @@
         Například dítě slyší zvuky „m“ – „a“ – „k“, a dokáže z nich sestavit slovo „mak“.
         Tato dovednost je klíčová pro správnou výslovnost a čtení. Pomáhá dětem porozumět tomu,
         jak zvuky tvoří slova, a jak tato slova zapadají do vět.
+    </string>
+    <string name="hearing_pop_up_body_4">
+        Přiřazení zvuku k obrázku je schopnost poznat, který zvuk patří ke konkrétnímu objektu
+        nebo situaci. Dítě například uslyší „haf“ a dokáže určit, že tento zvuk náleží obrázku psa.
+        Tato dovednost rozvíjí porozumění zvukům z okolního světa, podporuje vnímání souvislostí
+        mezi zvukem a jeho zdrojem a pomáhá dětem lépe orientovat se v reálných situacích.
+        Zároveň posiluje schopnost pozorně naslouchat a správně reagovat na sluchové podněty.
     </string>
 
     <string name="rythm_menu_label_1">Poličky</string>
@@ -166,6 +175,9 @@
     <string name="round">Úroveň</string>
     <string name="hearing_memory_label_1">Zapamatuj si co nejvíce slov</string>
     <string name="hearing_memory_label_2">Označ slova, která si pamatuješ</string>
+    <string name="hearing_assign_label"> Přehraj si zvuk a poté vyber obrázek</string>
+
+
     <string name="rythm_sound_card_label">Rytmus</string>
     <string name="rythm_syllables_label">Klikni na tolik koleček, kolik má slovo slabik</string>
     <string name="rythm_shelves_label">Najdi dvojice rýmů</string>

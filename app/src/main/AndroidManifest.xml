@@ -88,6 +88,10 @@
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
+            android:name=".presentationLayer.screens.hearing.hearingAssigning.HearingAssigningScreen"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
+        <activity
             android:name=".presentationLayer.screens.rythm.rythmShelvesScreen.RythmShelvesScreen"
             android:screenOrientation="portrait"
             android:exported="true"/>

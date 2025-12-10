@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -211,10 +212,12 @@ class SpeechScreen : AppCompatActivity() {
                         onCategoryClicked(
                             letterLabel,
                             true,
-                            pos.label
+                            pos.label,
+                            showSubSound = pos.doesntKnowLetter
                         )
                     },
-                    text = pos.label
+                    text = pos.label,
+                    doesntKnowLetter = pos.doesntKnowLetter
                 )
             }
         }
@@ -225,11 +228,19 @@ class SpeechScreen : AppCompatActivity() {
     fun SpeechButton(
         onClick: () -> Unit,
         text: String,
-        isPrimitive: Boolean = true
+        isPrimitive: Boolean = true,
+        doesntKnowLetter: Boolean = false
     ) {
-        val cardColors = CardDefaults.cardColors().copy(
-            containerColor = MaterialTheme.colorScheme.primary
-        )
+        val cardColors = if (doesntKnowLetter){
+            CardDefaults.cardColors().copy(
+                containerColor = colorResource(R.color.speech_substitution)
+            )
+        } else {
+            CardDefaults.cardColors().copy(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        }
+
         CustomCard(
             modifier = Modifier.padding(9.dp),
             onClick = { onClick() },
@@ -248,11 +259,17 @@ class SpeechScreen : AppCompatActivity() {
     }
 
 
-    private fun onCategoryClicked(letterLabel: String, showWords: Boolean, posLabel: String = "") {
+    private fun onCategoryClicked(
+        letterLabel: String,
+        showWords: Boolean,
+        posLabel: String = "",
+        showSubSound: Boolean = false
+    ) {
         val intent = Intent(this, SpeechDetailScreen::class.java)
         if (showWords) intent.putExtra("POS_LABEL", posLabel)
         intent.putExtra("LETTER_LABEL", letterLabel)
         intent.putExtra("SHOW_WORDS", showWords)
+        intent.putExtra("SHOW_SUB_SOUND", showSubSound)
         startActivity(intent)
     }
 }

@@ -4,10 +4,10 @@ import android.content.Context
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.dataLayer.IModel
 import com.tomdev.logopadix.dataLayer.UserSentence
-import com.tomdev.logopadix.dataLayer.WordContent
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText
 import kotlinx.coroutines.flow.Flow
 
 
@@ -24,9 +24,9 @@ class SpeechRepo(ctx: Context) :
     /**
      * @param letterLabel A label of the letter, for example "L".
      * @param posLabel A label of position that groups the words, for example "L_L".
-     * @return list of [WordContent]
+     * @return list of [SpeechWordContent]
      */
-    fun getWords(letterLabel: String, posLabel: String): List<WordContent>? {
+    fun getWords(letterLabel: String, posLabel: String): List<SpeechWordContent>? {
         val letter = data.find { letter -> letter.label == letterLabel }
         if (posLabel.isNotEmpty()){
             val pos = letter?.positions?.find { pos -> pos.label == posLabel }
@@ -59,12 +59,28 @@ class SpeechRepo(ctx: Context) :
     }
 }
 
-data class LetterPosition(
-    val label: String = "",
+
+class SpeechWordContent {
+    @JacksonXmlProperty(isAttribute = true)
+    val imageName: String? = null
+    @JacksonXmlProperty(isAttribute = true)
+    val soundName: String? = null
+    @JacksonXmlProperty(isAttribute = true)
+    val subSoundName: String? = null
+    @JacksonXmlProperty(isAttribute = true)
+    val subText: String? = null
+    @JacksonXmlText
+    val text: String? = null
+}
+
+class LetterPosition {
+    @JacksonXmlProperty(isAttribute = true)
+    val doesntKnowLetter: Boolean = false
+    val label: String = ""
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "word")
-    val words: List<WordContent> = emptyList()
-)
+    val words: List<SpeechWordContent> = emptyList()
+}
 
 data class SpeechLetter(
     val label: String = "",

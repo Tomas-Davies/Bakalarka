@@ -31,6 +31,9 @@ class LogoApp: Application() {
     val hearingSynthesisRepository by lazy { BasicWordsRepo(this,
         R.raw.hearing_synthesis_data
     ) }
+    val hearingAssignRepository by lazy { BasicWordsRepo(this,
+        R.raw.hearing_assign_data
+        ) }
     val rythmSyllablesRepository by lazy { RythmSyllablesRepo(this) }
     val rythmShelvesRepository by lazy { RythmShelvesRepo(this) }
     val rythmRepeatRepository by lazy { RythmRepeatRepo(this) }

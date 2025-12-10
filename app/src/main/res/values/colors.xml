@@ -34,4 +34,6 @@
     <color name="incorrect">#E00543</color>
     <color name="incorrect_outline">#97052E</color>
     <color name="wood">#FDC18A</color>
+
+    <color name="speech_substitution">#2196F3</color>
 </resources>

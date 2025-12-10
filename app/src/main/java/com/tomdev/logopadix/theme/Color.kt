@@ -7,7 +7,7 @@ val speech_theme_onPrimary = Color(0xFFF8F7F7)
 val speech_theme_primaryContainer = Color(0xFF6F230D)
 val speech_theme_onPrimaryContainer = Color(0xFFF5F5F5)
 
-val dark_error = Color(0xFFFFB4AB)
+val dark_error = Color(0xFF2196F3)
 val dark_errorContainer = Color(0xFF93000A)
 val dark_onError = Color(0xFF690005)
 val dark_onErrorContainer = Color(0xFFFFDAD6)
