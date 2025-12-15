@@ -4,6 +4,7 @@ activityCompose = "1.8.2"
 agp = "8.13.0"
 amplitudaVersion = "v2.3.1"
 composeAudiowaveform = "1.1.1"
+datastorePreferences = "1.2.0"
 jacksonVersion = "2.18.0"
 konfettiCompose = "2.0.4"
 kotlin = "1.9.23"
@@ -25,6 +26,7 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }

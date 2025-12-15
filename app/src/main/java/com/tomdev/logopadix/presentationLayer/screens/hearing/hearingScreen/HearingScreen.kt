@@ -53,6 +53,7 @@ class HearingScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.hearing_menu_label_long_1),
                         popUpHeading = stringResource(id = R.string.hearing_menu_label_long_1),
                         popUpContent = stringResource(id = R.string.hearing_pop_up_body_1),
+                        ageRec = stringResource(id = R.string.age_rec_s),
                         imageId = R.drawable.hearing_btn_1_logo
                     )
                 },
@@ -63,6 +64,7 @@ class HearingScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.hearing_menu_label_long_2),
                         popUpHeading = stringResource(id = R.string.hearing_menu_label_long_2),
                         popUpContent = stringResource(id = R.string.hearing_pop_up_body_2),
+                        ageRec = stringResource(id = R.string.age_rec_s),
                         imageId = R.drawable.hearing_btn_2_logo
                     )
                 },
@@ -73,6 +75,7 @@ class HearingScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.hearing_menu_label_long_3),
                         popUpHeading = stringResource(id = R.string.hearing_menu_label_long_3),
                         popUpContent = stringResource(id = R.string.hearing_pop_up_body_3),
+                        ageRec = stringResource(id = R.string.age_rec_s),
                         imageId = R.drawable.hearing_btn_3_logo
                     )
                 },
@@ -83,6 +86,7 @@ class HearingScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.hearing_menu_label_long_4),
                         popUpHeading = stringResource(id = R.string.hearing_menu_label_long_4),
                         popUpContent = stringResource(id = R.string.hearing_pop_up_body_4),
+                        ageRec = stringResource(id = R.string.age_rec_s),
                         imageId = R.drawable.hearing_btn_4_logo
                     )
                 }

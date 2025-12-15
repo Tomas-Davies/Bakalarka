@@ -188,4 +188,8 @@
     <string name="tales_images_description_label">Klikni na obrázek pro přehrání zvuku</string>
     <string name="done_btn_label">Hotovo</string>
 
+    <string name="age_rec_s">Věk: 3–6</string>
+    <string name="age_rec_m">Věk: 5</string>
+    <string name="timer">Časomíra</string>
+
 </resources>

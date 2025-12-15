@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText
 import kotlinx.coroutines.flow.Flow
+import kotlin.collections.emptyList
 
 
 class SpeechRepo(ctx: Context) :
@@ -27,12 +28,12 @@ class SpeechRepo(ctx: Context) :
      * @return list of [SpeechWordContent]
      */
     fun getWords(letterLabel: String, posLabel: String): List<SpeechWordContent>? {
-        val letter = data.find { letter -> letter.label == letterLabel }
+        val letter: SpeechLetter = data.find { letter -> letter.label == letterLabel } ?: return emptyList()
         if (posLabel.isNotEmpty()){
-            val pos = letter?.positions?.find { pos -> pos.label == posLabel }
-            return pos?.words
+            val pos = letter.positions.find { pos -> pos.label == posLabel }
+            return pos?.words ?: emptyList()
         } else {
-            return letter?.positions?.get(0)?.words ?: emptyList()
+            return letter.positions.firstOrNull()?.words ?: emptyList()
         }
     }
 
@@ -70,7 +71,7 @@ class SpeechWordContent {
     @JacksonXmlProperty(isAttribute = true)
     val subText: String? = null
     @JacksonXmlText
-    val text: String? = null
+    var text: String? = null
 }
 
 class LetterPosition {

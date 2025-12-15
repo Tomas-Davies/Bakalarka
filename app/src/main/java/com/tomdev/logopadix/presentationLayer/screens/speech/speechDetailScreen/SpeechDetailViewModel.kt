@@ -63,17 +63,31 @@ class SpeechDetailViewModel(
 
     init {
         viewModelScope.launch {
-            words = repo.getWords(letterLabel, posLabel) ?: listOf(SpeechWordContent())
+            words = repo.getWords(letterLabel, posLabel) ?: listOf()
             count = words.size
-            word = words[index]
-            _uiState = MutableStateFlow(
-                SpeechDetailWordsUiState(
-                    word,
-                    index,
-                    index == 0,
-                    index == words.size - 1
+
+            if (words.isNotEmpty()){
+                word = words[index]
+                _uiState = MutableStateFlow(
+                    SpeechDetailWordsUiState(
+                        word,
+                        index,
+                        index == 0,
+                        index == words.size - 1
+                    )
                 )
-            )
+            }
+            else {
+                _uiState = MutableStateFlow(
+                    SpeechDetailWordsUiState(
+                        SpeechWordContent().apply { text = "Nastala neočekávaná chyba." },
+                        index,
+                        true,
+                        true
+                    )
+                )
+            }
+
             uiState = _uiState
             _screenState.value = ScreenState.Success
             defaultSentences = repo.getDefaultSentences(letterLabel) ?: emptyList()

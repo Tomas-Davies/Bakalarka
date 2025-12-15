@@ -12,8 +12,8 @@ android {
         applicationId = "com.tomdev.logopadix"
         minSdk = 29
         targetSdk = 35
-        versionCode = 17
-        versionName = "1.0.10"
+        versionCode = 18
+        versionName = "1.0.11"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -79,6 +79,8 @@ dependencies {
     implementation(libs.amplituda)
     // AudioWave
     implementation(libs.compose.audiowaveform)
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -20,24 +20,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.tomdev.logopadix.EYESIGHT_SHOW_TIMER_KEY
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.datastore
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.theme.ThemeType
@@ -46,6 +53,8 @@ import com.tomdev.logopadix.presentationLayer.components.LinearTimerIndicator
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.tomdev.logopadix.theme.AppTheme
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 
 class EyesightComparisonScreen : AppCompatActivity() {
@@ -64,14 +73,18 @@ class EyesightComparisonScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    EyesightComparisonRunning(viewModel = viewModel)
+                    EyesightComparisonRunning(
+                        viewModel = viewModel
+                    )
                 }
             }
         }
     }
 
     @Composable
-    private fun EyesightComparisonRunning(viewModel: EyesightComparisonViewModel) {
+    private fun EyesightComparisonRunning(
+        viewModel: EyesightComparisonViewModel
+    ) {
         ScreenWrapper(
             onExit = { finish() },
             showPlaySoundIcon = true,
@@ -81,6 +94,12 @@ class EyesightComparisonScreen : AppCompatActivity() {
         ) {
             AsyncDataWrapper(viewModel) {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                val ctx = LocalContext.current
+                val datastore = ctx.datastore
+                val checkedFlow = datastore.data.map { pref -> pref[EYESIGHT_SHOW_TIMER_KEY] ?: true }
+                val checked by checkedFlow.collectAsStateWithLifecycle(true)
+                val scope = rememberCoroutineScope()
+
                 RoundsCompletedBox(
                     viewModel = viewModel,
                     onExit = { finish() }
@@ -97,17 +116,43 @@ class EyesightComparisonScreen : AppCompatActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         val enabled by viewModel.buttonsEnabled.collectAsStateWithLifecycle()
-
-                        LinearTimerIndicator(
-                            msDuration = 15_000,
-                            onFinish = {
-                                if (enabled) {
-                                    viewModel.onTimerFinish()
+                        Row (
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = stringResource(R.string.timer),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Spacer(modifier = Modifier.width(18.dp))
+                            Switch(
+                                modifier = Modifier.scale(0.7f),
+                                checked = checked == true,
+                                onCheckedChange = {
+                                    scope.launch {
+                                        ctx.datastore.edit { prefs ->
+                                            prefs[EYESIGHT_SHOW_TIMER_KEY] = it
+                                        }
+                                    }
                                 }
-                            },
-                            restartTrigger = uiState.restartTrigger
-                        )
-                        Spacer(modifier = Modifier.height(50.dp))
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(9.dp))
+                        if (checked == true){
+                            LinearTimerIndicator(
+                                msDuration = 15_000,
+                                onFinish = {
+                                    if (enabled) {
+                                        viewModel.onTimerFinish()
+                                    }
+                                },
+                                restartTrigger = uiState.restartTrigger
+                            )
+                            Spacer(modifier = Modifier.height(50.dp))
+                        }
+                        else{
+                            Spacer(modifier = Modifier.height(65.dp))
+                        }
+
                         val imageResId = viewModel.getDrawableId(uiState.imageName)
                         AnimatedContent(
                             modifier = Modifier

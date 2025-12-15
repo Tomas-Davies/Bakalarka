@@ -13,7 +13,6 @@
     <round>
         <roundContent imageName="kun" soundName="horse_sound"/>
         <roundContent imageName="opice" soundName="monkey_sound"/>
-        <roundContent imageName="prase" soundName="pig_sound"/>
         <roundContent imageName="slepice" soundName="chicken_sound"/>
     </round>
     <round>
@@ -21,5 +20,16 @@
         <roundContent imageName="klavir" soundName="piano_sound"/>
         <roundContent imageName="fletna" soundName="flute_sound"/>
         <roundContent imageName="housle" soundName="violin_sound"/>
+    </round>
+
+    <round>
+        <roundContent imageName="prase" soundName="pig_sound"/>
+        <roundContent imageName="osel" soundName="osel_sound"/>
+        <roundContent imageName="vlk" soundName="vlk_sound"/>
+    </round>
+    <round>
+        <roundContent imageName="lev" soundName="lev_sound"/>
+        <roundContent imageName="krava" soundName="krava_sound"/>
+        <roundContent imageName="kachna" soundName="kachna_sound"/>
     </round>
 </data>

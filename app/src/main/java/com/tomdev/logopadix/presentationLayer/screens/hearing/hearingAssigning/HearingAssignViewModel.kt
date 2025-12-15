@@ -31,7 +31,7 @@ class HearingAssignViewModel(
     lateinit var uiState: StateFlow<HearingAssignUiState>
         private set
 
-    override var roundSetSize = 5
+    override var roundSetSize = 3
 
     init {
         viewModelScope.launch {
