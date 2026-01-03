@@ -35,10 +35,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -55,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.NewComersDialog
+import com.tomdev.logopadix.presentationLayer.components.WhatsNewDialog
 import com.tomdev.logopadix.presentationLayer.screens.info.InfoScreen
 import com.tomdev.logopadix.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.tomdev.logopadix.presentationLayer.screens.hearing.hearingScreen.HearingScreen
@@ -127,8 +124,6 @@ class HomeScreen : AppCompatActivity() {
         menuItemRatio: Float = 1f,
         menuItemWideRatio: Float = 2.5f
     ) {
-        var showWelcomePopup by remember { mutableStateOf(true) }
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -234,18 +229,31 @@ class HomeScreen : AppCompatActivity() {
                     )
                 }
             }
-            if (showWelcomePopup){
-                var text = listOf(
+
+                val text1 = listOf(
                     Triple(R.string.welcome_heading_1, R.string.welcome_content_1, R.drawable.welcome_image_1),
                     Triple(R.string.welcome_heading_2, R.string.welcome_content_2, R.drawable.welcome_image_2),
                     Triple(R.string.welcome_heading_3, R.string.welcome_content_3, R.drawable.welcome_image_3)
                 )
                 NewComersDialog(
-                    headingsAndTexts = text,
+                    headingsAndTexts = text1,
                     btnLabelNext = stringResource(R.string.welcome_btn_label),
-                    onEnterClick = { showWelcomePopup = false }
+                    onEnterClick = {  }
                 )
-            }
+
+                val text2 = listOf(
+                    Triple(R.string.update_heading_1, R.string.update_content_1, R.drawable.welcome_image_1), // TODO - third obrazky
+                    Triple(R.string.update_heading_2, R.string.update_content_2, R.drawable.welcome_image_2),
+                    Triple(R.string.update_heading_3, R.string.update_content_3, R.drawable.welcome_image_3)
+                )
+                WhatsNewDialog(
+                    headingsAndTexts = text2,
+                    mainHeading = stringResource(R.string.update_main_heading),
+                    btnLabelNext = stringResource(R.string.update_btn_label_next),
+                    btnLabelPrev = stringResource(R.string.update_btn_label_prev),
+                    onEnterClick = {  }
+                )
+
         }
 
     }

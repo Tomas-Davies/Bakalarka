@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -205,7 +207,8 @@ class SpeechFilterScreen: AppCompatActivity() {
                 onDismissRequest = {
                     showSheet = false
                 },
-                sheetState = sheetState
+                sheetState = sheetState,
+                sheetGesturesEnabled = false
             ) {
                 AsyncDataWrapper(viewModel) {
                     Row {
@@ -269,7 +272,9 @@ class SpeechFilterScreen: AppCompatActivity() {
         val imageId = viewModel.getDrawableId(wordContent.imageName)
 
         CustomCard(
-            modifier = Modifier.padding(horizontal = 18.dp, vertical = 9.dp)
+            modifier = Modifier
+                .padding(horizontal = 18.dp, vertical = 9.dp)
+                .sizeIn(maxHeight = 200.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -280,14 +285,15 @@ class SpeechFilterScreen: AppCompatActivity() {
                     modifier = Modifier.padding(18.dp),
                     onClick = { viewModel.playSoundByName(wordContent.soundName) }
                 )
-                Spacer(modifier = Modifier.weight(0.3f))
+                Spacer(Modifier.weight(0.1f))
                 Text(
+                    modifier = Modifier.border(1.dp, Color.Red),
                     text = wordContent.text,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.weight(0.3f))
+                Spacer(Modifier.weight(0.1f))
                 Image(
                     modifier = Modifier
                         .weight(1f),

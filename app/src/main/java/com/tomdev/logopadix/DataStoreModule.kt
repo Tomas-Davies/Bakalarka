@@ -9,3 +9,6 @@ val Context.datastore by preferencesDataStore(name = "user_settings")
 val EYESIGHT_SHOW_TIMER_KEY = booleanPreferencesKey("EYESIGHT_SHOW_TIMER")
 val WELCOME_POPUP_VERSION_KEY = intPreferencesKey("WELCOME_POPUP_VERSION")
 const val CURRENT_WELCOME_POPUP_VERSION: Int = 1
+
+val WHATS_NEW_POPUP_VERSION_KEY = intPreferencesKey("WHATS_NEW_POPUP_VERSION")
+const val CURRENT_WHATS_NEW_POPUP_VERSION: Int = 1

@@ -1,10 +1,12 @@
 package com.tomdev.logopadix.presentationLayer.components
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,7 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.CURRENT_WELCOME_POPUP_VERSION
+import com.tomdev.logopadix.CURRENT_WHATS_NEW_POPUP_VERSION
 import com.tomdev.logopadix.WELCOME_POPUP_VERSION_KEY
+import com.tomdev.logopadix.WHATS_NEW_POPUP_VERSION_KEY
 import com.tomdev.logopadix.datastore
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -44,25 +48,33 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewComersDialog(
+fun WhatsNewDialog(
     modifier: Modifier = Modifier,
+    mainHeading: String,
     headingsAndTexts: List<Triple<Int, Int, Int>>,
     btnLabelNext: String,
+    btnLabelPrev: String,
     onEnterClick: () -> Unit
 ) {
     val ctx = LocalContext.current
-    val dataFlow = ctx.datastore.data.map { pref -> pref[WELCOME_POPUP_VERSION_KEY] ?: 0 }
-    val oldWelcomePopUpVersion by dataFlow.collectAsStateWithLifecycle(initialValue = Int.MAX_VALUE)
+    val welcomeDataFlow = ctx.datastore.data.map { pref -> pref[WELCOME_POPUP_VERSION_KEY] ?: 0 }
+    val oldWelcomePopUpVersion by welcomeDataFlow.collectAsStateWithLifecycle(initialValue = 0)
+
+    val whatsNewDataFlow = ctx.datastore.data.map { pref -> pref[WHATS_NEW_POPUP_VERSION_KEY] ?: 0 }
+    val oldWhatsNewPopUpVersion by whatsNewDataFlow.collectAsStateWithLifecycle(initialValue = Int.MAX_VALUE)
 
     var showWelcomePopUp by rememberSaveable { mutableStateOf(false) }
+    var showWhatsNewPopUp by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(oldWhatsNewPopUpVersion) {
+        showWelcomePopUp = oldWelcomePopUpVersion < CURRENT_WELCOME_POPUP_VERSION
+        showWhatsNewPopUp = oldWhatsNewPopUpVersion < CURRENT_WHATS_NEW_POPUP_VERSION
+    }
+
     val pagerState = rememberPagerState(pageCount = { headingsAndTexts.size })
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(oldWelcomePopUpVersion) {
-        showWelcomePopUp = oldWelcomePopUpVersion < CURRENT_WELCOME_POPUP_VERSION
-    }
-
-    if (showWelcomePopUp) {
+    if (showWhatsNewPopUp && !showWelcomePopUp) {
         BasicAlertDialog(
             modifier = Modifier
                 .padding(top = 18.dp, bottom = 18.dp)
@@ -86,41 +98,29 @@ fun NewComersDialog(
                     Box(
                         modifier = Modifier
                             .height(42.dp)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.CenterEnd
                     ) {
-                        PagerDots(
-                            modifier = Modifier.align(Alignment.Center),
-                            pagerState = pagerState
-                        )
-                        Box(
-                            modifier = Modifier.align(Alignment.CenterEnd)
-                        ){
-                            if (pagerState.currentPage < pagerState.pageCount - 1) {
-                                Button(
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        if (pagerState.currentPage == pagerState.pageCount - 1) {
+                            DeleteButton(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        ctx.datastore.edit { pref ->
+                                            pref[WHATS_NEW_POPUP_VERSION_KEY] =
+                                                CURRENT_WHATS_NEW_POPUP_VERSION
                                         }
                                     }
-                                ) {
-                                    Text(text = btnLabelNext)
+                                    onEnterClick()
                                 }
-                            } else {
-                                DeleteButton(
-                                    onClick = {
-                                        showWelcomePopUp = false
-                                        coroutineScope.launch {
-                                            ctx.datastore.edit { pref ->
-                                                pref[WELCOME_POPUP_VERSION_KEY] =
-                                                    CURRENT_WELCOME_POPUP_VERSION
-                                            }
-                                        }
-                                        onEnterClick()
-                                    }
-                                )
-                            }
+                            )
                         }
                     }
+
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = mainHeading,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
 
                     HorizontalPager(
                         modifier = Modifier.fillMaxWidth(),
@@ -145,6 +145,37 @@ fun NewComersDialog(
                                 painter = painterResource(headingsAndTexts[pagerState.currentPage].third),
                                 contentDescription = "decoration"
                             )
+                        }
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Button(
+                            onClick = {
+                                coroutineScope.launch {
+                                    val currPage = pagerState.currentPage
+                                    if (currPage > 0)
+                                        pagerState.animateScrollToPage(currPage - 1)
+                                }
+                            }
+                        ) {
+                            Text(btnLabelPrev)
+                        }
+                        Spacer(Modifier.weight(1f))
+                        PagerDots(pagerState = pagerState)
+                        Spacer(Modifier.weight(1f))
+                        Button(
+                            enabled = pagerState.currentPage < pagerState.pageCount - 1,
+                            onClick = {
+                                coroutineScope.launch {
+                                    val currPage = pagerState.currentPage
+                                    if (currPage < pagerState.pageCount - 1)
+                                        pagerState.animateScrollToPage(currPage + 1)
+                                }
+                            }
+                        ) {
+                            Text(btnLabelNext)
                         }
                     }
                 }
