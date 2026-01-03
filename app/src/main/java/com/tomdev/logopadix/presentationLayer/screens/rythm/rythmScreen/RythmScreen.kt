@@ -54,7 +54,6 @@ class RythmScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.rythm_menu_label_long_1),
                         popUpHeading = stringResource(id = R.string.rythm_menu_label_long_1),
                         popUpContent = stringResource(id = R.string.rythm_pop_up_body_1),
-                        ageRec = stringResource(id = R.string.age_rec_s),
                         imageId = R.drawable.rythm_btn_1_logo
                     )
                 },
@@ -65,7 +64,6 @@ class RythmScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.rythm_menu_label_long_2),
                         popUpHeading = stringResource(id = R.string.rythm_menu_label_long_2),
                         popUpContent = stringResource(id = R.string.rythm_pop_up_body_2),
-                        ageRec = stringResource(id = R.string.age_rec_s),
                         imageId = R.drawable.rythm_btn_2_logo
                     )
                 },
@@ -76,7 +74,6 @@ class RythmScreen : AppCompatActivity() {
                         labelLong = stringResource(id = R.string.rythm_menu_label_long_3),
                         popUpHeading = stringResource(id = R.string.rythm_menu_label_long_3),
                         popUpContent = stringResource(id = R.string.rythm_pop_up_body_3),
-                        ageRec = stringResource(id = R.string.age_rec_s),
                         imageId = R.drawable.rythm_btn_3_logo
                     )
                 }

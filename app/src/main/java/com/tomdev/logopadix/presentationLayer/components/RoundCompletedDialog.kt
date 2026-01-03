@@ -1,6 +1,7 @@
 package com.tomdev.logopadix.presentationLayer.components
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -41,6 +42,7 @@ import java.util.concurrent.TimeUnit
  * @param onExit Called when *exit* button is clicked.
  * @param continueBtnEnabled Boolean value controlling if *continue* button is enabled.
  */
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun RoundCompletedDialog(
     scorePercentage: Int,

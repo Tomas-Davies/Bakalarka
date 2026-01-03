@@ -32,6 +32,18 @@
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
+            android:name=".presentationLayer.screens.speech.speechInitialMenuScreen.SpeechInitialMenuScreen"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
+        <activity
+            android:name=".presentationLayer.screens.speech.speechFilterScreen.SpeechFilterScreen"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
+        <activity
+            android:name=".presentationLayer.screens.speech.speechTongueScreen.SpeechTongueScreen"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
+        <activity
             android:name=".presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen"
             android:screenOrientation="portrait"
             android:exported="true"/>

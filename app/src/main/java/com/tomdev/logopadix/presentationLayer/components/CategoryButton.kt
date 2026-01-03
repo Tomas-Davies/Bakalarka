@@ -54,7 +54,6 @@ fun CategoryButton(
     labelLong: String,
     popUpHeading: String,
     popUpContent: String,
-    ageRec: String = "",
     imageId: Int,
     onClick: () -> Unit
 ){
@@ -72,7 +71,6 @@ fun CategoryButton(
             labelLong = labelLong,
             popUpHeading = popUpHeading,
             popUpContent = popUpContent,
-            ageRec = ageRec,
             imageId = imageId
         )
     }
@@ -86,7 +84,6 @@ private fun CategoryContent(
     labelLong: String,
     popUpHeading: String,
     popUpContent: String,
-    ageRec: String,
     imageId: Int
 ){
     var showPopUp by remember { mutableStateOf(false) }
@@ -94,8 +91,7 @@ private fun CategoryContent(
         CategoryDetailDialog(
             popUpHeading = popUpHeading,
             popUpBody = popUpContent,
-            onExit = { showPopUp = false },
-            ageRec = ageRec
+            onExit = { showPopUp = false }
         )
     }
     Row(

@@ -4,7 +4,8 @@ import androidx.compose.ui.graphics.Color
 
 val speech_theme_primary = Color(0xFFF15226)
 val speech_theme_onPrimary = Color(0xFFF8F7F7)
-val speech_theme_primaryContainer = Color(0xFF6F230D)
+//val speech_theme_primaryContainer = Color(0xFF6F230D)
+val speech_theme_primaryContainer = Color(0xFFFF7926)
 val speech_theme_onPrimaryContainer = Color(0xFFF5F5F5)
 
 val dark_error = Color(0xFF2196F3)

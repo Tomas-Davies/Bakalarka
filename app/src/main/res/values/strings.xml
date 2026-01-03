@@ -16,6 +16,23 @@
     <string name="info_content_5_heading">Gif</string>
     <string name="info_content_5_text">Musical note animated icons created by Freepic - Flaticon</string>
 
+    <string name="welcome_heading_1">Vítejte v aplikaci Logopadix</string>
+    <string name="welcome_content_1">Logopadix je podpůrná aplikace zaměřená na rozvoj řeči a dalších
+    souvisejících dovedností u dětí. Vznikla s cílem nabídnout smysluplná a strukturovaná cvičení,
+    která lze využívat naprosto kdekoliv.</string>
+
+    <string name="welcome_heading_2">Každé dítě se vyvíjí vlastním tempem</string>
+    <string name="welcome_content_2">Vývoj řeči je velmi individuální proces. Aplikace
+    obsahuje cvičení určená především pro děti ve věku 3-8 let a je možný výběr dle
+    obtížností.</string>
+
+    <string name="welcome_heading_3">Podpora, ne diagnostika</string>
+    <string name="welcome_content_3">Logopadix není diagnostický nástroj a nenahrazuje
+    odborné vyšetření ani terapii. V případě pochybností o vývoji řeči doporučujeme
+    konzultaci s klinickým logopedem.</string>
+
+    <string name="welcome_btn_label">Další</string>
+
     <string name="speech_menu_item_label">Umístění</string>
     <string name="speech_options_label">Možnosti</string>
     <string name="speech_options_words">Slova</string>
@@ -28,6 +45,29 @@
     <string name="confirmButtonLabel">Ano</string>
     <string name="dismissButtonLabel">Ne</string>
     <string name="speechDeletePopUpText">Přejete si smazat tuto větu?</string>
+
+    <string name="speech_menu_label_1">Přehled</string>
+    <string name="speech_menu_label_2">Filtrace</string>
+    <string name="speech_menu_label_3">Jazyk</string>
+
+    <string name="speech_menu_label_long_1">Volný výběr</string>
+    <string name="speech_menu_label_long_2">Filtrace dle hlásek</string>
+    <string name="speech_menu_label_long_3">Diadochokineze</string>
+
+    <string name="speech_pop_up_body_1">description of the exercise</string><!--TODO  -->
+    <string name="speech_pop_up_body_2">description of the exercise</string><!--TODO  -->
+    <string name="speech_pop_up_body_3">description of the exercise</string><!--TODO  -->
+
+    <string name="speech_filter_field_1">Obsahuje</string>
+    <string name="speech_filter_field_2">Neobsahuje</string>
+    <string name="speech_filter_field_3">Začíná na</string>
+    <string name="speech_filter_field_4">Končí na</string>
+    <string name="speech_filter_field_letter_placeholder">písmena</string>
+    <string name="speech_filter_field_begins_placeholder">začátek</string>
+    <string name="speech_filter_field_ends_placeholder">konec</string>
+    <string name="speech_filter_btn">Vyhledat</string>
+    <string name="speech_filter_field_error">Vyplňte alespoň jedno pole</string>
+    <string name="speech_filter_no_matches">Taková slova u sebe nemám</string>
 
     <string name="eyesight_menu_label_1">Porovnání</string>
     <string name="eyesight_menu_label_2">Hledání</string>
@@ -188,8 +228,6 @@
     <string name="tales_images_description_label">Klikni na obrázek pro přehrání zvuku</string>
     <string name="done_btn_label">Hotovo</string>
 
-    <string name="age_rec_s">Věk: 3–6</string>
-    <string name="age_rec_m">Věk: 5</string>
     <string name="timer">Časomíra</string>
 
 </resources>

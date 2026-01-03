@@ -35,6 +35,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -50,11 +54,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
+import com.tomdev.logopadix.presentationLayer.components.NewComersDialog
 import com.tomdev.logopadix.presentationLayer.screens.info.InfoScreen
 import com.tomdev.logopadix.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.tomdev.logopadix.presentationLayer.screens.hearing.hearingScreen.HearingScreen
 import com.tomdev.logopadix.presentationLayer.screens.rythm.rythmScreen.RythmScreen
-import com.tomdev.logopadix.presentationLayer.screens.speech.speechScreen.SpeechScreen
+import com.tomdev.logopadix.presentationLayer.screens.speech.speechInitialMenuScreen.SpeechInitialMenuScreen
 import com.tomdev.logopadix.presentationLayer.screens.tales.talesMenu.TalesScreen
 import com.tomdev.logopadix.theme.AppTheme
 
@@ -122,107 +127,127 @@ class HomeScreen : AppCompatActivity() {
         menuItemRatio: Float = 1f,
         menuItemWideRatio: Float = 2.5f
     ) {
-        Column(
+        var showWelcomePopup by remember { mutableStateOf(true) }
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(sidePadding, padding.calculateTopPadding(), sidePadding, padding.calculateBottomPadding()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            LazyVerticalGrid(
-                horizontalArrangement = Arrangement.spacedBy(18.dp),
-                verticalArrangement = Arrangement.spacedBy(18.dp),
-                columns = GridCells.Fixed(2),
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(sidePadding, padding.calculateTopPadding(), sidePadding, padding.calculateBottomPadding()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly
             ) {
-                item {
-                    MenuCardMedium(
-                        title = stringResource(id = R.string.category_speech),
-                        onClick = { onCardClicked(0) },
-                        ratio = menuItemRatio,
-                        imageDecorCorner = painterResource(id = R.drawable.speech_btn_decor_top_start),
-                        imageDecorTopEnd = painterResource(id = R.drawable.speech_btn_decor_top_end),
-                        imageDecorBottomStart = painterResource(id = R.drawable.speech_btn_decor_bottom_start),
-                        textBackgroundColor = colorResource(id = R.color.speech_500),
-                        color = colorResource(id = R.color.speech_200),
-                        outlineColor = colorResource(id = R.color.speech_500)
-                    )
+                LazyVerticalGrid(
+                    horizontalArrangement = Arrangement.spacedBy(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(18.dp),
+                    columns = GridCells.Fixed(2),
+                ) {
+                    item {
+                        MenuCardMedium(
+                            title = stringResource(id = R.string.category_speech),
+                            onClick = { onCardClicked(0) },
+                            ratio = menuItemRatio,
+                            imageDecorCorner = painterResource(id = R.drawable.speech_btn_decor_top_start),
+                            imageDecorTopEnd = painterResource(id = R.drawable.speech_btn_decor_top_end),
+                            imageDecorBottomStart = painterResource(id = R.drawable.speech_btn_decor_bottom_start),
+                            textBackgroundColor = colorResource(id = R.color.speech_500),
+                            color = colorResource(id = R.color.speech_200),
+                            outlineColor = colorResource(id = R.color.speech_500)
+                        )
+                    }
+                    item {
+                        MenuCardMedium(
+                            title = stringResource(id = R.string.category_eyesight),
+                            onClick = { onCardClicked(1) },
+                            ratio = menuItemRatio,
+                            imageDecorCorner = painterResource(id = R.drawable.eyesight_btn_decor_top_start),
+                            imageDecorTopEnd = painterResource(id = R.drawable.eyesight_btn_decor_top_end),
+                            imageDecorBottomStart = painterResource(id = R.drawable.eyesight_btn_decor_bottom_start),
+                            textBackgroundColor = colorResource(id = R.color.eyesight_500),
+                            color = colorResource(id = R.color.eyesight_200),
+                            outlineColor = colorResource(id = R.color.eyesight_500)
+                        )
+                    }
+                    item {
+                        MenuCardMedium(
+                            title = stringResource(id = R.string.category_hearing),
+                            onClick = { onCardClicked(2) },
+                            ratio = menuItemRatio,
+                            imageDecorCorner = painterResource(id = R.drawable.hearing_btn_decor_top_start),
+                            imageDecorTopEnd = painterResource(id = R.drawable.hearing_btn_decor_top_end),
+                            imageDecorBottomStart = painterResource(id = R.drawable.hearing_btn_decor_bottom_start),
+                            textBackgroundColor = colorResource(id = R.color.hearing_500),
+                            color = colorResource(id = R.color.hearing_200),
+                            outlineColor = colorResource(id = R.color.hearing_500)
+                        )
+                    }
+                    item {
+                        MenuCardMedium(
+                            title = stringResource(id = R.string.category_rythm),
+                            onClick = { onCardClicked(3) },
+                            ratio = menuItemRatio,
+                            imageDecorCorner = painterResource(id = R.drawable.rythm_btn_decor_top_start),
+                            imageDecorTopEnd = painterResource(id = R.drawable.rythm_btn_decor_top_end),
+                            imageDecorBottomStart = painterResource(id = R.drawable.rythm_btn_decor_bottom_start),
+                            textBackgroundColor = colorResource(id = R.color.rythm_500),
+                            color = colorResource(id = R.color.rythm_200),
+                            outlineColor = colorResource(id = R.color.rythm_500)
+                        )
+                    }
+                    item(span = { GridItemSpan(2) }) {
+                        MenuCardTales(
+                            title = stringResource(id = R.string.category_tales),
+                            onClick = { onCardClicked(4) },
+                            ratio = menuItemWideRatio,
+                            imageDecorMain = painterResource(id = R.drawable.tale_button_decor_main),
+                            imageDecorLeft = painterResource(id = R.drawable.tale_button_decor_left),
+                            imageDecorRight = painterResource(id = R.drawable.tale_button_decor_right),
+                            textBackgroundColor = colorResource(id = R.color.tales_500),
+                            color = colorResource(id = R.color.tales_200),
+                            outlineColor = colorResource(id = R.color.tales_500)
+                        )
+                    }
                 }
-                item {
-                    MenuCardMedium(
-                        title = stringResource(id = R.string.category_eyesight),
-                        onClick = { onCardClicked(1) },
-                        ratio = menuItemRatio,
-                        imageDecorCorner = painterResource(id = R.drawable.eyesight_btn_decor_top_start),
-                        imageDecorTopEnd = painterResource(id = R.drawable.eyesight_btn_decor_top_end),
-                        imageDecorBottomStart = painterResource(id = R.drawable.eyesight_btn_decor_bottom_start),
-                        textBackgroundColor = colorResource(id = R.color.eyesight_500),
-                        color = colorResource(id = R.color.eyesight_200),
-                        outlineColor = colorResource(id = R.color.eyesight_500)
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .weight(4f)
+                            .align(Alignment.Bottom),
+                        painter = painterResource(id = R.drawable.home_decor_bubble),
+                        contentDescription = "decoration",
+                        contentScale = ContentScale.FillWidth
                     )
-                }
-                item {
-                    MenuCardMedium(
-                        title = stringResource(id = R.string.category_hearing),
-                        onClick = { onCardClicked(2) },
-                        ratio = menuItemRatio,
-                        imageDecorCorner = painterResource(id = R.drawable.hearing_btn_decor_top_start),
-                        imageDecorTopEnd = painterResource(id = R.drawable.hearing_btn_decor_top_end),
-                        imageDecorBottomStart = painterResource(id = R.drawable.hearing_btn_decor_bottom_start),
-                        textBackgroundColor = colorResource(id = R.color.hearing_500),
-                        color = colorResource(id = R.color.hearing_200),
-                        outlineColor = colorResource(id = R.color.hearing_500)
-                    )
-                }
-                item {
-                    MenuCardMedium(
-                        title = stringResource(id = R.string.category_rythm),
-                        onClick = { onCardClicked(3) },
-                        ratio = menuItemRatio,
-                        imageDecorCorner = painterResource(id = R.drawable.rythm_btn_decor_top_start),
-                        imageDecorTopEnd = painterResource(id = R.drawable.rythm_btn_decor_top_end),
-                        imageDecorBottomStart = painterResource(id = R.drawable.rythm_btn_decor_bottom_start),
-                        textBackgroundColor = colorResource(id = R.color.rythm_500),
-                        color = colorResource(id = R.color.rythm_200),
-                        outlineColor = colorResource(id = R.color.rythm_500)
-                    )
-                }
-                item(span = { GridItemSpan(2) }) {
-                    MenuCardTales(
-                        title = stringResource(id = R.string.category_tales),
-                        onClick = { onCardClicked(4) },
-                        ratio = menuItemWideRatio,
-                        imageDecorMain = painterResource(id = R.drawable.tale_button_decor_main),
-                        imageDecorLeft = painterResource(id = R.drawable.tale_button_decor_left),
-                        imageDecorRight = painterResource(id = R.drawable.tale_button_decor_right),
-                        textBackgroundColor = colorResource(id = R.color.tales_500),
-                        color = colorResource(id = R.color.tales_200),
-                        outlineColor = colorResource(id = R.color.tales_500)
+                    Image(
+                        modifier = Modifier
+                            .weight(3f)
+                            .align(Alignment.Bottom),
+                        painter = painterResource(id = R.drawable.home_screen_decor),
+                        contentDescription = "decoration",
+                        contentScale = ContentScale.FillWidth
                     )
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier
-                        .weight(4f)
-                        .align(Alignment.Bottom),
-                    painter = painterResource(id = R.drawable.home_decor_bubble),
-                    contentDescription = "decoration",
-                    contentScale = ContentScale.FillWidth
+            if (showWelcomePopup){
+                var text = listOf(
+                    Triple(R.string.welcome_heading_1, R.string.welcome_content_1, R.drawable.welcome_image_1),
+                    Triple(R.string.welcome_heading_2, R.string.welcome_content_2, R.drawable.welcome_image_2),
+                    Triple(R.string.welcome_heading_3, R.string.welcome_content_3, R.drawable.welcome_image_3)
                 )
-                Image(
-                    modifier = Modifier
-                        .weight(3f)
-                        .align(Alignment.Bottom),
-                    painter = painterResource(id = R.drawable.home_screen_decor),
-                    contentDescription = "decoration",
-                    contentScale = ContentScale.FillWidth
+                NewComersDialog(
+                    headingsAndTexts = text,
+                    btnLabelNext = stringResource(R.string.welcome_btn_label),
+                    onEnterClick = { showWelcomePopup = false }
                 )
             }
         }
+
     }
 
 
@@ -361,7 +386,7 @@ class HomeScreen : AppCompatActivity() {
 
 
     private fun onCardClicked(id: Int) {
-        var intent = Intent(this, SpeechScreen::class.java)
+        var intent = Intent(this, SpeechInitialMenuScreen::class.java)
         when (id) {
             1 -> {
                 intent = Intent(this, EyesightScreen::class.java)

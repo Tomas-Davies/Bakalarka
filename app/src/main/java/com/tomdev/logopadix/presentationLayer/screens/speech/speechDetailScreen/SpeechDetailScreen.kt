@@ -14,21 +14,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -54,7 +49,6 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -76,8 +70,11 @@ import com.tomdev.logopadix.dataLayer.UserSentence
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.CustomDialog
+import com.tomdev.logopadix.presentationLayer.components.DeleteButton
+import com.tomdev.logopadix.presentationLayer.components.EditButton
 import com.tomdev.logopadix.presentationLayer.components.OptionsMenu
 import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
+import com.tomdev.logopadix.presentationLayer.components.SaveButton
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.theme.AppTheme
 
@@ -399,65 +396,6 @@ class SpeechDetailScreen : AppCompatActivity() {
                 focusRequester.requestFocus()
                 keyboardController?.show()
             }
-        }
-    }
-
-
-    @Composable
-    fun DeleteButton(
-        modifier: Modifier = Modifier,
-        onClick: () -> Unit
-    ) = CircleIconButton(
-        modifier = modifier,
-        onClick = { onClick() },
-        color = MaterialTheme.colorScheme.errorContainer,
-        icon = Icons.Filled.Clear
-    )
-
-
-    @Composable
-    fun EditButton(
-        modifier: Modifier = Modifier,
-        onClick: () -> Unit
-    ) = CircleIconButton(
-        modifier = modifier,
-        onClick = { onClick() },
-        color = Color.Gray,
-        icon = Icons.Filled.Edit
-    )
-
-
-    @Composable
-    fun SaveButton(
-        modifier: Modifier = Modifier,
-        onClick: () -> Unit
-    ) = CircleIconButton(
-        modifier = modifier,
-        onClick = { onClick() },
-        color = Color.Green,
-        icon = Icons.Filled.Check
-    )
-
-
-    @Composable
-    fun CircleIconButton(
-        modifier: Modifier = Modifier,
-        onClick: () -> Unit,
-        color: Color,
-        icon: ImageVector
-    ) {
-        Surface(
-            modifier = modifier.size(28.dp),
-            onClick = { onClick() },
-            shape = CircleShape,
-            color = color
-        ) {
-            Icon(
-                modifier = Modifier
-                    .padding(5.dp),
-                imageVector = icon,
-                contentDescription = "delete button"
-            )
         }
     }
 

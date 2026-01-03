@@ -8,9 +8,17 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText
+import com.tomdev.logopadix.utils.string.normalizedWithCh
 import kotlinx.coroutines.flow.Flow
 import kotlin.collections.emptyList
 
+
+data class NormalizedWordContent(
+    val imageName: String,
+    val soundName: String,
+    val text: String,
+    val letters: List<String>
+)
 
 class SpeechRepo(ctx: Context) :
     ResourceMappedRepository<SpeechData, SpeechLetter>(
@@ -36,6 +44,31 @@ class SpeechRepo(ctx: Context) :
             return letter.positions.firstOrNull()?.words ?: emptyList()
         }
     }
+
+
+    fun getProcessedWords(): List<NormalizedWordContent>?{
+        val processed = mutableListOf<NormalizedWordContent>()
+        val distinctIndication = mutableSetOf<String>()
+
+        for (letter in data){
+            for(pos in letter.positions){
+                for (word in pos.words){
+                    if (!distinctIndication.add(word.text ?: "")) continue
+
+                    val str = word.text?.lowercase() ?: continue
+                    val normalized = NormalizedWordContent(
+                        word.imageName ?: "",
+                        word.soundName ?: "",
+                        word.text ?: "",
+                        str.normalizedWithCh()
+                    )
+                    processed.add(normalized)
+                }
+            }
+        }
+        return processed
+    }
+
 
     fun getDefaultSentences(letterLabel: String): List<String>? {
         val letter = data.find { letter -> letter.label == letterLabel }
