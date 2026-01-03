@@ -5,7 +5,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -287,7 +286,6 @@ class SpeechFilterScreen: AppCompatActivity() {
                 )
                 Spacer(Modifier.weight(0.1f))
                 Text(
-                    modifier = Modifier.border(1.dp, Color.Red),
                     text = wordContent.text,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,

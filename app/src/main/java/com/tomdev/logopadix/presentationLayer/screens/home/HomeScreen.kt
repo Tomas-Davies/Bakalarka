@@ -131,7 +131,12 @@ class HomeScreen : AppCompatActivity() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(sidePadding, padding.calculateTopPadding(), sidePadding, padding.calculateBottomPadding()),
+                    .padding(
+                        sidePadding,
+                        padding.calculateTopPadding(),
+                        sidePadding,
+                        padding.calculateBottomPadding()
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
@@ -229,30 +234,54 @@ class HomeScreen : AppCompatActivity() {
                     )
                 }
             }
+            
+            val text1 = listOf(
+                Triple(
+                    R.string.welcome_heading_1,
+                    R.string.welcome_content_1,
+                    R.drawable.welcome_image_1
+                ),
+                Triple(
+                    R.string.welcome_heading_2,
+                    R.string.welcome_content_2,
+                    R.drawable.welcome_image_2
+                ),
+                Triple(
+                    R.string.welcome_heading_3,
+                    R.string.welcome_content_3,
+                    R.drawable.welcome_image_3
+                )
+            )
+            NewComersDialog(
+                headingsAndTexts = text1,
+                btnLabelNext = stringResource(R.string.welcome_btn_label),
+                onEnterClick = { }
+            )
 
-                val text1 = listOf(
-                    Triple(R.string.welcome_heading_1, R.string.welcome_content_1, R.drawable.welcome_image_1),
-                    Triple(R.string.welcome_heading_2, R.string.welcome_content_2, R.drawable.welcome_image_2),
-                    Triple(R.string.welcome_heading_3, R.string.welcome_content_3, R.drawable.welcome_image_3)
+            val text2 = listOf(
+                Triple(
+                    R.string.update_heading_1,
+                    R.string.update_content_1,
+                    R.drawable.welcome_image_1
+                ), // TODO - third obrazky
+                Triple(
+                    R.string.update_heading_2,
+                    R.string.update_content_2,
+                    R.drawable.welcome_image_2
+                ),
+                Triple(
+                    R.string.update_heading_3,
+                    R.string.update_content_3,
+                    R.drawable.welcome_image_3
                 )
-                NewComersDialog(
-                    headingsAndTexts = text1,
-                    btnLabelNext = stringResource(R.string.welcome_btn_label),
-                    onEnterClick = {  }
-                )
-
-                val text2 = listOf(
-                    Triple(R.string.update_heading_1, R.string.update_content_1, R.drawable.welcome_image_1), // TODO - third obrazky
-                    Triple(R.string.update_heading_2, R.string.update_content_2, R.drawable.welcome_image_2),
-                    Triple(R.string.update_heading_3, R.string.update_content_3, R.drawable.welcome_image_3)
-                )
-                WhatsNewDialog(
-                    headingsAndTexts = text2,
-                    mainHeading = stringResource(R.string.update_main_heading),
-                    btnLabelNext = stringResource(R.string.update_btn_label_next),
-                    btnLabelPrev = stringResource(R.string.update_btn_label_prev),
-                    onEnterClick = {  }
-                )
+            )
+            WhatsNewDialog(
+                headingsAndTexts = text2,
+                mainHeading = stringResource(R.string.update_main_heading),
+                btnLabelNext = stringResource(R.string.update_btn_label_next),
+                btnLabelPrev = stringResource(R.string.update_btn_label_prev),
+                onEnterClick = { }
+            )
 
         }
 
