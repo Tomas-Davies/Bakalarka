@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllabRound
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllablesRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,8 +24,9 @@ data class RythmSyllabUiState(
 class RythmSyllablesViewModel(
     private val repo: RythmSyllablesRepo,
     app: com.tomdev.logopadix.LogoApp,
-    levelIndex: Int
-) : RoundsViewModel(app)
+    levelIndex: Int,
+    diff: String
+) : DifficultyRoundsViewModel(diff, app)
 {
     lateinit var rounds: List<RythmSyllabRound>
     private lateinit var currRound: RythmSyllabRound
@@ -43,12 +44,15 @@ class RythmSyllablesViewModel(
         roundIdx = levelIndex
         viewModelScope.launch {
             repo.loadData()
-            rounds = repo.data
+            rounds = if (diff.isNotEmpty()) {
+                repo.data.filter { item -> item.difficulty == diff }
+            } else {
+                repo.data
+            }
             count = rounds.size
             currRound = rounds[roundIdx]
             _uiState = MutableStateFlow(RythmSyllabUiState(currRound.imageName, currRound.soundName, currRound.syllabCount))
             uiState = _uiState
-
             _screenState.value = ScreenState.Success
         }
     }
@@ -129,13 +133,14 @@ class RythmSyllablesViewModel(
 class RythmSyllablesViewModelFactory(
     private val repo: RythmSyllablesRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val levelIndex: Int
+    private val levelIndex: Int,
+    private val diff: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmSyllablesViewModel::class.java)) {
-            return RythmSyllablesViewModel(repo, app, levelIndex) as T
+            return RythmSyllablesViewModel(repo, app, levelIndex, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

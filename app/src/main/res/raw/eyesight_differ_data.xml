@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-    <differItem>
+    <differItem difficulty="EASY">
         <imageId>eyesight_differ_image_1</imageId>
         <objects>
             <object imageName="differ_list">list</object>
@@ -17,7 +17,7 @@
             <questionSoundName>za_listem</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="EASY">
         <imageId>eyesight_differ_image_2</imageId>
         <objects>
             <object imageName="differ_motyl">motýl</object>
@@ -34,7 +34,7 @@
             <questionSoundName>za_motylem</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_3</imageId>
         <objects>
             <object imageName="differ_tresne">třešně</object>
@@ -64,7 +64,7 @@
             <questionSoundName>pred_cepici</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_4</imageId>
         <objects>
             <object imageName="differ_rostlina">rostlina</object>
@@ -96,7 +96,7 @@
     </differItem>
 
 
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_5</imageId>
         <objects>
             <object imageName="differ_mys">myš</object>
@@ -126,7 +126,7 @@
             <questionSoundName>pred_kockou</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_6</imageId>
         <objects>
             <object imageName="differ_obraz">obraz</object>
@@ -156,7 +156,7 @@
             <questionSoundName>za_kobylkou</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_7</imageId>
         <objects>
             <object imageName="differ_strom">strom</object>
@@ -186,7 +186,7 @@
             <questionSoundName>pred_stromem</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_8</imageId>
         <objects>
             <object imageName="differ_batoh">batoh</object>
@@ -216,7 +216,7 @@
             <questionSoundName>za_hodinkami</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_9</imageId>
         <objects>
             <object imageName="differ_notebook">notebook</object>
@@ -246,7 +246,7 @@
             <questionSoundName>pred_notebookem</questionSoundName>
         </round>
     </differItem>
-    <differItem>
+    <differItem difficulty="MEDIUM">
         <imageId>eyesight_differ_image_10</imageId>
         <objects>
             <object imageName="differ_boruvky">borůvky</object>

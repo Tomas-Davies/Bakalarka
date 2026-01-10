@@ -2,7 +2,7 @@ package com.tomdev.logopadix.dataLayer.repositories
 
 import android.content.Context
 import com.tomdev.logopadix.R
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
@@ -15,7 +15,9 @@ class RythmSyllablesRepo(ctx: Context):
         RythmSyllabData::class.java
     )
 
-class RythmSyllabRound: IImageLevel {
+class RythmSyllabRound : IImageLevel {
+    @JacksonXmlProperty(isAttribute = true)
+    override val difficulty: String = ""
     @JacksonXmlProperty(isAttribute = true)
     override val imageName: String = ""
     @JacksonXmlProperty(isAttribute = true)
@@ -29,4 +31,4 @@ data class RythmSyllabData(
     @JacksonXmlProperty(localName = "round")
     @JacksonXmlElementWrapper(useWrapping = false)
     override val data: List<RythmSyllabRound> = emptyList()
-) : IModel<RythmSyllabRound>
+) : IData<RythmSyllabRound>

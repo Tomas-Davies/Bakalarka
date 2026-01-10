@@ -7,7 +7,7 @@ import com.tomdev.logopadix.dataLayer.repositories.DifferItem
 import com.tomdev.logopadix.dataLayer.repositories.EyesightDifferRepo
 import com.tomdev.logopadix.dataLayer.repositories.ObjectAndImage
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,8 +26,10 @@ data class EyesightDifferUiState(
 
 class EyesightDifferViewModel(
     private val repo: EyesightDifferRepo,
-    app: com.tomdev.logopadix.LogoApp, levelIndex: Int
-) : RoundsViewModel(app)
+    app: com.tomdev.logopadix.LogoApp,
+    levelIndex: Int,
+    diffId: String
+) : DifficultyRoundsViewModel(diffId, app)
 {
     private lateinit var data: List<DifferItem>
     private var questionIdx = 0
@@ -46,7 +48,10 @@ class EyesightDifferViewModel(
         roundIdx = levelIndex
         viewModelScope.launch {
             repo.loadData()
-            data = repo.data
+            data = if (diffId.isNotEmpty())
+                repo.data.filter { item -> item.difficulty == diffId }
+            else repo.data
+
             count = data.size
             currentItem = data[roundIdx]
             _questionCountInRound = MutableStateFlow(currentItem.rounds.size)
@@ -163,13 +168,14 @@ class EyesightDifferViewModel(
 class EyesightDifferViewModelFactory(
     private val repo: EyesightDifferRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val levelIndex: Int
+    private val levelIndex: Int,
+    private val diff: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightDifferViewModel::class.java)) {
-            return EyesightDifferViewModel(repo, app, levelIndex) as T
+            return EyesightDifferViewModel(repo, app, levelIndex, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightDifferViewModel")
     }

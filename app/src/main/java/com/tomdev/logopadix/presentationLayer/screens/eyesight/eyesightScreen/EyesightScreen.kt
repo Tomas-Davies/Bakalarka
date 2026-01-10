@@ -4,17 +4,25 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.dataLayer.RepositoryType
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.CategoryButton
 import com.tomdev.logopadix.presentationLayer.components.CategoryMenu
+import com.tomdev.logopadix.presentationLayer.components.DifficultyDialog
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.screens.eyesight.eyesightComparisonScreen.EyesightComparisonScreen
 import com.tomdev.logopadix.presentationLayer.screens.eyesight.eyesightDifferScreen.EyesightDifferScreen
@@ -48,10 +56,20 @@ class EyesightScreen : AppCompatActivity() {
             onExit = { finish() },
             title = stringResource(id = R.string.category_eyesight)
         ) {
+            var chosenExcerciseId by remember { mutableIntStateOf(-1) }
+            var showDiffDialog by remember { mutableStateOf(false) }
+            var selectedExcerciseImageId by remember { mutableIntStateOf(0) }
+            var selectedExcerciseLabelId by remember { mutableIntStateOf(0) }
+
             val buttons = listOf<@Composable () -> Unit>(
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(0) },
+                        onClick = {
+                            chosenExcerciseId = 0
+                            selectedExcerciseLabelId = R.string.eyesight_menu_label_1
+                            selectedExcerciseImageId = R.drawable.eyesight_btn_1_logo
+                            showDiffDialog = true
+                        },
                         label = stringResource(id = R.string.eyesight_menu_label_1),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_1),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_1),
@@ -61,7 +79,12 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(1) },
+                        onClick = {
+                            chosenExcerciseId = 1
+                            selectedExcerciseLabelId = R.string.eyesight_menu_label_2
+                            selectedExcerciseImageId = R.drawable.eyesight_btn_2_logo
+                            showDiffDialog = true
+                        },
                         label = stringResource(id = R.string.eyesight_menu_label_2),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_2),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_2),
@@ -71,7 +94,12 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(2) },
+                        onClick = {
+                            chosenExcerciseId = 2
+                            selectedExcerciseLabelId = R.string.eyesight_menu_label_3
+                            selectedExcerciseImageId = R.drawable.eyesight_btn_3_logo
+                            showDiffDialog = true
+                        },
                         label = stringResource(id = R.string.eyesight_menu_label_3),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_3),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_3),
@@ -81,7 +109,12 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(3) },
+                        onClick = {
+                            chosenExcerciseId = 3
+                            selectedExcerciseLabelId = R.string.eyesight_menu_label_4
+                            selectedExcerciseImageId = R.drawable.eyesight_btn_4_logo
+                            showDiffDialog = true
+                        },
                         label = stringResource(id = R.string.eyesight_menu_label_4),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_4),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_4),
@@ -91,7 +124,12 @@ class EyesightScreen : AppCompatActivity() {
                 },
                 {
                     CategoryButton(
-                        onClick = { onCardClicked(4) },
+                        onClick = {
+                            chosenExcerciseId = 4
+                            selectedExcerciseLabelId = R.string.eyesight_menu_label_5
+                            selectedExcerciseImageId = R.drawable.eyesight_btn_5_logo
+                            showDiffDialog = true
+                        },
                         label = stringResource(id = R.string.eyesight_menu_label_5),
                         labelLong = stringResource(id = R.string.eyesight_menu_label_long_5),
                         popUpHeading = stringResource(id = R.string.eyesight_menu_label_long_5),
@@ -101,17 +139,38 @@ class EyesightScreen : AppCompatActivity() {
                 }
             )
 
-            CategoryMenu(
-                pdVal = it,
-                buttons = buttons
-            )
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ){
+                CategoryMenu(
+                    pdVal = it,
+                    buttons = buttons
+                )
+
+                DifficultyDialog(
+                    isVisible = showDiffDialog,
+                    setIsVisible = { visible -> showDiffDialog = visible },
+                    selectedExcerciseImage = selectedExcerciseImageId,
+                    selectedExcerciseLabel = selectedExcerciseLabelId,
+                    difficultyHeading = stringResource(R.string.difficulty_heading),
+                    easyLabel = stringResource(R.string.difficulty_easy),
+                    mediumLabel = stringResource(R.string.difficulty_medium),
+                    hardLabel = stringResource(R.string.difficulty_hard),
+                    easyColor = R.color.correct,
+                    mediumColor = R.color.hearing_500,
+                    hardColor = R.color.diff_hard,
+                    onEasyClick = { onDiffClicked(chosenExcerciseId, DifficultyType.EASY.name) },
+                    onMediumClick = { onDiffClicked(chosenExcerciseId, DifficultyType.MEDIUM.name) },
+                    onHardClick = { onDiffClicked(chosenExcerciseId, DifficultyType.HARD.name) }
+                )
+            }
         }
     }
 
 
-    private fun onCardClicked(id: Int) {
+    private fun onDiffClicked(excerciseId: Int, diffType: String) {
         var intent = Intent(this, LevelsScreen::class.java)
-        when (id) {
+        when (excerciseId) {
             0 -> {
                 intent.putExtra(IImageLevel.NEXT_CLASS_TAG, EyesightComparisonScreen::class.java)
                 intent.putExtra(RepositoryType.TAG, RepositoryType.EYESIGHT_COMPARISON.id)
@@ -136,6 +195,7 @@ class EyesightScreen : AppCompatActivity() {
             }
         }
         intent.putExtra(ThemeType.TAG, ThemeType.THEME_EYESIGHT.id)
+        intent.putExtra(DifficultyType.TAG, diffType)
         startActivity(intent)
     }
 }

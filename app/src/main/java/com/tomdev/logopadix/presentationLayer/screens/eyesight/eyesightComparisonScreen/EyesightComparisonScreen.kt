@@ -45,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.EYESIGHT_SHOW_TIMER_KEY
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.datastore
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.theme.ThemeType
@@ -62,10 +63,11 @@ class EyesightComparisonScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val levelIdx = intent.getIntExtra(IImageLevel.TAG, 0)
+        val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.eyesightComparisonRepository
         val viewModel: EyesightComparisonViewModel by viewModels {
-            EyesightComparionViewModelFactory(repo, app, levelIdx)
+            EyesightComparionViewModelFactory(repo, app, levelIdx, diffId)
         }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT.id) {

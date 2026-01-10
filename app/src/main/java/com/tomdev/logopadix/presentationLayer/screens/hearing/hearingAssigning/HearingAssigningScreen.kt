@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.LogoApp
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.ImageCard
 import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
@@ -43,8 +44,9 @@ class HearingAssigningScreen: AppCompatActivity() {
 
         val app = application as LogoApp
         val repo = app.hearingAssignRepository
+        val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
         val viewModel: HearingAssignViewModel by viewModels {
-            HearingAssignFactory(repo, app)
+            HearingAssignFactory(repo, app, diff)
         }
 
         setContent {

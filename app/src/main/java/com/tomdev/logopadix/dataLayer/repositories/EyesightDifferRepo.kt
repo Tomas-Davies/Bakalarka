@@ -2,7 +2,7 @@ package com.tomdev.logopadix.dataLayer.repositories
 
 import android.content.Context
 import com.tomdev.logopadix.R
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
@@ -35,18 +35,22 @@ class ObjectAndImage {
 }
 
 @JacksonXmlRootElement(localName = "differItem")
-data class DifferItem(
+class DifferItem : IImageLevel {
     @JacksonXmlProperty(localName = "imageId")
-    override val imageName: String = "",
-    val objects: List<ObjectAndImage> = emptyList(),
+    override val imageName: String = ""
+
+    @JacksonXmlProperty(isAttribute = true)
+    override val difficulty: String = ""
+    val objects: List<ObjectAndImage> = emptyList()
+
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "round")
     val rounds: List<Round> = emptyList()
-) : IImageLevel
+}
 
 @JacksonXmlRootElement(localName = "data")
 data class DifferData(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "differItem")
     override val data: List<DifferItem> = emptyList()
-) : IModel<DifferItem>
+) : IData<DifferItem>

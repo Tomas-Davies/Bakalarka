@@ -49,9 +49,10 @@ import com.tomdev.logopadix.dataLayer.repositories.SearchRound
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthData
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthRound
 import com.tomdev.logopadix.dataLayer.repositories.ComparisonData
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllabData
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllabRound
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
@@ -65,7 +66,8 @@ class LevelsScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val app = application as com.tomdev.logopadix.LogoApp
         val repoTypeName = intent.getIntExtra(RepositoryType.TAG, 0)
-
+        val difficulty = intent.getStringExtra(DifficultyType.TAG) ?: ""
+        // TODO poslat difficulty do viewModelu
         /*
             Chooses correct viewModel initialization based on repository type,
             as it supports more types of exercises
@@ -74,35 +76,35 @@ class LevelsScreen : AppCompatActivity() {
             RepositoryType.EYESIGHT_SEARCH.id -> {
                 val repo = app.eyesightSearchRepository
                 val tmpViewModel: LevelsViewModel<SearchData, SearchRound> by viewModels {
-                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_2)
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_2, difficulty)
                 }
                 tmpViewModel
             }
             RepositoryType.EYESIGHT_DIFFER.id -> {
                 val repo = app.eyesightDifferRepository
                 val tmpViewModel: LevelsViewModel<DifferData, DifferItem> by viewModels {
-                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_3)
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_3, difficulty)
                 }
                 tmpViewModel
             }
             RepositoryType.EYESIGHT_COMPARISON.id -> {
                 val repo = app.eyesightComparisonRepository
                 val tmpViewModel: LevelsViewModel<ComparisonData, ComparisonItem> by viewModels {
-                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_1)
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_1, difficulty)
                 }
                 tmpViewModel
             }
             RepositoryType.EYESIGHT_SYNTHESIS.id -> {
                 val repo = app.eyesightSynthesisRepository
                 val tmpViewModel: LevelsViewModel<EyesightSynthData, EyesightSynthRound> by viewModels {
-                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_5)
+                    LevelsViewModelFactory(app, repo, R.string.eyesight_menu_label_5, difficulty)
                 }
                 tmpViewModel
             }
             RepositoryType.RYTHM_SYLLABLES.id -> {
                 val repo = app.rythmSyllablesRepository
                 val tmpViewModel: LevelsViewModel<RythmSyllabData, RythmSyllabRound> by viewModels {
-                    LevelsViewModelFactory(app, repo, R.string.rythm_menu_label_2)
+                    LevelsViewModelFactory(app, repo, R.string.rythm_menu_label_2, difficulty)
                 }
                 tmpViewModel
             }
@@ -116,7 +118,7 @@ class LevelsScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LevelsScreenContent(viewModel)
+                    LevelsScreenContent(viewModel, difficulty)
                 }
             }
         }
@@ -124,11 +126,26 @@ class LevelsScreen : AppCompatActivity() {
 
 
     @Composable
-    fun <T : IModel<S>, S : IImageLevel> LevelsScreenContent(viewModel: LevelsViewModel<T, S>) {
+    fun <T : IData<S>, S : IImageLevel> LevelsScreenContent(
+            viewModel: LevelsViewModel<T, S>,
+            difficulty: String
+        ) {
         ScreenWrapper(
             onExit = { finish() },
             title = stringResource(viewModel.headingId)
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                val txt = when(difficulty.uppercase().trim()){
+                    DifficultyType.EASY.name -> stringResource(R.string.difficulty_easy)
+                    DifficultyType.MEDIUM.name -> stringResource(R.string.difficulty_medium)
+                    DifficultyType.HARD.name -> stringResource(R.string.difficulty_hard)
+                    else -> ""
+                }
+                if (txt.isNotEmpty()) Text(text = txt)
+            }
             AsyncDataWrapper(viewModel) {
                 val levels by viewModel.levels.collectAsStateWithLifecycle()
 
@@ -153,11 +170,13 @@ class LevelsScreen : AppCompatActivity() {
     private fun LevelImageIcon(imageId: Int, i: Int){
         val nextActivityClass = intent.getSdkBasedSerializableExtra(IImageLevel.NEXT_CLASS_TAG, Class::class.java)
         val labelId = intent.getIntExtra(IImageLevel.LEVEL_ITEM_LABEL_ID_TAG, R.string.round)
+        val difficulty = intent.getStringExtra(DifficultyType.TAG) ?: ""
 
         CustomCard(
             onClick = {
                 val intent = Intent(this, nextActivityClass)
                 intent.putExtra(IImageLevel.TAG, i)
+                intent.putExtra(DifficultyType.TAG, difficulty)
                 startActivity(intent)
             },
             colors = CardDefaults.cardColors().copy(

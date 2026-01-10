@@ -2,7 +2,7 @@ package com.tomdev.logopadix.dataLayer.repositories
 
 import android.content.Context
 import com.tomdev.logopadix.R
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
@@ -45,19 +45,22 @@ data class SearchItemOverlay(
  * @property coloredImageName The name of the drawable resource file containing image used for searching objects hidden by overlays.
  * @property items A list of [SearchItemOverlay] items.
  */
-data class SearchRound(
+class SearchRound : IImageLevel {
     @JacksonXmlProperty(localName = "backgroundNonColored")
-    override val imageName: String = "",
+    override val imageName: String = ""
+    @JacksonXmlProperty(isAttribute = true)
+    override val difficulty: String = ""
     @JacksonXmlProperty(localName = "backgroundColored")
-    val coloredImageName: String = "",
+    val coloredImageName: String = ""
+
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "item")
     val items: List<SearchItemOverlay> = emptyList()
-) : IImageLevel
+}
 
 @JacksonXmlRootElement(localName = "data")
 data class SearchData(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "round")
     override val data: List<SearchRound> = emptyList()
-) : IModel<SearchRound>
+) : IData<SearchRound>

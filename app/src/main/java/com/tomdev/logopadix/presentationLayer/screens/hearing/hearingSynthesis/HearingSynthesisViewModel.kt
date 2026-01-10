@@ -7,7 +7,7 @@ import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRound
 import com.tomdev.logopadix.dataLayer.WordContent
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -21,8 +21,9 @@ data class HearingSynthesisUiState(
 
 class HearingSynthesisViewModel(
     private val repo: BasicWordsRepo,
-    app: com.tomdev.logopadix.LogoApp
-) : RoundsViewModel(app)
+    app: com.tomdev.logopadix.LogoApp,
+    private val diff: String
+) : DifficultyRoundsViewModel(diff, app)
 {
     private lateinit var rounds: List<BasicWordsRound>
     private lateinit var currentRound: BasicWordsRound
@@ -37,7 +38,12 @@ class HearingSynthesisViewModel(
     init {
         viewModelScope.launch {
             repo.loadData()
-            rounds = repo.data.shuffled().sortedBy { item -> item.objects.size }
+            rounds = if (diff.isNotEmpty()) {
+                repo.data
+                    .filter { item -> item.difficulty == diff }
+            } else {
+                repo.data
+            }
             count = rounds.size
             currentRound = rounds[roundIdx]
             currentObject = currentRound.objects
@@ -95,13 +101,14 @@ class HearingSynthesisViewModel(
 
 class HearingSynthesisViewModelFactory(
     private val repo: BasicWordsRepo,
-    private val app: com.tomdev.logopadix.LogoApp
+    private val app: com.tomdev.logopadix.LogoApp,
+    private val diff: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HearingSynthesisViewModel::class.java)) {
-            return HearingSynthesisViewModel(repo, app) as T
+            return HearingSynthesisViewModel(repo, app, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

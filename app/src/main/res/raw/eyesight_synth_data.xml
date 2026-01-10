@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-    <round>
+    <round difficulty="EASY">
         <imageName>playground</imageName>
         <pieceCount>4</pieceCount>
     </round>
-    <round>
+    <round difficulty="EASY">
         <imageName>classroom</imageName>
         <pieceCount>5</pieceCount>
     </round>
-    <round>
+    <round difficulty="EASY">
         <imageName>ant_bg</imageName>
         <pieceCount>5</pieceCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <imageName>kitchen</imageName>
         <pieceCount>6</pieceCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <imageName>synth_kocky</imageName>
         <pieceCount>6</pieceCount>
     </round>
-    <round>
+    <round difficulty="HARD">
         <imageName>synth_skolka</imageName>
         <pieceCount>7</pieceCount>
     </round>
-    <round>
+    <round difficulty="HARD">
         <imageName>synth_basket</imageName>
         <pieceCount>7</pieceCount>
     </round>
-    <round>
+    <round difficulty="HARD">
         <imageName>synth_koupaliste</imageName>
         <pieceCount>7</pieceCount>
     </round>

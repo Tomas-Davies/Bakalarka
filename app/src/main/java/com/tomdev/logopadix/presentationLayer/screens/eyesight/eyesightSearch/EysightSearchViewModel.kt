@@ -12,7 +12,7 @@ import com.tomdev.logopadix.dataLayer.repositories.SearchItemOverlay
 import com.tomdev.logopadix.dataLayer.repositories.SearchRound
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSearchRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,8 +29,9 @@ data class EyesightSearchUiState(
 class EyesightSearchViewModel(
     repo: EyesightSearchRepo,
     app: com.tomdev.logopadix.LogoApp,
-    levelIndex: Int
-): RoundsViewModel(app)
+    levelIndex: Int,
+    diffId: String
+): DifficultyRoundsViewModel(diffId, app)
 {
     lateinit var rounds: List<SearchRound>
     private lateinit var currentRound: SearchRound
@@ -49,7 +50,10 @@ class EyesightSearchViewModel(
         roundIdx = levelIndex
         viewModelScope.launch {
             repo.loadData()
-            rounds = repo.data
+            rounds = if (diffId.isNotEmpty()) {
+                repo.data.filter { item -> item.difficulty == diffId }
+            } else repo.data
+            
             count = rounds.size
             currentRound = rounds[roundIdx]
             _uiState = MutableStateFlow(
@@ -168,12 +172,13 @@ class EyesightSearchViewModel(
 class EyesightSearchViewModelFactory(
     private val repo: EyesightSearchRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val levelIndex: Int
+    private val levelIndex: Int,
+    private val diffId: String
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSearchViewModel::class.java)) {
-            return EyesightSearchViewModel(repo, app, levelIndex) as T
+            return EyesightSearchViewModel(repo, app, levelIndex, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

@@ -1,5 +1,5 @@
 package com.tomdev.logopadix.dataLayer
 
-interface IModel<T> {
+interface IData<T> {
     val data: List<T>
 }

@@ -2,7 +2,7 @@ package com.tomdev.logopadix.dataLayer.repositories
 
 import android.content.Context
 import com.tomdev.logopadix.R
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.tomdev.logopadix.dataLayer.UserSentence
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
@@ -129,4 +129,4 @@ data class SpeechData(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "letter")
     override val data: List<SpeechLetter> = emptyList()
-) : IModel<SpeechLetter>
+) : IData<SpeechLetter>

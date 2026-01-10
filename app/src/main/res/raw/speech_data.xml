@@ -843,24 +843,56 @@
                 <word imageName="svestka" soundName="trnka" subText="Tdnka" subSoundName="svestka_sub">Trnka</word><!-- TODO -->
                 <word imageName="trha" soundName="trha" subText="Tdha" subSoundName="trha_sub">Trhá</word><!-- TODO -->
                 <word imageName="trci" soundName="trci" subText="Tdci" subSoundName="trci_sub">Trčí</word><!-- TODO -->
+                <word imageName="trpaslik" soundName="trpaslik" subText="Tdpaslík" subSoundName="trpaslik_sub">Trpaslík</word><!-- TODO -->
+                <word imageName="truhla" soundName="truhla" subText="Tduhla" subSoundName="truhla_sub">Truhla</word><!-- TODO -->
+                <word imageName="trouba" soundName="trouba" subText="Tdouba" subSoundName="trouba_sub">Trouba</word><!-- TODO -->
+                <word imageName="tramvaj" soundName="tramvaj" subText="Tdamvaj" subSoundName="tramvaj_sub">Tramvaj</word><!-- TODO -->
+                <word imageName="trava" soundName="trava" subText="Tdáva" subSoundName="trava_sub">Tráva</word><!-- TODO -->
+                <word imageName="trefa" soundName="trefa" subText="Tdefa" subSoundName="trefa_sub">Trefa</word><!-- TODO -->
+                <word imageName="treska" soundName="treska" subText="Tdeska" subSoundName="treska_sub">Treska</word><!-- TODO -->
+                <word imageName="tricko" soundName="tricko" subText="Tdičko" subSoundName="tdicko_sub">Tričko</word><!-- TODO -->
+                <word imageName="tryskac" soundName="tryskac" subText="Tdyskáč" subSoundName="tryskac_sub">Tryskáč</word><!-- TODO -->
             </position>
             <position doesntKnowLetter="true">
                 <label>DR</label>
                 <word imageName="drhne" soundName="drhne" subText="Ddhne" subSoundName="drhne_sub">Drhne</word><!-- TODO -->
                 <word imageName="kudrny" soundName="kudrny" subText="Kuddny" subSoundName="kudrny_sub">Kudrny</word><!-- TODO -->
                 <word imageName="drak" soundName="drak" subText="Ddak" subSoundName="drak_sub">Drak</word><!-- TODO -->
+                <word imageName="drti" soundName="drti" subText="Ddtí" subSoundName="drti_sub">Drtí</word><!-- TODO -->
+                <word imageName="druzice" soundName="druzice" subText="Dduzice" subSoundName="druzice_sub">Družice</word><!-- TODO -->
+                <word imageName="druhy" soundName="druhy" subText="Dduhy" subSoundName="druhy_sub">Druhý</word><!-- TODO -->
+                <word imageName="drozd" soundName="drozd" subText="Ddozd" subSoundName="drozd_sub">Drozd</word><!-- TODO -->
+                <word imageName="drap" soundName="drap" subText="Ddáp" subSoundName="drap_sub">Dráp</word><!-- TODO -->
+                <word imageName="dravec" soundName="dravec" subText="Ddavec" subSoundName="dravec_sub">Dravec</word><!-- TODO -->
+                <word imageName="drahokam" soundName="drahokam" subText="Ddahokam" subSoundName="drahokam_sub">Drahokam</word><!-- TODO -->
+                <word imageName="dres" soundName="dres" subText="Ddes" subSoundName="dres_sub">Dres</word><!-- TODO -->
+                <word imageName="driblovat" soundName="driblovat" subText="Ddiblovat" subSoundName="driblovat_sub">Driblovat</word><!-- TODO -->
             </position>
             <position doesntKnowLetter="true">
                 <label>MR</label>
                 <word imageName="mrak" soundName="mrak" subText="Mdak" subSoundName="mrak_sub">Mrak</word><!-- TODO -->
                 <word imageName="mrkev" soundName="mrkev" subText="Mdkev" subSoundName="mrkev_sub">Mrkev</word><!-- TODO -->
                 <word imageName="mroz" soundName="mroz" subText="Mdož" subSoundName="mroz_sub">Mrož</word><!-- TODO -->
+                <word imageName="mraz" soundName="mraz" subText="Mdáz" subSoundName="mraz_sub">Mráz</word><!-- TODO -->
+                <word imageName="mravenec" soundName="mravenec" subText="Mdavenec" subSoundName="mravenec_sub">Mravenec</word><!-- TODO -->
+                <word imageName="mraveniste" soundName="mraveniste" subText="Mdaveniště" subSoundName="mraveniste_sub">Mraveniště</word><!-- TODO -->
+                <word imageName="mrazik" soundName="mrazik" subText="Mdazík" subSoundName="mrazik_sub">Mrazík</word><!-- TODO -->
+                <word imageName="mrazivy" soundName="mrazivy" subText="Mdazivý" subSoundName="mrazivy_sub">Mrazivý</word><!-- TODO -->
             </position>
             <position doesntKnowLetter="true">
                 <label>PR</label>
+                <word imageName="prst" soundName="prst" subText="Pdst" subSoundName="prst_sub">Prst</word><!-- TODO -->
                 <word imageName="pracka" soundName="pracka" subText="Pdacka" subSoundName="pracka_sub">Pračka</word><!-- TODO -->
                 <word imageName="prase" soundName="prase" subText="Pdase" subSoundName="prase_sub">Prase</word><!-- TODO -->
                 <word imageName="prach" soundName="prach" subText="Pdach" subSoundName="prach_sub">Prach</word><!-- TODO -->
+                <word imageName="prvni" soundName="prvni" subText="Pdvní" subSoundName="prvni_sub">První</word><!-- TODO -->
+                <word imageName="prkno" soundName="prkno" subText="Pdkno" subSoundName="prkno_sub">Prkno</word><!-- TODO -->
+                <word imageName="prsten" soundName="prsten" subText="Pdsten" subSoundName="prsten_sub">Prsten</word><!-- TODO -->
+                <word imageName="prut" soundName="prut" subText="Pdut" subSoundName="prut_sub">Prut</word><!-- TODO -->
+                <word imageName="lano" soundName="provaz" subText="Pdovaz" subSoundName="provaz_sub">Provaz</word><!-- TODO -->
+                <word imageName="profil" soundName="profil" subText="Pdofil" subSoundName="profil_sub">Profil</word><!-- TODO -->
+                <word imageName="prodavac" soundName="prodavac" subText="Pdodavač" subSoundName="prodavac_sub">Prodavač</word><!-- TODO -->
+                <word imageName="proud" soundName="proud" subText="Pdout" subSoundName="proud_sub">Proud</word><!-- TODO -->
             </position>
             <position>
                 <label>R_</label>

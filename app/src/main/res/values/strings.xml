@@ -34,7 +34,7 @@
     <string name="welcome_btn_label">Další</string>
 
 
-    <string name="update_main_heading">Podívejte se co je nového</string>
+    <string name="update_main_heading">Co je nového?</string>
     <string name="update_heading_1">Lorem heading 1</string>
     <string name="update_content_1">Lorem content 1</string>
 
@@ -47,6 +47,10 @@
     <string name="update_btn_label_next">Další</string>
     <string name="update_btn_label_prev">Zpět</string>
 
+    <string name="difficulty_heading">Obtížnost</string>
+    <string name="difficulty_easy">Začátečník</string>
+    <string name="difficulty_medium">Pokročilý</string>
+    <string name="difficulty_hard">Výzva</string>
 
     <string name="speech_menu_item_label">Umístění</string>
     <string name="speech_options_label">Možnosti</string>

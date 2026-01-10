@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
@@ -58,10 +59,11 @@ class EyesightDifferScreen: AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
+                    val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
                     val app = application as com.tomdev.logopadix.LogoApp
                     val repo = app.eyesightDifferRepository
                     val viewModel: EyesightDifferViewModel by viewModels {
-                        EyesightDifferViewModelFactory(repo, app, levelIndex)
+                        EyesightDifferViewModelFactory(repo, app, levelIndex, diffId)
                     }
                     EyesightDifferScreenContent(viewModel)
                 }

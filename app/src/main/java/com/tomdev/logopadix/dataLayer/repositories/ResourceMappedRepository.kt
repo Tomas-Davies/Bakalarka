@@ -2,7 +2,7 @@ package com.tomdev.logopadix.dataLayer.repositories
 
 import android.content.Context
 import android.util.Log
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -18,7 +18,7 @@ import kotlinx.coroutines.withContext
  * @param resourceId The resource ID of the raw XML file to be loaded.
  * @param dataClass The Class object representing type T, used for deserialization.
  */
-abstract class ResourceMappedRepository<T : IModel<R>, R>(
+abstract class ResourceMappedRepository<T : IData<R>, R>(
     private val ctx: Context,
     private val resourceId: Int,
     private val dataClass: Class<T>

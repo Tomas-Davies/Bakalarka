@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
@@ -48,8 +49,10 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.rythmSyllablesRepository
         val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
+        val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
+
         val viewModel: RythmSyllablesViewModel by viewModels {
-            RythmSyllablesViewModelFactory(repo, app, levelIndex)
+            RythmSyllablesViewModelFactory(repo, app, levelIndex, diff)
         }
         setContent {
             AppTheme(ThemeType.THEME_RYTHM.id) {

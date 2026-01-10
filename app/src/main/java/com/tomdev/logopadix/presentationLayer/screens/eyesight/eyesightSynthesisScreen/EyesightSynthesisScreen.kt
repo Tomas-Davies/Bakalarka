@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
@@ -63,9 +64,10 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         setContent {
             val app = application as com.tomdev.logopadix.LogoApp
             val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
+            val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
             val repo = app.eyesightSynthesisRepository
             val viewModel: EyesightSynthesisViewModel by viewModels {
-                EyesightSynthesisViewModelFactory(repo, app, levelIndex)
+                EyesightSynthesisViewModelFactory(repo, app, levelIndex, diffId)
             }
 
             AppTheme(ThemeType.THEME_EYESIGHT.id) {

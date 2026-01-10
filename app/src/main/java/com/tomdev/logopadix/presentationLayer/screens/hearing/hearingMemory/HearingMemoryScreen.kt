@@ -49,6 +49,7 @@ import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import kotlinx.coroutines.launch
 
 
@@ -57,8 +58,10 @@ class HearingMemoryScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.hearingMemoryRepository
+        val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
+
         val viewModel: HearingMemoryViewModel by viewModels {
-            HearingMemoryViewModelFactory(repo, app)
+            HearingMemoryViewModelFactory(repo, app, diff)
         }
         setContent {
             AppTheme(ThemeType.THEME_HEARING.id) {

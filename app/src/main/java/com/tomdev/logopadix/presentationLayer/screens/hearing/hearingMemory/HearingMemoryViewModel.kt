@@ -7,7 +7,7 @@ import com.tomdev.logopadix.dataLayer.repositories.HearingMemoryRound
 import com.tomdev.logopadix.dataLayer.WordContent
 import com.tomdev.logopadix.dataLayer.repositories.HearingMemoryRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,8 +22,9 @@ data class HearingMemoryUiState(
 
 class HearingMemoryViewModel(
     private val repo: HearingMemoryRepo,
-    app: com.tomdev.logopadix.LogoApp
-) : RoundsViewModel(app)
+    app: com.tomdev.logopadix.LogoApp,
+    private val diff: String
+) : DifficultyRoundsViewModel(diff, app)
 {
     private lateinit var rounds: List<HearingMemoryRound>
     private lateinit var currRound: HearingMemoryRound
@@ -43,9 +44,11 @@ class HearingMemoryViewModel(
     init {
         viewModelScope.launch {
             repo.loadData()
-            rounds = repo.data
-                .shuffled()
-                .sortedBy { round -> round.toBePlayedCount }
+            rounds = if (diff.isNotEmpty()) {
+                repo.data.filter { item -> item.difficulty == diff }.shuffled()
+            } else {
+                repo.data
+            }
 
             currRound = rounds[roundIdx]
             allObjects = currRound.objects
@@ -140,13 +143,14 @@ class HearingMemoryViewModel(
 
 class HearingMemoryViewModelFactory(
     private val repo: HearingMemoryRepo,
-    private val app: com.tomdev.logopadix.LogoApp
+    private val app: com.tomdev.logopadix.LogoApp,
+    private val diff: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HearingMemoryViewModel::class.java)) {
-            return HearingMemoryViewModel(repo, app) as T
+            return HearingMemoryViewModel(repo, app, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

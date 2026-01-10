@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-    <round>
+    <round difficulty="EASY">
         <roundContent imageName="buben" soundName="buben"/>
         <roundContent imageName="kure" soundName="kure"/>
         <roundContent imageName="kuzel" soundName="kuzel"/>
@@ -8,7 +8,7 @@
         <roundContent imageName="opice" soundName="opice"/>
         <toBePlayedCount>3</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="EASY">
         <roundContent imageName="darek" soundName="darek"/>
         <roundContent imageName="datel" soundName="datel"/>
         <roundContent imageName="deda" soundName="deda"/>
@@ -16,7 +16,7 @@
         <roundContent imageName="casopis" soundName="casopis"/>
         <toBePlayedCount>3</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="EASY">
         <roundContent imageName="baba" soundName="baba"/>
         <roundContent imageName="bageta" soundName="bageta"/>
         <roundContent imageName="banan" soundName="banan"/>
@@ -24,7 +24,7 @@
         <roundContent imageName="hamburgr" soundName="hamburgr"/>
         <toBePlayedCount>3</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="ovecka" soundName="ovecka"/>
         <roundContent imageName="cmelak" soundName="cmelak"/>
         <roundContent imageName="sekacka" soundName="sekacka"/>
@@ -34,7 +34,7 @@
         <roundContent imageName="dopis" soundName="dopis"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="bouda" soundName="bouda"/>
         <roundContent imageName="chata" soundName="chata"/>
         <roundContent imageName="brambory" soundName="brambory"/>
@@ -43,7 +43,7 @@
         <roundContent imageName="baba" soundName="baba"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="cement" soundName="cement"/>
         <roundContent imageName="cepel" soundName="cepel"/>
         <roundContent imageName="clun" soundName="clun"/>
@@ -52,7 +52,7 @@
         <roundContent imageName="mech" soundName="mech"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="most" soundName="most"/>
         <roundContent imageName="mouka" soundName="mouka"/>
         <roundContent imageName="ovecka" soundName="ovecka"/>
@@ -61,7 +61,7 @@
         <roundContent imageName="zaba" soundName="zaba"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="zavazi" soundName="zavazi"/>
         <roundContent imageName="zub" soundName="zub"/>
         <roundContent imageName="zena" soundName="zena"/>
@@ -70,7 +70,7 @@
         <roundContent imageName="slepice" soundName="slepice"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="slzy" soundName="slzy"/>
         <roundContent imageName="pav" soundName="pav"/>
         <roundContent imageName="okno" soundName="okno"/>
@@ -79,7 +79,7 @@
         <roundContent imageName="most" soundName="most"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="lak" soundName="lak"/>
         <roundContent imageName="konev" soundName="konev"/>
         <roundContent imageName="kaktus" soundName="kaktus"/>
@@ -88,7 +88,7 @@
         <roundContent imageName="knihovna" soundName="knihovna"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent imageName="hokej" soundName="hokej"/>
         <roundContent imageName="houba" soundName="houba"/>
         <roundContent imageName="fotografka" soundName="fotografka"/>
@@ -97,4 +97,5 @@
         <roundContent imageName="drak" soundName="drak"/>
         <toBePlayedCount>4</toBePlayedCount>
     </round>
+    <!--TODO dodelat HARD obtiznost -->
 </data>

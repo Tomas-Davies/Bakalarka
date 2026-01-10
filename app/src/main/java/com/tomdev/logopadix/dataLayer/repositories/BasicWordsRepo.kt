@@ -1,7 +1,7 @@
 package com.tomdev.logopadix.dataLayer.repositories
 
 import android.content.Context
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.tomdev.logopadix.dataLayer.WordContent
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
@@ -20,11 +20,13 @@ class BasicWordsRepo(ctx: Context, resourceFileId: Int):
  *
  * @property objects A list of [WordContent] items contained within this round.
  */
-class BasicWordsRound(
+class BasicWordsRound {
+    @JacksonXmlProperty(isAttribute = true)
+    val difficulty: String = ""
     @JacksonXmlProperty(localName = "roundContent")
     @JacksonXmlElementWrapper(useWrapping = false)
     val objects: List<WordContent> = emptyList()
-)
+}
 
 /**
  * Represents rounds used by basic exercises.
@@ -37,4 +39,4 @@ data class BasicWordsRounds(
     @JacksonXmlProperty(localName = "round")
     @JacksonXmlElementWrapper(useWrapping = false)
     override val data: List<BasicWordsRound> = emptyList()
-) : IModel<BasicWordsRound>
+) : IData<BasicWordsRound>

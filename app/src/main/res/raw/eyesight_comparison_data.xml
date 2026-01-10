@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_13</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_14</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_15</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_16</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_17</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_18</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_19</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="EASY">
         <imageName>comparison_image_20</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_21</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_22</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_1</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_2</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_3</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_4</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_5</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_6</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="MEDIUM">
         <imageName>comparison_image_7</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="HARD">
         <imageName>comparison_image_8</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="HARD">
         <imageName>comparison_image_9</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="HARD">
         <imageName>comparison_image_10</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="HARD">
         <imageName>comparison_image_11</imageName>
         <isSameShape>true</isSameShape>
     </comparisonItem>
-    <comparisonItem>
+    <comparisonItem difficulty="HARD">
         <imageName>comparison_image_12</imageName>
         <isSameShape>false</isSameShape>
     </comparisonItem>

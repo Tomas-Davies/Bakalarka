@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthRound
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthesisRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -55,8 +55,9 @@ data class Rect(
 class EyesightSynthesisViewModel(
     private val repo: EyesightSynthesisRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    levelIndex: Int
-) : RoundsViewModel(app)
+    levelIndex: Int,
+    diffId: String
+) : DifficultyRoundsViewModel(diffId, app)
 {
     private lateinit var rounds: List<EyesightSynthRound>
     private lateinit var bitmaps: List<Bitmap>
@@ -74,7 +75,10 @@ class EyesightSynthesisViewModel(
         roundIdx = levelIndex
         viewModelScope.launch {
             repo.loadData()
-            rounds = repo.data
+            rounds = if (diffId.isNotEmpty()) {
+                repo.data.filter { item -> item.difficulty == diffId }
+            } else repo.data
+
             count = rounds.size
             bitmaps = imageNamesToBitmaps(rounds)
             currImage = bitmaps[roundIdx]
@@ -320,12 +324,13 @@ class EyesightSynthesisViewModel(
 class EyesightSynthesisViewModelFactory(
     private val repo: EyesightSynthesisRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val levelIndex: Int
+    private val levelIndex: Int,
+    private val diffId: String
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSynthesisViewModel::class.java)) {
-            return EyesightSynthesisViewModel(repo, app, levelIndex) as T
+            return EyesightSynthesisViewModel(repo, app, levelIndex, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

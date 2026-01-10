@@ -18,7 +18,9 @@ import kotlinx.coroutines.flow.update
  *
  * @param app The application instance that provides the application context.
  */
-abstract class RoundsViewModel(app: com.tomdev.logopadix.LogoApp) : BaseViewModel(app) {
+abstract class RoundsViewModel(
+    app: com.tomdev.logopadix.LogoApp,
+) : BaseViewModel(app) {
     protected var roundIdx = 0
         set(value) {
             field = value
@@ -148,7 +150,7 @@ abstract class RoundsViewModel(app: com.tomdev.logopadix.LogoApp) : BaseViewMode
     }
 
     open fun scorePercentage(): Int {
-        return if (clickCounter != 0) (score * 100) / clickCounter else 100
+        return if (clickCounter != 0) (score * 100) / clickCounter else 80
     }
 
 }

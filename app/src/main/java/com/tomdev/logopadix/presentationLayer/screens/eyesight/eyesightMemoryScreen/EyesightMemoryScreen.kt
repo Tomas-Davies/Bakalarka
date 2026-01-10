@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.ImageCard
@@ -44,10 +45,12 @@ import kotlinx.coroutines.launch
 class EyesightMemoryScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.eyesightMemoryRepository
         val viewModel: EyesightMemoryViewModel by viewModels {
-            EyesightMemoryViewModelFactory(repo, app)
+            EyesightMemoryViewModelFactory(repo, app, diffId)
         }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT.id) {

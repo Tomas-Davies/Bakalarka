@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRound
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -21,8 +21,9 @@ data class EyesightMemoryUiState(
 
 class EyesightMemoryViewModel(
     private val repo: BasicWordsRepo,
-    app: com.tomdev.logopadix.LogoApp
-) : RoundsViewModel(app)
+    app: com.tomdev.logopadix.LogoApp,
+    diffId: String
+) : DifficultyRoundsViewModel(diffId, app)
 {
     private lateinit var _uiState: MutableStateFlow<EyesightMemoryUiState>
     lateinit var uiState: StateFlow<EyesightMemoryUiState>
@@ -36,9 +37,14 @@ class EyesightMemoryViewModel(
     init {
         viewModelScope.launch {
             repo.loadData()
-            data = repo.data
-                .shuffled()
+            data = if (diffId.isNotEmpty()) {
+                repo.data.filter { item -> item.difficulty == diffId }
+                    .shuffled()
+                    .sortedBy { item -> item.objects.size }
+            }
+            else repo.data.shuffled()
                 .sortedBy { item -> item.objects.size }
+
 
             currentObjects = data[roundIdx].objects
                 .map { obj -> obj.text ?: "" }
@@ -126,13 +132,14 @@ class EyesightMemoryViewModel(
 
 class EyesightMemoryViewModelFactory(
     private val repo: BasicWordsRepo,
-    private val app: com.tomdev.logopadix.LogoApp
+    private val app: com.tomdev.logopadix.LogoApp,
+    private val diffId: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightMemoryViewModel::class.java)) {
-            return EyesightMemoryViewModel(repo, app) as T
+            return EyesightMemoryViewModel(repo, app, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-    <round>
+    <round difficulty="EASY">
         <roundContent>cmelak</roundContent>
         <roundContent>buvol</roundContent>
         <roundContent>beruska</roundContent>
         <roundContent>kos</roundContent>
     </round>
-    <round>
+    <round difficulty="EASY">
         <roundContent>kachna</roundContent>
         <roundContent>ker</roundContent>
         <roundContent>kilogram</roundContent>
         <roundContent>knoflik</roundContent>
     </round>
-    <round>
+    <round difficulty="EASY">
         <roundContent>liska</roundContent>
         <roundContent>lyze</roundContent>
         <roundContent>magie</roundContent>
         <roundContent>maja</roundContent>
     </round>
-    <round>
+    <round difficulty="EASY">
         <roundContent>mouka</roundContent>
         <roundContent>mrak</roundContent>
         <roundContent>napoj</roundContent>
         <roundContent>okno</roundContent>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent>cesnek</roundContent>
         <roundContent>cibule</roundContent>
         <roundContent>chleba</roundContent>
         <roundContent>cise</roundContent>
         <roundContent>clun</roundContent>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent>dum</roundContent>
         <roundContent>kabelka</roundContent>
         <roundContent>kaktus</roundContent>
         <roundContent>kompas</roundContent>
         <roundContent>maslo</roundContent>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent>cas</roundContent>
         <roundContent>doma</roundContent>
         <roundContent>dopis</roundContent>
         <roundContent>drak</roundContent>
         <roundContent>duch</roundContent>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent>gol</roundContent>
         <roundContent>gorila</roundContent>
         <roundContent>gulas</roundContent>
         <roundContent>guma</roundContent>
         <roundContent>houba</roundContent>
     </round>
-    <round>
+    <round difficulty="MEDIUM">
         <roundContent>ker</roundContent>
         <roundContent>kava</roundContent>
         <roundContent>kocka</roundContent>

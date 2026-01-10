@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.ComparisonItem
 import com.tomdev.logopadix.dataLayer.repositories.EyesightComparisonRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.viewModels.RoundsViewModel
+import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +24,9 @@ data class EyesightComparisonUiState(
 class EyesightComparisonViewModel(
     private val repo: EyesightComparisonRepo,
     app: com.tomdev.logopadix.LogoApp,
-    levelIndex: Int
-) : RoundsViewModel(app) {
+    levelIndex: Int,
+    diffId: String
+) : DifficultyRoundsViewModel(diffId, app) {
 
     private lateinit var data: List<ComparisonItem>
     private lateinit var currentItem: ComparisonItem
@@ -39,7 +40,7 @@ class EyesightComparisonViewModel(
         roundIdx = levelIndex
         viewModelScope.launch {
             repo.loadData()
-            data = repo.data
+            data = repo.data.filter { item -> item.difficulty == diffId }
             count = data.size
             currentItem = data[roundIdx]
             _uiState = MutableStateFlow(
@@ -127,13 +128,14 @@ class EyesightComparisonViewModel(
 class EyesightComparionViewModelFactory(
     private val repo: EyesightComparisonRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val levelIndex: Int
+    private val levelIndex: Int,
+    private val diffId: String
 ) : ViewModelProvider.Factory
 {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(EyesightComparisonViewModel::class.java)) {
-            return EyesightComparisonViewModel(repo, app, levelIndex) as T
+            return EyesightComparisonViewModel(repo, app, levelIndex, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

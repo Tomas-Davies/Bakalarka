@@ -2,7 +2,7 @@ package com.tomdev.logopadix.dataLayer.repositories
 
 import android.content.Context
 import com.tomdev.logopadix.R
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
@@ -20,9 +20,12 @@ data class ComparisonData(
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "comparisonItem")
     override val data: List<ComparisonItem> = emptyList()
-) : IModel<ComparisonItem>
+) : IData<ComparisonItem>
 
-data class ComparisonItem(
-    override val imageName: String = "",
+class ComparisonItem : IImageLevel {
+    override val imageName: String = ""
+
+    @JacksonXmlProperty(isAttribute = true)
+    override val difficulty: String = ""
     val isSameShape: Boolean = true
-) : IImageLevel
+}

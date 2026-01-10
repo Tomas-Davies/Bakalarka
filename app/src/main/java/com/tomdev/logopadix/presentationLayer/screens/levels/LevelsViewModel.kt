@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.viewModels.BaseViewModel
 import com.tomdev.logopadix.LogoApp
-import com.tomdev.logopadix.dataLayer.IModel
+import com.tomdev.logopadix.dataLayer.IData
+import com.tomdev.logopadix.dataLayer.ILevel
 import com.tomdev.logopadix.dataLayer.repositories.ResourceMappedRepository
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,8 +19,9 @@ import kotlinx.coroutines.launch
  *
  * @property imageName The name of the drawable resource file.
  */
-interface IImageLevel {
+interface IImageLevel : ILevel {
     val imageName: String
+
     companion object {
         const val TAG = "LEVEL_INDEX"
         const val NEXT_CLASS_TAG = "NEXT_ACTIVITY_CLASS"
@@ -36,10 +38,11 @@ interface IImageLevel {
  * @param repository The repository which provides list of rounds.
  * @param headingId The String resource id of heading used in [LevelsScreen]
  */
-class LevelsViewModel<T : IModel<R>, R : IImageLevel>(
+class LevelsViewModel<T : IData<R>, R : IImageLevel>(
     app: LogoApp,
     repository: ResourceMappedRepository<T, R>,
-    val headingId: Int
+    val headingId: Int,
+    val diffId: String
 ): BaseViewModel(app) {
 
     private var data: List<R> = emptyList()
@@ -49,7 +52,10 @@ class LevelsViewModel<T : IModel<R>, R : IImageLevel>(
     init {
         viewModelScope.launch {
             repository.loadData()
-            data = repository.data
+            data = if (diffId.isNotEmpty()) {
+                repository.data.filter { item -> item.difficulty == diffId }
+            } else repository.data
+
             _levels.value = getLevelsList()
             _screenState.value = ScreenState.Success
         }
@@ -57,24 +63,22 @@ class LevelsViewModel<T : IModel<R>, R : IImageLevel>(
 
     private fun getLevelsList(): List<String>{
         val l = mutableListOf<String>()
-        data.forEach { round ->
-            val roundInfo = round.imageName
-            l.add(roundInfo)
-        }
+        data.forEach { round -> l.add(round.imageName) }
         return l
     }
 }
 
 
-class LevelsViewModelFactory<R : IModel<S>, S : IImageLevel>(
+class LevelsViewModelFactory<R : IData<S>, S : IImageLevel>(
     private val app: LogoApp,
     private val repository: ResourceMappedRepository<R, S>,
-    private val headingId: Int
+    private val headingId: Int,
+    private val diff: String = ""
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(LevelsViewModel::class.java)){
-            return LevelsViewModel(app, repository, headingId) as T
+            return LevelsViewModel(app, repository, headingId, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

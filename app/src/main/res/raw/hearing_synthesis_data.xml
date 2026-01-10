@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-    <round>
-        <roundContent imageName="bota" soundName="bota_spelling"/>
-        <roundContent imageName="bochnik" soundName="bochnik_spelling"/>
-        <roundContent imageName="beruska" soundName="beruska_spelling"/>
+    <!-- Length = 3 -->
+    <round difficulty="EASY">
+        <roundContent imageName="cop" soundName="cop_spelling"/>
+        <roundContent imageName="gol" soundName="gol_spelling"/>
     </round>
-    <round>
+
+    <!-- Length = 4 -->
+    <round difficulty="MEDIUM">
+        <roundContent imageName="bota" soundName="bota_spelling"/>
         <roundContent imageName="dite" soundName="dite_spelling"/>
         <roundContent imageName="cvik" soundName="cvik_spelling"/>
-        <roundContent imageName="cop" soundName="cop_spelling"/>
-    </round>
-    <round>
-        <roundContent imageName="cibule" soundName="cibule_spelling"/>
-        <roundContent imageName="cihla" soundName="cihla_spelling"/>
-        <roundContent imageName="datel" soundName="datel_spelling"/>
         <roundContent imageName="duch" soundName="duch_spelling"/>
-    </round>
-    <round>
-        <roundContent imageName="fouka" soundName="fouka_spelling"/>
-        <roundContent imageName="gol" soundName="gol_spelling"/>
-        <roundContent imageName="fenka" soundName="fenka_spelling"/>
         <roundContent imageName="husa" soundName="husa_spelling"/>
-    </round>
-    <round>
-        <roundContent imageName="bouda" soundName="bouda_spelling"/>
-        <roundContent imageName="casopis" soundName="casopis_spelling"/>
-        <roundContent imageName="chata" soundName="chata_spelling"/>
-        <roundContent imageName="brambory" soundName="brambory_spelling"/>
-        <roundContent imageName="beruska" soundName="beruska_spelling"/>
-        <roundContent imageName="bochnik" soundName="bochnik_spelling"/>
-    </round>
-    <round>
-        <roundContent imageName="kabelka" soundName="kabelka_spelling"/>
-        <roundContent imageName="kachna" soundName="kachna_spelling"/>
-        <roundContent imageName="kaktus" soundName="kaktus_spelling"/>
         <roundContent imageName="klic" soundName="klic_spelling"/>
-        <roundContent imageName="leknin" soundName="leknin_spelling"/>
+    </round>
+
+    <!-- Length = 5 -->
+    <round difficulty="MEDIUM">
+        <roundContent imageName="datel" soundName="datel_spelling"/>
+        <roundContent imageName="fouka" soundName="fouka_spelling"/>
+        <roundContent imageName="fenka" soundName="fenka_spelling"/>
+        <roundContent imageName="bouda" soundName="bouda_spelling"/>
+        <roundContent imageName="chata" soundName="chata_spelling"/>
         <roundContent imageName="liska" soundName="liska_spelling"/>
     </round>
+
+    <!-- Length = 6 -->
+    <round difficulty="HARD">
+        <roundContent imageName="cibule" soundName="cibule_spelling"/>
+        <roundContent imageName="cihla" soundName="cihla_spelling"/>
+        <roundContent imageName="kaktus" soundName="kaktus_spelling"/>
+        <roundContent imageName="leknin" soundName="leknin_spelling"/>
+    </round>
+
+    <!-- Length = 7 -->
+    <round difficulty="HARD">
+        <roundContent imageName="bochnik" soundName="bochnik_spelling"/>
+        <roundContent imageName="beruska" soundName="beruska_spelling"/>
+        <roundContent imageName="casopis" soundName="casopis_spelling"/>
+        <roundContent imageName="kabelka" soundName="kabelka_spelling"/>
+        <roundContent imageName="kachna" soundName="kachna_spelling"/>
+    </round>
+    <!--TODO dodelat levely -->
 </data>

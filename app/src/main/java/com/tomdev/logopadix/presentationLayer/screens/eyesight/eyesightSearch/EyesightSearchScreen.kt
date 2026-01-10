@@ -57,6 +57,7 @@ import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.util.fastRoundToInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
@@ -83,10 +84,11 @@ class EyesightSearchScreen : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
                     val levelIdx = intent.getIntExtra(IImageLevel.TAG, 0)
                     val app = application as com.tomdev.logopadix.LogoApp
                     val viewModel: EyesightSearchViewModel by viewModels {
-                        EyesightSearchViewModelFactory(app.eyesightSearchRepository, app, levelIdx)
+                        EyesightSearchViewModelFactory(app.eyesightSearchRepository, app, levelIdx, diffId)
                     }
                     EyesightImageSearchScreenContent(viewModel)
                 }

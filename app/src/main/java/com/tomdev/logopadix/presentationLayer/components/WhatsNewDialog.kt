@@ -2,7 +2,6 @@ package com.tomdev.logopadix.presentationLayer.components
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,13 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.AlertDialogDefaults
-import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -75,23 +71,10 @@ fun WhatsNewDialog(
     val coroutineScope = rememberCoroutineScope()
 
     if (showWhatsNewPopUp && !showWelcomePopUp) {
-        BasicAlertDialog(
-            modifier = Modifier
-                .padding(top = 18.dp, bottom = 18.dp)
-                .then(modifier),
-            onDismissRequest = { }
+        BaseCustomDialog(
+            modifier = modifier,
+            onExit = { }
         ) {
-            Surface(
-                modifier = Modifier
-                    .border(
-                        3.dp,
-                        MaterialTheme.colorScheme.surfaceVariant,
-                        AlertDialogDefaults.shape
-                    )
-                    .fillMaxWidth(),
-                shape = AlertDialogDefaults.shape,
-                tonalElevation = AlertDialogDefaults.TonalElevation,
-            ) {
                 Column(
                     modifier = Modifier.padding(18.dp)
                 ) {
@@ -101,6 +84,12 @@ fun WhatsNewDialog(
                             .fillMaxWidth(),
                         contentAlignment = Alignment.CenterEnd
                     ) {
+                        Text(
+                            modifier = Modifier.align(Alignment.Center),
+                            text = mainHeading,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+
                         if (pagerState.currentPage == pagerState.pageCount - 1) {
                             DeleteButton(
                                 onClick = {
@@ -115,12 +104,6 @@ fun WhatsNewDialog(
                             )
                         }
                     }
-
-                    Text(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = mainHeading,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
 
                     HorizontalPager(
                         modifier = Modifier.fillMaxWidth(),
@@ -179,7 +162,7 @@ fun WhatsNewDialog(
                         }
                     }
                 }
-            }
+
         }
     }
 }
