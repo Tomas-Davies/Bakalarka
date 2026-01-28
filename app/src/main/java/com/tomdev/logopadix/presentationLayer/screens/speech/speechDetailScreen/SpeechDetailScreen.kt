@@ -76,6 +76,7 @@ import com.tomdev.logopadix.presentationLayer.components.OptionsMenu
 import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
 import com.tomdev.logopadix.presentationLayer.components.SaveButton
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 
 
@@ -90,8 +91,9 @@ class SpeechDetailScreen : AppCompatActivity() {
 
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.speechRepository
+        val streakService = DayStreakService(app.applicationContext)
         val viewModel: SpeechDetailViewModel by viewModels {
-            SpeechDetailViewModelFactory(repo, letterLabel, posLabel, app)
+            SpeechDetailViewModelFactory(repo, letterLabel, posLabel, app, streakService)
         }
         setContent {
             AppTheme(ThemeType.THEME_SPEECH.id) {

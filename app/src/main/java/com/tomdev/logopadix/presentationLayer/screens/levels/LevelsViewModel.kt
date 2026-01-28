@@ -51,10 +51,10 @@ class LevelsViewModel<T : IData<R>, R : IImageLevel>(
 
     init {
         viewModelScope.launch {
-            repository.loadData()
+            var loadedData = repository.loadData()
             data = if (diffId.isNotEmpty()) {
-                repository.data.filter { item -> item.difficulty == diffId }
-            } else repository.data
+                loadedData.filter { item -> item.difficulty == diffId }
+            } else loadedData
 
             _levels.value = getLevelsList()
             _screenState.value = ScreenState.Success

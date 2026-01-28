@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import com.linc.amplituda.Amplituda
 import com.linc.amplituda.callback.AmplitudaErrorListener
+import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -26,7 +27,8 @@ data class RythmResource(
 
 class RythmRepeatViewModel(
     private val repo: RythmRepeatRepo,
-    private val app: com.tomdev.logopadix.LogoApp
+    private val app: com.tomdev.logopadix.LogoApp,
+    private val streakService: DayStreakService
 ) : BaseViewModel(app) {
 
     private lateinit var _sounds: MutableStateFlow<List<RythmResource>>
@@ -39,10 +41,11 @@ class RythmRepeatViewModel(
 
     init {
         viewModelScope.launch {
-            repo.loadData()
-            _sounds = MutableStateFlow(getRythmResource(repo.data))
+            var loadedData = repo.loadData()
+            _sounds = MutableStateFlow(getRythmResource(loadedData))
             sounds = _sounds
             _screenState.value = ScreenState.Success
+            streakService.checkStreak()
         }
     }
 
@@ -92,13 +95,14 @@ class RythmRepeatViewModel(
 
 class RythmRepeatViewModelFactory(
     private val repo: RythmRepeatRepo,
-    private val app: com.tomdev.logopadix.LogoApp
+    private val app: com.tomdev.logopadix.LogoApp,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmRepeatViewModel::class.java)) {
-            return RythmRepeatViewModel(repo, app) as T
+            return RythmRepeatViewModel(repo, app, streakService) as T
         }
         throw IllegalArgumentException("Unknown viewModel class: $modelClass")
     }

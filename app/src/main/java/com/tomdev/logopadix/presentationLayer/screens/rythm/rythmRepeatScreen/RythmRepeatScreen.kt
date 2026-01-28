@@ -42,14 +42,16 @@ import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.theme.AppTheme
 import com.linc.audiowaveform.AudioWaveform
+import com.tomdev.logopadix.services.DayStreakService
 
 class RythmRepeatScreen: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.rythmRepeatRepository
+        val streakService = DayStreakService(app.applicationContext)
         val viewModel: RythmRepeatViewModel by viewModels {
-            RythmRepeatViewModelFactory(repo, app)
+            RythmRepeatViewModelFactory(repo, app, streakService)
         }
 
         setContent {

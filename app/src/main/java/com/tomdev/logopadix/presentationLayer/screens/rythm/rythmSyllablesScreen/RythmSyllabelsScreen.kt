@@ -40,6 +40,7 @@ import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 
 
@@ -50,9 +51,10 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         val repo = app.rythmSyllablesRepository
         val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
         val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
+        val streakService = DayStreakService(app.applicationContext)
 
         val viewModel: RythmSyllablesViewModel by viewModels {
-            RythmSyllablesViewModelFactory(repo, app, levelIndex, diff)
+            RythmSyllablesViewModelFactory(repo, app, levelIndex, diff, streakService)
         }
         setContent {
             AppTheme(ThemeType.THEME_RYTHM.id) {

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
@@ -17,6 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,7 +42,10 @@ fun DifficultyDialog(
     hardColor: Int,
     onEasyClick: () -> Unit,
     onMediumClick: () -> Unit,
-    onHardClick: () -> Unit
+    onHardClick: () -> Unit,
+    easyPainter: Painter,
+    mediumPainter: Painter,
+    hardPainter: Painter
 ){
     if (isVisible){
         BaseCustomDialog(
@@ -77,6 +83,7 @@ fun DifficultyDialog(
                 HorizontalDivider()
                 DifficultyCard(
                     difficultyLabel = easyLabel,
+                    painter = easyPainter,
                     onCardClick = {
                         onEasyClick()
                         setIsVisible(false)
@@ -87,6 +94,7 @@ fun DifficultyDialog(
                 )
                 DifficultyCard(
                     difficultyLabel = mediumLabel,
+                    painter = mediumPainter,
                     onCardClick = {
                         onMediumClick()
                         setIsVisible(false)
@@ -97,6 +105,7 @@ fun DifficultyDialog(
                 )
                 DifficultyCard(
                     difficultyLabel = hardLabel,
+                    painter = hardPainter,
                     onCardClick = {
                         onHardClick()
                         setIsVisible(false)
@@ -114,9 +123,10 @@ fun DifficultyDialog(
 @Composable
 private fun DifficultyCard(
     difficultyLabel: String,
+    painter: Painter,
     onCardClick: () -> Unit,
     colors: CardColors,
-    outlineColor: Color ,
+    outlineColor: Color,
     outlineSelectedColor: Color
 ) {
     CustomCard(
@@ -130,17 +140,21 @@ private fun DifficultyCard(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(18.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
+                modifier = Modifier.padding(18.dp),
                 text = difficultyLabel,
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
-
+            Spacer(Modifier.weight(1f))
+            Image(
+                painter = painter,
+                contentScale = ContentScale.Fit,
+                contentDescription = "decor image"
+            )
         }
 
     }

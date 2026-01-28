@@ -119,6 +119,18 @@
             android:name=".presentationLayer.screens.tales.taleDetail.TaleDetailScreen"
             android:screenOrientation="portrait"
             android:exported="true"/>
+        <activity
+            android:name=".presentationLayer.screens.achievements.AchievementScreen"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
+        <activity
+            android:name=".presentationLayer.screens.achievementCollectionScreen.AchievementCollectionScreen"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
+        <activity
+            android:name=".presentationLayer.screens.achievementSticker.AchievementStickerScreen"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllabRound
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllablesRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,8 +26,9 @@ class RythmSyllablesViewModel(
     private val repo: RythmSyllablesRepo,
     app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
-    diff: String
-) : DifficultyRoundsViewModel(diff, app)
+    diff: String,
+    streakService: DayStreakService
+) : DifficultyRoundsViewModel(diff, app, streakService)
 {
     lateinit var rounds: List<RythmSyllabRound>
     private lateinit var currRound: RythmSyllabRound
@@ -43,11 +45,11 @@ class RythmSyllablesViewModel(
     init {
         roundIdx = levelIndex
         viewModelScope.launch {
-            repo.loadData()
+            var loadedData = repo.loadData()
             rounds = if (diff.isNotEmpty()) {
-                repo.data.filter { item -> item.difficulty == diff }
+                loadedData.filter { item -> item.difficulty == diff }
             } else {
-                repo.data
+                loadedData
             }
             count = rounds.size
             currRound = rounds[roundIdx]
@@ -134,13 +136,14 @@ class RythmSyllablesViewModelFactory(
     private val repo: RythmSyllablesRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diff: String
+    private val diff: String,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmSyllablesViewModel::class.java)) {
-            return RythmSyllablesViewModel(repo, app, levelIndex, diff) as T
+            return RythmSyllablesViewModel(repo, app, levelIndex, diff, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

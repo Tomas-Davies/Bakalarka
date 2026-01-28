@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthRound
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthesisRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -56,8 +57,9 @@ class EyesightSynthesisViewModel(
     private val repo: EyesightSynthesisRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
-    diffId: String
-) : DifficultyRoundsViewModel(diffId, app)
+    diffId: String,
+    streakService: DayStreakService
+) : DifficultyRoundsViewModel(diffId, app, streakService)
 {
     private lateinit var rounds: List<EyesightSynthRound>
     private lateinit var bitmaps: List<Bitmap>
@@ -74,10 +76,10 @@ class EyesightSynthesisViewModel(
     init {
         roundIdx = levelIndex
         viewModelScope.launch {
-            repo.loadData()
+            var loadedData = repo.loadData()
             rounds = if (diffId.isNotEmpty()) {
-                repo.data.filter { item -> item.difficulty == diffId }
-            } else repo.data
+                loadedData.filter { item -> item.difficulty == diffId }
+            } else loadedData
 
             count = rounds.size
             bitmaps = imageNamesToBitmaps(rounds)
@@ -325,12 +327,13 @@ class EyesightSynthesisViewModelFactory(
     private val repo: EyesightSynthesisRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diffId: String
+    private val diffId: String,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSynthesisViewModel::class.java)) {
-            return EyesightSynthesisViewModel(repo, app, levelIndex, diffId) as T
+            return EyesightSynthesisViewModel(repo, app, levelIndex, diffId, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

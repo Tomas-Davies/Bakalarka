@@ -7,6 +7,7 @@ import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRound
 import com.tomdev.logopadix.dataLayer.WordContent
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +23,9 @@ data class HearingSynthesisUiState(
 class HearingSynthesisViewModel(
     private val repo: BasicWordsRepo,
     app: com.tomdev.logopadix.LogoApp,
-    private val diff: String
-) : DifficultyRoundsViewModel(diff, app)
+    private val diff: String,
+    streakService: DayStreakService
+) : DifficultyRoundsViewModel(diff, app, streakService)
 {
     private lateinit var rounds: List<BasicWordsRound>
     private lateinit var currentRound: BasicWordsRound
@@ -37,12 +39,12 @@ class HearingSynthesisViewModel(
 
     init {
         viewModelScope.launch {
-            repo.loadData()
+            var loadedData = repo.loadData()
             rounds = if (diff.isNotEmpty()) {
-                repo.data
+                loadedData
                     .filter { item -> item.difficulty == diff }
             } else {
-                repo.data
+                loadedData
             }
             count = rounds.size
             currentRound = rounds[roundIdx]
@@ -102,13 +104,14 @@ class HearingSynthesisViewModel(
 class HearingSynthesisViewModelFactory(
     private val repo: BasicWordsRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val diff: String
+    private val diff: String,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HearingSynthesisViewModel::class.java)) {
-            return HearingSynthesisViewModel(repo, app, diff) as T
+            return HearingSynthesisViewModel(repo, app, diff, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

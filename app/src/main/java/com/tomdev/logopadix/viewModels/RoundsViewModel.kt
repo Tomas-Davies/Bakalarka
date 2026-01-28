@@ -1,11 +1,14 @@
 package com.tomdev.logopadix.viewModels
 
 import android.os.VibrationEffect
+import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 /**
  * Abstract base ViewModel that provides common functionality for rounds-based activities.
@@ -20,6 +23,7 @@ import kotlinx.coroutines.flow.update
  */
 abstract class RoundsViewModel(
     app: com.tomdev.logopadix.LogoApp,
+    private val streakService: DayStreakService
 ) : BaseViewModel(app) {
     protected var roundIdx = 0
         set(value) {
@@ -34,6 +38,12 @@ abstract class RoundsViewModel(
             field = value
             updateHasNextRound()
         }
+
+    init {
+        viewModelScope.launch {
+            streakService.checkStreak()
+        }
+    }
 
     private var _resultMessageState = MutableStateFlow(ResultMessageState())
     val resultMessageState = _resultMessageState.asStateFlow()

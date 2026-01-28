@@ -9,6 +9,7 @@ import com.tomdev.logopadix.dataLayer.UserSentence
 import com.tomdev.logopadix.dataLayer.repositories.SpeechRepo
 import com.tomdev.logopadix.dataLayer.repositories.SpeechWordContent
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,7 +31,8 @@ class SpeechDetailViewModel(
     private val repo: SpeechRepo,
     private val letterLabel: String,
     posLabel: String,
-    app: com.tomdev.logopadix.LogoApp
+    app: com.tomdev.logopadix.LogoApp,
+    private val streakService: DayStreakService
 ) : BaseViewModel(app) {
     private lateinit var words: List<SpeechWordContent>
     private var index = 0
@@ -91,6 +93,7 @@ class SpeechDetailViewModel(
             uiState = _uiState
             _screenState.value = ScreenState.Success
             defaultSentences = repo.getDefaultSentences(letterLabel) ?: emptyList()
+            streakService.checkStreak()
         }
     }
 
@@ -177,12 +180,13 @@ class SpeechDetailViewModelFactory(
     private val repo: SpeechRepo,
     private val letterLabel: String,
     private val posLabel: String,
-    private val app: com.tomdev.logopadix.LogoApp
+    private val app: com.tomdev.logopadix.LogoApp,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SpeechDetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SpeechDetailViewModel(repo, letterLabel, posLabel, app) as T
+            return SpeechDetailViewModel(repo, letterLabel, posLabel, app, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

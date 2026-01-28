@@ -52,6 +52,7 @@ import com.tomdev.logopadix.R
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.NewComersDialog
 import com.tomdev.logopadix.presentationLayer.components.WhatsNewDialog
+import com.tomdev.logopadix.presentationLayer.screens.achievements.AchievementScreen
 import com.tomdev.logopadix.presentationLayer.screens.info.InfoScreen
 import com.tomdev.logopadix.presentationLayer.screens.eyesight.eyesightScreen.EyesightScreen
 import com.tomdev.logopadix.presentationLayer.screens.hearing.hearingScreen.HearingScreen
@@ -88,6 +89,13 @@ class HomeScreen : AppCompatActivity() {
                         Text(text = stringResource(id = R.string.app_name))
                     },
                     actions = {
+                        IconButton(onClick = { onCardClicked(6) }) {
+                            Icon(
+                                painter = painterResource(R.drawable.trophy_icon),
+                                contentDescription = "",
+                                tint = Color.Unspecified
+                            )
+                        }
                         IconButton(onClick = { onCardClicked(5) }) {
                             Icon(imageVector = Icons.Filled.Info, contentDescription = "info")
                         }
@@ -443,6 +451,10 @@ class HomeScreen : AppCompatActivity() {
 
             5 -> {
                 intent = Intent(this, InfoScreen::class.java)
+            }
+
+            6 -> {
+                intent = Intent(this, AchievementScreen::class.java)
             }
         }
         startActivity(intent)

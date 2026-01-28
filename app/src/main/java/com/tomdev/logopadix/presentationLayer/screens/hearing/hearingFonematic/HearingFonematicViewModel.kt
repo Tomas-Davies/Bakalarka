@@ -7,6 +7,7 @@ import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRound
 import com.tomdev.logopadix.dataLayer.WordContent
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +22,9 @@ data class HearingFonematicUiState(
 
 class HearingFonematicViewModel(
     private val repo: BasicWordsRepo,
-    app: com.tomdev.logopadix.LogoApp
-) : RoundsViewModel(app)
+    app: com.tomdev.logopadix.LogoApp,
+    streakService: DayStreakService
+) : RoundsViewModel(app, streakService)
 {
     private lateinit var rounds: List<BasicWordsRound>
     private lateinit var currentRound: BasicWordsRound
@@ -35,8 +37,8 @@ class HearingFonematicViewModel(
 
     init {
         viewModelScope.launch {
-            repo.loadData()
-            rounds = repo.data.shuffled().sortedBy { round -> round.objects.size }
+            var loadedData = repo.loadData()
+            rounds = loadedData.shuffled().sortedBy { round -> round.objects.size }
             count = rounds.count()
             currentRound = rounds[roundIdx]
             currentObjects = currentRound.objects
@@ -99,12 +101,13 @@ class HearingFonematicViewModel(
 
 class HearingFonematicFactory(
     private val repo: BasicWordsRepo,
-    private val app: com.tomdev.logopadix.LogoApp
+    private val app: com.tomdev.logopadix.LogoApp,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HearingFonematicViewModel::class.java)) {
-            return HearingFonematicViewModel(repo, app) as T
+            return HearingFonematicViewModel(repo, app, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

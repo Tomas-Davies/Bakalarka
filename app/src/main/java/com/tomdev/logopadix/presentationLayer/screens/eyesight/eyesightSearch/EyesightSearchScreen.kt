@@ -63,6 +63,7 @@ import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.utils.image.getContentOffsetInImage
 import com.tomdev.logopadix.utils.image.getFitContentScaleInImage
@@ -87,8 +88,9 @@ class EyesightSearchScreen : AppCompatActivity() {
                     val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
                     val levelIdx = intent.getIntExtra(IImageLevel.TAG, 0)
                     val app = application as com.tomdev.logopadix.LogoApp
+                    val streakService = DayStreakService(app.applicationContext)
                     val viewModel: EyesightSearchViewModel by viewModels {
-                        EyesightSearchViewModelFactory(app.eyesightSearchRepository, app, levelIdx, diffId)
+                        EyesightSearchViewModelFactory(app.eyesightSearchRepository, app, levelIdx, diffId, streakService)
                     }
                     EyesightImageSearchScreenContent(viewModel)
                 }

@@ -9,9 +9,10 @@ import androidx.room.RoomDatabase
 /**
  * Provides access to the local database and its tables.
  */
-@Database(entities = [UserSentence::class], version = 1)
+@Database(entities = [UserSentence::class, StickerProgress::class], version = 2)
 abstract class AppDb: RoomDatabase(){
     abstract fun sentencesDao(): UserSentenceDAO
+    abstract fun stickersDao(): StickerProgressDao
     companion object {
         @Volatile
         private var instance: AppDb? = null

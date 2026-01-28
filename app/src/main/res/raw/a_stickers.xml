@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <sticker>
+        <id>sticker_1</id>
+        <imageName>sticker_1</imageName>
+        <label>Steve</label>
+        <limitCount>10</limitCount>
+    </sticker>
+    <sticker>
+        <id>sticker_2</id>
+        <imageName>sticker_2</imageName>
+        <label>Bob</label>
+        <limitCount>20</limitCount>
+    </sticker>
+</data>

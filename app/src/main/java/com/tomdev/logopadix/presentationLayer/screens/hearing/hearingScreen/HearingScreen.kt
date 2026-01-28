@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.R
@@ -139,7 +140,10 @@ class HearingScreen : AppCompatActivity() {
                     hardColor = R.color.diff_hard,
                     onEasyClick = { onDiffClicked(chosenExcerciseId, DifficultyType.EASY.name) },
                     onMediumClick = { onDiffClicked(chosenExcerciseId, DifficultyType.MEDIUM.name) },
-                    onHardClick = { onDiffClicked(chosenExcerciseId, DifficultyType.HARD.name) }
+                    onHardClick = { onDiffClicked(chosenExcerciseId, DifficultyType.HARD.name) },
+                    easyPainter = painterResource(R.drawable.difficulty_beginner),
+                    mediumPainter = painterResource(R.drawable.difficulty_medium),
+                    hardPainter = painterResource(R.drawable.difficulty_hard)
                 )
             }
         }

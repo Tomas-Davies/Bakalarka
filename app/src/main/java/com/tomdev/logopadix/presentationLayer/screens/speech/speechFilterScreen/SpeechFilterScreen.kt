@@ -56,6 +56,7 @@ import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.DeleteButton
 import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.theme.ThemeType
 
@@ -65,8 +66,9 @@ class SpeechFilterScreen: AppCompatActivity() {
 
         val app = application as LogoApp
         val repo = app.speechRepository
+        val streakService = DayStreakService(app.applicationContext)
         val viewModel: SpeechFilterViewModel by viewModels {
-            SpeechFilterViewModelFactory(app, repo)
+            SpeechFilterViewModelFactory(app, repo, streakService)
         }
         setContent {
             AppTheme(ThemeType.THEME_SPEECH.id) {

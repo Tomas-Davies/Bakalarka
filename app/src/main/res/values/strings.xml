@@ -8,6 +8,11 @@
     <string name="info_heading">Informace</string>
     <string name="info_content_heading">Materiály</string>
     <string name="home_screen_decor_label">I procvičování může být zábava.</string>
+    <string name="achievement_heading">Denní řada</string>
+    <string name="achievement_badges_heading">Odznaky</string>
+    <string name="achievement_sticker_heading">Samolepky</string>
+    <string name="achievement_badges_subheading">Sbírej odznaky denní řady!</string>
+    <string name="achievement_stickers_subheading">Cvičením sbírej samolepky!</string>
 
     <string name="info_content_1_heading">Obrázky</string>
     <string name="info_content_1_text">chatGPT</string>

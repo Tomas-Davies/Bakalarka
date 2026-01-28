@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <achievement>
+        <imageName>achievement_1</imageName>
+        <label>Nováček</label>
+        <costPoints>1</costPoints>
+    </achievement>
+
+    <achievement>
+        <imageName>achievement_2</imageName>
+        <label>Jen tak dál!</label>
+        <costPoints>3</costPoints>
+    </achievement>
+
+    <achievement>
+        <imageName>achievement_3</imageName>
+        <label>Nezlomný</label>
+        <costPoints>7</costPoints>
+    </achievement>
+
+    <achievement>
+        <imageName>achievement_4</imageName>
+        <label>Vytrvalý</label>
+        <costPoints>25</costPoints>
+    </achievement>
+
+    <achievement>
+        <imageName>achievement_5</imageName>
+        <label>Legendární</label>
+        <costPoints>50</costPoints>
+    </achievement>
+
+    <achievement>
+        <imageName>achievement_6</imageName>
+        <label>Nejlepší</label>
+        <costPoints>75</costPoints>
+    </achievement>
+
+    <achievement>
+        <imageName>achievement_6</imageName>
+        <label>Profík</label>
+        <costPoints>100</costPoints>
+    </achievement>
+</data>

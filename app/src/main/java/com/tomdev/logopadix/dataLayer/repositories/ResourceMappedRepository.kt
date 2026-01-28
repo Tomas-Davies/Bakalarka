@@ -12,29 +12,30 @@ import kotlinx.coroutines.withContext
 /**
  * Abstract base repository for asynchronous resource data loading and deserialization.
  *
- * @param T The type of the class that is going to be mapped.
- * @param R The type of the individual data items that will be exposed by the repository.
+ * @param TData The type of the class that is going to be mapped.
+ * @param TItem The type of the individual data items that will be exposed by the repository.
  * @param ctx The Android Context used to access resources.
  * @param resourceId The resource ID of the raw XML file to be loaded.
  * @param dataClass The Class object representing type T, used for deserialization.
  */
-abstract class ResourceMappedRepository<T : IData<R>, R>(
+open class ResourceMappedRepository<TData : IData<TItem>, TItem>(
     private val ctx: Context,
     private val resourceId: Int,
-    private val dataClass: Class<T>
-)  {
-    private var mappedClass: T? = null
-    var data: List<R> = emptyList()
-        private set
+    private val dataClass: Class<TData>
+) : IRepository<TItem>
+{
+    private var mappedClass: TData? = null
+    var data: List<TItem> = emptyList()
 
-
-    suspend fun loadData(){
+    override suspend fun loadData(): List<TItem> {
         if (mappedClass == null){
             withContext(Dispatchers.Default){
                 mappedClass = mapXml(ctx, resourceId, dataClass)
             }
         }
-        data = mappedClass?.data ?: emptyList()
+        val result = mappedClass?.data ?: emptyList()
+        data = result
+        return result
     }
 
 

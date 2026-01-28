@@ -12,6 +12,7 @@ import com.tomdev.logopadix.dataLayer.repositories.SearchItemOverlay
 import com.tomdev.logopadix.dataLayer.repositories.SearchRound
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSearchRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,8 +31,9 @@ class EyesightSearchViewModel(
     repo: EyesightSearchRepo,
     app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
-    diffId: String
-): DifficultyRoundsViewModel(diffId, app)
+    diffId: String,
+    streakService: DayStreakService
+): DifficultyRoundsViewModel(diffId, app, streakService)
 {
     lateinit var rounds: List<SearchRound>
     private lateinit var currentRound: SearchRound
@@ -49,10 +51,10 @@ class EyesightSearchViewModel(
     init {
         roundIdx = levelIndex
         viewModelScope.launch {
-            repo.loadData()
+            var loadedData = repo.loadData()
             rounds = if (diffId.isNotEmpty()) {
-                repo.data.filter { item -> item.difficulty == diffId }
-            } else repo.data
+                loadedData.filter { item -> item.difficulty == diffId }
+            } else loadedData
             
             count = rounds.size
             currentRound = rounds[roundIdx]
@@ -173,12 +175,13 @@ class EyesightSearchViewModelFactory(
     private val repo: EyesightSearchRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diffId: String
+    private val diffId: String,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSearchViewModel::class.java)) {
-            return EyesightSearchViewModel(repo, app, levelIndex, diffId) as T
+            return EyesightSearchViewModel(repo, app, levelIndex, diffId, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRound
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +23,9 @@ data class EyesightMemoryUiState(
 class EyesightMemoryViewModel(
     private val repo: BasicWordsRepo,
     app: com.tomdev.logopadix.LogoApp,
-    diffId: String
-) : DifficultyRoundsViewModel(diffId, app)
+    diffId: String,
+    streakService: DayStreakService
+) : DifficultyRoundsViewModel(diffId, app, streakService)
 {
     private lateinit var _uiState: MutableStateFlow<EyesightMemoryUiState>
     lateinit var uiState: StateFlow<EyesightMemoryUiState>
@@ -36,13 +38,13 @@ class EyesightMemoryViewModel(
 
     init {
         viewModelScope.launch {
-            repo.loadData()
+            var loadedData = repo.loadData()
             data = if (diffId.isNotEmpty()) {
-                repo.data.filter { item -> item.difficulty == diffId }
+                loadedData.filter { item -> item.difficulty == diffId }
                     .shuffled()
                     .sortedBy { item -> item.objects.size }
             }
-            else repo.data.shuffled()
+            else loadedData.shuffled()
                 .sortedBy { item -> item.objects.size }
 
 
@@ -133,13 +135,14 @@ class EyesightMemoryViewModel(
 class EyesightMemoryViewModelFactory(
     private val repo: BasicWordsRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val diffId: String
+    private val diffId: String,
+    private val streakService: DayStreakService
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightMemoryViewModel::class.java)) {
-            return EyesightMemoryViewModel(repo, app, diffId) as T
+            return EyesightMemoryViewModel(repo, app, diffId, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

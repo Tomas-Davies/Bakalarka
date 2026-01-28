@@ -19,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -33,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.unit.dp
@@ -48,6 +46,7 @@ import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.presentationLayer.screens.tales.TalesViewModel
 import com.tomdev.logopadix.presentationLayer.screens.tales.TalesViewModelFactory
+import com.tomdev.logopadix.services.DayStreakService
 
 
 class TaleDetailScreen : AppCompatActivity() {
@@ -55,8 +54,9 @@ class TaleDetailScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.talesRepository
+        val streakService = DayStreakService(app.applicationContext)
         val viewModel by viewModels<TalesViewModel> {
-            TalesViewModelFactory(repo, app)
+            TalesViewModelFactory(repo, app, streakService)
         }
         val taleIdx = intent.getIntExtra("TALE_INDEX", 0)
         setContent {

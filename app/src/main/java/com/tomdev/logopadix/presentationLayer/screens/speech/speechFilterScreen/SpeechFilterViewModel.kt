@@ -3,10 +3,12 @@ package com.tomdev.logopadix.presentationLayer.screens.speech.speechFilterScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.room.Ignore
 import com.tomdev.logopadix.LogoApp
 import com.tomdev.logopadix.dataLayer.repositories.NormalizedWordContent
 import com.tomdev.logopadix.dataLayer.repositories.SpeechRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
+import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.utils.string.endsWithCh
 import com.tomdev.logopadix.utils.string.normalizedWithCh
 import com.tomdev.logopadix.utils.string.startsWithCh
@@ -18,7 +20,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
-class SpeechFilterViewModel(val app: LogoApp, val repo: SpeechRepo): BaseViewModel(app) {
+class SpeechFilterViewModel(
+    val app: LogoApp,
+    val repo: SpeechRepo,
+    val dayStreakService: DayStreakService
+): BaseViewModel(app) {
     private var processedWords = MutableStateFlow<List<NormalizedWordContent>?>(null)
     private var _filteredWords =  MutableStateFlow(emptyList<NormalizedWordContent>())
     val filteredWords = _filteredWords.asStateFlow()
@@ -28,6 +34,7 @@ class SpeechFilterViewModel(val app: LogoApp, val repo: SpeechRepo): BaseViewMod
         viewModelScope.launch {
             repo.loadData()
             processedWords.value = repo.getProcessedWords()
+            dayStreakService.checkStreak()
         }
     }
 
@@ -63,11 +70,14 @@ class SpeechFilterViewModel(val app: LogoApp, val repo: SpeechRepo): BaseViewMod
 
 class SpeechFilterViewModelFactory(
     private val app: LogoApp,
-    private val repo: SpeechRepo
+    private val repo: SpeechRepo,
+    private val streakService: DayStreakService
 ): ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(SpeechFilterViewModel::class.java)){
-            return SpeechFilterViewModel(app, repo) as T
+            return SpeechFilterViewModel(app, repo, streakService) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class $modelClass")
     }

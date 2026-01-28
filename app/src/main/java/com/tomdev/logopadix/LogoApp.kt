@@ -2,6 +2,7 @@ package com.tomdev.logopadix
 
 import android.app.Application
 import com.tomdev.logopadix.dataLayer.AppDb
+import com.tomdev.logopadix.dataLayer.repositories.AchievementRepo
 import com.tomdev.logopadix.dataLayer.repositories.EyesightComparisonRepo
 import com.tomdev.logopadix.dataLayer.repositories.EyesightDifferRepo
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSearchRepo
@@ -12,6 +13,8 @@ import com.tomdev.logopadix.dataLayer.repositories.RythmRepeatRepo
 import com.tomdev.logopadix.dataLayer.repositories.RythmShelvesRepo
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllablesRepo
 import com.tomdev.logopadix.dataLayer.repositories.SpeechRepo
+import com.tomdev.logopadix.dataLayer.repositories.StickerRepository
+import com.tomdev.logopadix.dataLayer.repositories.StickerStaticRepository
 import com.tomdev.logopadix.dataLayer.repositories.TalesRepo
 
 class LogoApp: Application() {
@@ -38,4 +41,8 @@ class LogoApp: Application() {
     val rythmShelvesRepository by lazy { RythmShelvesRepo(this) }
     val rythmRepeatRepository by lazy { RythmRepeatRepo(this) }
     val talesRepository by lazy { TalesRepo(this) }
+
+    val achievementsRepo by lazy { AchievementRepo(this) }
+    val stickerDefinitionsRepo by lazy { StickerStaticRepository(this) }
+    val stickerRepo by lazy { StickerRepository(this) }
 }
