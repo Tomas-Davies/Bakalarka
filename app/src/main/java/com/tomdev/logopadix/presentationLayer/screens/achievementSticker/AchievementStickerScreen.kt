@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,7 +29,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.LogoApp
 import com.tomdev.logopadix.R
@@ -123,7 +126,7 @@ class AchievementStickerScreen: AppCompatActivity() {
         var cardOutline = MaterialTheme.colorScheme.outline
         var cardOutlineSelected = MaterialTheme.colorScheme.outlineVariant
 
-        if (sticker.collectedPieceCount == sticker.pieceLimit){
+        if (sticker.collectedPieceCount >= sticker.pieceLimit){
             drawableId = viewModel.getDrawableId(sticker.imageName + "_golden")
             cardColors = CardDefaults.cardColors().copy(containerColor = colorResource(R.color.gold))
             cardOutline = colorResource(R.color.gold_outline)
@@ -153,8 +156,14 @@ class AchievementStickerScreen: AppCompatActivity() {
                 Spacer(Modifier.height(9.dp))
                 Text(
                     text = sticker.label,
-                    style = MaterialTheme.typography.titleMedium,
+                    fontSize = 19.sp,
                     fontWeight = FontWeight.SemiBold
+                )
+                HorizontalDivider(Modifier.padding(4.dp))
+                Text(
+                    text = sticker.description,
+                    style = MaterialTheme.typography.labelLarge,
+                    textAlign = TextAlign.Center
                 )
             }
         }

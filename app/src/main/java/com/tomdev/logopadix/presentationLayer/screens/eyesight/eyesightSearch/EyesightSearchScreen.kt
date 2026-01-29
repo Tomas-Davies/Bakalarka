@@ -57,6 +57,7 @@ import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.util.fastRoundToInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
@@ -131,7 +132,8 @@ class EyesightSearchScreen : AppCompatActivity() {
 
         RoundsCompletedBox(
             viewModel = viewModel,
-            onExit = { this@EyesightSearchScreen.finish() }
+            onExit = { this@EyesightSearchScreen.finish() },
+            stickerId = StickerType.EYESIGHT_SEARCH.id
         ) {
             val imageModifier = Modifier
                 .fillMaxSize()

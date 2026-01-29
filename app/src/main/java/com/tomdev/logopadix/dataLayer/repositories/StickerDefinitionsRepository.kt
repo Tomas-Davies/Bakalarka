@@ -7,7 +7,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.dataLayer.IData
 
-class StickerStaticRepository(ctx: Context) :
+class StickerDefinitionsRepository(ctx: Context) :
     ResourceMappedRepository<StickerData, Sticker>(
         ctx = ctx,
         resourceId = R.raw.a_stickers,
@@ -20,6 +20,7 @@ class Sticker {
     val imageName: String = ""
     val label: String = ""
     val limitCount: Int = 0
+    val description: String = ""
 }
 
 @JacksonXmlRootElement(localName = "data")

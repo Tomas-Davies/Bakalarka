@@ -27,7 +27,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.dataLayer.repositories.StickerUiModel
+import com.tomdev.logopadix.viewModels.RoundsViewModel
 import nl.dionsegijn.konfetti.compose.KonfettiView
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.emitter.Emitter
@@ -45,15 +48,19 @@ import java.util.concurrent.TimeUnit
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun RoundCompletedDialog(
+    viewModel: RoundsViewModel,
     scorePercentage: Int,
     onContinue: () -> Unit,
     onExit: () -> Unit,
+    stickerId: String,
     continueBtnEnabled: Boolean
 ) {
     CustomDialog(
         showExitButton = false,
         onExit = { }
     ) {
+        val stickerState by viewModel.stickerStateFlow.collectAsStateWithLifecycle()
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,6 +106,18 @@ fun RoundCompletedDialog(
                     contentDescription = "medal"
                 )
             }
+            if (stickerState != null){
+                HorizontalDivider(modifier = Modifier.padding(vertical = 18.dp))
+                Text(
+                    modifier = Modifier.align(Alignment.Start),
+                    text = stringResource(R.string.collected_sticker),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                CollectedStickerRow(
+                    sticker = stickerState,
+                    viewModel = viewModel
+                )
+            }
             HorizontalDivider(modifier = Modifier.padding(vertical = 18.dp))
             Text(
                 text = stringResource(id = R.string.accuracy_label) + ": ${(progress * 100).toInt()}%",
@@ -127,7 +146,13 @@ fun RoundCompletedDialog(
             ) {
                 Button(
                     modifier = Modifier.weight(1f),
-                    onClick = { onExit() }
+                    onClick = {
+                        if (stickerId.isNotEmpty() && scorePercentage == 100){
+                            viewModel.setStickerUiModelFlow(stickerId)
+                            viewModel.collectStickerPiece(stickerId)
+                        }
+                        onExit()
+                    }
                 ) {
                     Text(text = stringResource(id = R.string.leave_label))
                 }
@@ -135,11 +160,40 @@ fun RoundCompletedDialog(
                 Button(
                     modifier = Modifier.weight(1f),
                     enabled = continueBtnEnabled,
-                    onClick = { onContinue() }
+                    onClick = {
+                        if (stickerId.isNotEmpty() && scorePercentage == 100){
+                            viewModel.setStickerUiModelFlow(stickerId)
+                            viewModel.collectStickerPiece(stickerId)
+                        }
+                        onContinue()
+                    }
                 ) {
                     Text(text = stringResource(id = R.string.continue_label))
                 }
             }
         }
+    }
+}
+
+
+@Composable
+fun CollectedStickerRow(sticker: StickerUiModel?, viewModel: RoundsViewModel) {
+    Row(
+        modifier = Modifier.fillMaxWidth(0.7f),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = sticker?.label ?: "",
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(Modifier.weight(1f))
+
+        val drawableId = viewModel.getDrawableId(sticker?.imageName ?: "")
+        Image(
+            modifier = Modifier.sizeIn(maxHeight = 65.dp),
+            painter = painterResource(drawableId),
+            contentDescription = "collected sticker image"
+        )
+
     }
 }

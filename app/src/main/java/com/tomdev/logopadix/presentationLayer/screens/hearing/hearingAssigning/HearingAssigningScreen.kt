@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.LogoApp
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.ImageCard
@@ -97,7 +98,8 @@ class HearingAssigningScreen: AppCompatActivity() {
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
             contentAlignment = Alignment.Center,
-            onExit = { finish() }
+            onExit = { finish() },
+            stickerId = StickerType.HEARING_SOUNDS_DIFF.id
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

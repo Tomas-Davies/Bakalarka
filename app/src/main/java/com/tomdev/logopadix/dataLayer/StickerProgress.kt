@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class StickerProgress(
     @PrimaryKey
     val stickerId: String,
-    val collectedPieces: Int,
-    val isGoldenUnlocked: Boolean
+    var collectedPieces: Int,
+    var isGoldenUnlocked: Boolean
 )

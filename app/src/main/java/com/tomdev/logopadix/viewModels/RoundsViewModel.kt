@@ -3,6 +3,7 @@ package com.tomdev.logopadix.viewModels
 import android.os.VibrationEffect
 import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.dataLayer.repositories.StickerUiModel
 import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +24,7 @@ import kotlinx.coroutines.launch
  */
 abstract class RoundsViewModel(
     app: com.tomdev.logopadix.LogoApp,
-    private val streakService: DayStreakService
+    private val streakService: DayStreakService,
 ) : BaseViewModel(app) {
     protected var roundIdx = 0
         set(value) {
@@ -38,6 +39,7 @@ abstract class RoundsViewModel(
             field = value
             updateHasNextRound()
         }
+    protected val stickerRepo = app.stickerRepo
 
     init {
         viewModelScope.launch {
@@ -56,6 +58,12 @@ abstract class RoundsViewModel(
 
     protected abstract var roundSetSize: Int
     private var roundsCompletedCount = 0
+
+    protected var _stickerStateFlow = MutableStateFlow<StickerUiModel?>(null)
+        private set
+
+    val stickerStateFlow = _stickerStateFlow.asStateFlow()
+
     protected abstract fun updateData()
 
     protected open fun nextRound(): Boolean {
@@ -161,6 +169,18 @@ abstract class RoundsViewModel(
 
     open fun scorePercentage(): Int {
         return if (clickCounter != 0) (score * 100) / clickCounter else 80
+    }
+
+    fun collectStickerPiece(stickerId: String){
+        viewModelScope.launch {
+            stickerRepo.collectedPiece(stickerId)
+        }
+    }
+
+    fun setStickerUiModelFlow(stickerId: String) {
+        viewModelScope.launch {
+            _stickerStateFlow.value = stickerRepo.getStickerById(stickerId)
+        }
     }
 
 }

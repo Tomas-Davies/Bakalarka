@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
@@ -144,7 +145,8 @@ class EyesightSynthesisScreen : AppCompatActivity() {
         RoundsCompletedBox(
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
-            onExit = { finish() }
+            onExit = { finish() },
+            stickerId = StickerType.EYESIGHT_SYNTHESIS.id
         ) {
             val imageContent = uiState.image.asImageBitmap()
             Image(

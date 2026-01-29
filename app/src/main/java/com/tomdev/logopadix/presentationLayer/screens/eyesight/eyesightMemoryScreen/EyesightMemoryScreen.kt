@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
@@ -100,7 +101,8 @@ class EyesightMemoryScreen : AppCompatActivity() {
 
         RoundsCompletedBox(
             viewModel = viewModel,
-            onExit = { finish() }
+            onExit = { finish() },
+            stickerId = StickerType.EYESIGHT_MEMORY.id
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

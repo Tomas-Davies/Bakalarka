@@ -44,6 +44,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.EYESIGHT_SHOW_TIMER_KEY
 import com.tomdev.logopadix.R
+import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.datastore
 import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
@@ -106,7 +107,8 @@ class EyesightComparisonScreen : AppCompatActivity() {
 
                 RoundsCompletedBox(
                     viewModel = viewModel,
-                    onExit = { finish() }
+                    onExit = { finish() },
+                    stickerId = StickerType.EYESIGHT_COMPARISON.id
                 ) {
                     Column(
                         modifier = Modifier

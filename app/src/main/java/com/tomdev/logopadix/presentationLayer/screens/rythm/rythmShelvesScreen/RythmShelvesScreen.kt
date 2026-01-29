@@ -34,6 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.dataLayer.WordContent
+import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.ImageCard
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
@@ -83,7 +84,8 @@ class RythmShelvesScreen : AppCompatActivity() {
             ) { pdVal ->
                 RoundsCompletedBox(
                     viewModel = viewModel,
-                    onExit = { finish() }
+                    onExit = { finish() },
+                    stickerId = StickerType.RYTHM_PAIRS.id
                 ) {
                     Column(
                         modifier = Modifier.padding(start = 18.dp, top = pdVal.calculateTopPadding(), bottom = pdVal.calculateBottomPadding(), end = 18.dp),

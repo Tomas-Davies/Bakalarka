@@ -14,10 +14,14 @@ import com.tomdev.logopadix.dataLayer.repositories.RythmShelvesRepo
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllablesRepo
 import com.tomdev.logopadix.dataLayer.repositories.SpeechRepo
 import com.tomdev.logopadix.dataLayer.repositories.StickerRepository
-import com.tomdev.logopadix.dataLayer.repositories.StickerStaticRepository
+import com.tomdev.logopadix.dataLayer.repositories.StickerDefinitionsRepository
 import com.tomdev.logopadix.dataLayer.repositories.TalesRepo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
 class LogoApp: Application() {
+    val appScopeIO = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     val database by lazy { AppDb.getDatabase(this) }
     val speechRepository by lazy { SpeechRepo(this) }
     val eyesightDifferRepository by lazy { EyesightDifferRepo(this) }
@@ -43,6 +47,6 @@ class LogoApp: Application() {
     val talesRepository by lazy { TalesRepo(this) }
 
     val achievementsRepo by lazy { AchievementRepo(this) }
-    val stickerDefinitionsRepo by lazy { StickerStaticRepository(this) }
-    val stickerRepo by lazy { StickerRepository(this) }
+    val stickerDefinitionsRepo by lazy { StickerDefinitionsRepository(this) }
+    val stickerRepo by lazy { StickerRepository(this, appScopeIO) }
 }

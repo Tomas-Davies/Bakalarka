@@ -49,6 +49,7 @@ import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.presentationLayer.DifficultyType
 import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.launch
@@ -112,7 +113,8 @@ class HearingMemoryScreen : AppCompatActivity() {
             modifier = Modifier.fillMaxSize(),
             viewModel = viewModel,
             contentAlignment = Alignment.Center,
-            onExit = { finish() }
+            onExit = { finish() },
+            stickerId = StickerType.HEARING_MEMORY.id
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

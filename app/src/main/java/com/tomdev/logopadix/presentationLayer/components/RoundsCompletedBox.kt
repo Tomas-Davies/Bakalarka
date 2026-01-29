@@ -42,6 +42,7 @@ fun RoundsCompletedBox(
     viewModel: RoundsViewModel,
     contentAlignment: Alignment = Alignment.TopStart,
     onExit: () -> Unit,
+    stickerId: String = "",
     content: @Composable BoxScope.() -> Unit
 ){
     val roundCompleteDialogShow by viewModel.roundCompletedDialogShow.collectAsStateWithLifecycle()
@@ -62,9 +63,11 @@ fun RoundsCompletedBox(
 
         if (roundCompleteDialogShow){
             RoundCompletedDialog(
+                viewModel = viewModel,
                 scorePercentage = viewModel.scorePercentage(),
                 onContinue = { viewModel.onContinue() },
                 onExit = { onExit() },
+                stickerId = stickerId,
                 continueBtnEnabled = viewModel.hasNextRound
             )
         }
