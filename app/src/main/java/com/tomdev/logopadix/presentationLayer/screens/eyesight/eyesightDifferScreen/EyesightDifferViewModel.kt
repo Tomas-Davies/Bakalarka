@@ -7,7 +7,6 @@ import com.tomdev.logopadix.dataLayer.repositories.DifferItem
 import com.tomdev.logopadix.dataLayer.repositories.EyesightDifferRepo
 import com.tomdev.logopadix.dataLayer.repositories.ObjectAndImage
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,9 +28,8 @@ class EyesightDifferViewModel(
     private val repo: EyesightDifferRepo,
     app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
-    diffId: String,
-    streakService: DayStreakService
-) : DifficultyRoundsViewModel(diffId, app, streakService)
+    diffId: String
+) : DifficultyRoundsViewModel(diffId, app)
 {
     private lateinit var data: List<DifferItem>
     private var questionIdx = 0
@@ -171,14 +169,13 @@ class EyesightDifferViewModelFactory(
     private val repo: EyesightDifferRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diff: String,
-    private val streakService: DayStreakService
+    private val diff: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightDifferViewModel::class.java)) {
-            return EyesightDifferViewModel(repo, app, levelIndex, diff, streakService) as T
+            return EyesightDifferViewModel(repo, app, levelIndex, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: EyesightDifferViewModel")
     }

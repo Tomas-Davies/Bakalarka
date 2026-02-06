@@ -35,7 +35,6 @@ import com.tomdev.logopadix.presentationLayer.components.ImageCard
 import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.theme.ThemeType
 
@@ -47,9 +46,8 @@ class HearingAssigningScreen: AppCompatActivity() {
         val app = application as LogoApp
         val repo = app.hearingAssignRepository
         val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
-        val streakService = DayStreakService(app.applicationContext)
         val viewModel: HearingAssignViewModel by viewModels {
-            HearingAssignFactory(repo, app, diff, streakService)
+            HearingAssignFactory(repo, app, diff)
         }
 
         setContent {

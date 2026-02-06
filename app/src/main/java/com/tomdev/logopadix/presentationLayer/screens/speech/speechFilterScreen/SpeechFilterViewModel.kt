@@ -3,12 +3,10 @@ package com.tomdev.logopadix.presentationLayer.screens.speech.speechFilterScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.room.Ignore
 import com.tomdev.logopadix.LogoApp
 import com.tomdev.logopadix.dataLayer.repositories.NormalizedWordContent
 import com.tomdev.logopadix.dataLayer.repositories.SpeechRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.utils.string.endsWithCh
 import com.tomdev.logopadix.utils.string.normalizedWithCh
 import com.tomdev.logopadix.utils.string.startsWithCh
@@ -22,9 +20,9 @@ import kotlinx.coroutines.launch
 
 class SpeechFilterViewModel(
     val app: LogoApp,
-    val repo: SpeechRepo,
-    val dayStreakService: DayStreakService
+    val repo: SpeechRepo
 ): BaseViewModel(app) {
+    private val dailyActivityRepo = app.dailyActivityRepo
     private var processedWords = MutableStateFlow<List<NormalizedWordContent>?>(null)
     private var _filteredWords =  MutableStateFlow(emptyList<NormalizedWordContent>())
     val filteredWords = _filteredWords.asStateFlow()
@@ -34,8 +32,9 @@ class SpeechFilterViewModel(
         viewModelScope.launch {
             repo.loadData()
             processedWords.value = repo.getProcessedWords()
-            dayStreakService.checkStreak()
+
         }
+        dailyActivityRepo.markPracticed()
     }
 
     fun Clear(){
@@ -53,13 +52,12 @@ class SpeechFilterViewModel(
                 val normalizedExclude = exclude.normalizedWithCh()
 
                 _filteredWords.value = processed.filter { word ->
-                    val containCond = if (normalizedContains.isNotEmpty()) word.letters.containsAll(normalizedContains) else true
-                    val excludeCond = if (normalizedExclude.isNotEmpty()) !word.letters.containsAll(normalizedExclude) else true
-
+                    val containCond = normalizedContains.isEmpty() || word.letters.containsAll(normalizedContains)
+                    val excludeCond = normalizedExclude.isEmpty() || word.letters.none{ it in normalizedExclude }
+                    val textLower = word.text.lowercase()
                     containCond && excludeCond
-                    && word.text.lowercase().startsWithCh(starts)
-                    && word.text.lowercase().endsWithCh(ends)
-
+                    && textLower.startsWithCh(starts)
+                    && textLower.endsWithCh(ends)
                 }
                 _screenState.value = ScreenState.Success
             }
@@ -70,14 +68,13 @@ class SpeechFilterViewModel(
 
 class SpeechFilterViewModelFactory(
     private val app: LogoApp,
-    private val repo: SpeechRepo,
-    private val streakService: DayStreakService
+    private val repo: SpeechRepo
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(SpeechFilterViewModel::class.java)){
-            return SpeechFilterViewModel(app, repo, streakService) as T
+            return SpeechFilterViewModel(app, repo) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class $modelClass")
     }

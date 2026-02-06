@@ -48,7 +48,6 @@ import com.tomdev.logopadix.theme.ThemeType
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 
 class EyesightDifferScreen: AppCompatActivity() {
@@ -64,9 +63,8 @@ class EyesightDifferScreen: AppCompatActivity() {
                     val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
                     val app = application as com.tomdev.logopadix.LogoApp
                     val repo = app.eyesightDifferRepository
-                    val streakService = DayStreakService(app.applicationContext)
                     val viewModel: EyesightDifferViewModel by viewModels {
-                        EyesightDifferViewModelFactory(repo, app, levelIndex, diffId, streakService)
+                        EyesightDifferViewModelFactory(repo, app, levelIndex, diffId)
                     }
                     EyesightDifferScreenContent(viewModel)
                 }

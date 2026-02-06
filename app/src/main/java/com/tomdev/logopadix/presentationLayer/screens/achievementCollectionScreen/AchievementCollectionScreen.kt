@@ -24,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -51,6 +52,7 @@ class AchievementCollectionScreen: AppCompatActivity() {
         val viewModel: AchievementCollectionViewModel by viewModels {
             AchievementCollectionViewModelFactory(app, repo)
         }
+        val dayStreak = intent.getIntExtra("DAY_STREAK", 0)
         setContent {
             AppTheme {
                 Surface(
@@ -62,7 +64,7 @@ class AchievementCollectionScreen: AppCompatActivity() {
                         onExit = { finish() }
                     ) { pdVal ->
                         AsyncDataWrapper(viewModel) {
-                            AchievementCollectionContent(viewModel, pdVal)
+                            AchievementCollectionContent(viewModel, pdVal, dayStreak)
                         }
                     }
                 }
@@ -72,13 +74,12 @@ class AchievementCollectionScreen: AppCompatActivity() {
 
 
     @Composable
-    fun AchievementCollectionContent(viewModel: AchievementCollectionViewModel, pdVal: PaddingValues){
+    fun AchievementCollectionContent(viewModel: AchievementCollectionViewModel, pdVal: PaddingValues, dayStreak: Int){
         val uiState by viewModel.achievementsUiState.collectAsStateWithLifecycle()
-        val dayStreak by viewModel.dayStreakFlow.collectAsStateWithLifecycle(0)
 
         Column(
             modifier = Modifier
-                .padding(pdVal)
+                .padding(top = pdVal.calculateTopPadding(), start = 18.dp, end = 18.dp, bottom = pdVal.calculateBottomPadding())
                 .fillMaxWidth()
         ) {
             Text(
@@ -147,6 +148,7 @@ class AchievementCollectionScreen: AppCompatActivity() {
             )
             val drawableId = viewModel.getDrawableId(achievement.imageName)
             Image(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
                 painter = painterResource(drawableId),
                 contentDescription = "decor image"
             )

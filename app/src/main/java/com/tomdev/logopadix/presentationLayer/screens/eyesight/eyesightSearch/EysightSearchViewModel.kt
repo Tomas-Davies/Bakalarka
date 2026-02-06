@@ -12,7 +12,6 @@ import com.tomdev.logopadix.dataLayer.repositories.SearchItemOverlay
 import com.tomdev.logopadix.dataLayer.repositories.SearchRound
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSearchRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,9 +30,8 @@ class EyesightSearchViewModel(
     repo: EyesightSearchRepo,
     app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
-    diffId: String,
-    streakService: DayStreakService
-): DifficultyRoundsViewModel(diffId, app, streakService)
+    diffId: String
+): DifficultyRoundsViewModel(diffId, app)
 {
     lateinit var rounds: List<SearchRound>
     private lateinit var currentRound: SearchRound
@@ -175,13 +173,12 @@ class EyesightSearchViewModelFactory(
     private val repo: EyesightSearchRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diffId: String,
-    private val streakService: DayStreakService
+    private val diffId: String
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSearchViewModel::class.java)) {
-            return EyesightSearchViewModel(repo, app, levelIndex, diffId, streakService) as T
+            return EyesightSearchViewModel(repo, app, levelIndex, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

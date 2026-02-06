@@ -10,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthRound
 import com.tomdev.logopadix.dataLayer.repositories.EyesightSynthesisRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -58,8 +57,7 @@ class EyesightSynthesisViewModel(
     private val app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
     diffId: String,
-    streakService: DayStreakService
-) : DifficultyRoundsViewModel(diffId, app, streakService)
+) : DifficultyRoundsViewModel(diffId, app)
 {
     private lateinit var rounds: List<EyesightSynthRound>
     private lateinit var bitmaps: List<Bitmap>
@@ -327,13 +325,12 @@ class EyesightSynthesisViewModelFactory(
     private val repo: EyesightSynthesisRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diffId: String,
-    private val streakService: DayStreakService
+    private val diffId: String
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightSynthesisViewModel::class.java)) {
-            return EyesightSynthesisViewModel(repo, app, levelIndex, diffId, streakService) as T
+            return EyesightSynthesisViewModel(repo, app, levelIndex, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.ComparisonItem
 import com.tomdev.logopadix.dataLayer.repositories.EyesightComparisonRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,9 +25,8 @@ class EyesightComparisonViewModel(
     private val repo: EyesightComparisonRepo,
     app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
-    diffId: String,
-    streakService: DayStreakService
-) : DifficultyRoundsViewModel(diffId, app, streakService) {
+    diffId: String
+) : DifficultyRoundsViewModel(diffId, app) {
 
     private lateinit var data: List<ComparisonItem>
     private lateinit var currentItem: ComparisonItem
@@ -131,14 +129,13 @@ class EyesightComparionViewModelFactory(
     private val repo: EyesightComparisonRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diffId: String,
-    private val streakService: DayStreakService
+    private val diffId: String
 ) : ViewModelProvider.Factory
 {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
         if (modelClass.isAssignableFrom(EyesightComparisonViewModel::class.java)) {
-            return EyesightComparisonViewModel(repo, app, levelIndex, diffId, streakService) as T
+            return EyesightComparisonViewModel(repo, app, levelIndex, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

@@ -7,7 +7,6 @@ import com.tomdev.logopadix.dataLayer.repositories.HearingMemoryRound
 import com.tomdev.logopadix.dataLayer.WordContent
 import com.tomdev.logopadix.dataLayer.repositories.HearingMemoryRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,9 +23,8 @@ data class HearingMemoryUiState(
 class HearingMemoryViewModel(
     private val repo: HearingMemoryRepo,
     app: com.tomdev.logopadix.LogoApp,
-    private val diff: String,
-    streakService: DayStreakService
-) : DifficultyRoundsViewModel(diff, app, streakService)
+    private val diff: String
+) : DifficultyRoundsViewModel(diff, app)
 {
     private lateinit var rounds: List<HearingMemoryRound>
     private lateinit var currRound: HearingMemoryRound
@@ -146,14 +144,13 @@ class HearingMemoryViewModel(
 class HearingMemoryViewModelFactory(
     private val repo: HearingMemoryRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val diff: String,
-    private val streakService: DayStreakService
+    private val diff: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HearingMemoryViewModel::class.java)) {
-            return HearingMemoryViewModel(repo, app, diff, streakService) as T
+            return HearingMemoryViewModel(repo, app, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

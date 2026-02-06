@@ -32,6 +32,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,7 +65,6 @@ import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.utils.image.getContentOffsetInImage
 import com.tomdev.logopadix.utils.image.getFitContentScaleInImage
@@ -89,9 +89,8 @@ class EyesightSearchScreen : AppCompatActivity() {
                     val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
                     val levelIdx = intent.getIntExtra(IImageLevel.TAG, 0)
                     val app = application as com.tomdev.logopadix.LogoApp
-                    val streakService = DayStreakService(app.applicationContext)
                     val viewModel: EyesightSearchViewModel by viewModels {
-                        EyesightSearchViewModelFactory(app.eyesightSearchRepository, app, levelIdx, diffId, streakService)
+                        EyesightSearchViewModelFactory(app.eyesightSearchRepository, app, levelIdx, diffId)
                     }
                     EyesightImageSearchScreenContent(viewModel)
                 }
@@ -333,7 +332,7 @@ class EyesightSearchScreen : AppCompatActivity() {
         contentScale: Float,
         imageComposableInnerSpace: Size
     ) {
-        var overlayShow by remember { mutableStateOf(true) }
+        var overlayShow by rememberSaveable { mutableStateOf(true) }
         val x = offset.x - width / 2
         val y = offset.y - height / 2
         val localDensity = LocalDensity.current

@@ -7,7 +7,6 @@ import com.tomdev.logopadix.dataLayer.repositories.ShelvesRound
 import com.tomdev.logopadix.dataLayer.WordContent
 import com.tomdev.logopadix.dataLayer.repositories.RythmShelvesRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.RoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,9 +24,8 @@ data class RythmShelvesUiState(
 
 class RythmShelvesViewModel(
     private val repo: RythmShelvesRepo,
-    app: com.tomdev.logopadix.LogoApp,
-    streakService: DayStreakService
-) : RoundsViewModel(app, streakService) {
+    app: com.tomdev.logopadix.LogoApp
+) : RoundsViewModel(app) {
 
     private lateinit var rounds: List<ShelvesRound>
     private lateinit var currRound: ShelvesRound
@@ -207,14 +205,13 @@ class RythmShelvesViewModel(
 
 class RythmShelvesViewModelFactory(
     private val repo: RythmShelvesRepo,
-    private val app: com.tomdev.logopadix.LogoApp,
-    private val streakService: DayStreakService
+    private val app: com.tomdev.logopadix.LogoApp
 ): ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmShelvesViewModel::class.java)){
-            return RythmShelvesViewModel(repo, app, streakService) as T
+            return RythmShelvesViewModel(repo, app) as T
         }
         throw IllegalArgumentException("Unknown viewModel class: $modelClass")
     }

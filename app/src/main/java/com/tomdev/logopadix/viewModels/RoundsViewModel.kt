@@ -4,7 +4,7 @@ import android.os.VibrationEffect
 import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.dataLayer.repositories.StickerUiModel
-import com.tomdev.logopadix.services.DayStreakService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,8 +23,7 @@ import kotlinx.coroutines.launch
  * @param app The application instance that provides the application context.
  */
 abstract class RoundsViewModel(
-    app: com.tomdev.logopadix.LogoApp,
-    private val streakService: DayStreakService,
+    app: com.tomdev.logopadix.LogoApp
 ) : BaseViewModel(app) {
     protected var roundIdx = 0
         set(value) {
@@ -40,12 +39,7 @@ abstract class RoundsViewModel(
             updateHasNextRound()
         }
     protected val stickerRepo = app.stickerRepo
-
-    init {
-        viewModelScope.launch {
-            streakService.checkStreak()
-        }
-    }
+    protected val dailyActivityRepo = app.dailyActivityRepo
 
     private var _resultMessageState = MutableStateFlow(ResultMessageState())
     val resultMessageState = _resultMessageState.asStateFlow()
@@ -172,7 +166,7 @@ abstract class RoundsViewModel(
     }
 
     fun collectStickerPiece(stickerId: String){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             stickerRepo.collectedPiece(stickerId)
         }
     }
@@ -180,6 +174,12 @@ abstract class RoundsViewModel(
     fun setStickerUiModelFlow(stickerId: String) {
         viewModelScope.launch {
             _stickerStateFlow.value = stickerRepo.getStickerById(stickerId)
+        }
+    }
+
+    fun markDailyActivityAsPracticed(){
+        viewModelScope.launch(Dispatchers.IO) {
+            dailyActivityRepo.markPracticed()
         }
     }
 

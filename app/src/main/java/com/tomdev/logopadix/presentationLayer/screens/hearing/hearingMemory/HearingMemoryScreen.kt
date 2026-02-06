@@ -51,7 +51,6 @@ import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.tomdev.logopadix.dataLayer.repositories.StickerType
 import com.tomdev.logopadix.presentationLayer.DifficultyType
-import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.launch
 
 
@@ -61,10 +60,9 @@ class HearingMemoryScreen : AppCompatActivity() {
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.hearingMemoryRepository
         val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
-        val streakService = DayStreakService(app.applicationContext)
 
         val viewModel: HearingMemoryViewModel by viewModels {
-            HearingMemoryViewModelFactory(repo, app, diff, streakService)
+            HearingMemoryViewModelFactory(repo, app, diff)
         }
         setContent {
             AppTheme(ThemeType.THEME_HEARING.id) {

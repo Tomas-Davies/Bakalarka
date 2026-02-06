@@ -9,7 +9,6 @@ import com.tomdev.logopadix.dataLayer.UserSentence
 import com.tomdev.logopadix.dataLayer.repositories.SpeechRepo
 import com.tomdev.logopadix.dataLayer.repositories.SpeechWordContent
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,7 +31,6 @@ class SpeechDetailViewModel(
     private val letterLabel: String,
     posLabel: String,
     app: com.tomdev.logopadix.LogoApp,
-    private val streakService: DayStreakService
 ) : BaseViewModel(app) {
     private lateinit var words: List<SpeechWordContent>
     private var index = 0
@@ -45,6 +43,8 @@ class SpeechDetailViewModel(
         private set
     lateinit var defaultSentences: List<String>
         private set
+
+    private var dailyActivityRepo = app.dailyActivityRepo
 
     val userSentences = repo.getUserSentences(letterLabel)
         .flowOn(Dispatchers.IO)
@@ -93,7 +93,7 @@ class SpeechDetailViewModel(
             uiState = _uiState
             _screenState.value = ScreenState.Success
             defaultSentences = repo.getDefaultSentences(letterLabel) ?: emptyList()
-            streakService.checkStreak()
+            dailyActivityRepo.markPracticed()
         }
     }
 
@@ -180,13 +180,12 @@ class SpeechDetailViewModelFactory(
     private val repo: SpeechRepo,
     private val letterLabel: String,
     private val posLabel: String,
-    private val app: com.tomdev.logopadix.LogoApp,
-    private val streakService: DayStreakService
+    private val app: com.tomdev.logopadix.LogoApp
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SpeechDetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SpeechDetailViewModel(repo, letterLabel, posLabel, app, streakService) as T
+            return SpeechDetailViewModel(repo, letterLabel, posLabel, app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

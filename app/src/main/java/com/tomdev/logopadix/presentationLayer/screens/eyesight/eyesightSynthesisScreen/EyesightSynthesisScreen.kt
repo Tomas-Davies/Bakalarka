@@ -51,7 +51,6 @@ import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.utils.image.getContentOffsetInImage
 import com.tomdev.logopadix.utils.image.getFitContentScaleInImage
@@ -68,9 +67,8 @@ class EyesightSynthesisScreen : AppCompatActivity() {
             val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
             val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
             val repo = app.eyesightSynthesisRepository
-            val streakService = DayStreakService(app.applicationContext)
             val viewModel: EyesightSynthesisViewModel by viewModels {
-                EyesightSynthesisViewModelFactory(repo, app, levelIndex, diffId, streakService)
+                EyesightSynthesisViewModelFactory(repo, app, levelIndex, diffId)
             }
 
             AppTheme(ThemeType.THEME_EYESIGHT.id) {

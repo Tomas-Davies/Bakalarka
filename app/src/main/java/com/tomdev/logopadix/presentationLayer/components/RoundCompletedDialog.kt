@@ -17,6 +17,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -146,13 +147,7 @@ fun RoundCompletedDialog(
             ) {
                 Button(
                     modifier = Modifier.weight(1f),
-                    onClick = {
-                        if (stickerId.isNotEmpty() && scorePercentage == 100){
-                            viewModel.setStickerUiModelFlow(stickerId)
-                            viewModel.collectStickerPiece(stickerId)
-                        }
-                        onExit()
-                    }
+                    onClick = { onExit() }
                 ) {
                     Text(text = stringResource(id = R.string.leave_label))
                 }
@@ -160,16 +155,18 @@ fun RoundCompletedDialog(
                 Button(
                     modifier = Modifier.weight(1f),
                     enabled = continueBtnEnabled,
-                    onClick = {
-                        if (stickerId.isNotEmpty() && scorePercentage == 100){
-                            viewModel.setStickerUiModelFlow(stickerId)
-                            viewModel.collectStickerPiece(stickerId)
-                        }
-                        onContinue()
-                    }
+                    onClick = { onContinue() }
                 ) {
                     Text(text = stringResource(id = R.string.continue_label))
                 }
+            }
+        }
+
+        LaunchedEffect(Unit) {
+            if (stickerId.isNotEmpty() && scorePercentage == 100){
+                viewModel.setStickerUiModelFlow(stickerId)
+                viewModel.collectStickerPiece(stickerId)
+                viewModel.markDailyActivityAsPracticed()
             }
         }
     }

@@ -31,7 +31,6 @@ abstract class BaseViewModel(app: com.tomdev.logopadix.LogoApp) : ViewModel() {
     val screenState = _screenState.asStateFlow()
     var activePlayers = mutableListOf<MediaPlayer>()
 
-    // TODO udelat DayStreakControlled servicu / use case, ktery je pouzit v urcitych VM, ktere kontroluji streaky
 
     fun playSound(soundId: Int) {
         val mediaPlayer = MediaPlayer.create(appContext, soundId)

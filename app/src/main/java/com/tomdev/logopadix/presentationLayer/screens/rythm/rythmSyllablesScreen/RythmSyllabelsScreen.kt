@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +43,6 @@ import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 
 
@@ -52,10 +53,9 @@ class RythmSyllabelsScreen : AppCompatActivity() {
         val repo = app.rythmSyllablesRepository
         val levelIndex = intent.getIntExtra(IImageLevel.TAG, 0)
         val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
-        val streakService = DayStreakService(app.applicationContext)
 
         val viewModel: RythmSyllablesViewModel by viewModels {
-            RythmSyllablesViewModelFactory(repo, app, levelIndex, diff, streakService)
+            RythmSyllablesViewModelFactory(repo, app, levelIndex, diff)
         }
         setContent {
             AppTheme(ThemeType.THEME_RYTHM.id) {
@@ -149,12 +149,18 @@ class RythmSyllabelsScreen : AppCompatActivity() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             buttonsStates.forEachIndexed { idx, selected ->
-                SyllableIndicator(
+                Box(
                     modifier = Modifier.weight(1f),
-                    idx = idx,
-                    viewModel = viewModel,
-                    selected = selected
-                )
+                    contentAlignment = Alignment.Center
+                ) {
+                    SyllableIndicator(
+                        modifier = Modifier.sizeIn(maxHeight = 120.dp, maxWidth = 120.dp),
+                        idx = idx,
+                        viewModel = viewModel,
+                        selected = selected
+                    )
+                }
+
             }
         }
     }
@@ -168,10 +174,10 @@ class RythmSyllabelsScreen : AppCompatActivity() {
     ) {
 
         val color =
-            if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
+            if (selected) colorResource(R.color.rythm_200) else MaterialTheme.colorScheme.surfaceVariant
         val buttonColors = ButtonDefaults.buttonColors(containerColor = color)
         val border = if (selected)
-            BorderStroke(3.dp, MaterialTheme.colorScheme.surfaceDim)
+            BorderStroke(3.dp, colorResource(R.color.light))
         else BorderStroke(0.dp, MaterialTheme.colorScheme.surfaceDim)
 
         OutlinedButton(

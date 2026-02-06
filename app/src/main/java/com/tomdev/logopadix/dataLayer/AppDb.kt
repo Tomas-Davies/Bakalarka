@@ -9,10 +9,12 @@ import androidx.room.RoomDatabase
 /**
  * Provides access to the local database and its tables.
  */
-@Database(entities = [UserSentence::class, StickerProgress::class], version = 2)
+@Database(entities = [UserSentence::class, StickerProgress::class, DailyActivity::class], version = 3)
 abstract class AppDb: RoomDatabase(){
     abstract fun sentencesDao(): UserSentenceDAO
     abstract fun stickersDao(): StickerProgressDao
+    abstract fun dailyActivityDao(): DailyActivityDao
+
     companion object {
         @Volatile
         private var instance: AppDb? = null
@@ -26,6 +28,7 @@ abstract class AppDb: RoomDatabase(){
                     "LogopadixDatabase"
                 )
                     .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration() // TODO has to be deleted before launch, will need MANUAL MIGRATION
                     .build()
             }
             return instance as AppDb

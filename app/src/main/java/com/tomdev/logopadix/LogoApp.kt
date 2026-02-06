@@ -2,6 +2,7 @@ package com.tomdev.logopadix
 
 import android.app.Application
 import com.tomdev.logopadix.dataLayer.AppDb
+import com.tomdev.logopadix.dataLayer.DayStreakRepo
 import com.tomdev.logopadix.dataLayer.repositories.AchievementRepo
 import com.tomdev.logopadix.dataLayer.repositories.EyesightComparisonRepo
 import com.tomdev.logopadix.dataLayer.repositories.EyesightDifferRepo
@@ -19,6 +20,7 @@ import com.tomdev.logopadix.dataLayer.repositories.TalesRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+
 
 class LogoApp: Application() {
     val appScopeIO = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -49,4 +51,11 @@ class LogoApp: Application() {
     val achievementsRepo by lazy { AchievementRepo(this) }
     val stickerDefinitionsRepo by lazy { StickerDefinitionsRepository(this) }
     val stickerRepo by lazy { StickerRepository(this, appScopeIO) }
+    val dailyActivityRepo by lazy { DayStreakRepo(database.dailyActivityDao(), appScopeIO) }
+
+
+    override fun onCreate() {
+        super.onCreate()
+        dailyActivityRepo.addDayIfMissing()
+    }
 }

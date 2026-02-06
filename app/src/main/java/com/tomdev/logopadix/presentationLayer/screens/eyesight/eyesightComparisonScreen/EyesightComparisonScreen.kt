@@ -54,7 +54,6 @@ import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.components.LinearTimerIndicator
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.screens.levels.IImageLevel
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -68,9 +67,8 @@ class EyesightComparisonScreen : AppCompatActivity() {
         val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.eyesightComparisonRepository
-        val streakService = DayStreakService(app.applicationContext)
         val viewModel: EyesightComparisonViewModel by viewModels {
-            EyesightComparionViewModelFactory(repo, app, levelIdx, diffId, streakService)
+            EyesightComparionViewModelFactory(repo, app, levelIdx, diffId)
         }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT.id) {

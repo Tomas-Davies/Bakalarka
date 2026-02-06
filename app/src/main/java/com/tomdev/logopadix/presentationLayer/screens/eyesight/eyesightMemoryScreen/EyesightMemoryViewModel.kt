@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRound
 import com.tomdev.logopadix.dataLayer.repositories.BasicWordsRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,9 +22,8 @@ data class EyesightMemoryUiState(
 class EyesightMemoryViewModel(
     private val repo: BasicWordsRepo,
     app: com.tomdev.logopadix.LogoApp,
-    diffId: String,
-    streakService: DayStreakService
-) : DifficultyRoundsViewModel(diffId, app, streakService)
+    diffId: String
+) : DifficultyRoundsViewModel(diffId, app)
 {
     private lateinit var _uiState: MutableStateFlow<EyesightMemoryUiState>
     lateinit var uiState: StateFlow<EyesightMemoryUiState>
@@ -135,14 +133,13 @@ class EyesightMemoryViewModel(
 class EyesightMemoryViewModelFactory(
     private val repo: BasicWordsRepo,
     private val app: com.tomdev.logopadix.LogoApp,
-    private val diffId: String,
-    private val streakService: DayStreakService
+    private val diffId: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EyesightMemoryViewModel::class.java)) {
-            return EyesightMemoryViewModel(repo, app, diffId, streakService) as T
+            return EyesightMemoryViewModel(repo, app, diffId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

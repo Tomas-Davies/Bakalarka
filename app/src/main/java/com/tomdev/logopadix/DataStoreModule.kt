@@ -3,7 +3,6 @@ package com.tomdev.logopadix
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 
 val Context.datastore by preferencesDataStore(name = "user_settings")
@@ -13,7 +12,3 @@ const val CURRENT_WELCOME_POPUP_VERSION: Int = 1
 
 val WHATS_NEW_POPUP_VERSION_KEY = intPreferencesKey("WHATS_NEW_POPUP_VERSION")
 const val CURRENT_WHATS_NEW_POPUP_VERSION: Int = -1
-
-val DAY_STREAK_KEY = intPreferencesKey("DAY_STREAK_KEY")
-
-val DAY_STREAK_DATE_KEY = longPreferencesKey("DAY_STREAK_DATE_KEY")

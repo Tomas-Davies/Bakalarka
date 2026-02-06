@@ -40,7 +40,6 @@ import com.tomdev.logopadix.presentationLayer.components.ImageCard
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.presentationLayer.components.LinearTimerIndicator
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 import kotlinx.coroutines.launch
 
@@ -51,9 +50,8 @@ class EyesightMemoryScreen : AppCompatActivity() {
         val diffId = intent.getStringExtra(DifficultyType.TAG) ?: ""
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.eyesightMemoryRepository
-        val streakService = DayStreakService(app.applicationContext)
         val viewModel: EyesightMemoryViewModel by viewModels {
-            EyesightMemoryViewModelFactory(repo, app, diffId, streakService)
+            EyesightMemoryViewModelFactory(repo, app, diffId)
         }
         setContent {
             AppTheme(ThemeType.THEME_EYESIGHT.id) {

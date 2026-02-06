@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllabRound
 import com.tomdev.logopadix.dataLayer.repositories.RythmSyllablesRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.viewModels.DifficultyRoundsViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,8 +26,7 @@ class RythmSyllablesViewModel(
     app: com.tomdev.logopadix.LogoApp,
     levelIndex: Int,
     diff: String,
-    streakService: DayStreakService
-) : DifficultyRoundsViewModel(diff, app, streakService)
+) : DifficultyRoundsViewModel(diff, app)
 {
     lateinit var rounds: List<RythmSyllabRound>
     private lateinit var currRound: RythmSyllabRound
@@ -136,14 +134,13 @@ class RythmSyllablesViewModelFactory(
     private val repo: RythmSyllablesRepo,
     private val app: com.tomdev.logopadix.LogoApp,
     private val levelIndex: Int,
-    private val diff: String,
-    private val streakService: DayStreakService
+    private val diff: String
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RythmSyllablesViewModel::class.java)) {
-            return RythmSyllablesViewModel(repo, app, levelIndex, diff, streakService) as T
+            return RythmSyllablesViewModel(repo, app, levelIndex, diff) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

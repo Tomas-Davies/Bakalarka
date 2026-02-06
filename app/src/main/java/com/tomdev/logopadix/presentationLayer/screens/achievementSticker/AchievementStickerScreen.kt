@@ -79,7 +79,7 @@ class AchievementStickerScreen: AppCompatActivity() {
 
         Column(
             modifier = Modifier
-                .padding(pdVal)
+                .padding(top = pdVal.calculateTopPadding(), start = 18.dp, end = 18.dp, bottom = pdVal.calculateBottomPadding())
                 .fillMaxWidth()
         ) {
             Text(
@@ -102,7 +102,7 @@ class AchievementStickerScreen: AppCompatActivity() {
         uiState: AchievementStickersUiState
     ){
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 110.dp),
+            columns = GridCells.Adaptive(minSize = 150.dp),
             horizontalArrangement = Arrangement.spacedBy(18.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {

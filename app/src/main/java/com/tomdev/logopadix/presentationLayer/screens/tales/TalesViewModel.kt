@@ -10,25 +10,25 @@ import com.tomdev.logopadix.viewModels.BaseViewModel
 import com.tomdev.logopadix.dataLayer.repositories.Tale
 import com.tomdev.logopadix.dataLayer.repositories.TalesRepo
 import com.tomdev.logopadix.presentationLayer.states.ScreenState
-import com.tomdev.logopadix.services.DayStreakService
 import kotlinx.coroutines.launch
 
 
 class TalesViewModel(
     private val repo: TalesRepo,
-    app: com.tomdev.logopadix.LogoApp,
-    streakService: DayStreakService?
+    app: com.tomdev.logopadix.LogoApp
 ) : BaseViewModel(app)
 {
     lateinit var tales: List<Tale>
         private set
+
+    val dailyActivityRepo = app.dailyActivityRepo
 
     init {
         viewModelScope.launch {
             repo.loadData()
             tales = repo.tales
             _screenState.value = ScreenState.Success
-            streakService?.checkStreak()
+            dailyActivityRepo.markPracticed()
         }
     }
 
@@ -54,14 +54,13 @@ class TalesViewModel(
 
 class TalesViewModelFactory(
     private val repo: TalesRepo,
-    private val app: com.tomdev.logopadix.LogoApp,
-    private val streakService: DayStreakService? = null
+    private val app: com.tomdev.logopadix.LogoApp
 ) : ViewModelProvider.Factory
 {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TalesViewModel::class.java)){
-            return TalesViewModel(repo, app, streakService) as T
+            return TalesViewModel(repo, app) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: $modelClass")
     }

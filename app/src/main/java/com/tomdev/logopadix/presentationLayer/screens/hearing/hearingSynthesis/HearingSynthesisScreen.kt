@@ -35,7 +35,6 @@ import com.tomdev.logopadix.presentationLayer.components.ImageCard
 import com.tomdev.logopadix.presentationLayer.components.PlaySoundButton
 import com.tomdev.logopadix.presentationLayer.components.RoundsCompletedBox
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
-import com.tomdev.logopadix.services.DayStreakService
 import com.tomdev.logopadix.theme.AppTheme
 
 class HearingSynthesisScreen : AppCompatActivity() {
@@ -44,10 +43,9 @@ class HearingSynthesisScreen : AppCompatActivity() {
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.hearingSynthesisRepository
         val diff = intent.getStringExtra(DifficultyType.TAG) ?: ""
-        val streakService = DayStreakService(app.applicationContext)
 
         val viewModel: HearingSynthesisViewModel by viewModels {
-            HearingSynthesisViewModelFactory(repo, app, diff, streakService)
+            HearingSynthesisViewModelFactory(repo, app, diff)
         }
         setContent {
             AppTheme(ThemeType.THEME_HEARING.id) {

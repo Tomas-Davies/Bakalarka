@@ -46,7 +46,6 @@ import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.theme.AppTheme
 import com.tomdev.logopadix.presentationLayer.screens.tales.TalesViewModel
 import com.tomdev.logopadix.presentationLayer.screens.tales.TalesViewModelFactory
-import com.tomdev.logopadix.services.DayStreakService
 
 
 class TaleDetailScreen : AppCompatActivity() {
@@ -54,9 +53,8 @@ class TaleDetailScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val app = application as com.tomdev.logopadix.LogoApp
         val repo = app.talesRepository
-        val streakService = DayStreakService(app.applicationContext)
         val viewModel by viewModels<TalesViewModel> {
-            TalesViewModelFactory(repo, app, streakService)
+            TalesViewModelFactory(repo, app)
         }
         val taleIdx = intent.getIntExtra("TALE_INDEX", 0)
         setContent {
