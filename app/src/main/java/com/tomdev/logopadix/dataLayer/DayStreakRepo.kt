@@ -34,18 +34,22 @@ class DayStreakRepo(
         return dao.getWeek(start, end)
     }
 
-    fun addDayIfMissing(){
-        scope.launch {
+    suspend fun addDayIfMissing(){
             val date = LocalDate.now().toString()
             val test = dao.getByDate(date)
             if (test == null){
                 val activity = DailyActivity(date, false, false)
                 dao.insert(activity)
             }
-        }
     }
 
-    suspend fun loadCurrentWeek(): List<DayInfo>{
+    suspend fun getFirstDate(): LocalDate {
+        val activity = dao.getFirstDate()
+        return LocalDate.parse(activity.date)
+    }
+
+    suspend fun loadCurrentWeek(): List<DayInfo> {
+        val firstDate = getFirstDate()
         val today = LocalDate.now()
         val weekFields = WeekFields.ISO
         val weekStart = today.with(weekFields.dayOfWeek(), 1)
@@ -56,12 +60,12 @@ class DayStreakRepo(
             val date = weekStart.plusDays(offset.toLong())
             val activity = byDate[date]
             val state = when {
-                date.isAfter(today) -> DayState.FUTURE
-                activity == null -> DayState.FUTURE
+                date.isBefore(firstDate) || date.isAfter(today) -> DayState.UNKNOWN
+                activity == null -> DayState.MISSED
                 activity.practiced && date == today -> DayState.CURRENT_PRACTICED
+                date == today -> DayState.CURRENT
                 activity.practiced -> DayState.PRACTICED
                 activity.frozen -> DayState.FROZEN
-                date == today -> DayState.CURRENT
                 else -> DayState.MISSED
             }
             val label = date.dayOfWeek.getDisplayName(
@@ -86,10 +90,10 @@ data class DayInfo(
 )
 
 enum class DayState {
-    FUTURE,
+    CURRENT_PRACTICED,
+    UNKNOWN,
     CURRENT,
     MISSED,
     PRACTICED,
-    FROZEN,
-    CURRENT_PRACTICED
+    FROZEN
 }

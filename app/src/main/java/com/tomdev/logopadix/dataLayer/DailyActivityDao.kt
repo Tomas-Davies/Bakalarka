@@ -25,4 +25,7 @@ interface DailyActivityDao {
 
     @Query("SELECT * FROM daily_activity WHERE date BETWEEN :start AND :end")
     suspend fun getWeek(start: String, end: String): List<DailyActivity>
+
+    @Query("SELECT * FROM daily_activity LIMIT 1")
+    suspend fun getFirstDate(): DailyActivity
 }

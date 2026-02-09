@@ -53,9 +53,4 @@ class LogoApp: Application() {
     val stickerRepo by lazy { StickerRepository(this, appScopeIO) }
     val dailyActivityRepo by lazy { DayStreakRepo(database.dailyActivityDao(), appScopeIO) }
 
-
-    override fun onCreate() {
-        super.onCreate()
-        dailyActivityRepo.addDayIfMissing()
-    }
 }

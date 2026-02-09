@@ -16,6 +16,8 @@
 
     <string name="collected_sticker">Získali jste samolepku!</string>
 
+    <string name="menu_profile_label">Profil</string>
+
     <string name="info_content_1_heading">Obrázky</string>
     <string name="info_content_1_text">chatGPT</string>
     <string name="info_content_2_heading">Zvuky</string>

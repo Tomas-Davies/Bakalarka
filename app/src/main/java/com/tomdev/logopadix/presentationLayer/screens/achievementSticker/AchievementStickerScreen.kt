@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -37,6 +39,7 @@ import com.tomdev.logopadix.LogoApp
 import com.tomdev.logopadix.R
 import com.tomdev.logopadix.dataLayer.repositories.StickerUiModel
 import com.tomdev.logopadix.presentationLayer.components.AsyncDataWrapper
+import com.tomdev.logopadix.presentationLayer.components.CardStripe
 import com.tomdev.logopadix.presentationLayer.components.CustomCard
 import com.tomdev.logopadix.presentationLayer.components.ScreenWrapper
 import com.tomdev.logopadix.theme.AppTheme
@@ -79,7 +82,12 @@ class AchievementStickerScreen: AppCompatActivity() {
 
         Column(
             modifier = Modifier
-                .padding(top = pdVal.calculateTopPadding(), start = 18.dp, end = 18.dp, bottom = pdVal.calculateBottomPadding())
+                .padding(
+                    top = pdVal.calculateTopPadding(),
+                    start = 18.dp,
+                    end = 18.dp,
+                    bottom = pdVal.calculateBottomPadding()
+                )
                 .fillMaxWidth()
         ) {
             Text(
@@ -125,8 +133,8 @@ class AchievementStickerScreen: AppCompatActivity() {
         var cardColors = CardDefaults.cardColors().copy(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         var cardOutline = MaterialTheme.colorScheme.outline
         var cardOutlineSelected = MaterialTheme.colorScheme.outlineVariant
-
-        if (sticker.collectedPieceCount >= sticker.pieceLimit){
+        val isGold = sticker.collectedPieceCount >= sticker.pieceLimit
+        if (isGold){
             drawableId = viewModel.getDrawableId(sticker.imageName + "_golden")
             cardColors = CardDefaults.cardColors().copy(containerColor = colorResource(R.color.gold))
             cardOutline = colorResource(R.color.gold_outline)
@@ -139,34 +147,59 @@ class AchievementStickerScreen: AppCompatActivity() {
             outlineColor = cardOutline,
             outlineSelectedColor = cardOutlineSelected
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(end = 9.dp),
-                    text = "${sticker.collectedPieceCount}/${sticker.pieceLimit}"
-                )
+            Box(modifier = Modifier.fillMaxSize()){
+                if (isGold) CardStripesBackground()
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Text(
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(end = 9.dp),
+                        text = "${sticker.collectedPieceCount}/${sticker.pieceLimit}"
+                    )
 
-                Image(
-                    painter = painterResource(drawableId),
-                    contentDescription = "sticker image"
-                )
-                Spacer(Modifier.height(9.dp))
-                Text(
-                    text = sticker.label,
-                    fontSize = 19.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                HorizontalDivider(Modifier.padding(4.dp))
-                Text(
-                    text = sticker.description,
-                    style = MaterialTheme.typography.labelLarge,
-                    textAlign = TextAlign.Center
-                )
+                    Image(
+                        painter = painterResource(drawableId),
+                        contentDescription = "sticker image"
+                    )
+                    Spacer(Modifier.height(9.dp))
+                    Text(
+                        text = sticker.label,
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    HorizontalDivider(Modifier.padding(4.dp))
+                    Text(
+                        text = sticker.description,
+                        style = MaterialTheme.typography.labelLarge,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
         }
 
     }
+
+
+    @Composable
+    fun CardStripesBackground() {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            repeat(2) {
+                Spacer(Modifier.height(40.dp))
+                CardStripe(
+                    Modifier
+                        .height(55.dp)
+                        .graphicsLayer(
+                            rotationZ = -33f
+                        )
+                        .fillMaxWidth()
+                )
+            }
+        }
+    }
+
+
 }

@@ -206,7 +206,7 @@ class AchievementScreen: AppCompatActivity() {
                 colorResource(R.color.incorrect_outline),
                 Color.LightGray
             )
-            DayState.FUTURE -> Triple(
+            DayState.UNKNOWN -> Triple(
                 Color.LightGray,
                 Color.LightGray,
                 Color.LightGray
@@ -234,7 +234,7 @@ class AchievementScreen: AppCompatActivity() {
                     ),
                 contentAlignment = Alignment.Center
             ){
-                if (day.state == DayState.PRACTICED || day.state == DayState.CURRENT_PRACTICED){
+                if (day.state == DayState.PRACTICED){
                     Icon(
                         imageVector = Icons.Filled.Check,
                         tint = MaterialTheme.colorScheme.background,

@@ -15,14 +15,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.CardDefaults
@@ -37,8 +40,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -89,13 +96,6 @@ class HomeScreen : AppCompatActivity() {
                         Text(text = stringResource(id = R.string.app_name))
                     },
                     actions = {
-                        IconButton(onClick = { onCardClicked(6) }) {
-                            Icon(
-                                painter = painterResource(R.drawable.trophy_icon),
-                                contentDescription = "",
-                                tint = Color.Unspecified
-                            )
-                        }
                         IconButton(onClick = { onCardClicked(5) }) {
                             Icon(imageVector = Icons.Filled.Info, contentDescription = "info")
                         }
@@ -112,13 +112,17 @@ class HomeScreen : AppCompatActivity() {
     private fun MainContent(pdVal: PaddingValues) {
         BoxWithConstraints {
             if (maxWidth < 500.dp) {
-                MainMenu(padding = pdVal)
+                MainMenu(
+                    padding = pdVal,
+                    menuItemRatio = 1.3f,
+                    menuItemWideRatio = 3.5f
+                )
             } else {
                 MainMenu(
                     padding = pdVal,
                     sidePadding = 32.dp,
-                    menuItemRatio = 1.5f,
-                    menuItemWideRatio = 3f
+                    menuItemRatio = 1.8f,
+                    menuItemWideRatio = 3.3f
                 )
             }
         }
@@ -130,7 +134,8 @@ class HomeScreen : AppCompatActivity() {
         padding: PaddingValues,
         sidePadding: Dp = 18.dp,
         menuItemRatio: Float = 1f,
-        menuItemWideRatio: Float = 2.5f
+        menuItemWideRatio: Float = 3f,
+        menuProfileRatio: Float = 4f
     ) {
         Box(
             modifier = Modifier
@@ -218,9 +223,19 @@ class HomeScreen : AppCompatActivity() {
                             outlineColor = colorResource(id = R.color.tales_500)
                         )
                     }
+                    item(span = { GridItemSpan(2) }) {
+                        MenuCardProfile(
+                            title = stringResource(R.string.menu_profile_label),
+                            onClick = { onCardClicked(6) },
+                            ratio = menuProfileRatio,
+                            imageDecorMain = null,
+                            color = colorResource(R.color.gold),
+                            outlineColor = colorResource(R.color.gold_outline),
+                        )
+                    }
                 }
                 Row(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -232,6 +247,7 @@ class HomeScreen : AppCompatActivity() {
                         contentDescription = "decoration",
                         contentScale = ContentScale.FillWidth
                     )
+                    Spacer(Modifier.width(18.dp))
                     Image(
                         modifier = Modifier
                             .weight(3f)
@@ -242,7 +258,7 @@ class HomeScreen : AppCompatActivity() {
                     )
                 }
             }
-            
+
             val text1 = listOf(
                 Triple(
                     R.string.welcome_heading_1,
@@ -338,7 +354,6 @@ class HomeScreen : AppCompatActivity() {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f)
                     .background(textBackgroundColor)
                     .wrapContentHeight(),
                 text = title,
@@ -367,6 +382,99 @@ class HomeScreen : AppCompatActivity() {
         }
     }
 
+
+    @Composable
+    private fun MenuCardProfile(
+        title: String,
+        onClick: () -> Unit,
+        ratio: Float,
+        imageDecorMain: Painter?,
+        color: Color,
+        outlineColor: Color
+    ) {
+        val cardColors = CardDefaults.cardColors().copy(containerColor = color)
+        CustomCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(ratio),
+            onClick = { onClick() },
+            colors = cardColors,
+            outlineColor = outlineColor
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Row(modifier = Modifier.fillMaxSize()) {
+                    Spacer(Modifier.weight(1f))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(2f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth(0.7f)
+                                .graphicsLayer(rotationZ = 33f)
+                                .fillMaxHeight()
+                                .clip(RoundedCornerShape(25.dp))
+                                .background(
+                                    Brush.verticalGradient(
+                                        listOf(
+                                            Color.Yellow.copy(alpha = 0.05f),
+                                            Color.Yellow.copy(alpha = 0.25f),
+                                            Color.Yellow.copy(alpha = 0.5f),
+                                            Color.Yellow.copy(alpha = 0.25f),
+                                            Color.Yellow.copy(alpha = 0.05f)
+                                        )
+                                    )
+                                )
+                        ) {
+//                                Image(
+//                                    modifier = Modifier.fillMaxSize().alpha(0.4f),
+//                                    painter = painterResource(R.drawable.gold_medal),
+//                                    contentDescription = null
+//                                )
+                        }
+                    }
+                    Spacer(Modifier.weight(1f))
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .alpha(0.8f),
+                        painter = painterResource(R.drawable.trophy_2),
+                        contentDescription = "decor"
+                    )
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth(0.6f)
+                            .background(
+                                color = colorResource(R.color.gold_outline),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .wrapContentHeight(),
+                        text = title,
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.displaySmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Image(
+                        modifier = Modifier
+                            .alpha(0.8f),
+                        painter = painterResource(R.drawable.trophy_2),
+                        contentDescription = "decor"
+                    )
+                }
+
+            }
+        }
+    }
 
     @Composable
     private fun MenuCardTales(
@@ -401,29 +509,41 @@ class HomeScreen : AppCompatActivity() {
                     contentDescription = "decor"
                 )
                 Column(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(textBackgroundColor)
-                            .wrapContentHeight()
-                            .weight(1f),
-                        text = title,
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.displaySmall,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Spacer(Modifier.weight(1f))
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        horizontalArrangement = Arrangement.Center
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        Image(painter = imageDecorLeft, contentDescription = "decor")
-                        Image(painter = imageDecorRight, contentDescription = "decor")
+                        Image(
+                            modifier = Modifier.alpha(0.85f),
+                            painter = imageDecorLeft,
+                            contentDescription = "decor"
+                        )
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(0.6f)
+                                .background(
+                                    color = textBackgroundColor,
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .wrapContentHeight(),
+                            text = title,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.displaySmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Image(
+                            modifier = Modifier.alpha(0.85f),
+                            painter = imageDecorRight,
+                            contentDescription = "decor"
+                        )
                     }
+
+                    Spacer(Modifier.weight(1f))
                 }
             }
         }

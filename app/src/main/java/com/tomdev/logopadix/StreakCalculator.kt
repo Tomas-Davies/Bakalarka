@@ -14,10 +14,11 @@ class StreakCalculator {
 
             while (true){
                 val entry = activities[date]
-                if (entry?.practiced == true || entry?.frozen == true){
-                    streak++
-                    date = date.minusDays(1)
-                } else break
+                val missingPastDay = date != today && entry == null
+                val failedUnfrozenDay = entry?.practiced == false && !entry.frozen
+                if (missingPastDay || failedUnfrozenDay) break
+                streak++
+                date = date.minusDays(1)
             }
 
             return streak

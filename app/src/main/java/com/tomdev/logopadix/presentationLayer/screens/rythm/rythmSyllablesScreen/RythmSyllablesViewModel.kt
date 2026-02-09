@@ -78,7 +78,7 @@ class RythmSyllablesViewModel(
         if (roundSetCompletedCheck()) {
             showRoundSetDialog()
         } else {
-            onContinue()
+            doContinue()
         }
     }
 

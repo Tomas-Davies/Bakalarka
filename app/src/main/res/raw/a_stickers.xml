@@ -3,7 +3,7 @@
     <sticker>
         <id>sticker_1</id>
         <imageName>sticker_1</imageName>
-        <label>Mistr Srovnávač</label>
+        <label>Srovnávač</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre v zrakovém porovnávání</description>
     </sticker>
@@ -11,7 +11,7 @@
     <sticker>
         <id>sticker_2</id>
         <imageName>sticker_2</imageName>
-        <label>Mistr detektiv</label>
+        <label>Detektiv</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre v zrakovém vyhledávání</description>
     </sticker>
@@ -19,7 +19,7 @@
     <sticker>
         <id>sticker_3</id>
         <imageName>sticker_3</imageName>
-        <label>Mistr rozlišení</label>
+        <label>Dinosaurus</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre ve zrakovém rozlišování</description>
     </sticker>
@@ -27,7 +27,7 @@
     <sticker>
         <id>sticker_4</id>
         <imageName>sticker_4</imageName>
-        <label>Mistr pamatovač</label>
+        <label>Kočka</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre ve zrakové paměti</description>
     </sticker>
@@ -35,7 +35,7 @@
     <sticker>
         <id>sticker_5</id>
         <imageName>sticker_5</imageName>
-        <label>Mistr puzzle</label>
+        <label>Pejsek</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre ve zrakové syntéze</description>
     </sticker>
@@ -43,7 +43,7 @@
     <sticker>
         <id>sticker_6</id>
         <imageName>sticker_6</imageName>
-        <label>Mistr sluchu</label>
+        <label>Hvězda</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre ve fonematickém sluchu</description>
     </sticker>
@@ -51,7 +51,7 @@
     <sticker>
         <id>sticker_7</id>
         <imageName>sticker_7</imageName>
-        <label>Mistr paměti</label>
+        <label>Jednorožec</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre ve sluchové paměti</description>
     </sticker>
@@ -59,7 +59,7 @@
     <sticker>
         <id>sticker_8</id>
         <imageName>sticker_8</imageName>
-        <label>Mistr syntézy</label>
+        <label>Medvěd</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre ve sluchové syntéze</description>
     </sticker>
@@ -67,7 +67,7 @@
     <sticker>
         <id>sticker_9</id>
         <imageName>sticker_9</imageName>
-        <label>Mistr zvuků</label>
+        <label>Panda</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre v rozpoznávání zvuků</description>
     </sticker>
@@ -75,7 +75,7 @@
     <sticker>
         <id>sticker_10</id>
         <imageName>sticker_10</imageName>
-        <label>Mistr rýmů</label>
+        <label>Papoušek</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre ve hledání rýmů</description>
     </sticker>
@@ -83,7 +83,7 @@
     <sticker>
         <id>sticker_11</id>
         <imageName>sticker_11</imageName>
-        <label>Mistr slabik</label>
+        <label>Sova</label>
         <limitCount>10</limitCount>
         <description>Získej 100% skóre v určování slabik</description>
     </sticker>
@@ -91,8 +91,8 @@
     <sticker>
         <id>sticker_12</id>
         <imageName>sticker_12</imageName>
-        <label>Mistr rytmu</label>
+        <label>Koník</label>
         <limitCount>10</limitCount>
-        <description>Získej 100% skóre v opakování rytmů</description>
+        <description>TODO - Diadochokineze</description>
     </sticker>
 </data>

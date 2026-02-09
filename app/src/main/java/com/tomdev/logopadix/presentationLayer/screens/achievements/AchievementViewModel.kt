@@ -24,6 +24,7 @@ class AchievementViewModel(app: LogoApp): BaseViewModel(app) {
 
     init {
         viewModelScope.launch {
+            repo.addDayIfMissing()
             val activities = repo.getActivities().associateBy { LocalDate.parse(it.date) }
             val streak = StreakCalculator.calculate(activities, LocalDate.now())
             _dailyStreakFlow.value = streak
